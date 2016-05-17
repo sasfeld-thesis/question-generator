@@ -19,11 +19,19 @@
     <properties>
         <!-- logging framework -->
         <slf4j.version>1.7.2</slf4j.version>
+        <!-- Google Guava coding library -->
         <guava.version>19.0</guava.version>
+        <!-- Targeted Liferay portal server version -->
         <liferay.version>6.1.2</liferay.version>
+        <!-- Spring framework version (used for dependency injection and web context) -->
         <spring.version>4.2.4.RELEASE</spring.version>
+        <!-- Vaadin web UI framework -->
         <vaadin.version>7.6.4</vaadin.version>
+        <!-- JUnit version -->
         <junit.version>4.12</junit.version>
+        <!-- JavaCodeCoverage version -->
+        <jacoco.version>0.7.6.201602180812</jacoco.version>
+        <!-- name of the built portlet war file - this will be deployed if the 'deploy' profile is activated -->
         <portlet.war.name>qg-portlet</portlet.war.name>
     </properties>
 
@@ -69,6 +77,36 @@
                 <!-- Liferay -->
                 <liferay.deployment.directory>C:/Masterthesis/liferay-portal-server/deploy</liferay.deployment.directory>
             </properties>
+        </profile>
+        <profile>
+            <id>codecoverage</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.jacoco</groupId>
+                        <artifactId>jacoco-maven-plugin</artifactId>
+                        <version>${jacoco.version}</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>prepare-agent</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>report</id>
+                                <phase>test</phase>
+                                <goals>
+                                    <goal>report</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
     </profiles>
 
