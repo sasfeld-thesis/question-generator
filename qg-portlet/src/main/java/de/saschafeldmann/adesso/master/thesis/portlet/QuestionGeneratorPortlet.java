@@ -31,7 +31,7 @@ public class QuestionGeneratorPortlet extends UI {
         final VerticalLayout layout = new VerticalLayout();
         layout.setMargin(true);
         setContent(layout);
-        Button button = new Button("Click Me");
+        Button button = new Button("Do not Click Me");
         button.addClickListener(new Button.ClickListener() {
             public void buttonClick(Button.ClickEvent event) {
                 layout.addComponent(
