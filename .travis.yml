@@ -12,7 +12,7 @@ notifications:
   - sascha.feldmann@gmx.de
 after_success:
   - bash <(curl -s https://codecov.io/bash) # CodeCov integration
-  - sshpass -e scp qg-portlet/target/qg-portlet.war $TESTING_USER:$TESTING_PW@$TESTING_HOST $DEPLOY_PATH
+  - sshpass -p $TESTING_PW scp qg-portlet/target/qg-portlet.war $TESTING_USER@$TESTING_HOST/$DEPLOY_PATH
 secure: "jml3b+Bf3LbTc5dmJTBtqwCnkRhc3Aruo0E2cSdoseiIsog6qGSwVMqT/vZj+HcdxzO2h
 MhBLgPUjtzrMItKdvWyV5jYsrOZDAT2jvYEE7hJm9qrtsUSbAkgswyFN1ysYViBzg4Gw02z6WSvLgtAf
 UAiH2zrhUKmQjgpe0YiowSM/8Exkx89l+q3ehe2natHbtmTpB0PEV/N+QKXjXNIJwgBP6WIg0blyngcV
