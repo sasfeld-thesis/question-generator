@@ -10,9 +10,9 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>core</module>
-        <module>import</module>
-        <module>portlet</module>
+        <module>qg-core</module>
+        <module>qg-import</module>
+        <module>qg-portlet</module>
     </modules>
 
     <!-- global properties to be used across all modules -->

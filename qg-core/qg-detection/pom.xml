@@ -6,11 +6,11 @@
 
     <parent>
         <groupId>de.saschafeldmann.adesso.master.thesis.software</groupId>
-        <artifactId>core</artifactId>
+        <artifactId>qg-core</artifactId>
         <version>1</version>
     </parent>
     <!-- groupID and artifactID are inherited from parent -->
-    <artifactId>detection</artifactId>
+    <artifactId>qg-detection</artifactId>
 
 
 </project>

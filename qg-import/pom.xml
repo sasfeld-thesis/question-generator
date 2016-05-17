@@ -10,7 +10,7 @@
         <version>1</version>
     </parent>
     <!-- groupID and artifactID are inherited from parent -->
-    <artifactId>import</artifactId>
+    <artifactId>qg-import</artifactId>
 
     <dependencies>
         <dependency>
