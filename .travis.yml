@@ -10,8 +10,7 @@ addons:
     - sshpass
 after_success:
 - bash <(curl -s https://codecov.io/bash)
-- sudo sshpass -p $TESTING_PW sudo scp /home/travis/build/sasfeld-thesis/question-generator/qg-portlet/target/qg-portlet.war
-  $TESTING_USER@$TESTING_HOST/$DEPLOY_PATH
+- sudo sshpass -p $TESTING_PW sudo scp /home/travis/build/sasfeld-thesis/question-generator/qg-portlet/target/qg-portlet.war $DEPLOY_SCP
 env:
   global:
     secure: Y6R7K+v71x4AipYzuvLGGQJkfMwfyHMncL+5+QwUkrrVs/E2N/FFhH0Jjo+jtjmdjcDfPnvJkz2fykPPMBdnTXJwCvLmyhHcXMivMMVctvcS1FQjl1WsbKygDh+TVnTqXfvWmdD8A06iao8l+Vj6PYpdkr6shAOIqPY2QTWOu55HBpAIF8vZGu/2vinSU/YSJP4ywu5cbfZb7InHRB6Ooodx9g/JsnfN8O+Cx58k0x0WaOCWIYZIaJFfsmVyX+v4/awfRo7qb5B5oOGChcCZtvKb3pRpRETK3b1oxlTtQK2pOIj9E/aGlDJs4aUIcyWFxddz2iyZ/oU7UGIxMdxgEBq6Y5PuONxMhIxwjHQIhoLB6rSXRdqULSuf0/q9nipXxM8nKJJHq5wp/sSioreVJ7cnD6UWsP5agISgBRPoBya7XFCGXEcLiLRqZaTpYdq5KQFOFl/tC+tMRylAe5hZ/ioODE3AYwxp0u+qTYsBZza5aUhRSvaEvb93z++MKcrxZQWUM2mQvTylHBAEpfamGfrDmniV4T8FhNd+WZR/UiYGugJBv3tNPBNR5CbQgV8wEqR9LI+r6FR3Mi65Vwsj1YMEx9DYGWuBlBlxXYLqZitjZ2AfqtEQF8EiptUgNLI97a4OliwuyzuJjzlUi2woWoO6gSIQNAqtsMF7oUM7dwQ=
