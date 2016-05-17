@@ -1,3 +1,7 @@
+addons:
+    apt:
+        packages:
+            - sshpass
 language: java
 jdk:
   - oraclejdk8
@@ -7,4 +11,41 @@ notifications:
   email:
   - sascha.feldmann@gmx.de
 after_success:
-  - bash <(curl -s https://codecov.io/bash)
+  - bash <(curl -s https://codecov.io/bash) # CodeCov integration
+  - sshpass -e scp qg-portlet/target/qg-portlet.war $TESTING_USER:$TESTING_PW@$TESTING_HOST $DEPLOY_PATH
+secure: "jml3b+Bf3LbTc5dmJTBtqwCnkRhc3Aruo0E2cSdoseiIsog6qGSwVMqT/vZj+HcdxzO2h
+MhBLgPUjtzrMItKdvWyV5jYsrOZDAT2jvYEE7hJm9qrtsUSbAkgswyFN1ysYViBzg4Gw02z6WSvLgtAf
+UAiH2zrhUKmQjgpe0YiowSM/8Exkx89l+q3ehe2natHbtmTpB0PEV/N+QKXjXNIJwgBP6WIg0blyngcV
+0G6F9a58PBMjVhIrCPVbZ5oANlHELEQB/COVj6ZlhSxgJX9lG75N1OZONIzXHSjbHRG2PGPKcgpVx7PH
+QHvYqDBjK9hb0vi3Jo/qRf9XsQ7vYP/lzAwdkJCpCxoXbJZ0czA49FC5v97vYxHVvTEmZ/j12oxS9P0z
+kXZP1Bc/Y2F299WvXMQdC6GfqT903ZWj6GQAo+unv8Favn24owICeUjgnBvl6yfC0G/XwHW4aguOi/dm
+1281Z9i3xhD+9LJGPMI3WTL1/xg48P73SbGuSqHsUZ3zddVOPpa00Qfllwij8nceyD80zgqwrdAF0wan
+w16GRbVfwg+l0Gp/i/jURTuF+8hP6Z1zxkKgLh4DW/AxqCcdlzY/Nb8rbWWF3hTNdM0D1jbFvZ+pvxLu
+WeWDQpX9GkEdfn1UTEBqJOu/8vO7ix/7PsdDE3ylzGBDzEAqQO++1w="
+secure: "M5iDFucxNXF+i3roKNn52T9cP7ApZ/qVCb8jciES0+1XUHLss2SD/xDcn/o7GbmZRXx0q
+7/NzQ5HDeGR/zPZq+xufbYbmPPSj+NSZgCVw1gKK3gElkT6SjL/wZo+GI422dgheb5s9o5IFHjoP26L5
+x7ZMdqz2SuvR8pS5PZMhGB3l0OuHwfOIbYr+ne/F0I8nJcQiMXQY4DzlY2ShZ5wxWlsHtUpGsf/gwgQA
+U3MlI7GjXKggPTsIbpciT6TiNl65EtgSpKI1Cmu7GekwQVS4GPlTIQlDzQYiCXR+lSIuCZymHQ5juxBA
+GkqhvnDYfuOHGHJk/5OV1xauxppCbpwtBiQj9fWis1AbxuLtyb5dhG868aQvNWMe9JfTXPGbysVAQ2Tf
+LArAZXaqSkd+3dllEWL5nKHEaVwJsPfYtpDwdNBThpmlshtorABiWFBrwnUoVdBPEhSuXY1OZffYdzVm
+UXVV82JCif3oPPrYVUekLoIOthPR4l0/3p0HvJxVrtzVNEDTCkwhMqQgqQvUEtlzyb65DEw3EkzGnqmm
+FIU96GXrVZp/zf7jieowj5v9Kblc8IWnLp9nMn0RvwYW3jlDf8PYjYCixcMDSJWfz4BHgKRx/Tw8x8Uc
++ADBkjZCgO63o4fT3sHlf+IEzpGo0RrncsITYYqh5n7abHIFMbPkqw="
+secure: "Ra/9XSM2vgyds+QYUWDpfk4/KHnz33oAA2ufI+ZVldyKr5yDzO/4lWXxuwhPEGtcFubnu
+P8m5debIYrxYlrw2gaqeXhJ0CiAcDSuOmzRFZRlb8lapJTdJWQQAeIPudid7hg2MPTQEeBNNWsRTeLYG
+03wM/MwKr5qNYPxNWgcoV5RDFViznrlK1xkhSPhrp2vmM++fWNeR7vr7u2IRo19ARgXfh6Jmg4fLLxjJ
+m6rK/dhn+rKuPoU2fsJmDejE+7d0O4eOd20ozRDfPbAK31IIB5xbhiu0qEXD/Tax2RZUwiaQWyc6m0FO
+vv/25iT12y+e5sngOs0Wm3fjJxPuUmu24enTa+42k2tGA5MfuuEZY0gC3nK0dl/iORjXHPug90d8Wa3J
+uaWycsahIx6YiSyVbas3YQU71k4PlroxZka3jyRXP+crmmJXBp7lKXi/oyYqwfWBM08EeonMi4sOKM/r
+SOLyUmAwzWbVh7KHdH3JCPXqIFOkWj+DfvHnwVHIASGYKpLkHqtlvWkIG+akWS7NQmMqu1zDa93D/X1D
+WxQFTG7MFlgWhCKx4GwStYpSJfACqyHwndHLvJ+RQVl7AVSt33CFOwkk/OUkteJeszE59veuXas9mZwF
+ug/y5jSzdImkjPofsWwLQLszacrXH/a9wY/l5/UgarMpobVVXm2zNo="
+secure: "Bcko+vBJ9Yu+T/ZAiva4jKTg50q2hqBpJWZ/5s7lrhQOD7d4OMboZtADfbEfpTq2NT1Xf
+tzOSDEzP6fL5zNyOioVu/sxNYf2OmfZjig35lvVKx1HwhhScrb4BgA+pnjNHrj3ZVGyMc8VquI80Ma8Y
+hYrtEVoLbexDqFTorqZ6BZv8kysxvwSbGyjAUhqmfnOBRzwzlVf6StaLwMxUzDusDnVMAvnCkJ0NfM6q
+XhvxTEoirwrVcPgqySjD8zTy41XFgLA8+epMbLoYlqSjD156MOoYipJnzpMDxVfmDiHeAFMVLqvA98zT
+RhJmUHTtjCfkdDo2mT5SBqp0w7VlydV/FiwPJav3eAn4hdvXrbJ3PJBSHqFHInxvsRj7P0Wl5XRD3cqZ
+u/xYJxay/0YpH1LF1gqoZhfKKsK9PYMrHpC0eIHC294ZCez7aXb88RdFUcAUs/+oIJlazsDY40dl0DG7
+iAEdedtQGqkOUjq9dTN8XebloEH7MSta0G+WHfQX1hRSrrsdFNL0BWdgi8pS8OUfPRtoDgRNzxkNSxpQ
+iUjOpLU3zeZ6A0o5irhrIjZZUzda5uPmIIdmCouYwGPpNESM9cCpx4U8XHmoFfuSls2R3+jlzraoy8SF
+eSy5JcpFDuUwMDp6bd63SsBN9tFeVcKzBgUXEi2RObd6KSEdtp0Oao="
