@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<!DOCTYPE display PUBLIC
+        "-//Liferay//DTD Display 4.0.0//EN"
+        "http://www.liferay.com/dtd/liferay-display_4_0_0.dtd">
+<display>
+    <!-- defines the category under which the portlet will be shown in the liferay UI -->
+    <category name="Vaadin">
+        <portlet id="de.saschafeldmann.adesso.master.thesis.portlet.QuestionGeneratorPortlet"/>
+    </category>
+</display>

@@ -1,6 +1,6 @@
 package software;
 
-import de.saschafeldmann.adesso.master.thesis.software.Importer;
+import de.saschafeldmann.adesso.master.thesis.elearningimport.Importer;
 import org.junit.Test;
 import static org.junit.Assert.*;
 /**

@@ -21,6 +21,7 @@
         <slf4j.version>1.7.2</slf4j.version>
         <guava.version>19.0</guava.version>
         <liferay.version>6.1.2</liferay.version>
+        <spring.version>4.2.4.RELEASE</spring.version>
         <vaadin.version>7.6.4</vaadin.version>
         <junit.version>4.12</junit.version>
     </properties>
@@ -36,16 +37,6 @@
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
                 <version>${guava.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.vaadin</groupId>
-                <artifactId>server</artifactId>
-                <version>${vaadin.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.vaadin</groupId>
-                <artifactId>themes</artifactId>
-                <version>${vaadin.version}</version>
             </dependency>
             <dependency>
                 <groupId>junit</groupId>

@@ -1,4 +1,4 @@
-package de.saschafeldmann.adesso.master.thesis.software;
+package de.saschafeldmann.adesso.master.thesis.elearningimport;
 
 /**
  *
