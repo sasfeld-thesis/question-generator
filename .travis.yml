@@ -6,3 +6,5 @@ jdk:
 notifications:
   email:
   - sascha.feldmann@gmx.de
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
