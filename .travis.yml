@@ -1,11 +1,15 @@
 language: java
 jdk:
   - oraclejdk8
-  - oraclejdk7
-  - openjdk7
+  #- oraclejdk7 # uncomment to test backwards compatibility
+  #- openjdk7 # uncomment to test backwards compatibility
 notifications:
   email:
   - sascha.feldmann@gmx.de
+addons:
+      apt:
+          packages:
+              - sshpass
 after_success:
   - bash <(curl -s https://codecov.io/bash) # CodeCov integration
   - sshpass -p $TESTING_PW scp qg-portlet/target/qg-portlet.war $TESTING_USER@$TESTING_HOST/$DEPLOY_PATH
