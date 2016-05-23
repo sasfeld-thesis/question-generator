@@ -100,6 +100,8 @@
                 <groupId>javax.portlet</groupId>
                 <artifactId>portlet-api</artifactId>
                 <version>${portlets.api.version}</version>
+                <!-- provided by liferay, DO NOT CHANGE if you don't know what you're doing since it might lead to class conflicts -->
+                <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>junit</groupId>

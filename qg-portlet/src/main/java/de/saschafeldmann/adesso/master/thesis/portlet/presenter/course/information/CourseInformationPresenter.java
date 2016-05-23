@@ -1,5 +1,6 @@
 package de.saschafeldmann.adesso.master.thesis.portlet.presenter.course.information;
 
+import de.saschafeldmann.adesso.master.thesis.portlet.presenter.VaadinViewPresenter;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.course.information.CourseInformationView;
 
 /**
@@ -19,11 +20,12 @@ import de.saschafeldmann.adesso.master.thesis.portlet.view.course.information.Co
  *
  * Here, the user can enter information on the course for which he or she wants to trigger the question generation process.
  */
-public interface CourseInformationPresenter {
+public interface CourseInformationPresenter extends VaadinViewPresenter {
 
     /**
      * Initializes the view and returns it.
      * @return the Vaadin view for this presenter to be displayed.
      */
     CourseInformationView initializeView();
+
 }

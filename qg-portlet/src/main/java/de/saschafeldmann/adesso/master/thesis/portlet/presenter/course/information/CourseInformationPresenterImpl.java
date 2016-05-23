@@ -29,16 +29,14 @@ import org.springframework.stereotype.Component;
 @Scope("prototype")
 public class CourseInformationPresenterImpl extends AbstractStepPresenter implements CourseInformationPresenter, CourseInformationViewListener {
     private final CourseInformationView courseInformationView;
+    private Navigator navigator;
 
     /**
      * Creates a new CourseInformationPresenterImpl.
      * @param courseInformationViewImpl the managed view.
-     * @param navigator the Vaadin view navigator
      */
     @Autowired
-    public CourseInformationPresenterImpl(final CourseInformationViewImpl courseInformationViewImpl, final Navigator navigator) {
-        super(navigator);
-
+    public CourseInformationPresenterImpl(final CourseInformationViewImpl courseInformationViewImpl) {
         if (null == courseInformationViewImpl) {
             throw new NullPointerException("The argument courseInformationView must not be null!");
         }
@@ -47,10 +45,12 @@ public class CourseInformationPresenterImpl extends AbstractStepPresenter implem
     }
 
 
+
     /**
      * @see CourseInformationPresenter#initializeView()
      */
     public CourseInformationView initializeView() {
+        this.courseInformationView.setMenuListener(this);
         this.courseInformationView.reset();
         return this.courseInformationView;
     }
@@ -68,4 +68,5 @@ public class CourseInformationPresenterImpl extends AbstractStepPresenter implem
     public void onNewSessionButtonClicked() {
 
     }
+
 }

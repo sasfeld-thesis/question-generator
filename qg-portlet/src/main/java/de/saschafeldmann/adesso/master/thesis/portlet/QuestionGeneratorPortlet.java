@@ -60,8 +60,11 @@ public class QuestionGeneratorPortlet extends UI {
 
     private void initializeViews() {
         CourseInformationPresenter courseInformationPresenter = getApplicationContext().getBean(CourseInformationPresenterImpl.class);
+        courseInformationPresenter.setNavigator(this.viewNavigator);
 
         this.courseInformationView = courseInformationPresenter.initializeView();
         this.viewNavigator.addView(CourseInformationViewImpl.VIEW_NAME, courseInformationView);
+        // show the course information view initially
+        this.viewNavigator.addView("", courseInformationView);
     }
 }

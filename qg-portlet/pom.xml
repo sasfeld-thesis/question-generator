@@ -54,6 +54,7 @@
         <dependency>
             <groupId>javax.portlet</groupId>
             <artifactId>portlet-api</artifactId>
+            <scope>provided</scope>
         </dependency>
         <!-- Vaadin -->
         <dependency>

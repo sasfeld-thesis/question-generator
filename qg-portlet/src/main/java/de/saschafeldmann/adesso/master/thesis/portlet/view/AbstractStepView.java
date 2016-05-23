@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
  * This abstract view defines the basic components that each view in the application has, e.g. the current step indicator etc.
  * It notifies the set {@link MenuListener} instance on menu item click.
  */
-public class AbstractStepView extends VerticalLayout implements View {
+public class AbstractStepView extends VerticalLayout implements ViewWithMenu {
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractStepView.class);
 
     /**
@@ -82,8 +82,15 @@ public class AbstractStepView extends VerticalLayout implements View {
      * Sets the menu listener that is informed after click on menu items.
      * @param outsideMenuListener the outsideMenuListener
      */
-    public void setOutsideMenuListener(MenuListener outsideMenuListener) {
+    private void setOutsideMenuListener(MenuListener outsideMenuListener) {
         this.outsideMenuListener = outsideMenuListener;
+    }
+
+    /**
+     * @see ViewWithMenu#setMenuListener(MenuListener)
+     */
+    public void setMenuListener(MenuListener menuListener) {
+        setOutsideMenuListener(menuListener);
     }
 
     /**

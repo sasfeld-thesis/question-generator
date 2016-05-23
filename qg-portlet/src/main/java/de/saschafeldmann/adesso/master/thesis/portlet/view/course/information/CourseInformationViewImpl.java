@@ -4,6 +4,8 @@ import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.Messages;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.AbstractStepView;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.MenuListener;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.ViewWithMenu;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.VersionLabel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -26,7 +28,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @Scope("prototype")
-public class CourseInformationViewImpl extends AbstractStepView implements View, CourseInformationView {
+public class CourseInformationViewImpl extends AbstractStepView implements CourseInformationView {
 
     public static final String VIEW_NAME = "CourseInformationView";
 
@@ -55,4 +57,5 @@ public class CourseInformationViewImpl extends AbstractStepView implements View,
     public com.vaadin.ui.Component getRootComponent() {
         return this;
     }
+
 }

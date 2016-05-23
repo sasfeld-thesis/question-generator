@@ -22,22 +22,14 @@ import de.saschafeldmann.adesso.master.thesis.portlet.view.course.information.Co
  * This abstract presenter defines the basic components that each view in the application has, e.g. the current step indicator etc.
  * It is a {@link de.saschafeldmann.adesso.master.thesis.portlet.view.MenuListener} and therefore manages menu clicks.
  */
-public class AbstractStepPresenter implements MenuListener {
-    private final Navigator navigator;
-
-    /**
-     * Creates an abstract step presenter.
-     * @param navigator the vaadin view navigator
-     */
-    public AbstractStepPresenter(Navigator navigator) {
-        this.navigator = navigator;
-    }
+public class AbstractStepPresenter implements MenuListener, VaadinViewPresenter {
+    private Navigator navigator;
 
     /**
      * @see MenuListener#onCourseInformationClicked()
      */
     public void onCourseInformationClicked() {
-        this.navigator.navigateTo(CourseInformationViewImpl.VIEW_NAME);
+        getNavigator().navigateTo(CourseInformationViewImpl.VIEW_NAME);
     }
 
     /**
@@ -66,5 +58,19 @@ public class AbstractStepPresenter implements MenuListener {
      */
     public void onQuestionGenerationClicked() {
 
+    }
+
+    /**
+     * @see VaadinViewPresenter#setNavigator(Navigator)
+     */
+    public void setNavigator(Navigator navigator) {
+        this.navigator = navigator;
+    }
+
+    /**
+     * @see VaadinViewPresenter#getNavigator()
+     */
+    public Navigator getNavigator() {
+        return this.navigator;
     }
 }
