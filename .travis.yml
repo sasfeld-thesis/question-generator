@@ -10,4 +10,4 @@ addons:
     - sshpass
 after_success:
 - bash <(curl -s https://codecov.io/bash)
-- curl -T /home/travis/build/sasfeld-thesis/question-generator/qg-portlet/target/qg-portlet.war -u $TESTING_DEPLOYMENT_USER:$TESTING_DEPLYOMENT_PW $TESTING_DEPLOYMENT_PATH
+- curl -T /home/travis/build/sasfeld-thesis/question-generator/qg-portlet/target/qg-portlet.war -u $TESTING_DEPLOYMENT_USER:$TESTING_DEPLOYMENT_PW $TESTING_DEPLOYMENT_PATH
