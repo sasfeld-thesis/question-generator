@@ -2,17 +2,12 @@ package de.saschafeldmann.adesso.master.thesis.portlet;
 
 import com.vaadin.annotations.Theme;
 import com.vaadin.navigator.Navigator;
-import com.vaadin.navigator.View;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.WrappedPortletSession;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
-import com.vaadin.ui.VerticalLayout;
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.course.information.CourseInformationPresenter;
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.course.information.CourseInformationPresenterImpl;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.VaadinProperties;
-import de.saschafeldmann.adesso.master.thesis.portlet.properties.VersionProperties;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.course.information.CourseInformationView;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.course.information.CourseInformationViewImpl;
 import org.springframework.context.ApplicationContext;
@@ -46,8 +41,10 @@ public class QuestionGeneratorPortlet extends UI {
     @Override
     protected void init(VaadinRequest vaadinRequest) {
         initializeApplicationContext(vaadinRequest);
+        initializeViewNavigator();
         initializeViews();
 
+        // show the course information view initially
         setContent(courseInformationView.getRootComponent());
     }
 
@@ -55,6 +52,10 @@ public class QuestionGeneratorPortlet extends UI {
         WrappedPortletSession wrappedPortletSession = (WrappedPortletSession) vaadinRequest.getWrappedSession();
 
         this.applicationContext = PortletApplicationContextUtils.getRequiredWebApplicationContext(wrappedPortletSession.getPortletSession().getPortletContext());
+    }
+
+    private void initializeViewNavigator() {
+        this.viewNavigator = new Navigator(this, this);
     }
 
     private void initializeViews() {
