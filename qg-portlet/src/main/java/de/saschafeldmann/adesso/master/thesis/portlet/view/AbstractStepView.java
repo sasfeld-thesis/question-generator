@@ -2,6 +2,8 @@ package de.saschafeldmann.adesso.master.thesis.portlet.view;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.MenuBar;
 import com.vaadin.ui.VerticalLayout;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.Messages;
@@ -25,7 +27,7 @@ import org.slf4j.LoggerFactory;
  * This abstract view defines the basic components that each view in the application has, e.g. the current step indicator etc.
  * It notifies the set {@link MenuListener} instance on menu item click.
  */
-public class AbstractStepView extends VerticalLayout implements ViewWithMenu {
+public abstract class AbstractStepView extends VerticalLayout implements ViewWithMenu {
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractStepView.class);
 
     /**
@@ -59,7 +61,7 @@ public class AbstractStepView extends VerticalLayout implements ViewWithMenu {
         }
     }
 
-    private final Messages messages;
+    protected final Messages messages;
     private MenuBar menuBar;
     private MenuClickListener menuClickListener;
     private MenuListener outsideMenuListener;
@@ -69,13 +71,6 @@ public class AbstractStepView extends VerticalLayout implements ViewWithMenu {
     public AbstractStepView(Messages messages, VersionLabel versionLabel) {
         this.messages = messages;
         this.versionLabel = versionLabel;
-    }
-
-    /**
-     * @see View#enter(ViewChangeListener.ViewChangeEvent)
-     */
-    public void enter(ViewChangeListener.ViewChangeEvent viewChangeEvent) {
-
     }
 
     /**
@@ -108,10 +103,9 @@ public class AbstractStepView extends VerticalLayout implements ViewWithMenu {
         this.addComponent(menuBar);
 
         addMenuItems();
-        addVersionLabel();
     }
 
-    private void addVersionLabel() {
+    protected void addVersionLabel() {
         this.addComponent(versionLabel);
     }
 
@@ -125,5 +119,19 @@ public class AbstractStepView extends VerticalLayout implements ViewWithMenu {
 
     private void resetLayout() {
         this.removeAllComponents();
+    }
+
+    /**
+     * Adds the buttons in a shared layout so they look nice.
+     * @param leftButton button on the left side
+     * @param rightButton button on the right side
+     */
+    protected void addButtonsAtBottom(Button leftButton, Button rightButton) {
+        HorizontalLayout buttonsLayout = new HorizontalLayout();
+
+        buttonsLayout.addComponent(leftButton);
+        buttonsLayout.addComponent(rightButton);
+
+        this.addComponent(buttonsLayout);
     }
 }

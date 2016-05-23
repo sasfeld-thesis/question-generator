@@ -5,6 +5,8 @@ import de.saschafeldmann.adesso.master.thesis.portlet.presenter.AbstractStepPres
 import de.saschafeldmann.adesso.master.thesis.portlet.view.course.information.CourseInformationView;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.course.information.CourseInformationViewImpl;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.course.information.CourseInformationViewListener;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -28,6 +30,8 @@ import org.springframework.stereotype.Component;
 @Component
 @Scope("prototype")
 public class CourseInformationPresenterImpl extends AbstractStepPresenter implements CourseInformationPresenter, CourseInformationViewListener {
+    private static final Logger LOGGER = LoggerFactory.getLogger(CourseInformationPresenterImpl.class);
+
     private final CourseInformationView courseInformationView;
     private Navigator navigator;
 
@@ -44,13 +48,13 @@ public class CourseInformationPresenterImpl extends AbstractStepPresenter implem
         this.courseInformationView = courseInformationViewImpl;
     }
 
-
-
     /**
      * @see CourseInformationPresenter#initializeView()
      */
     public CourseInformationView initializeView() {
         this.courseInformationView.setMenuListener(this);
+        this.courseInformationView.setViewListener(this);
+        this.courseInformationView.setViewMode(CourseInformationViewImpl.ViewMode.NEW_COURSE);
         this.courseInformationView.reset();
         return this.courseInformationView;
     }
@@ -59,14 +63,14 @@ public class CourseInformationPresenterImpl extends AbstractStepPresenter implem
      * @see CourseInformationViewListener#onNextButtonClicked()
      */
     public void onNextButtonClicked() {
-
+        LOGGER.info("onNextButtonClicked()");
     }
 
     /**
      * @see CourseInformationViewListener#onNewSessionButtonClicked()
      */
     public void onNewSessionButtonClicked() {
-
+        LOGGER.info("onNewSessionButtonClicked()");
     }
 
 }

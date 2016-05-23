@@ -51,11 +51,84 @@ public class Messages {
     public String getMenuItemDetectionLabel() {
         return "Detektion";
     }
+
     /**
      * Gets the menu item label.
      * @return String
      */
     public String getMenuItemQuestionGenerationLabel() {
         return "Fragen-Generierung";
+    }
+
+    /**
+     * Gets the text.
+     * @return String
+     */
+    public String getCourseInformationViewNewCourseInfoText() {
+        return "Sie haben noch keine Schulung angelegt.<br>Mit diesem Dialog legen Sie eine an und starten so Ihre Sitzung.";
+    }
+
+    /**
+     * Gets the text.
+     * @return String
+     */
+    public String getCourseInformationViewIntroductionText() {
+        return "Geben Sie hier eine Schulung mit ihren Rahmendaten an.";
+    }
+
+    /**
+     * Gets the text.
+     * @return String
+     */
+    public String getCourseInformationViewCourseTitleLabel() {
+        return "Schulungstitel:";
+    }
+
+    /**
+     * Gets the text.
+     * @return String
+     */
+    public String getCourseInformationViewCourseUrlLabel() {
+        return "URL:";
+    }
+
+    /**
+     * Gets the text.
+     * @return String
+     */
+    public String getCourseInformationViewCourseLanguageLabel() {
+        return "Primäre Sprache:";
+    }
+
+    /**
+     * Gets the text.
+     * @return String
+     */
+    public String getCourseInformationViewBtnNextLabel() {
+        return "Weiter";
+    }
+
+    /**
+     * Gets the text.
+     * @return String
+     */
+    public String getCourseInformationViewBtnNewSessionLabel() {
+        return "Neue Sitzung starten:";
+    }
+
+    /**
+     * Gets the text.
+     * @return String
+     */
+    public String getCourseInformationViewEnglishLanguageLabel() {
+        return "Englisch";
+    }
+
+    /**
+     * Gets the text.
+     * @return String
+     */
+    public String getCourseInformationViewGermanLanguageLabel() {
+        return "Deutsch";
     }
 }

@@ -34,4 +34,16 @@ public interface CourseInformationView extends ViewWithMenu {
      * @return
      */
     Component getRootComponent();
+
+    /**
+     * Sets the view listener for this view.
+     * @param viewListener the view listener instance.
+     */
+    void setViewListener(CourseInformationViewListener viewListener);
+
+    /**
+     * Sets the view mode of this view.
+     * @param viewMode see {@link CourseInformationViewImpl.ViewMode}
+     */
+    void setViewMode(CourseInformationViewImpl.ViewMode viewMode);
 }
