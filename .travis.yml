@@ -5,7 +5,7 @@ notifications:
   email:
   - sascha.feldmann@gmx.de
 install:
-  - mvn install -DskipTests=true -Dmaven.javadoc.skip=true,travisBuildVersion=$TRAVIS_BUILD_NUMBER -B -V
+  - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -DtravisBuildVersion=$TRAVIS_BUILD_NUMBER -B -V
 after_success:
 - bash <(curl -s https://codecov.io/bash)
 - curl -T /home/travis/build/sasfeld-thesis/question-generator/qg-portlet/target/qg-portlet.war -u $TESTING_DEPLOYMENT_USER:$TESTING_DEPLOYMENT_PW $TESTING_DEPLOYMENT_PATH
