@@ -5,6 +5,7 @@ notifications:
   email:
   - sascha.feldmann@gmx.de
 install:
+  # Add the travis build number as maven property so that it can be read by the application
   - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -DtravisBuildVersion=$TRAVIS_BUILD_NUMBER -B -V
 after_success:
 - bash <(curl -s https://codecov.io/bash)
