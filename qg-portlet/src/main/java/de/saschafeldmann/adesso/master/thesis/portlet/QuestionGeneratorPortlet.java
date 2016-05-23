@@ -7,6 +7,7 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.VaadinProperties;
+import de.saschafeldmann.adesso.master.thesis.portlet.properties.VersionProperties;
 
 /**
  * Project:        Masterthesis of Sascha Feldmann
@@ -39,5 +40,10 @@ public class QuestionGeneratorPortlet extends UI {
             }
         });
         layout.addComponent(button);
+
+        // version label
+        final Label versionLabel = new Label();
+        versionLabel.setCaption(VersionProperties.getBuildLabel());
+        layout.addComponent(versionLabel);
     }
 }
