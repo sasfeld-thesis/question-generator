@@ -35,6 +35,8 @@
         <junit.version>4.12</junit.version>
         <!-- JavaCodeCoverage version -->
         <jacoco.version>0.7.6.201602180812</jacoco.version>
+        <!-- Portlets API version -->
+        <portlets.api.version>2.0</portlets.api.version>
         <!-- name of the built portlet war file - this will be deployed if the 'deploy' profile is activated -->
         <portlet.war.name>qg-portlet</portlet.war.name>
         <!-- 1.0 is the default version and should be overwritten by the mvn build command using mvn ... -D=travisBuildVersion=[travisBuildVersion] -->
@@ -42,6 +44,8 @@
         <!-- build timestamp that can be used -->
         <buildTimestamp>${maven.build.timestamp}</buildTimestamp>
         <maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
+        <!-- default liferay deployment directory -->
+        <liferay.deployment.directory />
     </properties>
 
     <dependencyManagement>
@@ -64,6 +68,7 @@
                 <artifactId>log4j</artifactId>
                 <version>${log4j.version}</version>
             </dependency>
+            <!-- Coding libraries -->
             <dependency>
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
@@ -74,6 +79,7 @@
                 <artifactId>commons-lang3</artifactId>
                 <version>${apache.commons.version}</version>
             </dependency>
+            <!-- Spring -->
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-context</artifactId>
@@ -83,6 +89,17 @@
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-web</artifactId>
                 <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-webmvc-portlet</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            <!-- Portlets API -->
+            <dependency>
+                <groupId>javax.portlet</groupId>
+                <artifactId>portlet-api</artifactId>
+                <version>${portlets.api.version}</version>
             </dependency>
             <dependency>
                 <groupId>junit</groupId>
