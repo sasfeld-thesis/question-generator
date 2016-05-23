@@ -1,13 +1,18 @@
 package de.saschafeldmann.adesso.master.thesis.portlet;
 
 import com.vaadin.annotations.Theme;
+import com.vaadin.navigator.Navigator;
+import com.vaadin.navigator.View;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
+import de.saschafeldmann.adesso.master.thesis.portlet.presenter.course.information.CourseInformationPresenter;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.VaadinProperties;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.VersionProperties;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.course.information.CourseInformationView;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.course.information.CourseInformationViewImpl;
 
 /**
  * Project:        Masterthesis of Sascha Feldmann
@@ -26,24 +31,19 @@ import de.saschafeldmann.adesso.master.thesis.portlet.properties.VersionProperti
  */
 @Theme(VaadinProperties.THEME)
 public class QuestionGeneratorPortlet extends UI {
+    private Navigator viewNavigator;
+    private CourseInformationView courseInformationView;
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
-        final VerticalLayout layout = new VerticalLayout();
-        layout.setMargin(true);
-        setContent(layout);
-        Button button = new Button("Do not Click Me");
-        button.addClickListener(new Button.ClickListener() {
-            public void buttonClick(Button.ClickEvent event) {
-                layout.addComponent(
-                        new Label("Thank you for clicking"));
-            }
-        });
-        layout.addComponent(button);
+        initializeViews();
 
-        // version label
-        final Label versionLabel = new Label();
-        versionLabel.setCaption(VersionProperties.getBuildLabel());
-        layout.addComponent(versionLabel);
+        setContent(courseInformationView.getRootComponent());
+    }
+
+    private void initializeViews() {
+        CourseInformationPresenter courseInformationPresenter;
+        this.courseInformationView = courseInformationPresenter.initializeView();
+        this.viewNavigator.addView(CourseInformationViewImpl.VIEW_NAME, courseInformationView);
     }
 }
