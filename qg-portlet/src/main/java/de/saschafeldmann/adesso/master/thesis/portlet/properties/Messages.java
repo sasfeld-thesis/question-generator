@@ -113,7 +113,7 @@ public class Messages {
      * @return String
      */
     public String getCourseInformationViewBtnNewSessionLabel() {
-        return "Neue Sitzung starten:";
+        return "Neue Sitzung starten";
     }
 
     /**

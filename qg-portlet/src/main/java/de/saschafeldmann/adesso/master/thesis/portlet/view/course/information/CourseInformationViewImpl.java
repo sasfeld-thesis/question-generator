@@ -29,6 +29,8 @@ import javax.annotation.PostConstruct;
 @Component
 @Scope("prototype")
 public class CourseInformationViewImpl extends AbstractStepView implements CourseInformationView {
+    private static final java.lang.String CSS_BUTTON_GROUP_STYLENAME = "course-information-view-button-group";
+
     /**
      * The view mode for this view.
      */
@@ -42,26 +44,31 @@ public class CourseInformationViewImpl extends AbstractStepView implements Cours
     private ViewMode viewMode;
     private InfoBox infoBox;
     private Label introductionLabel;
+    private FormLayout formLayout;
     private TextField inputCourseTitle;
     private TextField inputCourseUrl;
     private ListSelect inputCourseLanguageSelect;
+    private HorizontalLayout buttonGroupLayout;
     private Button btnNext;
     private Button btnNewSession;
     private CourseInformationViewListener viewListener;
 
     @Autowired
-    public CourseInformationViewImpl(final Messages messages, final InfoBox infoBox, final Label introductionLabel, final VersionLabel versionLabel, final TextField inputCourseTitle,
-            final TextField inputCourseUrl,
-            final ListSelect inputCourseLanguageSelect,
-            final Button btnNext,
-            final Button btnNewSession ) {
+    public CourseInformationViewImpl(final Messages messages, final InfoBox infoBox, final Label introductionLabel, final FormLayout formLayout, final VersionLabel versionLabel, final TextField inputCourseTitle,
+                                     final TextField inputCourseUrl,
+                                     final ListSelect inputCourseLanguageSelect,
+                                     final HorizontalLayout buttonGroupLayout,
+                                     final Button btnNext,
+                                     final Button btnNewSession ) {
         super(messages, versionLabel);
 
         this.infoBox = infoBox;
         this.introductionLabel = introductionLabel;
+        this.formLayout = formLayout;
         this.inputCourseTitle = inputCourseTitle;
         this.inputCourseUrl = inputCourseUrl;
         this.inputCourseLanguageSelect = inputCourseLanguageSelect;
+        this.buttonGroupLayout = buttonGroupLayout;
         this.btnNext = btnNext;
         this.btnNewSession = btnNewSession;
     }
@@ -74,6 +81,7 @@ public class CourseInformationViewImpl extends AbstractStepView implements Cours
 
         initializeLanguageSelect();
 
+        this.buttonGroupLayout.addStyleName(CSS_BUTTON_GROUP_STYLENAME);
         this.btnNext.setCaption(messages.getCourseInformationViewBtnNextLabel());
         this.btnNewSession.setCaption(messages.getCourseInformationViewBtnNewSessionLabel());
 
@@ -83,8 +91,12 @@ public class CourseInformationViewImpl extends AbstractStepView implements Cours
     private void initializeLanguageSelect() {
         this.inputCourseLanguageSelect.setCaption(messages.getCourseInformationViewCourseLanguageLabel());
 
-        this.inputCourseLanguageSelect.addItem(messages.getCourseInformationViewGermanLanguageLabel());
+        String germanLanguageLabel = messages.getCourseInformationViewGermanLanguageLabel();
+        this.inputCourseLanguageSelect.addItem(germanLanguageLabel);
         this.inputCourseLanguageSelect.addItem(messages.getCourseInformationViewEnglishLanguageLabel());
+
+        this.inputCourseLanguageSelect.setRows(2);
+        this.inputCourseLanguageSelect.select(germanLanguageLabel);
     }
 
     private void registerListeners() {
@@ -118,11 +130,15 @@ public class CourseInformationViewImpl extends AbstractStepView implements Cours
         setInfoBox();
         addComponent(infoBox);
         addComponent(introductionLabel);
-        addComponent(inputCourseTitle);
-        addComponent(inputCourseUrl);
-        addComponent(inputCourseLanguageSelect);
 
-        addButtonsAtBottom(btnNext, btnNewSession);
+        formLayout.addComponent(inputCourseTitle);
+        formLayout.addComponent(inputCourseUrl);
+        formLayout.addComponent(inputCourseLanguageSelect);
+        addComponent(formLayout);
+
+        addButtonsAtBottom(buttonGroupLayout, btnNext, btnNewSession);
+        addComponent(buttonGroupLayout);
+
         addVersionLabel();
     }
 

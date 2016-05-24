@@ -2,11 +2,9 @@ package de.saschafeldmann.adesso.master.thesis.portlet.view;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.MenuBar;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.*;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.Messages;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.FormLayout;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.VersionLabel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,6 +29,7 @@ public abstract class AbstractStepView extends VerticalLayout implements ViewWit
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractStepView.class);
     private static final String CSS_ACTIVE_ITEM_STYLENAME = "active_menuitem";
     private static final String CSS_MAIN_CONTAINER_STYLENAME = "maincontainer";
+    private static final String CSS_RIGHT_BUTTON_STYLENAME = "right-button";
 
     /**
      * The menu listener implementation.
@@ -138,15 +137,13 @@ public abstract class AbstractStepView extends VerticalLayout implements ViewWit
 
     /**
      * Adds the buttons in a shared layout so they look nice.
+     * @param layout the wrapping layout used in the view (e.g. a form layout)
      * @param leftButton button on the left side
      * @param rightButton button on the right side
      */
-    protected void addButtonsAtBottom(Button leftButton, Button rightButton) {
-        HorizontalLayout buttonsLayout = new HorizontalLayout();
-
-        buttonsLayout.addComponent(leftButton);
-        buttonsLayout.addComponent(rightButton);
-
-        this.addComponent(buttonsLayout);
+    protected void addButtonsAtBottom(Layout layout, Button leftButton, Button rightButton) {
+        layout.addComponent(leftButton);
+        layout.addComponent(rightButton);
+        rightButton.addStyleName(CSS_RIGHT_BUTTON_STYLENAME);
     }
 }

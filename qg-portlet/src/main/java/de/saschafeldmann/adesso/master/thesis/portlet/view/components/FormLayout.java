@@ -3,8 +3,6 @@ package de.saschafeldmann.adesso.master.thesis.portlet.view.components;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
-
 /**
  * Project:        Masterthesis of Sascha Feldmann
  * Creation date:  23.05.2016
@@ -18,15 +16,10 @@ import javax.annotation.PostConstruct;
  * Company:
  * adesso AG
  * <br /><br />
- * A Vaadin list select component.
+ * A form layout component.
  */
 @Component
 @Scope("prototype")
-public class ListSelect extends com.vaadin.ui.ListSelect {
+public class FormLayout extends com.vaadin.ui.FormLayout {
 
-    @PostConstruct
-    public void initialize() {
-        // do not allow null selections per default
-        this.setNullSelectionAllowed(false);
-    }
 }
