@@ -59,6 +59,14 @@ public class QuestionGenerationSession {
         Status(final Integer statusSequenceNumber) {
             this.statusSequenceNumber = statusSequenceNumber;
         }
+
+        /**
+         * Gets the sequence number of this status in the processing.
+         * @return the sequence number
+         */
+        public Integer getSequenceNumber() {
+            return statusSequenceNumber;
+        }
     }
 
     private Course course;

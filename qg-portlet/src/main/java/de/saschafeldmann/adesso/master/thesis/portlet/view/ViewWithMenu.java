@@ -1,6 +1,7 @@
 package de.saschafeldmann.adesso.master.thesis.portlet.view;
 
 import com.vaadin.navigator.View;
+import de.saschafeldmann.adesso.master.thesis.portlet.model.QuestionGenerationSession;
 
 /**
  * Project:        Masterthesis of Sascha Feldmann
@@ -24,4 +25,10 @@ public interface ViewWithMenu extends View {
      * @param menuListener the menu listener (a presenter).
      */
     void setMenuListener(MenuListener menuListener);
+
+    /**
+     * Sets the current user session status so that the menu can be adjusted.
+     * @param currentSessionStatus the current session status
+     */
+    void setCurrentSessionStatus(QuestionGenerationSession.Status currentSessionStatus);
 }

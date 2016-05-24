@@ -3,6 +3,7 @@ package de.saschafeldmann.adesso.master.thesis.portlet.view;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.*;
+import de.saschafeldmann.adesso.master.thesis.portlet.model.QuestionGenerationSession;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.Messages;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.FormLayout;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.VersionLabel;
@@ -30,6 +31,7 @@ public abstract class AbstractStepView extends VerticalLayout implements ViewWit
     private static final String CSS_ACTIVE_ITEM_STYLENAME = "active_menuitem";
     private static final String CSS_MAIN_CONTAINER_STYLENAME = "maincontainer";
     private static final String CSS_RIGHT_BUTTON_STYLENAME = "right-button";
+    private QuestionGenerationSession.Status currentSessionStatus;
 
     /**
      * The menu listener implementation.
@@ -90,6 +92,12 @@ public abstract class AbstractStepView extends VerticalLayout implements ViewWit
     }
 
     /**
+     * @see ViewWithMenu#setCurrentSessionStatus(QuestionGenerationSession.Status)
+     */
+    public void setCurrentSessionStatus(QuestionGenerationSession.Status currentSessionStatus) {
+        this.currentSessionStatus = currentSessionStatus;
+    }
+    /**
      * Initializes or resets the view.
      *
      * @param activeItem the menu item to be marked active. Set to null if no item is active.
@@ -113,11 +121,29 @@ public abstract class AbstractStepView extends VerticalLayout implements ViewWit
     }
 
     private void addMenuItems(final String activeItem) {
-        addMenuItem(messages.getMenuItemCourseInformationLabel(), activeItem);
-        addMenuItem(messages.getMenuItemContentsLabel(), activeItem);
-        addMenuItem(messages.getMenuItemPreprocessesLabel(), activeItem);
-        addMenuItem(messages.getMenuItemDetectionLabel(), activeItem);
-        addMenuItem(messages.getMenuItemQuestionGenerationLabel(), activeItem);
+        MenuBar.MenuItem courseInformationItem = addMenuItem(messages.getMenuItemCourseInformationLabel(), activeItem);
+        courseInformationItem.setEnabled(true);
+
+        // trigger the enabled state by the current course processing state: make the menu item only clickable if it was already processed by the user
+        MenuBar.MenuItem courseContentsItem = addMenuItem(messages.getMenuItemContentsLabel(), activeItem);
+        if (currentSessionStatus.getSequenceNumber() > 1) {
+            courseContentsItem.setEnabled(true);
+        }
+
+        MenuBar.MenuItem coursePreprocessesItem = addMenuItem(messages.getMenuItemPreprocessesLabel(), activeItem);
+        if (currentSessionStatus.getSequenceNumber() > 2) {
+            coursePreprocessesItem.setEnabled(true);
+        }
+
+        MenuBar.MenuItem detectionItem = addMenuItem(messages.getMenuItemDetectionLabel(), activeItem);
+        if (currentSessionStatus.getSequenceNumber() > 3) {
+            detectionItem.setEnabled(true);
+        }
+
+        MenuBar.MenuItem questionGenerationItem = addMenuItem(messages.getMenuItemQuestionGenerationLabel(), activeItem);
+        if (currentSessionStatus.getSequenceNumber() > 4) {
+            questionGenerationItem.setEnabled(true);
+        }
     }
 
     private MenuBar.MenuItem addMenuItem(final String label, final String activeItemLabel) {
@@ -126,6 +152,9 @@ public abstract class AbstractStepView extends VerticalLayout implements ViewWit
         if (label.equals(activeItemLabel)) {
             item.setStyleName(CSS_ACTIVE_ITEM_STYLENAME);
         }
+
+        // disable item per default
+        item.setEnabled(false);
 
         return item;
     }

@@ -60,6 +60,7 @@ public class CourseContentsPresenterImpl extends AbstractStepPresenter implement
     public CourseContentsView initializeView() {
         this.courseContentsView.setMenuListener(this);
         this.courseContentsView.setViewListener(this);
+        this.courseContentsView.setCurrentSessionStatus(questionGenerationSession.getStatus());
 
         this.courseContentsView.reset();
 
@@ -123,6 +124,7 @@ public class CourseContentsPresenterImpl extends AbstractStepPresenter implement
 
         if (null != questionGenerationSession.getCourse()) {
             this.courseContentsView.setCourseTitle(questionGenerationSession.getCourse().getTitle());
+            this.courseContentsView.setCurrentSessionStatus(questionGenerationSession.getStatus());
             this.courseContentsView.reset();
         }
     }

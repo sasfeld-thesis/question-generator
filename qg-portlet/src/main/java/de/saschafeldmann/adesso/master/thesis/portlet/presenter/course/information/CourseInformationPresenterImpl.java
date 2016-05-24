@@ -62,6 +62,7 @@ public class CourseInformationPresenterImpl extends AbstractStepPresenter implem
      */
     public CourseInformationView initializeView() {
         this.courseInformationView.setMenuListener(this);
+        this.courseInformationView.setCurrentSessionStatus(questionGenerationSession.getStatus());
         this.courseInformationView.setViewListener(this);
         this.courseInformationView.setViewMode(CourseInformationViewImpl.ViewMode.NEW_COURSE);
         this.courseInformationView.reset();
@@ -131,6 +132,7 @@ public class CourseInformationPresenterImpl extends AbstractStepPresenter implem
             this.courseInformationView.setViewMode(CourseInformationViewImpl.ViewMode.EDIT_COURSE);
         }
 
+        this.courseInformationView.setCurrentSessionStatus(questionGenerationSession.getStatus());
         this.courseInformationView.reset();
     }
 
