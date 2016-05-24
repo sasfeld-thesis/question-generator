@@ -3,7 +3,6 @@ package de.saschafeldmann.adesso.master.thesis.portlet.view.course.contents;
 import com.google.common.base.Strings;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.shared.ui.label.ContentMode;
-import com.vaadin.ui.*;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.Messages;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.AbstractStepView;
@@ -16,9 +15,6 @@ import de.saschafeldmann.adesso.master.thesis.portlet.view.components.Label;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.ListSelect;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.TextArea;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.TextField;
-import de.saschafeldmann.adesso.master.thesis.portlet.view.course.information.CourseInformationView;
-import de.saschafeldmann.adesso.master.thesis.portlet.view.course.information.CourseInformationViewImpl;
-import de.saschafeldmann.adesso.master.thesis.portlet.view.course.information.CourseInformationViewListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 
@@ -55,10 +51,14 @@ public class CourseContentsViewImpl extends AbstractStepView implements CourseCo
     private final FileUpload accordionDocumentsLeftSideFileUpload;
     private final ListSelect accordionDocumentsLeftSideUploadedList;
     private final HorizontalLayout accordionRawTextsLayout;
+
     private final FormLayout accordionRawTextsLeftSideFormLayout;
     private final TextField accordionRawTextsLeftSideTitleInput;
     private final TextArea accordionRawTextsLeftSideRawTextInput;
     private final Button btnAccordionRawTextsLeftSideAddRawText;
+
+    private final FormLayout accordionRawTextsRightSideFormLayout;
+    private final ListSelect accordionRawTextsRightSideAddedList;
 
     private final HorizontalLayout buttonGroupLayout;
     private final Button btnNext;
@@ -79,6 +79,8 @@ public class CourseContentsViewImpl extends AbstractStepView implements CourseCo
                                   final TextField accordionRawTextsLeftSideTitleInput,
                                   final TextArea accordionRawTextsLeftSideRawTextInput,
                                   final Button btnAccordionRawTextsLeftSideAddRawText,
+                                  final FormLayout accordionRawTextsRightSideFormLayout,
+                                  final ListSelect accordionRawTextsRightSideAddedList,
                                   final Button btnNext) {
         super(messages, versionLabel);
 
@@ -95,6 +97,8 @@ public class CourseContentsViewImpl extends AbstractStepView implements CourseCo
         this.accordionRawTextsLeftSideTitleInput = accordionRawTextsLeftSideTitleInput;
         this.accordionRawTextsLeftSideRawTextInput = accordionRawTextsLeftSideRawTextInput;
         this.btnAccordionRawTextsLeftSideAddRawText = btnAccordionRawTextsLeftSideAddRawText;
+        this.accordionRawTextsRightSideFormLayout = accordionRawTextsRightSideFormLayout;
+        this.accordionRawTextsRightSideAddedList = accordionRawTextsRightSideAddedList;
         this.btnNext = btnNext;
     }
 
@@ -129,7 +133,13 @@ public class CourseContentsViewImpl extends AbstractStepView implements CourseCo
 
         accordionRawTextsLeftSideFormLayout.addComponent(accordionRawTextsLeftSideTitleInput);
         accordionRawTextsLeftSideFormLayout.addComponent(accordionRawTextsLeftSideRawTextInput);
+        accordionRawTextsLeftSideFormLayout.addComponent(btnAccordionRawTextsLeftSideAddRawText);
         accordionRawTextsLayout.addComponent(accordionRawTextsLeftSideFormLayout);
+
+        accordionRawTextsRightSideAddedList.setCaption(messages.getCourseContentsViewAccordionRawTextsAddedLabel());
+        accordionRawTextsRightSideFormLayout.addComponent(accordionRawTextsRightSideAddedList);
+        accordionRawTextsLayout.addComponent(accordionRawTextsRightSideFormLayout);
+
         accordion.addTab(accordionRawTextsLayout, messages.getCourseContentsViewAccordionRawTextsTitleLabel());
     }
 
@@ -142,7 +152,7 @@ public class CourseContentsViewImpl extends AbstractStepView implements CourseCo
 
         btnAccordionRawTextsLeftSideAddRawText.addClickListener(new com.vaadin.ui.Button.ClickListener() {
             public void buttonClick(com.vaadin.ui.Button.ClickEvent clickEvent) {
-                viewListener.onContentRawTextAddClick();
+                viewListener.onContentRawTextAddClick(accordionRawTextsLeftSideTitleInput.getValue(), accordionRawTextsLeftSideRawTextInput.getValue());
             }
         });
     }
@@ -178,14 +188,14 @@ public class CourseContentsViewImpl extends AbstractStepView implements CourseCo
      * @see CourseContentsView#showContentFiles(List)
      */
     public void showContentFiles(List<LearningContent> learningContentFiles) {
-
+        accordionDocumentsLeftSideUploadedList.addItems(learningContentFiles);
     }
 
     /**
      * @see CourseContentsView#showContentRawTexts(List)
      */
     public void showContentRawTexts(List<LearningContent> learningRawTexts) {
-
+        accordionRawTextsRightSideAddedList.addItems(learningRawTexts);
     }
 
     /**

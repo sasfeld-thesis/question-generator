@@ -74,7 +74,7 @@ public class Messages {
      * @return String
      */
     public String getCourseInformationViewEditCourseInfoText(String... args) {
-        return String.format("Sie arbeiten gerade mit der Schulung %s.<br />Mit diesem Dialog können Sie die Schulungsinformationen " +
+        return String.format("Sie arbeiten gerade mit der Schulung '%s'.<br />Mit diesem Dialog können Sie die Schulungsinformationen " +
                 "bearbeiten oder eine neue Sitzung starten.", args);
     }
 
@@ -238,5 +238,21 @@ public class Messages {
      */
     public String getCourseContentsInfoBoxCourseAddedText(String... params) {
         return String.format("Die Schulung '%s' wurde erfolgreich angelegt.", params);
+    }
+
+    /**
+     * Gets the text.
+     * @return String
+     */
+    public String getCourseContentsViewAddRawTextErrorNotificationTitle() {
+        return "Fehler";
+    }
+
+    /**
+     * Gets the text.
+     * @return String
+     */
+    public String getCourseContentsViewAddRawTextErrorNotificationText() {
+        return "Ihr Rohtext konnte nicht hinzugefügt werden. Bitte überprüfen Sie Ihre Eingabe.";
     }
 }

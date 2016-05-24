@@ -91,9 +91,7 @@ public class LearningContent {
 
     @Override
     public String toString() {
-        return "LearningContent{" + "title='" + title + '\'' +
-                ", rawText='" + rawText + '\'' +
-                '}';
+        return title;
     }
 
     /**
@@ -105,6 +103,7 @@ public class LearningContent {
         return new LearningContentBuilder()
                 .withTitle(learningContent.getTitle())
                 .withRawText(learningContent.getRawText())
+                .withType(learningContent.getType())
                 .build();
     }
 

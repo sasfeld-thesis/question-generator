@@ -57,8 +57,10 @@ public interface CourseContentsViewListener {
 
     /**
      * Triggered if the button "Add" at the raw text section was clicked.
+     * @param contentTitle the title as told by the user
+     * @param contentRawText the raw text as given by the user
      */
-    void onContentRawTextAddClick();
+    void onContentRawTextAddClick(final String contentTitle, final String contentRawText);
 
     /**
      * Called if the view gets the user's focus.
