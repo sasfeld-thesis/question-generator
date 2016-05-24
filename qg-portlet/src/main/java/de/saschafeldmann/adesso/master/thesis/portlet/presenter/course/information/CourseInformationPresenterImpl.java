@@ -1,10 +1,15 @@
 package de.saschafeldmann.adesso.master.thesis.portlet.presenter.course.information;
 
 import com.vaadin.navigator.Navigator;
+import com.vaadin.ui.Notification;
+import de.saschafeldmann.adesso.master.thesis.elearningimport.model.Course;
+import de.saschafeldmann.adesso.master.thesis.elearningimport.model.Language;
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.AbstractStepPresenter;
+import de.saschafeldmann.adesso.master.thesis.portlet.properties.Messages;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.course.information.CourseInformationView;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.course.information.CourseInformationViewImpl;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.course.information.CourseInformationViewListener;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,18 +39,21 @@ public class CourseInformationPresenterImpl extends AbstractStepPresenter implem
 
     private final CourseInformationView courseInformationView;
     private Navigator navigator;
+    private Course courseModel;
+    private Messages messages;
 
     /**
      * Creates a new CourseInformationPresenterImpl.
      * @param courseInformationViewImpl the managed view.
      */
     @Autowired
-    public CourseInformationPresenterImpl(final CourseInformationViewImpl courseInformationViewImpl) {
+    public CourseInformationPresenterImpl(final CourseInformationViewImpl courseInformationViewImpl, final Messages messages) {
         if (null == courseInformationViewImpl) {
             throw new NullPointerException("The argument courseInformationView must not be null!");
         }
 
         this.courseInformationView = courseInformationViewImpl;
+        this.messages = messages;
     }
 
     /**
@@ -64,6 +72,38 @@ public class CourseInformationPresenterImpl extends AbstractStepPresenter implem
      */
     public void onNextButtonClicked() {
         LOGGER.info("onNextButtonClicked()");
+
+        try {
+            updateCourseModel();
+        } catch (Exception e) {
+            LOGGER.error("onNextButtonClicked(): could not create or update the course - exception {} occured:\n{}",
+                    e.getMessage(), ExceptionUtils.getStackTrace(e));
+
+            Notification.show(
+                    messages.getCourseInformationViewErrorNotificationTitle(),
+                    messages.getCourseInformationViewErrorNotificationText(),
+                    Notification.Type.ERROR_MESSAGE
+            );
+        }
+    }
+
+    /**
+     * Creates or updates the course model.
+     */
+    private void updateCourseModel() {
+        this.courseModel = new Course.CourseBuilder()
+                .withTitle(courseInformationView.getInputTitle())
+                .withViewUrl(courseInformationView.getInputViewUrl())
+                .withLanguage(getLanguage(courseInformationView.getInputLanguage()))
+                .build();
+    }
+
+    private Language getLanguage(String inputLanguage) {
+        if (inputLanguage.equals(messages.getCourseInformationViewEnglishLanguageLabel())) {
+            return Language.ENGLISH;
+        } else {
+            return Language.GERMAN;
+        }
     }
 
     /**

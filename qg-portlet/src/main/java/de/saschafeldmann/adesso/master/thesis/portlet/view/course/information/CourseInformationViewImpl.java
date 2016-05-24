@@ -175,4 +175,25 @@ public class CourseInformationViewImpl extends AbstractStepView implements Cours
     public void setViewMode(ViewMode viewMode) {
         this.viewMode = viewMode;
     }
+
+    /**
+     * @see CourseInformationView#getInputTitle()
+     */
+    public String getInputTitle() {
+        return inputCourseTitle.getValue();
+    }
+
+    /**
+     * @see CourseInformationView#getInputViewUrl()
+     */
+    public String getInputViewUrl() {
+        return inputCourseUrl.getValue();
+    }
+
+    /**
+     * @see CourseInformationView#getInputLanguage()
+     */
+    public String getInputLanguage() {
+        return (String) inputCourseLanguageSelect.getValue();
+    }
 }

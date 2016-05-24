@@ -131,4 +131,20 @@ public class Messages {
     public String getCourseInformationViewGermanLanguageLabel() {
         return "Deutsch";
     }
+
+    /**
+     * Gets the text.
+     * @return String
+     */
+    public String getCourseInformationViewErrorNotificationTitle() {
+        return "Fehler";
+    }
+
+    /**
+     * Gets the text.
+     * @return String
+     */
+    public String getCourseInformationViewErrorNotificationText() {
+        return "Der Kurs konnte nicht erstellt werden. Bitte prüfen Sie ihre Eingaben!";
+    }
 }

@@ -2,6 +2,7 @@ package de.saschafeldmann.adesso.master.thesis.portlet.view.course.information;
 
 import com.vaadin.navigator.View;
 import com.vaadin.ui.Component;
+import de.saschafeldmann.adesso.master.thesis.elearningimport.model.Language;
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.course.information.CourseInformationPresenter;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.ViewWithMenu;
 
@@ -46,4 +47,22 @@ public interface CourseInformationView extends ViewWithMenu {
      * @param viewMode see {@link CourseInformationViewImpl.ViewMode}
      */
     void setViewMode(CourseInformationViewImpl.ViewMode viewMode);
+
+    /**
+     * Get the course title from the user's input.
+     * @return String
+     */
+    String getInputTitle();
+
+    /**
+     * Get the view url from the user's input.
+     * @return String
+     */
+    String getInputViewUrl();
+
+    /**
+     * Get the input language from the user's input.
+     * @return String
+     */
+    String getInputLanguage();
 }
