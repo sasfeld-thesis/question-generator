@@ -8,7 +8,7 @@
     <parent>
         <groupId>de.saschafeldmann.adesso.master.thesis.software</groupId>
         <artifactId>questiongenerator</artifactId>
-        <version>1</version>
+        <version>${questiongenerator.version}</version>
     </parent>
     <!-- groupID and artifactID are inherited from parent -->
     <artifactId>qg-portlet</artifactId>
@@ -77,6 +77,12 @@
             <groupId>org.vaadin.icons</groupId>
             <artifactId>vaadin-icons</artifactId>
             <version>${vaadin.icons.version}</version>
+        </dependency>
+        <!-- internal dependency -->
+        <dependency>
+            <groupId>de.saschafeldmann.adesso.master.thesis.software</groupId>
+            <artifactId>qg-import</artifactId>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
 

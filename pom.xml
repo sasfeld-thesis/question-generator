@@ -5,7 +5,7 @@
 
     <groupId>de.saschafeldmann.adesso.master.thesis.software</groupId>
     <artifactId>questiongenerator</artifactId>
-    <version>1</version>
+    <version>${questiongenerator.version}</version>
     <!-- allow aggregation of modules -->
     <packaging>pom</packaging>
 
@@ -17,6 +17,7 @@
 
     <!-- global properties to be used across all modules -->
     <properties>
+        <questiongenerator.version>1</questiongenerator.version>
         <!-- logging facade -->
         <slf4j.version>1.7.2</slf4j.version>
         <!-- Logging Framework -->
