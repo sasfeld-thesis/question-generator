@@ -65,4 +65,11 @@ public interface CourseInformationView extends ViewWithMenu {
      * @return String
      */
     String getInputLanguage();
+
+    /**
+     * Sets the course title - only relevant in the edit mode.
+     * @param courseTitle String
+     * @return String
+     */
+    void setCourseTitle(final String courseTitle);
 }

@@ -4,6 +4,7 @@ import com.vaadin.navigator.Navigator;
 import com.vaadin.ui.Notification;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.Course;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.Language;
+import de.saschafeldmann.adesso.master.thesis.portlet.model.QuestionGenerationSession;
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.AbstractStepPresenter;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.Messages;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.course.contents.CourseContentsViewImpl;
@@ -39,7 +40,6 @@ public class CourseInformationPresenterImpl extends AbstractStepPresenter implem
     private static final Logger LOGGER = LoggerFactory.getLogger(CourseInformationPresenterImpl.class);
 
     private final CourseInformationView courseInformationView;
-    private Navigator navigator;
     private Course courseModel;
     private Messages messages;
 
@@ -99,6 +99,8 @@ public class CourseInformationPresenterImpl extends AbstractStepPresenter implem
                 .withViewUrl(courseInformationView.getInputViewUrl())
                 .withLanguage(getLanguage(courseInformationView.getInputLanguage()))
                 .build();
+
+        this.questionGenerationSession.setCourse(courseModel);
     }
 
     private Language getLanguage(String inputLanguage) {
@@ -114,6 +116,22 @@ public class CourseInformationPresenterImpl extends AbstractStepPresenter implem
      */
     public void onNewSessionButtonClicked() {
         LOGGER.info("onNewSessionButtonClicked()");
+    }
+
+    /**
+     * @see CourseInformationViewListener#onViewFocus()
+     */
+    public void onViewFocus() {
+        LOGGER.info("onViewFocus()");
+
+        if (questionGenerationSession.getStatus().equals(QuestionGenerationSession.Status.STARTED)) {
+            this.courseInformationView.setViewMode(CourseInformationViewImpl.ViewMode.NEW_COURSE);
+        } else {
+            this.courseInformationView.setCourseTitle(questionGenerationSession.getCourse().getTitle());
+            this.courseInformationView.setViewMode(CourseInformationViewImpl.ViewMode.EDIT_COURSE);
+        }
+
+        this.courseInformationView.reset();
     }
 
 }

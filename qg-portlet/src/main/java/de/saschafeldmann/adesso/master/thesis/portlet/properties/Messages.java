@@ -1,5 +1,6 @@
 package de.saschafeldmann.adesso.master.thesis.portlet.properties;
 
+import org.springframework.cglib.util.StringSwitcher;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -66,6 +67,15 @@ public class Messages {
      */
     public String getCourseInformationViewNewCourseInfoText() {
         return "Sie haben noch keine Schulung angelegt.<br />Mit diesem Dialog legen Sie eine an und starten so Ihre Sitzung.";
+    }
+
+    /**
+     * Gets the text.
+     * @return String
+     */
+    public String getCourseInformationViewEditCourseInfoText(String... args) {
+        return String.format("Sie arbeiten gerade mit der Schulung %s.<br />Mit diesem Dialog können Sie die Schulungsinformationen " +
+                "bearbeiten oder eine neue Sitzung starten.", args);
     }
 
     /**

@@ -1,6 +1,7 @@
 package de.saschafeldmann.adesso.master.thesis.portlet.presenter;
 
 import com.vaadin.navigator.Navigator;
+import de.saschafeldmann.adesso.master.thesis.portlet.model.QuestionGenerationSession;
 
 /**
  * Project:        Masterthesis of Sascha Feldmann
@@ -29,4 +30,11 @@ public interface VaadinViewPresenter {
      * @return
      */
     Navigator getNavigator();
+
+    /**
+     * Sets the question generation session.
+     * Should be done after the session was started.
+     * @param questionGenerationSession the {@link QuestionGenerationSession}
+     */
+    void setQuestionGenerationSession(QuestionGenerationSession questionGenerationSession);
 }

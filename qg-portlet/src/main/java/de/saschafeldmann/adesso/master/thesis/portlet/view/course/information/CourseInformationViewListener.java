@@ -28,4 +28,9 @@ public interface CourseInformationViewListener {
      * On new session button clicked action.
      */
     void onNewSessionButtonClicked();
+
+    /**
+     * Called if the view gets the user's focus.
+     */
+    void onViewFocus();
 }

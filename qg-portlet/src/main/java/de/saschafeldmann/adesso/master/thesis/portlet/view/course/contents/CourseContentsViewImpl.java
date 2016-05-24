@@ -148,7 +148,7 @@ public class CourseContentsViewImpl extends AbstractStepView implements CourseCo
     }
 
     public void enter(ViewChangeListener.ViewChangeEvent viewChangeEvent) {
-
+        viewListener.onViewFocus();
     }
 
     public void reset() {

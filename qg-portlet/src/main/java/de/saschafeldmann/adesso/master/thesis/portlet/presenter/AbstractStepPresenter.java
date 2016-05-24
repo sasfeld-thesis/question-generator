@@ -1,10 +1,9 @@
 package de.saschafeldmann.adesso.master.thesis.portlet.presenter;
 
 import com.vaadin.navigator.Navigator;
-import de.saschafeldmann.adesso.master.thesis.portlet.view.AbstractStepView;
+import de.saschafeldmann.adesso.master.thesis.portlet.model.QuestionGenerationSession;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.MenuListener;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.course.contents.CourseContentsViewImpl;
-import de.saschafeldmann.adesso.master.thesis.portlet.view.course.information.CourseInformationView;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.course.information.CourseInformationViewImpl;
 
 /**
@@ -25,6 +24,7 @@ import de.saschafeldmann.adesso.master.thesis.portlet.view.course.information.Co
  */
 public class AbstractStepPresenter implements MenuListener, VaadinViewPresenter {
     private Navigator navigator;
+    protected QuestionGenerationSession questionGenerationSession;
 
     /**
      * @see MenuListener#onCourseInformationClicked()
@@ -73,5 +73,12 @@ public class AbstractStepPresenter implements MenuListener, VaadinViewPresenter 
      */
     public Navigator getNavigator() {
         return this.navigator;
+    }
+
+    /**
+     * @see VaadinViewPresenter#setQuestionGenerationSession(QuestionGenerationSession)
+     */
+    public void setQuestionGenerationSession(QuestionGenerationSession questionGenerationSession) {
+        this.questionGenerationSession = questionGenerationSession;
     }
 }

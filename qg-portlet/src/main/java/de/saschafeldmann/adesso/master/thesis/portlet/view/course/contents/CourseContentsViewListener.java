@@ -59,4 +59,9 @@ public interface CourseContentsViewListener {
      * Triggered if the button "Add" at the raw text section was clicked.
      */
     void onContentRawTextAddClick();
+
+    /**
+     * Called if the view gets the user's focus.
+     */
+    void onViewFocus();
 }

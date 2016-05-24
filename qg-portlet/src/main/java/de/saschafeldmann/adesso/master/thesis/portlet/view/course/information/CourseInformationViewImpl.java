@@ -52,6 +52,7 @@ public class CourseInformationViewImpl extends AbstractStepView implements Cours
     private final Button btnNext;
     private final Button btnNewSession;
     private CourseInformationViewListener viewListener;
+    private String courseTitle;
 
     @Autowired
     public CourseInformationViewImpl(final Messages messages, final InfoBox infoBox, final Label introductionLabel, final FormLayout formLayout, final VersionLabel versionLabel, final TextField inputCourseTitle,
@@ -117,7 +118,7 @@ public class CourseInformationViewImpl extends AbstractStepView implements Cours
      * @see View#enter(ViewChangeListener.ViewChangeEvent)
      */
     public void enter(ViewChangeListener.ViewChangeEvent viewChangeEvent) {
-
+        viewListener.onViewFocus();
     }
 
     /**
@@ -147,9 +148,9 @@ public class CourseInformationViewImpl extends AbstractStepView implements Cours
 
         if (viewMode.equals(ViewMode.NEW_COURSE)) {
             this.infoBox.setCaption(messages.getCourseInformationViewNewCourseInfoText());
-
         } else {
-            // TODO
+            // ViewMode.EDIT_COURSE
+            this.infoBox.setCaption(messages.getCourseInformationViewEditCourseInfoText(courseTitle));
         }
     }
 
@@ -195,5 +196,12 @@ public class CourseInformationViewImpl extends AbstractStepView implements Cours
      */
     public String getInputLanguage() {
         return (String) inputCourseLanguageSelect.getValue();
+    }
+
+    /**
+     * @see CourseInformationView#setCourseTitle(String)
+     */
+    public void setCourseTitle(String courseTitle) {
+        this.courseTitle = courseTitle;
     }
 }

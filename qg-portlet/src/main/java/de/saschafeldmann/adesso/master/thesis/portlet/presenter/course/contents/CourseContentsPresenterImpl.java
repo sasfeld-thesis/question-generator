@@ -2,11 +2,14 @@ package de.saschafeldmann.adesso.master.thesis.portlet.presenter.course.contents
 
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.Course;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
+import de.saschafeldmann.adesso.master.thesis.portlet.model.QuestionGenerationSession;
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.AbstractStepPresenter;
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.course.information.CourseInformationPresenterImpl;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.Messages;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.course.contents.CourseContentsView;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.course.contents.CourseContentsViewListener;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.course.information.CourseInformationViewImpl;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.course.information.CourseInformationViewListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,6 +60,7 @@ public class CourseContentsPresenterImpl extends AbstractStepPresenter implement
     public CourseContentsView initializeView() {
         this.courseContentsView.setMenuListener(this);
         this.courseContentsView.setViewListener(this);
+
         this.courseContentsView.reset();
 
         return this.courseContentsView;
@@ -109,5 +113,17 @@ public class CourseContentsPresenterImpl extends AbstractStepPresenter implement
      */
     public void onContentRawTextAddClick() {
 
+    }
+
+    /**
+     * @see CourseInformationViewListener#onViewFocus()
+     */
+    public void onViewFocus() {
+        LOGGER.info("onViewFocus()");
+
+        if (null != questionGenerationSession.getCourse()) {
+            this.courseContentsView.setCourseTitle(questionGenerationSession.getCourse().getTitle());
+            this.courseContentsView.reset();
+        }
     }
 }
