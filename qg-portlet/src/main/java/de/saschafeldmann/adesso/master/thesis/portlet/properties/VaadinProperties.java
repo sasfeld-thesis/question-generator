@@ -17,5 +17,5 @@ package de.saschafeldmann.adesso.master.thesis.portlet.properties;
  */
 public class VaadinProperties {
 
-    public static final String THEME = "liferay";
+    public static final String THEME = "questiongenerator";
 }

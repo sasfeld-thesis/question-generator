@@ -2,3 +2,5 @@
 *.iml
 *.war
 target
+qg-portlet/src/main/webapp/VAADIN/themes/questiongenerator/addons.scss
+qg-portlet/src/main/webapp/VAADIN/themes/questiongenerator/styles.css

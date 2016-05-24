@@ -31,6 +31,10 @@
         <spring.version>4.2.4.RELEASE</spring.version>
         <!-- Vaadin web UI framework -->
         <vaadin.version>7.6.4</vaadin.version>
+        <!-- Vaadin icons -->
+        <vaadin.icons.version>1.0.1</vaadin.icons.version>
+        <!-- Vaadin maven plugin for theme compilation etc. -->
+        <vaadin.plugin.version>7.6.6</vaadin.plugin.version>
         <!-- JUnit version -->
         <junit.version>4.12</junit.version>
         <!-- JavaCodeCoverage version -->
@@ -46,6 +50,7 @@
         <maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
         <!-- default liferay deployment directory -->
         <liferay.deployment.directory />
+        <liferay.vaadin.themes.folder/>
     </properties>
 
     <dependencyManagement>
@@ -86,24 +91,6 @@
                 <version>${spring.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-web</artifactId>
-                <version>${spring.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-webmvc-portlet</artifactId>
-                <version>${spring.version}</version>
-            </dependency>
-            <!-- Portlets API -->
-            <dependency>
-                <groupId>javax.portlet</groupId>
-                <artifactId>portlet-api</artifactId>
-                <version>${portlets.api.version}</version>
-                <!-- provided by liferay, DO NOT CHANGE if you don't know what you're doing since it might lead to class conflicts -->
-                <scope>provided</scope>
-            </dependency>
-            <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
                 <version>${junit.version}</version>
@@ -123,6 +110,7 @@
             <properties>
                 <!-- Liferay -->
                 <liferay.deployment.directory>C:/Masterthesis/liferay-portal-server/deploy</liferay.deployment.directory>
+                <liferay.vaadin.themes.folder>C:/Masterthesis/liferay-portal-server/tomcat-7.0.62/webapps/ROOT/html/VAADIN/themes</liferay.vaadin.themes.folder>
             </properties>
         </profile>
         <profile>

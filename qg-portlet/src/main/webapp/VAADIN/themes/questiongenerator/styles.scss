@@ -1,0 +1,39 @@
+/**
+ * Project:        Masterthesis of Sascha Feldmann
+ * Creation date:  24.05.2016
+ * Author:         Sascha Feldmann (sascha.feldmann@gmx.de)
+ * <br /><br />
+ * University:
+ * Hochschule für Technik und Wirtschaft, Berlin
+ * Fachbereich 4
+ * Studiengang Internationale Medieninformatik (Master)
+ * <br /><br />
+ * Company:
+ * adesso AG
+ * <br /><br />
+ * This class defines the (vaadin) portlet. It is the single entry point for the portlet handling logic.
+ */
+
+/* This font-face declaration must be outside your theme mixin. */
+@font-face {
+  font-family: 'Vaadin-Icons';
+  src: url('fonts/Vaadin-Icons.eot');
+  src: url('fonts/Vaadin-Icons.eot?#iefix') format('embedded-opentype'),
+  url('fonts/Vaadin-Icons.woff') format('woff'),
+  url('fonts/Vaadin-Icons.ttf') format('truetype'),
+  url('fonts/Vaadin-Icons.svg#icomoon') format('svg');
+}
+
+.Vaadin-Icons {
+  font-family: 'Vaadin-Icons';
+}
+
+// Import Valo (default theme) of Vaadin
+@import "addons";
+@import "../valo/valo";
+
+// own theme block
+.questiongenerator {
+  @include addons;
+  @include valo;
+}

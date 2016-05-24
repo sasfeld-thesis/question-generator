@@ -1,10 +1,13 @@
 package de.saschafeldmann.adesso.master.thesis.portlet.view.components;
 
+import com.vaadin.server.FontAwesome;
+import com.vaadin.server.Resource;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.vaadin.teemu.VaadinIcons;
 
 import javax.annotation.PostConstruct;
 
@@ -41,13 +44,28 @@ public class InfoBox extends HorizontalLayout {
     }
 
     /**
-     * Sets the information to be displayed.
-     * @param infoText
+     * @see Component#setCaption(String)
      */
-    public void setInfoText(final String infoText) {
+    @Override
+    public void setCaption(final String infoText) {
         this.infoLabel.setContentMode(ContentMode.HTML);
         this.infoLabel.setCaption(infoText);
     }
 
+    /**
+     * @see Component#setIcon(Resource)
+     */
+    @Override
+    public void setIcon(final Resource icon) {
+        this.infoLabel.setIcon(icon);
+    }
+
+    /**
+     * Sets the info box as information.
+     * An info icon will be drawn.
+     */
+    public void setInfo() {
+        this.setIcon(VaadinIcons.INFO_CIRCLE);
+    }
 
 }

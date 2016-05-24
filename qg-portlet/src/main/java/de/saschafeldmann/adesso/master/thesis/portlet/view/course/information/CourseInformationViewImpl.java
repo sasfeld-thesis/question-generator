@@ -126,8 +126,11 @@ public class CourseInformationViewImpl extends AbstractStepView implements Cours
     }
 
     private void setInfoBox() {
+        this.infoBox.setInfo();
+
         if (viewMode.equals(ViewMode.NEW_COURSE)) {
             this.infoBox.setCaption(messages.getCourseInformationViewNewCourseInfoText());
+
         } else {
             // TODO
         }
