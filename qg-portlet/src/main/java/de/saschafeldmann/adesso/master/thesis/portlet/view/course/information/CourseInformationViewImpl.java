@@ -42,15 +42,15 @@ public class CourseInformationViewImpl extends AbstractStepView implements Cours
     public static final String VIEW_NAME = "CourseInformationView";
 
     private ViewMode viewMode;
-    private InfoBox infoBox;
-    private Label introductionLabel;
-    private FormLayout formLayout;
-    private TextField inputCourseTitle;
-    private TextField inputCourseUrl;
-    private ListSelect inputCourseLanguageSelect;
-    private HorizontalLayout buttonGroupLayout;
-    private Button btnNext;
-    private Button btnNewSession;
+    private final InfoBox infoBox;
+    private final Label introductionLabel;
+    private final FormLayout formLayout;
+    private final TextField inputCourseTitle;
+    private final TextField inputCourseUrl;
+    private final ListSelect inputCourseLanguageSelect;
+    private final HorizontalLayout buttonGroupLayout;
+    private final Button btnNext;
+    private final Button btnNewSession;
     private CourseInformationViewListener viewListener;
 
     @Autowired

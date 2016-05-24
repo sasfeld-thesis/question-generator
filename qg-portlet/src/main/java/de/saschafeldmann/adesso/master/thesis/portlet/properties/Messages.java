@@ -147,4 +147,86 @@ public class Messages {
     public String getCourseInformationViewErrorNotificationText() {
         return "Der Kurs konnte nicht erstellt werden. Bitte prüfen Sie ihre Eingaben!";
     }
+
+    /**
+     * Gets the text.
+     * @return String
+     */
+    public String getCourseContentsViewIntroductionText() {
+        return "Füllen Sie die Schulung mit Inhalten.<br />" +
+                "Sie können entweder Dokumente verschiedener Typen (PDF, DOC) hochladen, aus denen die Volltexte entnommen werden, oder direkt Rohtexte eingeben.";
+    }
+
+
+    /**
+     * Gets the text.
+     * @return String
+     */
+    public String getCourseContentsViewAccordionDocumentsTitleLabel() {
+        return "Dokumente hochladen";
+    }
+
+    /**
+     * Gets the text.
+     * @return String
+     */
+    public String getCourseContentsViewAccordionDocumentsFileUploadLabel() {
+        return "Datei:";
+    }
+    /**
+     * Gets the text.
+     * @return String
+     */
+    public String getCourseContentsViewAccordionDocumentsUploadedListLabel() {
+        return "Hochgeladen:";
+    }
+
+    /**
+     * Gets the text.
+     * @return String
+     */
+    public String getCourseContentsViewAccordionRawTextsTitleLabel() {
+        return "Rohtext eingeben";
+    }
+
+    /**
+     * Gets the text.
+     * @return String
+     */
+    public String getCourseContentsViewAccordionRawTextsTitleInputLabel() {
+        return "Titel:";
+    }
+
+    /**
+     * Gets the text.
+     * @return String
+     */
+    public String getCourseContentsViewAccordionRawTextsRawTextInputLabel() {
+        return "Rohtext:";
+    }
+
+    /**
+     * Gets the text.
+     * @return String
+     */
+    public String getCourseContentsViewAccordionRawTextsAddButtonLabel() {
+        return "Hinzufügen";
+    }
+
+    /**
+     * Gets the text.
+     * @return String
+     */
+    public String getCourseContentsViewAccordionRawTextsAddedLabel() {
+        return "Hinzugefügt:";
+    }
+
+    /**
+     * Gets the text.
+     * @param params parameters
+     * @return String
+     */
+    public String getCourseContentsInfoBoxCourseAddedText(String... params) {
+        return String.format("Die Schulung '%s' wurde erfolgreich angelegt.", params);
+    }
 }
