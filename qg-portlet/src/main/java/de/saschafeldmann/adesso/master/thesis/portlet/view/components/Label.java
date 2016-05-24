@@ -1,5 +1,6 @@
 package de.saschafeldmann.adesso.master.thesis.portlet.view.components;
 
+import com.vaadin.shared.ui.label.ContentMode;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -22,4 +23,19 @@ import org.springframework.stereotype.Component;
 @Scope("prototype")
 public class Label extends com.vaadin.ui.Label {
 
+    /**
+     * Creates a label.
+     */
+    public Label() {
+        super();
+    }
+
+    /**
+     * Creates a new label.
+     * @param infoText the info text
+     * @param mode the content mode
+     */
+    public Label(String infoText, ContentMode mode) {
+        super(infoText, mode);
+    }
 }

@@ -112,7 +112,8 @@ public class CourseInformationViewImpl extends AbstractStepView implements Cours
      * @see CourseInformationView#reset()
      */
     public void reset() {
-        super.reset();
+        // add menu and set the course information item to be active
+        super.reset(messages.getMenuItemCourseInformationLabel());
 
         setInfoBox();
         addComponent(infoBox);

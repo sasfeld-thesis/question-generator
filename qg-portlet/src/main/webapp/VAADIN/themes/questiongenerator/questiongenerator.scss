@@ -1,0 +1,64 @@
+/**
+ * Project:        Masterthesis of Sascha Feldmann
+ * Creation date:  24.05.2016
+ * Author:         Sascha Feldmann (sascha.feldmann@gmx.de)
+ * <br /><br />
+ * University:
+ * Hochschule für Technik und Wirtschaft, Berlin
+ * Fachbereich 4
+ * Studiengang Internationale Medieninformatik (Master)
+ * <br /><br />
+ * Company:
+ * adesso AG
+ * <br /><br />
+ * This theme written in SASS includes the default VAADIN theme called 'Valo' and overwrites some style settings.
+ */
+// Import Valo (default theme) of Vaadin
+@import "variables";
+@import "addons";
+@import "../valo/valo";
+
+
+// Define the theme as mixin so that it can be included in other files
+@mixin questiongenerator {
+  @include addons;
+  @include valo;
+
+  /*
+  * Main container: outer vertical layout of each (Java Vaadin class) AbstractStepView
+  */
+  .maincontainer {
+    margin: $boxMargins;
+  }
+
+  /**
+   * Infobox component (Java Vaadin class: InfoBox)
+   */
+  .infobox {
+    margin-top: $boxMargins;
+    margin-bottom: $boxMargins;
+
+    padding: $boxPaddings;
+    border: $boxBordersWidth $boxBordersStyle;
+
+    .v-icon {
+      font-size: $infoBoxIconFontSize;
+    }
+
+    .v-slot {
+      margin-right: $boxMargins;
+    }
+  }
+
+  .v-menubar {
+    .v-menubar-menuitem-active_menuitem {
+      background-color: $activeMenuItemColor;
+      border: none;
+    }
+  }
+
+  .v-button {
+    margin-top: $boxMargins;
+    margin-bottom: $boxMargins;
+  }
+}

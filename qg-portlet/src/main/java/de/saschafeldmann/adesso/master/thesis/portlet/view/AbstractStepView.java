@@ -29,6 +29,8 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class AbstractStepView extends VerticalLayout implements ViewWithMenu {
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractStepView.class);
+    private static final String CSS_ACTIVE_ITEM_STYLENAME = "active_menuitem";
+    private static final String CSS_MAIN_CONTAINER_STYLENAME = "maincontainer";
 
     /**
      * The menu listener implementation.
@@ -90,35 +92,48 @@ public abstract class AbstractStepView extends VerticalLayout implements ViewWit
 
     /**
      * Initializes or resets the view.
+     *
+     * @param activeItem the menu item to be marked active. Set to null if no item is active.
      */
-    public void reset() {
+    protected void reset(final String activeItem) {
         resetLayout();
-        resetMenu();
+        resetMenu(activeItem);
     }
 
-    private void resetMenu() {
+    private void resetMenu(final String activeItem) {
         this.menuClickListener = new MenuClickListener();
 
         this.menuBar = new MenuBar();
         this.addComponent(menuBar);
 
-        addMenuItems();
+        addMenuItems(activeItem);
     }
 
     protected void addVersionLabel() {
         this.addComponent(versionLabel);
     }
 
-    private void addMenuItems() {
-        this.menuBar.addItem(messages.getMenuItemCourseInformationLabel(), null, this.menuClickListener);
-        this.menuBar.addItem(messages.getMenuItemContentsLabel(), null, this.menuClickListener);
-        this.menuBar.addItem(messages.getMenuItemPreprocessesLabel(), null, this.menuClickListener);
-        this.menuBar.addItem(messages.getMenuItemDetectionLabel(), null, this.menuClickListener);
-        this.menuBar.addItem(messages.getMenuItemQuestionGenerationLabel(), null, this.menuClickListener);
+    private void addMenuItems(final String activeItem) {
+        addMenuItem(messages.getMenuItemCourseInformationLabel(), activeItem);
+        addMenuItem(messages.getMenuItemContentsLabel(), activeItem);
+        addMenuItem(messages.getMenuItemPreprocessesLabel(), activeItem);
+        addMenuItem(messages.getMenuItemDetectionLabel(), activeItem);
+        addMenuItem(messages.getMenuItemQuestionGenerationLabel(), activeItem);
+    }
+
+    private MenuBar.MenuItem addMenuItem(final String label, final String activeItemLabel) {
+        MenuBar.MenuItem item = this.menuBar.addItem(label, null, this.menuClickListener);
+
+        if (label.equals(activeItemLabel)) {
+            item.setStyleName(CSS_ACTIVE_ITEM_STYLENAME);
+        }
+
+        return item;
     }
 
     private void resetLayout() {
         this.removeAllComponents();
+        this.addStyleName(CSS_MAIN_CONTAINER_STYLENAME);
     }
 
     /**

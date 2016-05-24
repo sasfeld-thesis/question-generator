@@ -1,11 +1,9 @@
 package de.saschafeldmann.adesso.master.thesis.portlet.view.components;
 
-import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Resource;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.vaadin.teemu.VaadinIcons;
 
@@ -29,18 +27,15 @@ import javax.annotation.PostConstruct;
 @org.springframework.stereotype.Component
 @Scope("prototype")
 public class InfoBox extends HorizontalLayout {
-    private final Label infoLabel;
-
-    @Autowired
-    public InfoBox(final Label infoLabel) {
-        this.infoLabel = infoLabel;
-    }
+    private static final String CSS_STYLE_NAME = "infobox";
+    private Label iconLabel;
+    private Label infoLabel;
 
     @PostConstruct
     public void reset() {
         this.removeAllComponents();
 
-        this.addComponent(infoLabel);
+        this.addStyleName(CSS_STYLE_NAME);
     }
 
     /**
@@ -48,8 +43,21 @@ public class InfoBox extends HorizontalLayout {
      */
     @Override
     public void setCaption(final String infoText) {
-        this.infoLabel.setContentMode(ContentMode.HTML);
-        this.infoLabel.setCaption(infoText);
+        this.infoLabel = new Label(infoText, ContentMode.HTML);
+
+        removeAndAdd();
+    }
+
+    private void removeAndAdd() {
+        this.removeAllComponents();
+
+        if (null != this.iconLabel) {
+            addComponent(iconLabel);
+        }
+
+        if (null != this.infoLabel) {
+            addComponent(infoLabel);
+        }
     }
 
     /**
@@ -57,7 +65,10 @@ public class InfoBox extends HorizontalLayout {
      */
     @Override
     public void setIcon(final Resource icon) {
-        this.infoLabel.setIcon(icon);
+        this.iconLabel = new Label();
+        this.iconLabel.setIcon(icon);
+
+        removeAndAdd();
     }
 
     /**

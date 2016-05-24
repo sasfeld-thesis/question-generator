@@ -65,7 +65,7 @@ public class Messages {
      * @return String
      */
     public String getCourseInformationViewNewCourseInfoText() {
-        return "Sie haben noch keine Schulung angelegt.<br>Mit diesem Dialog legen Sie eine an und starten so Ihre Sitzung.";
+        return "Sie haben noch keine Schulung angelegt.<br />Mit diesem Dialog legen Sie eine an und starten so Ihre Sitzung.";
     }
 
     /**
