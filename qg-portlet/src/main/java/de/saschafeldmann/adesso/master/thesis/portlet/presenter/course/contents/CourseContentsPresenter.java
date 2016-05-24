@@ -1,5 +1,6 @@
 package de.saschafeldmann.adesso.master.thesis.portlet.presenter.course.contents;
 
+import de.saschafeldmann.adesso.master.thesis.portlet.presenter.VaadinViewPresenter;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.course.contents.CourseContentsView;
 
 /**
@@ -18,7 +19,7 @@ import de.saschafeldmann.adesso.master.thesis.portlet.view.course.contents.Cours
  * Interface for the course contents dialog step.
  * The user can add learning contents for his/her course using the file upload and raw text extraction service or by directly entering raw text.
  */
-public interface CourseContentsPresenter {
+public interface CourseContentsPresenter extends VaadinViewPresenter {
 
     /**
      * Initializes and returns the view.

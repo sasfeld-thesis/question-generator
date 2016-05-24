@@ -3,6 +3,7 @@ package de.saschafeldmann.adesso.master.thesis.portlet.presenter;
 import com.vaadin.navigator.Navigator;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.AbstractStepView;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.MenuListener;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.course.contents.CourseContentsViewImpl;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.course.information.CourseInformationView;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.course.information.CourseInformationViewImpl;
 
@@ -36,7 +37,7 @@ public class AbstractStepPresenter implements MenuListener, VaadinViewPresenter 
      * @see MenuListener#onContentsClicked()
      */
     public void onContentsClicked() {
-
+        getNavigator().navigateTo(CourseContentsViewImpl.VIEW_NAME);
     }
 
     /**

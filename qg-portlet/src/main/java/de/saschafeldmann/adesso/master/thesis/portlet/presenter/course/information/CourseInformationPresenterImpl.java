@@ -6,6 +6,7 @@ import de.saschafeldmann.adesso.master.thesis.elearningimport.model.Course;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.Language;
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.AbstractStepPresenter;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.Messages;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.course.contents.CourseContentsViewImpl;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.course.information.CourseInformationView;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.course.information.CourseInformationViewImpl;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.course.information.CourseInformationViewListener;
@@ -75,6 +76,8 @@ public class CourseInformationPresenterImpl extends AbstractStepPresenter implem
 
         try {
             updateCourseModel();
+
+            getNavigator().navigateTo(CourseContentsViewImpl.VIEW_NAME);
         } catch (Exception e) {
             LOGGER.error("onNextButtonClicked(): could not create or update the course - exception {} occured:\n{}",
                     e.getMessage(), ExceptionUtils.getStackTrace(e));
