@@ -194,4 +194,12 @@ public class CourseContentsViewImpl extends AbstractStepView implements CourseCo
     public void setCourseTitle(String courseTitle) {
         this.courseTitle = courseTitle;
     }
+
+    /**
+     * @see CourseContentsView#setViewListener(CourseContentsViewListener)
+     */
+    public void setViewListener(CourseContentsViewListener courseContentsViewListener) {
+        this.viewListener = courseContentsViewListener;
+    }
+
 }

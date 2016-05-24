@@ -1,6 +1,7 @@
 package de.saschafeldmann.adesso.master.thesis.portlet.view.course.contents;
 
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.ViewWithMenu;
 
 import java.util.List;
 
@@ -20,7 +21,7 @@ import java.util.List;
  * The course contents view. The user can upload course documents and enter raw texts here.
  * It will attach {@link de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent} instances to the {@link de.saschafeldmann.adesso.master.thesis.elearningimport.model.Course} model in the session.
  */
-public interface CourseContentsView {
+public interface CourseContentsView extends ViewWithMenu {
 
     /**
      * Displays the learning content files in the session.
@@ -39,4 +40,16 @@ public interface CourseContentsView {
      * @param courseTitle the current course title
      */
     void setCourseTitle(final String courseTitle);
+
+    /**
+     * Resets / initializes the view layout.
+     */
+    void reset();
+
+    /**
+     * Sets the view listener which is notified on user actions.
+     * @param courseContentsViewListener
+     */
+    void setViewListener(CourseContentsViewListener courseContentsViewListener);
+
 }
