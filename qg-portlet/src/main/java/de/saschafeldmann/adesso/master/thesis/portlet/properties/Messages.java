@@ -255,4 +255,68 @@ public class Messages {
     public String getCourseContentsViewAddRawTextErrorNotificationText() {
         return "Ihr Rohtext konnte nicht hinzugefügt werden. Bitte überprüfen Sie Ihre Eingabe.";
     }
+
+    /**
+     * Gets the text.
+     * @return String
+     */
+    public String getCourseContentsViewRawtextEditWindowTitleText() {
+        return "Eingegebener Rohtext";
+    }
+
+    /**
+     * Gets the text.
+     * @return String
+     */
+    public String getCourseContentsViewRawtextEditWindowTextareaLabel() {
+        return "Rohtext:";
+    }
+
+    /**
+     * Gets the text.
+     * @return String
+     */
+    public String getCourseContentsViewDocumentsEditWindowTitleText() {
+        return "Hochgeladenes Dokument";
+    }
+
+    /**
+     * Gets the text.
+     * @return String
+     */
+    public String getCourseContentsViewDocumentsEditWindowTextareaLabel() {
+        return "Extrahierter Inhalt:";
+    }
+
+    /**
+     * Gets the text.
+     * @return String
+     */
+    public String getEditWindowChangeButtonLabel() {
+        return "Ändern";
+    }
+
+    /**
+     * Gets the text.
+     * @return String
+     */
+    public String getEditWindowDeleteButtonLabel() {
+        return "Löschen";
+    }
+
+    /**
+     * Gets the text.
+     * @return String
+     */
+    public String getCourseContentsViewDeleteRawTextErrorNotificationTitle() {
+        return "Fehler";
+    }
+
+    /**
+     * Gets the text.
+     * @return String
+     */
+    public String getCourseContentsViewDeleteRawTextErrorNotificationText() {
+        return "Ihr Rohtext konnte nicht gelöscht werden.";
+    }
 }

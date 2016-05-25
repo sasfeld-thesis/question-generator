@@ -40,9 +40,10 @@ public interface CourseContentsViewListener {
 
     /**
      * Triggered if a raw text was selected and changed.
-     * @param learningContent the associated {@link LearningContent} of {@link de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent.Type} DIRECT_RAWTEXT
+     * @param learningContent the associated {@link LearningContent} of {@link LearningContent.Type} DIRECT_RAWTEXT
+     * @param textareaInput String the user's input
      */
-    void onContentRawTextChangeClick(final LearningContent learningContent);
+    void onContentRawTextChangeClick(final LearningContent learningContent, String textareaInput);
 
     /**
      * Triggered if a raw text was selected and deleted.

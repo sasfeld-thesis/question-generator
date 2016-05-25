@@ -89,4 +89,19 @@
       width: $courseContentsAccordionInputWidth;
     }
   }
+
+  /*
+   * Edit dialog window.
+   */
+  .edit-window {
+    width: $editDialogWindowWidth;
+
+    .v-formlayout {
+      margin-left: $boxMargins;
+    }
+
+    textarea {
+      width: $courseContentsAccordionInputWidth;
+    }
+  }
 }

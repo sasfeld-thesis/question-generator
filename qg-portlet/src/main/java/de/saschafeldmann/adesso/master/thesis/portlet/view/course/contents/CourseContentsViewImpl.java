@@ -1,8 +1,10 @@
 package de.saschafeldmann.adesso.master.thesis.portlet.view.course.contents;
 
 import com.google.common.base.Strings;
+import com.vaadin.data.Property;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.shared.ui.label.ContentMode;
+import com.vaadin.ui.UI;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.Messages;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.AbstractStepView;
@@ -15,6 +17,8 @@ import de.saschafeldmann.adesso.master.thesis.portlet.view.components.Label;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.ListSelect;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.TextArea;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.TextField;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.window.EditWindow;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.window.EditWindowListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 
@@ -63,6 +67,8 @@ public class CourseContentsViewImpl extends AbstractStepView implements CourseCo
     private final FormLayout accordionRawTextsRightSideFormLayout;
     private final ListSelect accordionRawTextsRightSideAddedList;
 
+    private final EditWindow editWindow;
+
     private final HorizontalLayout buttonGroupLayout;
     private final Button btnNext;
     private CourseContentsViewListener viewListener;
@@ -84,6 +90,7 @@ public class CourseContentsViewImpl extends AbstractStepView implements CourseCo
                                   final Button btnAccordionRawTextsLeftSideAddRawText,
                                   final FormLayout accordionRawTextsRightSideFormLayout,
                                   final ListSelect accordionRawTextsRightSideAddedList,
+                                  final EditWindow editWindow,
                                   final Button btnNext) {
         super(messages, versionLabel);
 
@@ -102,6 +109,7 @@ public class CourseContentsViewImpl extends AbstractStepView implements CourseCo
         this.btnAccordionRawTextsLeftSideAddRawText = btnAccordionRawTextsLeftSideAddRawText;
         this.accordionRawTextsRightSideFormLayout = accordionRawTextsRightSideFormLayout;
         this.accordionRawTextsRightSideAddedList = accordionRawTextsRightSideAddedList;
+        this.editWindow = editWindow;
         this.btnNext = btnNext;
     }
 
@@ -164,12 +172,56 @@ public class CourseContentsViewImpl extends AbstractStepView implements CourseCo
                 viewListener.onContentRawTextAddClick(accordionRawTextsLeftSideTitleInput.getValue(), accordionRawTextsLeftSideRawTextInput.getValue());
             }
         });
+
+        accordionRawTextsRightSideAddedList.addValueChangeListener(new Property.ValueChangeListener() {
+            public void valueChange(Property.ValueChangeEvent valueChangeEvent) {
+                LearningContent selectedContent = (LearningContent) valueChangeEvent.getProperty().getValue();
+                showRawTextEditWindow(selectedContent);
+
+                // reset selection
+                accordionRawTextsRightSideAddedList.unselect(selectedContent);
+            }
+        });
+    }
+
+    private void showRawTextEditWindow(final LearningContent selectedContent) {
+        String title = selectedContent.getTitle();
+        String rawText = selectedContent.getRawText();
+        editWindow.setTextareaLabel(messages.getCourseContentsViewRawtextEditWindowTextareaLabel());
+        editWindow.setTitle(messages.getCourseContentsViewRawtextEditWindowTitleText() + " - " + title);
+        editWindow.setTextareaInput(rawText);
+
+        // set window listener which delegates to the view listener
+        editWindow.setEditWindowListener(new EditWindowListener() {
+            /**
+             * @see EditWindowListener#onEditButtonClicked(String)
+             */
+            public void onEditButtonClicked(String textareaInput) {
+                viewListener.onContentRawTextChangeClick(selectedContent, textareaInput);
+            }
+
+            /**
+             * @see EditWindowListener#onDeleteButtonClicked()
+             */
+            public void onDeleteButtonClicked() {
+                viewListener.onContentRawTextDeleteClick(selectedContent);
+            }
+        });
+
+        editWindow.reset();   // initializes / resets the windows layout
+        editWindow.center();  // displays the window on the screen center
+
+        // displays the window
+        UI.getCurrent().addWindow(editWindow);
     }
 
     public void enter(ViewChangeListener.ViewChangeEvent viewChangeEvent) {
         viewListener.onViewFocus();
     }
 
+    /**
+     * @see CourseContentsView#reset()
+     */
     public void reset() {
         // add menu and set the course contents item to be active
         super.reset(messages.getMenuItemContentsLabel());

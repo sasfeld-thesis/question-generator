@@ -79,28 +79,59 @@ public class CourseContentsPresenterImpl extends AbstractStepPresenter implement
      * @see CourseContentsViewListener#onContentFileChangeClick(LearningContent)
      */
     public void onContentFileChangeClick(LearningContent learningContent) {
-
+        LOGGER.info("onContentFileChangeClick()");
     }
 
     /**
      * @see CourseContentsViewListener#onContentFileDeleteClick(LearningContent)
      */
     public void onContentFileDeleteClick(LearningContent learningContent) {
-
+        LOGGER.info("onContentFileDeleteClick()");
     }
 
     /**
-     * @see CourseContentsViewListener#onContentRawTextChangeClick(LearningContent)
+     * @see CourseContentsViewListener#onContentRawTextChangeClick(LearningContent, String)
      */
-    public void onContentRawTextChangeClick(LearningContent learningContent) {
+    public void onContentRawTextChangeClick(LearningContent learningContent, String textareaInput) {
+        LOGGER.info("onContentRawTextChangeClick()");
 
+        try {
+            LearningContent newLearningContent = buildLearningContent(learningContent.getTitle(), learningContent.getRawText(), LearningContent.Type.DIRECT_RAWTEXT);
+            questionGenerationSession.getCourse().addOrReplaceLearningContent(newLearningContent);
+
+            updateCourseRawTexts();
+        } catch (Exception e) {
+            LOGGER.error("onContentRawTextChangeClick(): could not add the raw text - exception {} occured:\n{}",
+                    e.getMessage(), ExceptionUtils.getStackTrace(e));
+
+            Notification.show(
+                    messages.getCourseContentsViewAddRawTextErrorNotificationTitle(),
+                    messages.getCourseContentsViewAddRawTextErrorNotificationText(),
+                    Notification.Type.ERROR_MESSAGE
+            );
+        }
     }
 
     /**
      * @see CourseContentsViewListener#onContentRawTextDeleteClick(LearningContent)
      */
     public void onContentRawTextDeleteClick(LearningContent learningContent) {
+        LOGGER.info("onContentRawTextDeleteClick()");
 
+        try {
+            questionGenerationSession.getCourse().removeLearningContent(learningContent);
+
+            updateCourseRawTexts();
+        } catch (Exception e) {
+            LOGGER.error("onContentRawTextDeleteClick(): could not delete the raw text - exception {} occured:\n{}",
+                    e.getMessage(), ExceptionUtils.getStackTrace(e));
+
+            Notification.show(
+                    messages.getCourseContentsViewDeleteRawTextErrorNotificationTitle(),
+                    messages.getCourseContentsViewDeleteRawTextErrorNotificationText(),
+                    Notification.Type.ERROR_MESSAGE
+            );
+        }
     }
 
     /**
