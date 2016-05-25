@@ -40,7 +40,10 @@ import java.util.List;
 @Scope("prototype")
 public class CourseContentsViewImpl extends AbstractStepView implements CourseContentsView {
     public static final String VIEW_NAME = "CourseContentsView";
-    private static final String CSS_BUTTON_GROUP_STYLENAME = "course-contents-view-button-group\"";
+    private static final String CSS_BUTTON_GROUP_STYLENAME = "course-contents-view-button-group";
+    private static final String CSS_ACCORDION_STYLENAME = "course-contents-accordion";
+    private static final String CSS_ACCORDION_DOCUMENTS_STYLENAME = "course-contents-accordion-documents";
+    private static final String CSS_RAW_TEXTS_RIGHT_SIDE_STYLENAME = "course-contents-raw-texts-right";
 
     private final InfoBox infoBox;
     private final Label introductionLabel;
@@ -116,7 +119,12 @@ public class CourseContentsViewImpl extends AbstractStepView implements CourseCo
     }
 
     private void initializeAccordion() {
+        accordion.addStyleName(CSS_ACCORDION_STYLENAME);
+
         // documents
+        accordionDocumentsLayout.addStyleName(CSS_ACCORDION_DOCUMENTS_STYLENAME);
+        accordionDocumentsLeftSideFileUpload.setImmediate(true);
+
         this.accordionDocumentsLeftSideFileUpload.setCaption(messages.getCourseContentsViewAccordionDocumentsFileUploadLabel());
         this.accordionDocumentsLeftSideUploadedList.setCaption(messages.getCourseContentsViewAccordionDocumentsUploadedListLabel());
 
@@ -136,6 +144,7 @@ public class CourseContentsViewImpl extends AbstractStepView implements CourseCo
         accordionRawTextsLeftSideFormLayout.addComponent(btnAccordionRawTextsLeftSideAddRawText);
         accordionRawTextsLayout.addComponent(accordionRawTextsLeftSideFormLayout);
 
+        accordionRawTextsRightSideFormLayout.addStyleName(CSS_RAW_TEXTS_RIGHT_SIDE_STYLENAME);
         accordionRawTextsRightSideAddedList.setCaption(messages.getCourseContentsViewAccordionRawTextsAddedLabel());
         accordionRawTextsRightSideFormLayout.addComponent(accordionRawTextsRightSideAddedList);
         accordionRawTextsLayout.addComponent(accordionRawTextsRightSideFormLayout);

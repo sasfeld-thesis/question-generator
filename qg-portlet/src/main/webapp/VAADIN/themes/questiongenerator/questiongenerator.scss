@@ -65,4 +65,28 @@
   .right-button {
     margin-left: $rightButtonMargin;
   }
+
+  .course-contents-accordion {
+    input[type="text"] {
+      width: $courseContentsAccordionInputWidth;
+    }
+
+    textarea {
+      width: $courseContentsAccordionInputWidth;
+    }
+  }
+
+  .course-contents-raw-texts-right {
+    margin-left: $courseContentsAccordionRightCellMargin;
+  }
+
+  .course-contents-accordion-documents {
+    input[type="file"] {
+      width: $courseContentsAccordionInputWidth;
+    }
+
+    select {
+      width: $courseContentsAccordionInputWidth;
+    }
+  }
 }
