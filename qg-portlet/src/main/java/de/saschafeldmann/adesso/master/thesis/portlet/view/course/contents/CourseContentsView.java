@@ -48,7 +48,7 @@ public interface CourseContentsView extends ViewWithMenu {
 
     /**
      * Sets the view listener which is notified on user actions.
-     * @param courseContentsViewListener
+     * @param courseContentsViewListener the view listener
      */
     void setViewListener(CourseContentsViewListener courseContentsViewListener);
 

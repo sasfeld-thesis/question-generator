@@ -96,7 +96,7 @@ public class CourseContentsPresenterImpl extends AbstractStepPresenter implement
         LOGGER.info("onContentRawTextChangeClick()");
 
         try {
-            LearningContent newLearningContent = buildLearningContent(learningContent.getTitle(), learningContent.getRawText(), LearningContent.Type.DIRECT_RAWTEXT);
+            LearningContent newLearningContent = buildLearningContent(learningContent.getTitle(), textareaInput, LearningContent.Type.DIRECT_RAWTEXT);
             questionGenerationSession.getCourse().addOrReplaceLearningContent(newLearningContent);
 
             updateCourseRawTexts();

@@ -94,14 +94,18 @@
    * Edit dialog window.
    */
   .edit-window {
-    width: $editDialogWindowWidth;
+    width: $editDialogWindowWidth !important;
 
     .v-formlayout {
-      margin-left: $boxMargins;
+      margin-left: $boxMargins !important;
     }
 
     textarea {
-      width: $courseContentsAccordionInputWidth;
+      width: $courseContentsAccordionInputWidth !important;
     }
+  }
+
+  .v-accordion-item {
+    padding-left: $boxMargins;
   }
 }

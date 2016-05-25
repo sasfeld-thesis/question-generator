@@ -170,18 +170,29 @@ public class CourseContentsViewImpl extends AbstractStepView implements CourseCo
         btnAccordionRawTextsLeftSideAddRawText.addClickListener(new com.vaadin.ui.Button.ClickListener() {
             public void buttonClick(com.vaadin.ui.Button.ClickEvent clickEvent) {
                 viewListener.onContentRawTextAddClick(accordionRawTextsLeftSideTitleInput.getValue(), accordionRawTextsLeftSideRawTextInput.getValue());
+                clearRawTextInputs();
             }
         });
 
         accordionRawTextsRightSideAddedList.addValueChangeListener(new Property.ValueChangeListener() {
             public void valueChange(Property.ValueChangeEvent valueChangeEvent) {
-                LearningContent selectedContent = (LearningContent) valueChangeEvent.getProperty().getValue();
-                showRawTextEditWindow(selectedContent);
+                if (null != valueChangeEvent.getProperty()) {
+                    LearningContent selectedContent = (LearningContent) valueChangeEvent.getProperty().getValue();
+
+                    if (null != selectedContent) {
+                        showRawTextEditWindow(selectedContent);
+                    }
+                }
 
                 // reset selection
-                accordionRawTextsRightSideAddedList.unselect(selectedContent);
+                accordionRawTextsRightSideAddedList.select(accordionRawTextsRightSideAddedList.getNullSelectionItemId());
             }
         });
+    }
+
+    private void clearRawTextInputs() {
+        accordionRawTextsLeftSideTitleInput.setValue("");
+        accordionRawTextsLeftSideRawTextInput.setValue("");
     }
 
     private void showRawTextEditWindow(final LearningContent selectedContent) {
@@ -249,6 +260,7 @@ public class CourseContentsViewImpl extends AbstractStepView implements CourseCo
      * @see CourseContentsView#showContentFiles(List)
      */
     public void showContentFiles(List<LearningContent> learningContentFiles) {
+        accordionDocumentsLeftSideUploadedList.removeAllItems();
         accordionDocumentsLeftSideUploadedList.addItems(learningContentFiles);
     }
 
@@ -256,6 +268,7 @@ public class CourseContentsViewImpl extends AbstractStepView implements CourseCo
      * @see CourseContentsView#showContentRawTexts(List)
      */
     public void showContentRawTexts(List<LearningContent> learningRawTexts) {
+        accordionRawTextsRightSideAddedList.removeAllItems();
         accordionRawTextsRightSideAddedList.addItems(learningRawTexts);
     }
 
