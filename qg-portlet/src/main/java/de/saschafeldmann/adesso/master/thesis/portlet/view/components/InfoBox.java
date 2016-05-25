@@ -36,6 +36,7 @@ public class InfoBox extends HorizontalLayout {
         this.removeAllComponents();
 
         this.addStyleName(CSS_STYLE_NAME);
+        this.setVisible(false);
     }
 
     /**
@@ -58,6 +59,8 @@ public class InfoBox extends HorizontalLayout {
         if (null != this.infoLabel) {
             addComponent(infoLabel);
         }
+
+        this.setVisible(true);
     }
 
     /**

@@ -4,6 +4,7 @@ import com.google.common.base.Strings;
 import com.vaadin.data.Property;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.shared.ui.label.ContentMode;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.Messages;
@@ -17,12 +18,15 @@ import de.saschafeldmann.adesso.master.thesis.portlet.view.components.Label;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.ListSelect;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.TextArea;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.TextField;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.upload.FileUpload;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.upload.FileUploadListener;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.window.EditWindow;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.window.EditWindowListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 
 import javax.annotation.PostConstruct;
+import java.io.File;
 import java.util.List;
 
 /**
@@ -42,7 +46,7 @@ import java.util.List;
  */
 @org.springframework.stereotype.Component
 @Scope("prototype")
-public class CourseContentsViewImpl extends AbstractStepView implements CourseContentsView {
+public class CourseContentsViewImpl extends AbstractStepView implements CourseContentsView, FileUploadListener {
     public static final String VIEW_NAME = "CourseContentsView";
     private static final String CSS_BUTTON_GROUP_STYLENAME = "course-contents-view-button-group";
     private static final String CSS_ACCORDION_STYLENAME = "course-contents-accordion";
@@ -57,8 +61,10 @@ public class CourseContentsViewImpl extends AbstractStepView implements CourseCo
     private final FormLayout accordionDocumentsLeftSideFormLayout;
     private final FileUpload accordionDocumentsLeftSideFileUpload;
     private final ListSelect accordionDocumentsLeftSideUploadedList;
-    private final HorizontalLayout accordionRawTextsLayout;
+    private final VerticalLayout accordionDocumentsRightSideLayout;
+    private final InfoBox accordionDocumentsRightSideInfoBox;
 
+    private final HorizontalLayout accordionRawTextsLayout;
     private final FormLayout accordionRawTextsLeftSideFormLayout;
     private final TextField accordionRawTextsLeftSideTitleInput;
     private final TextArea accordionRawTextsLeftSideRawTextInput;
@@ -83,6 +89,8 @@ public class CourseContentsViewImpl extends AbstractStepView implements CourseCo
                                   final FormLayout accordionDocumentsLeftSideFormLayout,
                                   final FileUpload accordionDocumentsLeftSideFileUpload,
                                   final ListSelect accordionDocumentsLeftSideUploadedList,
+                                  final VerticalLayout accordionDocumentsRightSideLayout,
+                                  final InfoBox accordionDocumentsRightSideInfoBox,
                                   final HorizontalLayout accordionRawTextsLayout,
                                   final FormLayout accordionRawTextsLeftSideFormLayout,
                                   final TextField accordionRawTextsLeftSideTitleInput,
@@ -102,6 +110,8 @@ public class CourseContentsViewImpl extends AbstractStepView implements CourseCo
         this.accordionDocumentsLeftSideFormLayout = accordionDocumentsLeftSideFormLayout;
         this.accordionDocumentsLeftSideFileUpload = accordionDocumentsLeftSideFileUpload;
         this.accordionDocumentsLeftSideUploadedList = accordionDocumentsLeftSideUploadedList;
+        this.accordionDocumentsRightSideLayout = accordionDocumentsRightSideLayout;
+        this.accordionDocumentsRightSideInfoBox = accordionDocumentsRightSideInfoBox;
         this.accordionRawTextsLayout = accordionRawTextsLayout;
         this.accordionRawTextsLeftSideFormLayout = accordionRawTextsLeftSideFormLayout;
         this.accordionRawTextsLeftSideTitleInput = accordionRawTextsLeftSideTitleInput;
@@ -131,7 +141,6 @@ public class CourseContentsViewImpl extends AbstractStepView implements CourseCo
 
         // documents
         accordionDocumentsLayout.addStyleName(CSS_ACCORDION_DOCUMENTS_STYLENAME);
-        accordionDocumentsLeftSideFileUpload.setImmediate(true);
 
         this.accordionDocumentsLeftSideFileUpload.setCaption(messages.getCourseContentsViewAccordionDocumentsFileUploadLabel());
         this.accordionDocumentsLeftSideUploadedList.setCaption(messages.getCourseContentsViewAccordionDocumentsUploadedListLabel());
@@ -140,6 +149,12 @@ public class CourseContentsViewImpl extends AbstractStepView implements CourseCo
         accordionDocumentsLeftSideFormLayout.addComponent(accordionDocumentsLeftSideUploadedList);
 
         accordionDocumentsLayout.addComponent(accordionDocumentsLeftSideFormLayout);
+
+        accordionDocumentsRightSideLayout.addComponent(accordionDocumentsRightSideInfoBox);
+        // adds the progress bar of the file upload component
+        accordionDocumentsRightSideLayout.addComponent(accordionDocumentsLeftSideFileUpload.getProgressBar());
+        accordionDocumentsLayout.addComponent(accordionDocumentsRightSideLayout);
+
         accordion.addTab(accordionDocumentsLayout, messages.getCourseContentsViewAccordionDocumentsTitleLabel());
 
         // raw texts
@@ -188,6 +203,8 @@ public class CourseContentsViewImpl extends AbstractStepView implements CourseCo
                 accordionRawTextsRightSideAddedList.select(accordionRawTextsRightSideAddedList.getNullSelectionItemId());
             }
         });
+
+        accordionDocumentsLeftSideFileUpload.setFileUploadListener(this);
     }
 
     private void clearRawTextInputs() {
@@ -286,4 +303,27 @@ public class CourseContentsViewImpl extends AbstractStepView implements CourseCo
         this.viewListener = courseContentsViewListener;
     }
 
+    /**
+     * @see FileUploadListener#uploadFailed()
+     */
+    public void uploadFailed() {
+        // display error notification
+        Notification.show(
+                messages.getCourseContentsViewUploadFileErrorNotificationTitle(),
+                messages.getCourseContentsViewUploadFileErrorNotificationText(),
+                Notification.Type.ERROR_MESSAGE
+        );
+    }
+
+    /**
+     * @see FileUploadListener#uploadSucceeded(File)
+     */
+    public void uploadSucceeded(final File file) {
+        // display info box
+        this.accordionDocumentsRightSideInfoBox.setInfo();
+        this.accordionDocumentsRightSideInfoBox.setCaption(messages.getCourseContentsViewUploadFileSuccessNotificationText(file.getName()));
+
+        // notify listener
+        viewListener.onContentFileUploaded(file);
+    }
 }

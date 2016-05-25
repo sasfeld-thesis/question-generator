@@ -319,4 +319,38 @@ public class Messages {
     public String getCourseContentsViewDeleteRawTextErrorNotificationText() {
         return "Ihr Rohtext konnte nicht gelöscht werden.";
     }
+
+    /**
+     * Gets the text.
+     * @return String
+     */
+    public String getCourseContentsViewUploadFileErrorNotificationTitle() {
+        return "Fehler";
+    }
+
+    /**
+     * Gets the text.
+     * @return String
+     */
+    public String getCourseContentsViewUploadFileErrorNotificationText() {
+        return "Ihre Datei konnte nicht hochgeladen werden.";
+    }
+
+    /**
+     * Gets the text.
+     * @param params
+     * @return String
+     */
+    public String getCourseContentsViewUploadFileSuccessNotificationText(String params) {
+        return String.format("'%s' wurde erfolgreich hochgeladen. Starte Verarbeitung...", params);
+    }
+
+    /**
+     * Gets the text.
+     * @param params
+     * @return String
+     */
+    public String getCourseContentsViewUploadFileProcessSuccessNotificationText(String params) {
+        return String.format("'%s' wurde erfolgreich hochgeladen und verarbeitet.", params);
+    }
 }
