@@ -52,6 +52,7 @@ public class CourseContentsViewImpl extends AbstractStepView implements CourseCo
     private static final String CSS_ACCORDION_STYLENAME = "course-contents-accordion";
     private static final String CSS_ACCORDION_DOCUMENTS_STYLENAME = "course-contents-accordion-documents";
     private static final String CSS_RAW_TEXTS_RIGHT_SIDE_STYLENAME = "course-contents-raw-texts-right";
+    private static final String CSS_FILE_UPLOAD_PROGRESSBAR_STYLENAME = "course-contents-file-upload-progress-bar";
 
     private final InfoBox infoBox;
     private final Label introductionLabel;
@@ -130,10 +131,15 @@ public class CourseContentsViewImpl extends AbstractStepView implements CourseCo
 
         initializeAccordion();
 
-        this.buttonGroupLayout.addStyleName(CSS_BUTTON_GROUP_STYLENAME);
+        setStyles();
         this.btnNext.setCaption(messages.getCourseInformationViewBtnNextLabel());
 
         registerListeners();
+    }
+
+    private void setStyles() {
+        this.buttonGroupLayout.addStyleName(CSS_BUTTON_GROUP_STYLENAME);
+        this.accordionDocumentsLeftSideFileUpload.getProgressBar().addStyleName(CSS_FILE_UPLOAD_PROGRESSBAR_STYLENAME);
     }
 
     private void initializeAccordion() {
@@ -145,6 +151,7 @@ public class CourseContentsViewImpl extends AbstractStepView implements CourseCo
         this.accordionDocumentsLeftSideFileUpload.setCaption(messages.getCourseContentsViewAccordionDocumentsFileUploadLabel());
         this.accordionDocumentsLeftSideUploadedList.setCaption(messages.getCourseContentsViewAccordionDocumentsUploadedListLabel());
 
+        accordionDocumentsLeftSideFileUpload.setImmediate(true);
         accordionDocumentsLeftSideFormLayout.addComponent(accordionDocumentsLeftSideFileUpload);
         accordionDocumentsLeftSideFormLayout.addComponent(accordionDocumentsLeftSideUploadedList);
 
