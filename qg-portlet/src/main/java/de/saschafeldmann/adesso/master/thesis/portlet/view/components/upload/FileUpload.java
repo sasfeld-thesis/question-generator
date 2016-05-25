@@ -13,6 +13,9 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.io.*;
+import java.net.MalformedURLException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 /**
  * Project:        Masterthesis of Sascha Feldmann
@@ -40,7 +43,7 @@ import java.io.*;
  */
 @Component
 @Scope("prototype")
-public class FileUpload extends com.vaadin.ui.Upload implements Upload.Receiver, Upload.SucceededListener, Upload.ProgressListener {
+public class FileUpload extends com.vaadin.ui.Upload implements Upload.Receiver, Upload.SucceededListener, Upload.ProgressListener, Upload.FailedListener {
     private static final Logger LOGGER = LoggerFactory.getLogger(FileUpload.class);
 
     private File uploadFile;
@@ -68,6 +71,8 @@ public class FileUpload extends com.vaadin.ui.Upload implements Upload.Receiver,
         super.addProgressListener(this);
         // and the succeeded event of Vaadin
         super.addSucceededListener(this);
+        // and the upload failed listener
+        super.addFailedListener(this);
     }
 
     /**
@@ -99,20 +104,15 @@ public class FileUpload extends com.vaadin.ui.Upload implements Upload.Receiver,
 
         try {
             // create a temporarily file
-            uploadFile = File.createTempFile(getTempFilePrefix(), getTempFileSuffix());
+            uploadFile = new File(getTempFolder(), fileName);
             fileOutputStream = new FileOutputStream(uploadFile);
         } catch (IOException e) {
             LOGGER.error("receiveUpload(): could not upload file {} due to an exception {}:\n{}",
                     fileName, e.getMessage(), ExceptionUtils.getStackTrace(e));
             fileUploadListener.uploadFailed();
-        } finally {
-            try {
-                if (null != fileOutputStream) {
-                    fileOutputStream.close();
-                }
-            } catch (IOException e) { //ignore
-            }
+            return null;
         }
+
         return fileOutputStream;
     }
 
@@ -140,11 +140,26 @@ public class FileUpload extends com.vaadin.ui.Upload implements Upload.Receiver,
         }
     }
 
-    private String getTempFilePrefix() {
-        return questionGeneratorProperties.fetchValue(PropertyKeys.FILEUPLOAD_TEMP_PREFIX);
+    private String getTempFileFolderFromProperty() {
+        return questionGeneratorProperties.fetchValue(PropertyKeys.FILEUPLOAD_TEMP_FOLDER);
     }
 
-    private String getTempFileSuffix() {
-        return questionGeneratorProperties.fetchValue(PropertyKeys.FILEUPLOAD_TEMP_SUFFIX);
+    /**
+     * @see com.vaadin.ui.Upload.FailedListener#uploadFailed(FailedEvent)
+     */
+    public void uploadFailed(FailedEvent failedEvent) {
+        LOGGER.error("uploadFailed(): could not upload file {} due to an exception {}:\n{}",
+                failedEvent.getFilename(), failedEvent.getReason().getMessage(), ExceptionUtils.getStackTrace(failedEvent.getReason()));
+
+        fileUploadListener.uploadFailed();
+    }
+
+    /**
+     * Gets the temp folder as file.
+     * @return File the temp folder
+     */
+    private File getTempFolder() throws MalformedURLException {
+        LOGGER.info("getTempFolder(): current CWD {}", System.getProperty("user.dir"));
+        return new File(getTempFileFolderFromProperty());
     }
 }

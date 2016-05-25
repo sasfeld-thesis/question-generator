@@ -16,6 +16,5 @@ package de.saschafeldmann.adesso.master.thesis.portlet.util;
  * All keys of the properties file.
  */
 public interface PropertyKeys {
-    String FILEUPLOAD_TEMP_PREFIX = "de.saschafeldmann.adesso.master.thesis.portlet.fileupload.temp.prefix";
-    String FILEUPLOAD_TEMP_SUFFIX = "de.saschafeldmann.adesso.master.thesis.portlet.fileupload.temp.suffix";
+    String FILEUPLOAD_TEMP_FOLDER = "de.saschafeldmann.adesso.master.thesis.portlet.fileupload.temp.folder";
 }

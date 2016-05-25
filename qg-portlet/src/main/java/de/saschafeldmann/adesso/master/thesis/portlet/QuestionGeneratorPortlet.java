@@ -2,6 +2,7 @@ package de.saschafeldmann.adesso.master.thesis.portlet;
 
 import com.vaadin.annotations.Theme;
 import com.vaadin.navigator.Navigator;
+import com.vaadin.server.VaadinPortlet;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.WrappedPortletSession;
 import com.vaadin.ui.UI;
@@ -19,6 +20,10 @@ import de.saschafeldmann.adesso.master.thesis.portlet.view.course.information.Co
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.portlet.context.PortletApplicationContextUtils;
+
+import javax.portlet.PortletContext;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 /**
  * Project:        Masterthesis of Sascha Feldmann
@@ -49,6 +54,7 @@ public class QuestionGeneratorPortlet extends UI {
     @Override
     protected void init(VaadinRequest vaadinRequest) {
         initSession();
+
         ApplicationContext applicationContext = initializeApplicationContext(vaadinRequest);
         initializeViewNavigator();
         initializeViews(applicationContext);
@@ -94,5 +100,13 @@ public class QuestionGeneratorPortlet extends UI {
 
         CourseContentsView courseContentsView = courseContentsPresenter.initializeView();
         this.viewNavigator.addView(CourseContentsViewImpl.VIEW_NAME, courseContentsView);
+    }
+
+    /**
+     * Gets the current portlet context.
+     * @return
+     */
+    public static PortletContext getContext() {
+        return VaadinPortlet.getCurrent().getPortletContext();
     }
 }
