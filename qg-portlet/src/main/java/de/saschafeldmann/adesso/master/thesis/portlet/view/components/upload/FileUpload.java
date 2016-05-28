@@ -14,8 +14,6 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import java.io.*;
 import java.net.MalformedURLException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 /**
  * Project:        Masterthesis of Sascha Feldmann
@@ -148,8 +146,8 @@ public class FileUpload extends com.vaadin.ui.Upload implements Upload.Receiver,
      * @see com.vaadin.ui.Upload.FailedListener#uploadFailed(FailedEvent)
      */
     public void uploadFailed(FailedEvent failedEvent) {
-        LOGGER.error("uploadFailed(): could not upload file {} due to an exception {}:\n{}",
-                failedEvent.getFilename(), failedEvent.getReason().getMessage(), ExceptionUtils.getStackTrace(failedEvent.getReason()));
+        LOGGER.error("uploadFailed(): could not upload file {} due to an exception :\n{}",
+                failedEvent.getFilename(), failedEvent);
 
         fileUploadListener.uploadFailed();
     }

@@ -353,4 +353,13 @@ public class Messages {
     public String getCourseContentsViewUploadFileProcessSuccessNotificationText(String params) {
         return String.format("'%s' wurde erfolgreich hochgeladen und verarbeitet.", params);
     }
+
+    /**
+     * Gets the text
+     * @param params
+     * @return
+     */
+    public String getCourseContentsViewUploadFileProcessErrorNotificationText(String params) {
+        return String.format("'%s' konnte nicht verarbeiten werden.", params);
+    }
 }

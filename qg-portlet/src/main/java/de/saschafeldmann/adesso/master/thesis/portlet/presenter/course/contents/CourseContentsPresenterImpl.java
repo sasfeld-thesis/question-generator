@@ -72,7 +72,21 @@ public class CourseContentsPresenterImpl extends AbstractStepPresenter implement
 
     @Override
     public void onContentFileUploaded(File contentFile) {
+        LOGGER.info("onContentFileUploaded()");
 
+        courseContentsView.displayFileUploadInformation(messages.getCourseContentsViewUploadFileSuccessNotificationText(contentFile.getName()));
+
+        try {
+            importerService.addOrReplaceLearningContentByFile(questionGenerationSession.getCourse(), contentFile);
+
+            courseContentsView.displayFileUploadInformation(messages.getCourseContentsViewUploadFileProcessSuccessNotificationText(contentFile.getName()));
+            updateCourseFileUploadRawTexts();
+        } catch (Exception e) {
+            LOGGER.error("onContentFileUploaded(): could extract the raw text from file {} - exception occured:\n{}",
+                    contentFile.getName(),
+                    e);
+            courseContentsView.displayFileUploadError(messages.getCourseContentsViewUploadFileProcessErrorNotificationText(contentFile.getName()));
+        }
     }
 
     @Override
@@ -96,8 +110,8 @@ public class CourseContentsPresenterImpl extends AbstractStepPresenter implement
 
             updateCourseRawTexts();
         } catch (Exception e) {
-            LOGGER.error("onContentRawTextChangeClick(): could not add the raw text - exception {} occured:\n{}",
-                    e.getMessage(), ExceptionUtils.getStackTrace(e));
+            LOGGER.error("onContentRawTextChangeClick(): could not add the raw text - exception occured:\n{}",
+                    e);
 
             Notification.show(
                     messages.getCourseContentsViewAddRawTextErrorNotificationTitle(),
@@ -116,8 +130,8 @@ public class CourseContentsPresenterImpl extends AbstractStepPresenter implement
 
             updateCourseRawTexts();
         } catch (Exception e) {
-            LOGGER.error("onContentRawTextDeleteClick(): could not delete the raw text - exception {} occured:\n{}",
-                    e.getMessage(), ExceptionUtils.getStackTrace(e));
+            LOGGER.error("onContentRawTextDeleteClick(): could not delete the raw text - exception occured:\n{}",
+                    e);
 
             Notification.show(
                     messages.getCourseContentsViewDeleteRawTextErrorNotificationTitle(),
@@ -141,8 +155,8 @@ public class CourseContentsPresenterImpl extends AbstractStepPresenter implement
 
             updateCourseRawTexts();
         } catch (Exception e) {
-            LOGGER.error("onContentRawTextAddClick(): could not add the raw text - exception {} occured:\n{}",
-                    e.getMessage(), ExceptionUtils.getStackTrace(e));
+            LOGGER.error("onContentRawTextAddClick(): could not add the raw text - exception occured:\n{}",
+                    e);
 
             Notification.show(
                     messages.getCourseContentsViewAddRawTextErrorNotificationTitle(),

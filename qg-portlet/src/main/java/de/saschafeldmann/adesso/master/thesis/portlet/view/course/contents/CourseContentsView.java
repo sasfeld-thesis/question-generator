@@ -3,6 +3,7 @@ package de.saschafeldmann.adesso.master.thesis.portlet.view.course.contents;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.ViewWithMenu;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -52,4 +53,15 @@ public interface CourseContentsView extends ViewWithMenu {
      */
     void setViewListener(CourseContentsViewListener courseContentsViewListener);
 
+    /**
+     * Displays the current file upload information.
+     * @param information String
+     */
+    void displayFileUploadInformation(String information);
+
+    /**
+     * Displays the current file upload error.
+     * @param error String
+     */
+    void displayFileUploadError(String error);
 }

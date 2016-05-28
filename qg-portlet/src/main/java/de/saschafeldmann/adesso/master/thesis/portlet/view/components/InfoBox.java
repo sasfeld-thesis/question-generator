@@ -82,4 +82,11 @@ public class InfoBox extends HorizontalLayout {
         this.setIcon(VaadinIcons.INFO_CIRCLE);
     }
 
+    /**
+     * Sets the box as error.
+     * A warning icon will be drawn.
+     */
+    public void setError() {
+        this.setIcon(VaadinIcons.WARNING);
+    }
 }

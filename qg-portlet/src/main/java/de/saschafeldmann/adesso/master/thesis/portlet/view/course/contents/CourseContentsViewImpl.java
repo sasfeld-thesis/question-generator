@@ -302,21 +302,26 @@ public class CourseContentsViewImpl extends AbstractStepView implements CourseCo
 
     @Override
     public void uploadFailed() {
-        // display error notification
-        Notification.show(
-                messages.getCourseContentsViewUploadFileErrorNotificationTitle(),
-                messages.getCourseContentsViewUploadFileErrorNotificationText(),
-                Notification.Type.ERROR_MESSAGE
-        );
+        this.displayFileUploadError(messages.getCourseContentsViewUploadFileErrorNotificationText());
     }
 
     @Override
     public void uploadSucceeded(final File file) {
-        // display info box
-        this.accordionDocumentsRightSideInfoBox.setInfo();
-        this.accordionDocumentsRightSideInfoBox.setCaption(messages.getCourseContentsViewUploadFileSuccessNotificationText(file.getName()));
-
         // notify listener
         viewListener.onContentFileUploaded(file);
+    }
+
+    @Override
+    public void displayFileUploadInformation(final String information) {
+        // display info box
+        this.accordionDocumentsRightSideInfoBox.setInfo();
+        this.accordionDocumentsRightSideInfoBox.setCaption(information);
+    }
+
+    @Override
+    public void displayFileUploadError(String error) {
+        // display error box
+        this.accordionDocumentsRightSideInfoBox.setError();
+        this.accordionDocumentsRightSideInfoBox.setCaption(error);
     }
 }

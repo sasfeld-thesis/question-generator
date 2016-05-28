@@ -52,13 +52,7 @@ public class ImporterServiceImpl implements ImporterService {
         checkNotNull(contentTitle, "The contentTitle must not be null.");
         checkNotNull(contentRawText, "The contentRawText must not be null.");
 
-        LearningContent learningContent = new LearningContent.LearningContentBuilder()
-                .withTitle(contentTitle)
-                .withRawText(contentRawText)
-                .withType(LearningContent.Type.DIRECT_RAWTEXT)
-                .build();
-
-        course.addOrReplaceLearningContent(learningContent);
+        addOrReplaceLearningContentToCourse(course, contentTitle, contentRawText, LearningContent.Type.DIRECT_RAWTEXT);
     }
 
     @Override
@@ -69,7 +63,17 @@ public class ImporterServiceImpl implements ImporterService {
         final String rawText = parseFile(file);
         final String learningContentTitle = file.getName();
 
-        addOrReplaceLearningContentByRawtext(course, learningContentTitle, rawText);
+        addOrReplaceLearningContentToCourse(course, learningContentTitle, rawText, LearningContent.Type.FILE);
+    }
+
+    private void addOrReplaceLearningContentToCourse(Course course, String contentTitle, String contentRawText, LearningContent.Type type) {
+        LearningContent learningContent = new LearningContent.LearningContentBuilder()
+                .withTitle(contentTitle)
+                .withRawText(contentRawText)
+                .withType(type)
+                .build();
+
+        course.addOrReplaceLearningContent(learningContent);
     }
 
     private String parseFile(final File file) throws ParserException {
