@@ -1,11 +1,14 @@
 package de.saschafeldmann.adesso.master.thesis.elearningimport.parser;
 
+import static com.google.common.base.Preconditions.*;
 import org.apache.tika.exception.TikaException;
 import org.apache.tika.metadata.Metadata;
 import org.apache.tika.parser.AutoDetectParser;
 import org.apache.tika.sax.BodyContentHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 import org.xml.sax.SAXException;
 
 import java.io.*;
@@ -25,6 +28,8 @@ import java.io.*;
  * <br /><br />
  * A {@link RawtextParserAdapter} to the Apache Tika library.
  */
+@Component
+@Scope("singleton")
 public class TikaRawtextParserAdapter implements RawtextParserAdapter {
     private static final Logger LOGGER = LoggerFactory.getLogger(TikaRawtextParserAdapter.class);
 
@@ -32,6 +37,8 @@ public class TikaRawtextParserAdapter implements RawtextParserAdapter {
      * @see RawtextParserAdapter#extractRawtext(File)
      */
     public String extractRawtext(final File file) throws ParserException {
+        checkNotNull(file, "File must not be null.");
+
         AutoDetectParser autoDetectParser = new AutoDetectParser();
         BodyContentHandler bodyContentHandler = new BodyContentHandler();
         Metadata metadata = new Metadata();

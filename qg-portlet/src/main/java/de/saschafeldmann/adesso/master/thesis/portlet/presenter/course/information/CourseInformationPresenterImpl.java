@@ -2,6 +2,8 @@ package de.saschafeldmann.adesso.master.thesis.portlet.presenter.course.informat
 
 import com.vaadin.navigator.Navigator;
 import com.vaadin.ui.Notification;
+import de.saschafeldmann.adesso.master.thesis.elearningimport.ImporterService;
+import de.saschafeldmann.adesso.master.thesis.elearningimport.ImporterServiceImpl;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.Course;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.Language;
 import de.saschafeldmann.adesso.master.thesis.portlet.model.QuestionGenerationSession;
@@ -40,6 +42,7 @@ public class CourseInformationPresenterImpl extends AbstractStepPresenter implem
     private static final Logger LOGGER = LoggerFactory.getLogger(CourseInformationPresenterImpl.class);
 
     private final CourseInformationView courseInformationView;
+    private final ImporterService importerService;
     private Course courseModel;
     private Messages messages;
 
@@ -48,13 +51,15 @@ public class CourseInformationPresenterImpl extends AbstractStepPresenter implem
      * @param courseInformationViewImpl the managed view.
      */
     @Autowired
-    public CourseInformationPresenterImpl(final CourseInformationViewImpl courseInformationViewImpl, final Messages messages) {
+    public CourseInformationPresenterImpl(final CourseInformationViewImpl courseInformationViewImpl, final Messages messages,
+                                          final ImporterServiceImpl importerService) {
         if (null == courseInformationViewImpl) {
             throw new NullPointerException("The argument courseInformationView must not be null!");
         }
 
         this.courseInformationView = courseInformationViewImpl;
         this.messages = messages;
+        this.importerService = importerService;
     }
 
     /**
@@ -95,11 +100,10 @@ public class CourseInformationPresenterImpl extends AbstractStepPresenter implem
      * Creates or updates the course model.
      */
     private void updateCourseModel() {
-        this.courseModel = new Course.CourseBuilder()
-                .withTitle(courseInformationView.getInputTitle())
-                .withViewUrl(courseInformationView.getInputViewUrl())
-                .withLanguage(getLanguage(courseInformationView.getInputLanguage()))
-                .build();
+        this.courseModel = importerService.buildNewCourseInstance(
+                courseInformationView.getInputTitle(),
+                courseInformationView.getInputViewUrl(),
+                getLanguage(courseInformationView.getInputLanguage()));
 
         this.questionGenerationSession.setCourse(courseModel);
     }

@@ -1,6 +1,7 @@
 package de.saschafeldmann.adesso.master.thesis.portlet.presenter.course.contents;
 
 import com.vaadin.ui.Notification;
+import de.saschafeldmann.adesso.master.thesis.elearningimport.ImporterService;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.Course;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.AbstractStepPresenter;
@@ -42,6 +43,7 @@ public class CourseContentsPresenterImpl extends AbstractStepPresenter implement
     private final CourseContentsView courseContentsView;
     private Course courseModel;
     private final Messages messages;
+    private final ImporterService importerService;
 
     /**
      * Creates a new CourseContentsPresenterImpl.
@@ -50,9 +52,11 @@ public class CourseContentsPresenterImpl extends AbstractStepPresenter implement
      */
     @Autowired
     public CourseContentsPresenterImpl(final CourseContentsView courseContentsView,
-                                       final Messages messages) {
+                                       final Messages messages,
+                                       final ImporterService importerService) {
         this.courseContentsView = courseContentsView;
         this.messages = messages;
+        this.importerService = importerService;
     }
 
     /**
@@ -96,8 +100,9 @@ public class CourseContentsPresenterImpl extends AbstractStepPresenter implement
         LOGGER.info("onContentRawTextChangeClick()");
 
         try {
-            LearningContent newLearningContent = buildLearningContent(learningContent.getTitle(), textareaInput, LearningContent.Type.DIRECT_RAWTEXT);
-            questionGenerationSession.getCourse().addOrReplaceLearningContent(newLearningContent);
+            importerService.addOrReplaceLearningContentByRawtext(questionGenerationSession.getCourse(),
+                    learningContent.getTitle(),
+                    textareaInput);
 
             updateCourseRawTexts();
         } catch (Exception e) {
@@ -119,7 +124,7 @@ public class CourseContentsPresenterImpl extends AbstractStepPresenter implement
         LOGGER.info("onContentRawTextDeleteClick()");
 
         try {
-            questionGenerationSession.getCourse().removeLearningContent(learningContent);
+            importerService.removeLearningContent(questionGenerationSession.getCourse(), learningContent);
 
             updateCourseRawTexts();
         } catch (Exception e) {
@@ -146,8 +151,9 @@ public class CourseContentsPresenterImpl extends AbstractStepPresenter implement
      */
     public void onContentRawTextAddClick(final String contentTitle, final String contentRawText) {
         try {
-            LearningContent learningContent = buildLearningContent(contentTitle, contentRawText, LearningContent.Type.DIRECT_RAWTEXT);
-            questionGenerationSession.getCourse().addOrReplaceLearningContent(learningContent);
+            importerService.addOrReplaceLearningContentByRawtext(questionGenerationSession.getCourse(),
+                    contentTitle,
+                    contentRawText);
 
             updateCourseRawTexts();
         } catch (Exception e) {
@@ -196,14 +202,6 @@ public class CourseContentsPresenterImpl extends AbstractStepPresenter implement
         }
 
         return courseRawTexts;
-    }
-
-    private LearningContent buildLearningContent(String contentTitle, String contentRawText, LearningContent.Type type) {
-        return new LearningContent.LearningContentBuilder()
-                .withTitle(contentTitle)
-                .withRawText(contentRawText)
-                .withType(type)
-                .build();
     }
 
     /**
