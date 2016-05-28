@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * Project:        Masterthesis of Sascha Feldmann
@@ -31,6 +32,11 @@ public class TikaRawtextParserAdapterTest {
     private final static String TEST_FILE_DOCX = "/files/testdocument.docx";
     private final static String TEST_FILE_ODT = "/files/testdocument.odt";
     private final static String TEST_FILE_PDF = "/files/testdocument.pdf";
+    private final static String TEST_FILE_ODP = "/files/testdocument.odp";
+    private final static String TEST_FILE_PPTX = "/files/testdocument.pptx";
+    private static final String TEST_PDF_FILE_WITHOUT_EXTENSION = "/files/testdocument";
+    private static final String TEST_TXT_FILE = "/files/testdocument.txt";
+    private static final String TEST_FILE_NOT_EXISTING = "/files/notexisting";
 
     private final static List<String> EXPECTED_STRINGS_PDF = new ArrayList<>(
             Arrays.asList(
@@ -57,6 +63,11 @@ public class TikaRawtextParserAdapterTest {
                     "In a last step, an natural language generation component will create – hopefully – syntactically correct questions."
             ));
 
+    private final static List<String> EXPECTED_STRINGS_ODT = EXPECTED_STRINGS_DOCX;
+    private final static List<String> EXPECTED_STRINGS_ODP = EXPECTED_STRINGS_DOCX;
+    private final static List<String> EXPECTED_STRINGS_PPTX = EXPECTED_STRINGS_ODP;
+    private static final List<String> EXPECTED_STRINGS_TXT = EXPECTED_STRINGS_DOCX;
+
     private RawtextParserAdapter rawtextParserAdapter;
 
     private static RawtextParserAdapter newTikaRawTextParserAdapter() {
@@ -69,42 +80,67 @@ public class TikaRawtextParserAdapterTest {
     }
 
     @Test
-    public void testPdfFileParsing() throws ParserException, URISyntaxException {
+    public void testPdfFileParsingIsSuccessful() throws ParserException, URISyntaxException {
+        testFile(TEST_FILE_PDF, EXPECTED_STRINGS_PDF);
+    }
+
+    @Test
+    public void testDocxFileParsingIsSuccessful() throws ParserException, URISyntaxException {
+        testFile(TEST_FILE_DOCX, EXPECTED_STRINGS_DOCX);
+    }
+
+    @Test
+    public void testOdtFileParsingIsSuccessful() throws ParserException, URISyntaxException {
+        testFile(TEST_FILE_ODT, EXPECTED_STRINGS_ODT);
+    }
+
+    @Test
+    public void testOdpFileParsingIsSuccessful() throws ParserException, URISyntaxException {
+        testFile(TEST_FILE_ODP, EXPECTED_STRINGS_ODP);
+    }
+
+    @Test
+    public void testPptxFileParsingIsSuccessful() throws ParserException, URISyntaxException {
+        testFile(TEST_FILE_PPTX, EXPECTED_STRINGS_PPTX);
+    }
+
+    @Test
+    public void testTextFileParsingIsSuccessful() throws URISyntaxException, ParserException {
+        testFile(TEST_TXT_FILE, EXPECTED_STRINGS_TXT);
+    }
+
+    @Test
+    public void testFileWithoutExtensionIsSuccessful() throws URISyntaxException, ParserException {
+        testFile(TEST_PDF_FILE_WITHOUT_EXTENSION, EXPECTED_STRINGS_PDF);
+    }
+
+    @Test
+    public void testInvalidFileLeadsToParserException() throws URISyntaxException {
+        try {
+            // given a PDF file
+            File file = new File(TEST_FILE_NOT_EXISTING);
+
+            // when extractRawtext() is called with the given file
+            rawtextParserAdapter.extractRawtext(file);
+
+            // then an exception should have been thrown
+            fail("A parser exception should have been thrown.");
+        } catch (ParserException parserException) {
+            // test is successful
+            assertTrue("An exception message should been given", parserException.getMessage().length() > 0);
+        }
+    }
+
+    private void testFile(String testFile, List<String> expectedStrings) throws URISyntaxException, ParserException {
         // given a PDF file
-        File file = getFile(TEST_FILE_PDF);
+        File file = getFile(testFile);
 
         // when extractRawtext() is called with the given file
         String extractedRawtext = rawtextParserAdapter.extractRawtext(file);
 
         // then assert the following rawtext
         assertTrue("The extracted rawtext must not be empty", extractedRawtext.length() > 0);
-        assertExtractedTextContainsExpectedStrings(extractedRawtext, EXPECTED_STRINGS_PDF);
-    }
-
-    @Test
-    public void testDocxFileParsing() throws ParserException, URISyntaxException {
-        // given a DOCX file
-        File pdfFile = getFile(TEST_FILE_DOCX);
-
-        // when extractRawtext() is called with the given file
-        String extractedRawtext = rawtextParserAdapter.extractRawtext(pdfFile);
-
-        // then assert the following rawtext
-        assertTrue("The extracted rawtext must not be empty", extractedRawtext.length() > 0);
-        assertExtractedTextContainsExpectedStrings(extractedRawtext, EXPECTED_STRINGS_DOCX);
-    }
-
-    @Test
-    public void testOdtFileParsing() throws ParserException, URISyntaxException {
-        // given a DOCX file
-        File pdfFile = getFile(TEST_FILE_ODT);
-
-        // when extractRawtext() is called with the given file
-        String extractedRawtext = rawtextParserAdapter.extractRawtext(pdfFile);
-
-        // then assert the following rawtext
-        assertTrue("The extracted rawtext must not be empty", extractedRawtext.length() > 0);
-        assertExtractedTextContainsExpectedStrings(extractedRawtext, EXPECTED_STRINGS_DOCX);
+        assertExtractedTextContainsExpectedStrings(extractedRawtext, expectedStrings);
     }
 
     private void assertExtractedTextContainsExpectedStrings(String extractedRawtext, List<String> expectedStrings) {

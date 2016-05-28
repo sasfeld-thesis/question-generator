@@ -1,0 +1,7 @@
+Test document
+
+I'm writing this text here to test the import functionality of my question generator software. The question generator itself is the central part of my master thesis at Hochschule für Technik und Wirtschaft, Berlin in 2016.
+
+The software allows e-learning administrators to automatically create test quesion for their offered courses. Therefore they need to provide the course contents so that the concepts can be extracted by making use of natural language processing and semantical technologies.
+
+In a last step, an natural language generation component will create – hopefully – syntactically correct questions.
