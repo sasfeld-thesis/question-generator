@@ -6,6 +6,7 @@ import de.saschafeldmann.adesso.master.thesis.elearningimport.model.Course;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.Language;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.parser.ParserException;
+import de.saschafeldmann.adesso.master.thesis.elearningimport.parser.TikaRawtextParserAdapter;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -25,7 +26,7 @@ import java.net.URISyntaxException;
  * Company:
  * adesso AG
  * <br /><br />
- * Test of the {@link ImporterServiceImpl}
+ * Test of the {@link ImporterServiceImpl} service facade
  */
 public class ImporterServiceImplTest {
     private static final String COURSE_TITLE = "Testcourse";
@@ -35,12 +36,7 @@ public class ImporterServiceImplTest {
     private static final String RAWTEXT_LEARNING_CONTENT_TEXT = "Test content";
     private static final String FILE_LEARNING_CONTENT = "/files/testdocument.docx";
     private static final String FILE_LEARNING_CONTENT_TITLE = "testdocument.docx";
-    private static final String FILE_LEARNING_CONTENT_TEXT =  "Test document"
-            +"I'm writing this text here to test the import functionality of my question generator software."
-            +"The question generator itself is the central part of my master thesis at Hochschule für Technik und Wirtschaft, Berlin in 2016."
-            +"The software allows e-learning administrators to automatically create test quesion for their offered courses. "
-            +"Therefore they need to provide the course contents so that the concepts can be extracted by making use of natural language processing and semantical technologies."
-            +"In a last step, an natural language generation component will create – hopefully – syntactically correct questions.";
+    private static final String FILE_LEARNING_CONTENT_TEXT_FIRSTLINE =  "Test document";
 
 
     private ImporterService importerService;
@@ -51,7 +47,7 @@ public class ImporterServiceImplTest {
     }
 
     private ImporterService newImporterServiceImpl() {
-        return new ImporterServiceImpl();
+        return new ImporterServiceImpl(new TikaRawtextParserAdapter());
     }
 
     @Test
@@ -98,7 +94,7 @@ public class ImporterServiceImplTest {
         // then the following learning content should have been added to the course
         assertEquals(1, course.getLearningContents().size());
         assertEquals(FILE_LEARNING_CONTENT_TITLE, course.getLearningContents().get(0).getTitle());
-        assertEquals(FILE_LEARNING_CONTENT_TEXT, course.getLearningContents().get(0).getRawText());
+        assertTrue(course.getLearningContents().get(0).getRawText().contains(FILE_LEARNING_CONTENT_TEXT_FIRSTLINE));
         // and especially the type file should have been set automatically
         assertEquals(LearningContent.Type.FILE, course.getLearningContents().get(0).getType());
     }
@@ -128,7 +124,9 @@ public class ImporterServiceImplTest {
 
         // when service method is called
         importerService.removeLearningContent(course, learningContent);
-        
+
+        // then the learning contents should have been removed
+        assertEquals(0, course.getLearningContents().size());
     }
 
     private Course newCourse() {

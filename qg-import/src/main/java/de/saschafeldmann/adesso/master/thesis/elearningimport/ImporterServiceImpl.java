@@ -30,8 +30,12 @@ import java.io.File;
 @Component
 @Scope("singleton")
 public class ImporterServiceImpl implements ImporterService {
+    private final RawtextParserAdapter rawtextParserAdapter;
+
     @Autowired
-    private RawtextParserAdapter rawtextParserAdapter;
+    public ImporterServiceImpl(final RawtextParserAdapter rawtextParserAdapter) {
+        this.rawtextParserAdapter = rawtextParserAdapter;
+    }
 
     @Override
     public Course buildNewCourseInstance(final String courseTitle, final String courseViewUrl, final Language courseMainLanguage) {
