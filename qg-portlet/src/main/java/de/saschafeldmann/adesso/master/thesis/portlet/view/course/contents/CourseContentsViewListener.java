@@ -28,9 +28,10 @@ public interface CourseContentsViewListener {
 
     /**
      * Triggered if a content file was selected and its content was changed.
-     * @param learningContent the associated {@link LearningContent} of {@link de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent.Type} FILE
+     * @param learningContent the associated {@link LearningContent} of {@link LearningContent.Type} FILE
+     * @param newRawText
      */
-    void onContentFileChangeClick(final LearningContent learningContent);
+    void onContentFileChangeClick(final LearningContent learningContent, String newRawText);
 
     /**
      * Triggered if a content file was selected an delete was pressed.

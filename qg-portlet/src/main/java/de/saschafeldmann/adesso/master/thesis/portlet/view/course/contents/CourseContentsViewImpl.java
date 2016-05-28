@@ -211,6 +211,22 @@ public class CourseContentsViewImpl extends AbstractStepView implements CourseCo
             }
         });
 
+        accordionDocumentsLeftSideUploadedList.addValueChangeListener(new Property.ValueChangeListener() {
+            @Override
+            public void valueChange(Property.ValueChangeEvent valueChangeEvent) {
+                if (null != valueChangeEvent.getProperty()) {
+                    LearningContent selectedContent = (LearningContent) valueChangeEvent.getProperty().getValue();
+
+                    if (null != selectedContent) {
+                        showFileEditWindow(selectedContent);
+                    }
+                }
+
+                // reset selection
+                accordionDocumentsLeftSideUploadedList.select(accordionDocumentsLeftSideUploadedList.getNullSelectionItemId());
+            }
+        });
+
         accordionDocumentsLeftSideFileUpload.setFileUploadListener(this);
     }
 
@@ -240,6 +256,37 @@ public class CourseContentsViewImpl extends AbstractStepView implements CourseCo
              */
             public void onDeleteButtonClicked() {
                 viewListener.onContentRawTextDeleteClick(selectedContent);
+            }
+        });
+
+        editWindow.reset();   // initializes / resets the windows layout
+        editWindow.center();  // displays the window on the screen center
+
+        // displays the window
+        UI.getCurrent().addWindow(editWindow);
+    }
+
+    private void showFileEditWindow(final LearningContent selectedContent) {
+        String title = selectedContent.getTitle();
+        String rawText = selectedContent.getRawText();
+        editWindow.setTextareaLabel(messages.getCourseContentsViewFileEditWindowTextareaLabel());
+        editWindow.setTitle(messages.getCourseContentsViewFileEditWindowTitleText() + " - " + title);
+        editWindow.setTextareaInput(rawText);
+
+        // set window listener which delegates to the view listener
+        editWindow.setEditWindowListener(new EditWindowListener() {
+            /**
+             * @see EditWindowListener#onEditButtonClicked(String)
+             */
+            public void onEditButtonClicked(String textareaInput) {
+                viewListener.onContentFileChangeClick(selectedContent, textareaInput);
+            }
+
+            /**
+             * @see EditWindowListener#onDeleteButtonClicked()
+             */
+            public void onDeleteButtonClicked() {
+                viewListener.onContentFileDeleteClick(selectedContent);
             }
         });
 

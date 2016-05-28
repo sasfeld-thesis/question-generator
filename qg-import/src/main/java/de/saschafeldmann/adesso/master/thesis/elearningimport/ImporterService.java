@@ -57,4 +57,14 @@ public interface ImporterService {
      * @param learningContent the learning content that should get removed
      */
     void removeLearningContent(final Course course, final LearningContent learningContent);
+
+    /**
+     * Adds or replaces - if a learning content with the given title already belongs to the course -  learning content to the given course.
+     *
+     * @param course the course that the learning content should be added to
+     * @param contentTitle the unique content title. If content with this title was already attached to the course, it will be replaced.
+     * @param contentRawText the raw text
+     * @param type the {@link de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent.Type}
+     */
+    void addOrReplaceLearningContentWithType(Course course, String contentTitle, String contentRawText, LearningContent.Type type);
 }

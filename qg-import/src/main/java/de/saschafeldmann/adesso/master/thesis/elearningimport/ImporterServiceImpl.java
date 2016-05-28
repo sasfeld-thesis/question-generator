@@ -87,4 +87,14 @@ public class ImporterServiceImpl implements ImporterService {
 
         course.removeLearningContent(learningContent);
     }
+
+    @Override
+    public void addOrReplaceLearningContentWithType(Course course, String contentTitle, String contentRawText, LearningContent.Type type) {
+        checkNotNull(course, "The course must not be null.");
+        checkNotNull(contentTitle, "The contentTitle must not be null.");
+        checkNotNull(contentRawText, "The contentRawText must not be null.");
+        checkNotNull(type, "The type must not be null.");
+
+        addOrReplaceLearningContentToCourse(course, contentTitle, contentRawText, type);
+    }
 }

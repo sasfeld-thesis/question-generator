@@ -8,8 +8,6 @@ import de.saschafeldmann.adesso.master.thesis.portlet.presenter.AbstractStepPres
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.Messages;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.course.contents.CourseContentsView;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.course.contents.CourseContentsViewListener;
-import de.saschafeldmann.adesso.master.thesis.portlet.view.course.information.CourseInformationViewListener;
-import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,7 +78,7 @@ public class CourseContentsPresenterImpl extends AbstractStepPresenter implement
             importerService.addOrReplaceLearningContentByFile(questionGenerationSession.getCourse(), contentFile);
 
             courseContentsView.displayFileUploadInformation(messages.getCourseContentsViewUploadFileProcessSuccessNotificationText(contentFile.getName()));
-            updateCourseFileUploadRawTexts();
+            updateLearningContentsInView();
         } catch (Exception e) {
             LOGGER.error("onContentFileUploaded(): could extract the raw text from file {} - exception occured:\n{}",
                     contentFile.getName(),
@@ -90,13 +88,44 @@ public class CourseContentsPresenterImpl extends AbstractStepPresenter implement
     }
 
     @Override
-    public void onContentFileChangeClick(LearningContent learningContent) {
+    public void onContentFileChangeClick(LearningContent learningContent, String newRawText) {
         LOGGER.info("onContentFileChangeClick()");
+
+        try {
+            importerService.addOrReplaceLearningContentWithType(questionGenerationSession.getCourse(),
+                    learningContent.getTitle(),
+                    newRawText,
+                    LearningContent.Type.FILE);
+
+            updateLearningContentsInView();
+        } catch (Exception e) {
+            LOGGER.error("onContentFileChangeClick(): could not change the raw text - exception occured:\n{}",
+                    e);
+
+            Notification.show(
+                    messages.getCourseContentsViewAddRawTextErrorNotificationTitle(),
+                    messages.getCourseContentsViewAddRawTextErrorNotificationText(),
+                    Notification.Type.ERROR_MESSAGE
+            );
+        }
     }
 
     @Override
     public void onContentFileDeleteClick(LearningContent learningContent) {
         LOGGER.info("onContentFileDeleteClick()");
+
+        try {
+            removeLearningContent(learningContent);
+        } catch (Exception e) {
+            LOGGER.error("onContentFileDeleteClick(): could not delete the raw text - exception occured:\n{}",
+                    e);
+
+            Notification.show(
+                    messages.getCourseContentsViewDeleteRawTextErrorNotificationTitle(),
+                    messages.getCourseContentsViewDeleteRawTextErrorNotificationText(),
+                    Notification.Type.ERROR_MESSAGE
+            );
+        }
     }
 
     @Override
@@ -108,9 +137,9 @@ public class CourseContentsPresenterImpl extends AbstractStepPresenter implement
                     learningContent.getTitle(),
                     textareaInput);
 
-            updateCourseRawTexts();
+            updateLearningContentsInView();
         } catch (Exception e) {
-            LOGGER.error("onContentRawTextChangeClick(): could not add the raw text - exception occured:\n{}",
+            LOGGER.error("onContentRawTextChangeClick(): could not cbange the raw text - exception occured:\n{}",
                     e);
 
             Notification.show(
@@ -126,9 +155,7 @@ public class CourseContentsPresenterImpl extends AbstractStepPresenter implement
         LOGGER.info("onContentRawTextDeleteClick()");
 
         try {
-            importerService.removeLearningContent(questionGenerationSession.getCourse(), learningContent);
-
-            updateCourseRawTexts();
+            removeLearningContent(learningContent);
         } catch (Exception e) {
             LOGGER.error("onContentRawTextDeleteClick(): could not delete the raw text - exception occured:\n{}",
                     e);
@@ -153,7 +180,7 @@ public class CourseContentsPresenterImpl extends AbstractStepPresenter implement
                     contentTitle,
                     contentRawText);
 
-            updateCourseRawTexts();
+            updateLearningContentsInView();
         } catch (Exception e) {
             LOGGER.error("onContentRawTextAddClick(): could not add the raw text - exception occured:\n{}",
                     e);
@@ -175,6 +202,17 @@ public class CourseContentsPresenterImpl extends AbstractStepPresenter implement
             this.courseContentsView.setCurrentSessionStatus(questionGenerationSession.getStatus());
             this.courseContentsView.reset();
         }
+    }
+
+    private void removeLearningContent(LearningContent learningContent) {
+        importerService.removeLearningContent(questionGenerationSession.getCourse(), learningContent);
+
+        updateLearningContentsInView();
+    }
+
+    private void updateLearningContentsInView() {
+        updateCourseFileUploadRawTexts();
+        updateCourseRawTexts();
     }
 
     /**

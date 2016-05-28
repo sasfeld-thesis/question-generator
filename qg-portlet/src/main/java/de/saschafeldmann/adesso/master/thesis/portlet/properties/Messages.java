@@ -360,6 +360,22 @@ public class Messages {
      * @return
      */
     public String getCourseContentsViewUploadFileProcessErrorNotificationText(String params) {
-        return String.format("'%s' konnte nicht verarbeiten werden.", params);
+        return String.format("'%s' konnte nicht verarbeitet werden.", params);
+    }
+
+    /**
+     * Gets the text
+     * @return String
+     */
+    public String getCourseContentsViewFileEditWindowTextareaLabel() {
+        return "Extrahierter Inhalt:";
+    }
+
+    /**
+     * Gets the text
+     * @return String
+     */
+    public String getCourseContentsViewFileEditWindowTitleText() {
+        return "Hochgeladenes Dokument";
     }
 }
