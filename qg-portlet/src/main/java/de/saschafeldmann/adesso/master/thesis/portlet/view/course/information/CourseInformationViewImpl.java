@@ -114,16 +114,12 @@ public class CourseInformationViewImpl extends AbstractStepView implements Cours
         });
     }
 
-    /**
-     * @see View#enter(ViewChangeListener.ViewChangeEvent)
-     */
+    @Override
     public void enter(ViewChangeListener.ViewChangeEvent viewChangeEvent) {
         viewListener.onViewFocus();
     }
 
-    /**
-     * @see CourseInformationView#reset()
-     */
+    @Override
     public void reset() {
         // add menu and set the course information item to be active
         super.reset(messages.getMenuItemCourseInformationLabel());
@@ -154,9 +150,7 @@ public class CourseInformationViewImpl extends AbstractStepView implements Cours
         }
     }
 
-    /**
-     * @see CourseInformationView#getRootComponent()
-     */
+    @Override
     public com.vaadin.ui.Component getRootComponent() {
         return this;
     }
@@ -177,30 +171,22 @@ public class CourseInformationViewImpl extends AbstractStepView implements Cours
         this.viewMode = viewMode;
     }
 
-    /**
-     * @see CourseInformationView#getInputTitle()
-     */
+    @Override
     public String getInputTitle() {
         return inputCourseTitle.getValue();
     }
 
-    /**
-     * @see CourseInformationView#getInputViewUrl()
-     */
+    @Override
     public String getInputViewUrl() {
         return inputCourseUrl.getValue();
     }
 
-    /**
-     * @see CourseInformationView#getInputLanguage()
-     */
+    @Override
     public String getInputLanguage() {
         return (String) inputCourseLanguageSelect.getValue();
     }
 
-    /**
-     * @see CourseInformationView#setCourseTitle(String)
-     */
+    @Override
     public void setCourseTitle(String courseTitle) {
         this.courseTitle = courseTitle;
     }

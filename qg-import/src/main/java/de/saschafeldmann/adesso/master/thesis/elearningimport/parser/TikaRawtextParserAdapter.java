@@ -33,9 +33,7 @@ import java.io.*;
 public class TikaRawtextParserAdapter implements RawtextParserAdapter {
     private static final Logger LOGGER = LoggerFactory.getLogger(TikaRawtextParserAdapter.class);
 
-    /**
-     * @see RawtextParserAdapter#extractRawtext(File)
-     */
+    @Override
     public String extractRawtext(final File file) throws ParserException {
         checkNotNull(file, "File must not be null.");
 

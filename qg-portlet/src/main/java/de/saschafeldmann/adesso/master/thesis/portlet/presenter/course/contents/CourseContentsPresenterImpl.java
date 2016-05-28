@@ -59,9 +59,7 @@ public class CourseContentsPresenterImpl extends AbstractStepPresenter implement
         this.importerService = importerService;
     }
 
-    /**
-     * @see CourseContentsPresenter#initializeView()
-     */
+    @Override
     public CourseContentsView initializeView() {
         this.courseContentsView.setMenuListener(this);
         this.courseContentsView.setViewListener(this);
@@ -72,30 +70,22 @@ public class CourseContentsPresenterImpl extends AbstractStepPresenter implement
         return this.courseContentsView;
     }
 
-    /**
-     * @see CourseContentsViewListener#onContentFileUploaded(File)
-     */
+    @Override
     public void onContentFileUploaded(File contentFile) {
 
     }
 
-    /**
-     * @see CourseContentsViewListener#onContentFileChangeClick(LearningContent)
-     */
+    @Override
     public void onContentFileChangeClick(LearningContent learningContent) {
         LOGGER.info("onContentFileChangeClick()");
     }
 
-    /**
-     * @see CourseContentsViewListener#onContentFileDeleteClick(LearningContent)
-     */
+    @Override
     public void onContentFileDeleteClick(LearningContent learningContent) {
         LOGGER.info("onContentFileDeleteClick()");
     }
 
-    /**
-     * @see CourseContentsViewListener#onContentRawTextChangeClick(LearningContent, String)
-     */
+    @Override
     public void onContentRawTextChangeClick(LearningContent learningContent, String textareaInput) {
         LOGGER.info("onContentRawTextChangeClick()");
 
@@ -117,9 +107,7 @@ public class CourseContentsPresenterImpl extends AbstractStepPresenter implement
         }
     }
 
-    /**
-     * @see CourseContentsViewListener#onContentRawTextDeleteClick(LearningContent)
-     */
+    @Override
     public void onContentRawTextDeleteClick(LearningContent learningContent) {
         LOGGER.info("onContentRawTextDeleteClick()");
 
@@ -139,16 +127,12 @@ public class CourseContentsPresenterImpl extends AbstractStepPresenter implement
         }
     }
 
-    /**
-     * @see CourseContentsViewListener#onNextButtonClicked()
-     */
+    @Override
     public void onNextButtonClicked() {
 
     }
 
-    /**
-     * @see CourseContentsViewListener#onContentRawTextAddClick(String, String)
-     */
+    @Override
     public void onContentRawTextAddClick(final String contentTitle, final String contentRawText) {
         try {
             importerService.addOrReplaceLearningContentByRawtext(questionGenerationSession.getCourse(),
@@ -165,6 +149,17 @@ public class CourseContentsPresenterImpl extends AbstractStepPresenter implement
                     messages.getCourseContentsViewAddRawTextErrorNotificationText(),
                     Notification.Type.ERROR_MESSAGE
             );
+        }
+    }
+
+    @Override
+    public void onViewFocus() {
+        LOGGER.info("onViewFocus()");
+
+        if (null != questionGenerationSession.getCourse()) {
+            this.courseContentsView.setCourseTitle(questionGenerationSession.getCourse().getTitle());
+            this.courseContentsView.setCurrentSessionStatus(questionGenerationSession.getStatus());
+            this.courseContentsView.reset();
         }
     }
 
@@ -204,16 +199,4 @@ public class CourseContentsPresenterImpl extends AbstractStepPresenter implement
         return courseRawTexts;
     }
 
-    /**
-     * @see CourseInformationViewListener#onViewFocus()
-     */
-    public void onViewFocus() {
-        LOGGER.info("onViewFocus()");
-
-        if (null != questionGenerationSession.getCourse()) {
-            this.courseContentsView.setCourseTitle(questionGenerationSession.getCourse().getTitle());
-            this.courseContentsView.setCurrentSessionStatus(questionGenerationSession.getStatus());
-            this.courseContentsView.reset();
-        }
-    }
 }

@@ -62,9 +62,7 @@ public class CourseInformationPresenterImpl extends AbstractStepPresenter implem
         this.importerService = importerService;
     }
 
-    /**
-     * @see CourseInformationPresenter#initializeView()
-     */
+    @Override
     public CourseInformationView initializeView() {
         this.courseInformationView.setMenuListener(this);
         this.courseInformationView.setCurrentSessionStatus(questionGenerationSession.getStatus());
@@ -74,9 +72,7 @@ public class CourseInformationPresenterImpl extends AbstractStepPresenter implem
         return this.courseInformationView;
     }
 
-    /**
-     * @see CourseInformationViewListener#onNextButtonClicked()
-     */
+    @Override
     public void onNextButtonClicked() {
         LOGGER.info("onNextButtonClicked()");
 
@@ -116,16 +112,12 @@ public class CourseInformationPresenterImpl extends AbstractStepPresenter implem
         }
     }
 
-    /**
-     * @see CourseInformationViewListener#onNewSessionButtonClicked()
-     */
+    @Override
     public void onNewSessionButtonClicked() {
         LOGGER.info("onNewSessionButtonClicked()");
     }
 
-    /**
-     * @see CourseInformationViewListener#onViewFocus()
-     */
+    @Override
     public void onViewFocus() {
         LOGGER.info("onViewFocus()");
 

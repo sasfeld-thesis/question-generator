@@ -254,9 +254,7 @@ public class CourseContentsViewImpl extends AbstractStepView implements CourseCo
         viewListener.onViewFocus();
     }
 
-    /**
-     * @see CourseContentsView#reset()
-     */
+    @Override
     public void reset() {
         // add menu and set the course contents item to be active
         super.reset(messages.getMenuItemContentsLabel());
@@ -280,39 +278,29 @@ public class CourseContentsViewImpl extends AbstractStepView implements CourseCo
         }
     }
 
-    /**
-     * @see CourseContentsView#showContentFiles(List)
-     */
+    @Override
     public void showContentFiles(List<LearningContent> learningContentFiles) {
         accordionDocumentsLeftSideUploadedList.removeAllItems();
         accordionDocumentsLeftSideUploadedList.addItems(learningContentFiles);
     }
 
-    /**
-     * @see CourseContentsView#showContentRawTexts(List)
-     */
+    @Override
     public void showContentRawTexts(List<LearningContent> learningRawTexts) {
         accordionRawTextsRightSideAddedList.removeAllItems();
         accordionRawTextsRightSideAddedList.addItems(learningRawTexts);
     }
 
-    /**
-     * @see CourseContentsView#setCourseTitle(String)
-     */
+    @Override
     public void setCourseTitle(String courseTitle) {
         this.courseTitle = courseTitle;
     }
 
-    /**
-     * @see CourseContentsView#setViewListener(CourseContentsViewListener)
-     */
+    @Override
     public void setViewListener(CourseContentsViewListener courseContentsViewListener) {
         this.viewListener = courseContentsViewListener;
     }
 
-    /**
-     * @see FileUploadListener#uploadFailed()
-     */
+    @Override
     public void uploadFailed() {
         // display error notification
         Notification.show(
@@ -322,9 +310,7 @@ public class CourseContentsViewImpl extends AbstractStepView implements CourseCo
         );
     }
 
-    /**
-     * @see FileUploadListener#uploadSucceeded(File)
-     */
+    @Override
     public void uploadSucceeded(final File file) {
         // display info box
         this.accordionDocumentsRightSideInfoBox.setInfo();

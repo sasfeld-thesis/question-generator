@@ -17,6 +17,11 @@
 
     <!-- global properties to be used across all modules -->
     <properties>
+        <!-- Maven compiler version -->
+        <maven.compiler.version>3.5.1</maven.compiler.version>
+        <!-- Targeted JRE version of the questiongenerator -->
+        <targeted.jre.version>1.7</targeted.jre.version>
+        <!-- question generator artifact version -->
         <questiongenerator.version>1</questiongenerator.version>
         <!-- logging facade -->
         <slf4j.version>1.7.2</slf4j.version>
@@ -53,6 +58,7 @@
         <maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
         <!-- default liferay deployment directory -->
         <liferay.deployment.directory />
+        <!-- default liferay vaadin themes deployment directory -->
         <liferay.vaadin.themes.folder/>
     </properties>
 
@@ -111,6 +117,20 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven.compiler.version}</version>
+                <configuration>
+                    <source>${targeted.jre.version}</source>
+                    <target>${targeted.jre.version}</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
     <!-- Special builds -->
     <profiles>
