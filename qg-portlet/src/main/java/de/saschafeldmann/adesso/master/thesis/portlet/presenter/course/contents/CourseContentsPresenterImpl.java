@@ -84,6 +84,12 @@ public class CourseContentsPresenterImpl extends AbstractStepPresenter implement
                     contentFile.getName(),
                     e);
             courseContentsView.displayFileUploadError(messages.getCourseContentsViewUploadFileProcessErrorNotificationText(contentFile.getName()));
+        } finally {
+            // delete the uploaded file since the contents were extracted or it can't be processed
+            if (!contentFile.delete()) {
+                LOGGER.error("onContentFileUploaded(): could not delete file {} after operations.",
+                        contentFile.getName());
+            }
         }
     }
 
