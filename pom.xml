@@ -42,6 +42,8 @@
         <jacoco.version>0.7.6.201602180812</jacoco.version>
         <!-- Portlets API version -->
         <portlets.api.version>2.0</portlets.api.version>
+        <!-- Apache TIKA parser library version -->
+        <apache.tika.version>1.13</apache.tika.version>
         <!-- name of the built portlet war file - this will be deployed if the 'deploy' profile is activated -->
         <portlet.war.name>qg-portlet</portlet.war.name>
         <!-- 1.0 is the default version and should be overwritten by the mvn build command using mvn ... -D=travisBuildVersion=[travisBuildVersion] -->
@@ -96,6 +98,16 @@
                 <artifactId>junit</artifactId>
                 <version>${junit.version}</version>
                 <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.tika</groupId>
+                <artifactId>tika-core</artifactId>
+                <version>${apache.tika.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.tika</groupId>
+                <artifactId>tika-parsers</artifactId>
+                <version>${apache.tika.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
