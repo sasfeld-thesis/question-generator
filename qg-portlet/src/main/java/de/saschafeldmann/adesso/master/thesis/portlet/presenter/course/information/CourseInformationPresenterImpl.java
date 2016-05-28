@@ -43,7 +43,6 @@ public class CourseInformationPresenterImpl extends AbstractStepPresenter implem
 
     private final CourseInformationView courseInformationView;
     private final ImporterService importerService;
-    private Course courseModel;
     private Messages messages;
 
     /**
@@ -96,12 +95,26 @@ public class CourseInformationPresenterImpl extends AbstractStepPresenter implem
      * Creates or updates the course model.
      */
     private void updateCourseModel() {
-        this.courseModel = importerService.buildNewCourseInstance(
+        if (null == this.questionGenerationSession.getCourse()) {
+            createNewCourseModelInSession();
+        } else {
+            updateCourseModelInSession();
+        }
+    }
+
+    private void createNewCourseModelInSession() {
+        // create
+        this.questionGenerationSession.setCourse(importerService.buildNewCourseInstance(
                 courseInformationView.getInputTitle(),
                 courseInformationView.getInputViewUrl(),
-                getLanguage(courseInformationView.getInputLanguage()));
+                getLanguage(courseInformationView.getInputLanguage())));
+    }
 
-        this.questionGenerationSession.setCourse(courseModel);
+    private void updateCourseModelInSession() {
+        // update
+        this.questionGenerationSession.getCourse().setTitle(courseInformationView.getInputTitle());
+        this.questionGenerationSession.getCourse().setViewUrl(courseInformationView.getInputViewUrl());
+        this.questionGenerationSession.getCourse().setLanguage(getLanguage(courseInformationView.getInputLanguage()));
     }
 
     private Language getLanguage(String inputLanguage) {
