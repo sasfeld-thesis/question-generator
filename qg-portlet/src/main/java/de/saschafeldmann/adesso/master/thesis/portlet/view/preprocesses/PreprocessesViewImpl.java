@@ -137,6 +137,8 @@ public class PreprocessesViewImpl extends AbstractStepView implements Preprocess
 
     private void addFooterWithButtonGroup() {
         addButtonsAtBottom(bottomButtonGroupLayout, btnPrevious, btnNext);
+        addComponent(bottomButtonGroupLayout);
+
         addFooter();
     }
 
@@ -152,6 +154,6 @@ public class PreprocessesViewImpl extends AbstractStepView implements Preprocess
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent viewChangeEvent) {
-
+        viewListener.onViewFocus();
     }
 }

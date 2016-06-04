@@ -35,4 +35,9 @@ public interface PreprocessesViewListener {
      * @param processActivationElement the processActivationElement
      */
     void onActivationElementChange(final ProcessActivationElement processActivationElement);
+
+    /**
+     * Called if the view gets the user's focus.
+     */
+    void onViewFocus();
 }

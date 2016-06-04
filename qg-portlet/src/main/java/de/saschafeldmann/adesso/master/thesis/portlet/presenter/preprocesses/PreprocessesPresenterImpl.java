@@ -8,6 +8,8 @@ import de.saschafeldmann.adesso.master.thesis.portlet.view.preprocesses.Preproce
 import de.saschafeldmann.adesso.master.thesis.portlet.view.preprocesses.PreprocessesViewImpl;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.preprocesses.PreprocessesViewListener;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 /**
  * Project:        Masterthesis of Sascha Feldmann
@@ -24,6 +26,8 @@ import org.springframework.beans.factory.annotation.Autowired;
  * <br /><br />
  * Implementation of the {@link PreprocessesPresenter}
  */
+@Component
+@Scope("prototype")
 public class PreprocessesPresenterImpl extends AbstractStepPresenter implements PreprocessesPresenter, PreprocessesViewListener {
     private PreprocessesView preprocessesView;
 
@@ -60,5 +64,11 @@ public class PreprocessesPresenterImpl extends AbstractStepPresenter implements 
     @Override
     public void onActivationElementChange(ProcessActivationElement processActivationElement) {
 
+    }
+
+    @Override
+    public void onViewFocus() {
+        preprocessesView.setCurrentSessionStatus(questionGenerationSession.getStatus());
+        preprocessesView.reset();
     }
 }

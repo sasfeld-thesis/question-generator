@@ -8,6 +8,7 @@ import de.saschafeldmann.adesso.master.thesis.portlet.presenter.AbstractStepPres
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.Messages;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.course.contents.CourseContentsView;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.course.contents.CourseContentsViewListener;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.preprocesses.PreprocessesViewImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -176,7 +177,7 @@ public class CourseContentsPresenterImpl extends AbstractStepPresenter implement
 
     @Override
     public void onNextButtonClicked() {
-
+        getNavigator().navigateTo(PreprocessesViewImpl.VIEW_NAME);
     }
 
     @Override
