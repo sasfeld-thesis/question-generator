@@ -444,4 +444,229 @@ public class Messages {
     public String getCourseContentsViewFileEditWindowTitleText() {
         return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.course.contents.view.accordion.documents.edit.window.title.label");
     }
+
+    /**
+     * Gets the text
+     *
+     * @return String
+     */
+    public String getPreproccesesViewInfoText() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.preprocesses.view.info.text");
+    }
+
+    /**
+     * Gets the text
+     *
+     * @return String
+     */
+    public String getPreproccesesViewIntroductionText() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.preprocesses.view.introduction.text");
+    }
+
+    /**
+     * Gets the text
+     *
+     * @return String
+     */
+    public String getPreproccesesViewAccordionActivationLabel() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.preprocesses.view.accordion.activation.label");
+    }
+
+    /**
+     * Gets the text
+     *
+     * @return String
+     */
+    public String getPreproccesesViewAccordionProcesschainLabel() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.preprocesses.view.accordion.processchain.label");
+    }
+
+    /**
+     * Gets the text
+     *
+     * @return String
+     */
+    public String getPreproccesesViewAccordionActivationOptiongroupLanguageDetectionLabel() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.preprocesses.view.accordion.activation.optiongroup.language.detection.label");
+    }
+
+    /**
+     * Gets the text
+     *
+     * @return String
+     */
+    public String getPreproccesesViewAccordionActivationOptiongroupLanguageDetectionTooltip() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.preprocesses.view.accordion.activation.optiongroup.language.detection.tooltip");
+    }
+
+    /**
+     * Gets the text
+     *
+     * @return String
+     */
+    public String getPreproccesesViewAccordionActivationOptiongroupPartOfSpeechDetectionLabel() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.preprocesses.view.accordion.activation.optiongroup.partofspeech.detection.label");
+    }
+
+    /**
+     * Gets the text
+     *
+     * @return String
+     */
+    public String getPreproccesesViewAccordionActivationOptiongroupPartOfSpeechDetectionTooltip() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.preprocesses.view.accordion.activation.optiongroup.partofspeech.detection.tooltip");
+    }
+
+    /**
+     * Gets the text
+     *
+     * @return String
+     */
+    public String getPreproccesesViewAccordionActivationOptiongroupNamedEntitiesDetectionLabel() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.preprocesses.view.accordion.activation.optiongroup.namedentities.detection.label");
+    }
+
+    /**
+     * Gets the text
+     *
+     * @return String
+     */
+    public String getPreproccesesViewAccordionActivationOptiongroupNamedEntitiesDetectionTooltip() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.preprocesses.view.accordion.activation.optiongroup.namedentities.detection.tooltip");
+    }
+
+    /**
+     * Gets the text
+     *
+     * @return String
+     */
+    public String getPreproccesesViewAccordionActivationSetSuccessInfo() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.preprocesses.view.accordion.activation.set.success.info");
+    }
+
+    /**
+     * Gets the text
+     *
+     * @return String
+     */
+    public String getPreproccesesViewAccordionProcesschainButtonStartLabel() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.preprocesses.view.accordion.processchain.button.start.label");
+    }
+
+    /**
+     * Gets the text
+     *
+     * @return String
+     */
+    public String getPreproccesesViewAccordionProcesschainFinishedLabel() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.preprocesses.view.accordion.processchain.finished.label");
+    }
+
+    /**
+     * Gets the text
+     *
+     * @return String
+     */
+    public String getPreproccesesViewAccordionProcesschainLogChainStarted() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.preprocesses.view.accordion.processchain.log.chain.started");
+    }
+
+    /**
+     * Gets the text
+     *
+     * @return String
+     */
+    public String getPreproccesesViewAccordionProcesschainLogLanguageDetectionStarted() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.preprocesses.view.accordion.processchain.log.language.detection.started");
+    }
+
+    /**
+     * Gets the text
+     *
+     * @return String
+     */
+    public String getPreproccesesViewAccordionProcesschainLogLanguageDetectionFinished() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.preprocesses.view.accordion.processchain.log.language.detection.finished");
+    }
+
+    /**
+     * Gets the text
+     *
+     * @return String
+     */
+    public String getPreproccesesViewAccordionProcesschainLogPartofspeechDetectionStarted() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.preprocesses.view.accordion.processchain.log.partofspeech.detection.started");
+    }
+
+    /**
+     * Gets the text
+     *
+     * @return String
+     */
+    public String getPreproccesesViewAccordionProcesschainLogPartofspeechDetectionFinished() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.preprocesses.view.accordion.processchain.log.partofspeech.detection.finished");
+    }
+
+    /**
+     * Gets the text
+     *
+     * @return String
+     */
+    public String getPreproccesesViewAccordionProcesschainLogNamedEntityRecognitionStarted() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.preprocesses.view.accordion.processchain.log.namedentity.recognition.started");
+    }
+
+    /**
+     * Gets the text
+     *
+     * @return String
+     */
+    public String getPreproccesesViewAccordionProcesschainLogNamedEntityRecognitionFinished() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.preprocesses.view.accordion.processchain.log.namedentity.recognition.finished");
+    }
+
+    /**
+     * Gets the text
+     *
+     * @return String
+     */
+    public String getPreproccesesViewAccordionProcesschainLogChainFinished() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.preprocesses.view.accordion.processchain.log.chain.finished");
+    }
+
+    /**
+     * Gets the text
+     *
+     * @return String
+     */
+    public String getPreproccesesViewAccordionProcesschainEditWindowTitle() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.preprocesses.view.accordion.processchain.edit.window.title");
+    }
+
+    /**
+     * Gets the text
+     *
+     * @return String
+     */
+    public String getPreproccesesViewAccordionProcesschainEditWindowTextareaTitle() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.preprocesses.view.accordion.processchain.edit.window.textarea.title");
+    }
+
+    /**
+     * Gets the text
+     *
+     * @return String
+     */
+    public String getPreproccesesViewAccordionProcesschainEditWindowEditButtonTooltip() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.preprocesses.view.accordion.processchain.edit.window.button.edit.tooltip");
+    }
+
+    /**
+     * Gets the text
+     *
+     * @return String
+     */
+    public String getPreproccesesViewAccordionProcesschainEditWindowDeleteButtonTooltip() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.preprocesses.view.accordion.processchain.edit.window.button.delete.tooltip");
+    }
 }
