@@ -35,7 +35,7 @@ Development - Getting started
   ```git clone https://github.com/sasfeld-thesis/liferay-portal-server.git```
 4. Create MySQL user liferay with PW liferay and an identically named db by running 
 
-  ```CREATE USER 'liferay'@'localhost' IDENTIFIED BY '***';```
+  ```CREATE USER 'liferay'@'localhost' IDENTIFIED BY 'liferay';```
   
   ```GRANT USAGE ON * . * TO 'liferay'@'localhost' IDENTIFIED BY '***' WITH MAX_QUERIES_PER_HOUR 0 MAX_CONNECTIONS_PER_HOUR 0MAX_UPDATES_PER_HOUR 0 MAX_USER_CONNECTIONS 0 ;```
   
@@ -43,10 +43,7 @@ Development - Getting started
   
   ```GRANT ALL PRIVILEGES ON `liferay` . * TO 'liferay'@'localhost';```
   
-5. Start the liferay server via CMD: 
-
-	```cd C:/Masterthesis/liferay-portal-6.2```
-	```tomcat-7.0.62/bin/startup.sh```
+5. Start the liferay server via CMD (change to liferay directory and run startup.sh in tomcat-x subfolder).
 
 6. View localhost:8080 in your browser, now you are asked to do the setup.
 
