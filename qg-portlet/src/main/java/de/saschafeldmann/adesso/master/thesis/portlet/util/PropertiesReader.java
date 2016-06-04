@@ -4,10 +4,7 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -32,12 +29,17 @@ import java.util.Properties;
  * <br /><br />
  * Abstract adapter to a properties file.
  * To use it for a special property file, implement a subclass and define the properties file.
+ * Make sure that all property files are UTF-8 encoded.
  *
  * This class was taken from my own proect JumpUpMe, but completely written by myself.
  * https://github.com/JumpUpMe/jumpup_webapp/blob/master/src/main/java/de/htw/fb4/imi/jumpup/config/APropertiesConfigReader.java
  */
 public abstract class PropertiesReader implements PropertiesReaderApi {
     private static final Logger LOGGER = LoggerFactory.getLogger(Properties.class);
+    /**
+     * Defines the property files encodings. Make sure to use them correctly!
+     */
+    public static final String PROPERTY_FILES_ENCODING = "UTF-8";
 
     protected Properties properties;
     protected Map<String, String> propertiesMap;
@@ -72,7 +74,8 @@ public abstract class PropertiesReader implements PropertiesReaderApi {
 
         properties = new Properties();
         try {
-            properties.load(inputStream);
+            // use UTF-8 encoding since the property files should be UTF-8 encoded
+            properties.load(new InputStreamReader(inputStream, PROPERTY_FILES_ENCODING));
         } catch (Exception e) { // log critical message
             LOGGER.error("PropertiesReader(): could not load properties - exception:\n{}",
                     ExceptionUtils.getStackTrace(e));
