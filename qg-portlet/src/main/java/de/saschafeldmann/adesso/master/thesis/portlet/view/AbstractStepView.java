@@ -1,12 +1,9 @@
 package de.saschafeldmann.adesso.master.thesis.portlet.view;
 
-import com.vaadin.navigator.View;
-import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.*;
 import de.saschafeldmann.adesso.master.thesis.portlet.model.QuestionGenerationSession;
-import de.saschafeldmann.adesso.master.thesis.portlet.properties.Messages;
+import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.Messages;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.CommonStyleNames;
-import de.saschafeldmann.adesso.master.thesis.portlet.view.components.FormLayout;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.VersionLabel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -174,5 +171,9 @@ public abstract class AbstractStepView extends VerticalLayout implements ViewWit
         layout.addComponent(leftButton);
         layout.addComponent(rightButton);
         rightButton.addStyleName(CommonStyleNames.BUTTON_GROUP_RIGHT_BUTTON_STYLENAME);
+    }
+
+    protected void addFooter() {
+        addVersionLabel();
     }
 }

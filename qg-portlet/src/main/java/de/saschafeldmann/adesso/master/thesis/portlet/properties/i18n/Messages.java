@@ -1,4 +1,4 @@
-package de.saschafeldmann.adesso.master.thesis.portlet.properties;
+package de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n;
 
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.MessagesDeProperties;
 import de.saschafeldmann.adesso.master.thesis.portlet.util.PropertiesReader;
@@ -668,5 +668,13 @@ public class Messages {
      */
     public String getPreproccesesViewAccordionProcesschainEditWindowDeleteButtonTooltip() {
         return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.preprocesses.view.accordion.processchain.edit.window.button.delete.tooltip");
+    }
+
+    public String getButtonBackTitle() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.footer.button.back.label");
+    }
+
+    public String getButtonNextTitle() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.footer.button.next.label");
     }
 }

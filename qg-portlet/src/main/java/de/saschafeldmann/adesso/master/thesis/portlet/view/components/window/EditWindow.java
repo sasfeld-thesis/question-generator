@@ -1,6 +1,6 @@
 package de.saschafeldmann.adesso.master.thesis.portlet.view.components.window;
 
-import de.saschafeldmann.adesso.master.thesis.portlet.properties.Messages;
+import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.Messages;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;

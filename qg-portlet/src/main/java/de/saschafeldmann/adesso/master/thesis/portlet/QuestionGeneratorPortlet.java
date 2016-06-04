@@ -11,12 +11,16 @@ import de.saschafeldmann.adesso.master.thesis.portlet.presenter.course.contents.
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.course.contents.CourseContentsPresenterImpl;
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.course.information.CourseInformationPresenter;
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.course.information.CourseInformationPresenterImpl;
+import de.saschafeldmann.adesso.master.thesis.portlet.presenter.preprocesses.PreprocessesPresenter;
+import de.saschafeldmann.adesso.master.thesis.portlet.presenter.preprocesses.PreprocessesPresenterImpl;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.VaadinProperties;
 import de.saschafeldmann.adesso.master.thesis.portlet.util.Factory;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.course.contents.CourseContentsView;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.course.contents.CourseContentsViewImpl;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.course.information.CourseInformationView;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.course.information.CourseInformationViewImpl;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.preprocesses.PreprocessesView;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.preprocesses.PreprocessesViewImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.portlet.context.PortletApplicationContextUtils;
@@ -77,6 +81,7 @@ public class QuestionGeneratorPortlet extends UI {
     private void initializeViews(ApplicationContext applicationContext) {
         initializeCourseInformationView(applicationContext);
         initializeCourseContentsView(applicationContext);
+        initializePreprocessesView(applicationContext);
     }
 
     private void initializeCourseInformationView(ApplicationContext applicationContext) {
@@ -100,6 +105,15 @@ public class QuestionGeneratorPortlet extends UI {
 
         CourseContentsView courseContentsView = courseContentsPresenter.initializeView();
         this.viewNavigator.addView(CourseContentsViewImpl.VIEW_NAME, courseContentsView);
+    }
+
+    private void initializePreprocessesView(ApplicationContext applicationContext) {
+        PreprocessesPresenter preprocessesPresenter = applicationContext.getBean(PreprocessesPresenterImpl.class);
+        preprocessesPresenter.setQuestionGenerationSession(questionGenerationSession);
+        preprocessesPresenter.setNavigator(this.viewNavigator);
+
+        PreprocessesView preprocessesView = preprocessesPresenter.initializeView();
+        this.viewNavigator.addView(PreprocessesViewImpl.VIEW_NAME, preprocessesView);
     }
 
     /**

@@ -1,8 +1,7 @@
 package de.saschafeldmann.adesso.master.thesis.portlet.view.course.information;
 
-import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
-import de.saschafeldmann.adesso.master.thesis.portlet.properties.Messages;
+import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.Messages;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.AbstractStepView;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -136,7 +135,7 @@ public class CourseInformationViewImpl extends AbstractStepView implements Cours
         addButtonsAtBottom(buttonGroupLayout, btnNext, btnNewSession);
         addComponent(buttonGroupLayout);
 
-        addVersionLabel();
+        addFooter();
     }
 
     private void setInfoBox() {

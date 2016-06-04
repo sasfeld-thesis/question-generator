@@ -4,10 +4,9 @@ import com.google.common.base.Strings;
 import com.vaadin.data.Property;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.shared.ui.label.ContentMode;
-import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
-import de.saschafeldmann.adesso.master.thesis.portlet.properties.Messages;
+import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.Messages;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.AbstractStepView;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.*;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.Accordion;
@@ -314,7 +313,7 @@ public class CourseContentsViewImpl extends AbstractStepView implements CourseCo
 
         addComponent(btnNext);
 
-        addVersionLabel();
+        addFooter();
     }
 
     private void setInfoBox() {
