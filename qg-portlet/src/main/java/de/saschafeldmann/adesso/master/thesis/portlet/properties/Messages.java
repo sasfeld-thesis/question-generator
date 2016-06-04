@@ -1,6 +1,8 @@
 package de.saschafeldmann.adesso.master.thesis.portlet.properties;
 
-import org.springframework.cglib.util.StringSwitcher;
+import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.MessagesDeProperties;
+import de.saschafeldmann.adesso.master.thesis.portlet.util.PropertiesReader;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -22,360 +24,424 @@ import org.springframework.stereotype.Component;
 @Component
 @Scope("singleton")
 public class Messages {
+    @Autowired
+    private MessagesDeProperties messageDeProperties;
+
+    private static final String MENU_ITEM_COURSE_INFORMATION_LABEL = "de.saschafeldmann.adesso.master.thesis.portlet.menu.item.course.information.label";
+    private static final String MENU_ITEM_CONTENT_LABEL = "de.saschafeldmann.adesso.master.thesis.portlet.menu.item.contents.label";
+    private static final String MENU_ITEM_PREPROCESSES_LABEL = "de.saschafeldmann.adesso.master.thesis.portlet.menu.item.preprocesses.label";
+    private static final String MENU_ITEM_DETECTION_LABEL = "de.saschafeldmann.adesso.master.thesis.portlet.menu.item.detection.label";
+    private static final String MENU_ITEM_QUESTION_GENERATION_LABEL = "de.saschafeldmann.adesso.master.thesis.portlet.menu.item.question.generation.label";
+
+    /**
+     * Gets the message properties for the current user's language.
+     * <p>
+     * TODO implement logic to determine current language and get specialised properties reader
+     *
+     * @return
+     */
+    private PropertiesReader getMessageProperties() {
+        return messageDeProperties;
+    }
 
     /**
      * Gets the menu item label.
+     *
      * @return String
      */
     public String getMenuItemCourseInformationLabel() {
-        return "Schulungsinformationen";
+        return getMessageProperties().fetchValue(MENU_ITEM_COURSE_INFORMATION_LABEL);
     }
+
     /**
      * Gets the menu item label.
+     *
      * @return String
      */
     public String getMenuItemContentsLabel() {
-        return "Inhalte einlesen";
+        return getMessageProperties().fetchValue(MENU_ITEM_CONTENT_LABEL);
     }
 
     /**
      * Gets the menu item label.
+     *
      * @return String
      */
     public String getMenuItemPreprocessesLabel() {
-        return "Präprozesse";
+        return getMessageProperties().fetchValue(MENU_ITEM_PREPROCESSES_LABEL);
     }
+
     /**
      * Gets the menu item label.
+     *
      * @return String
      */
     public String getMenuItemDetectionLabel() {
-        return "Detektion";
+        return getMessageProperties().fetchValue(MENU_ITEM_DETECTION_LABEL);
     }
 
     /**
      * Gets the menu item label.
+     *
      * @return String
      */
     public String getMenuItemQuestionGenerationLabel() {
-        return "Fragen-Generierung";
+        return getMessageProperties().fetchValue(MENU_ITEM_QUESTION_GENERATION_LABEL);
     }
 
     /**
      * Gets the text.
+     *
      * @return String
      */
     public String getCourseInformationViewNewCourseInfoText() {
-        return "Sie haben noch keine Schulung angelegt.<br />Mit diesem Dialog legen Sie eine an und starten so Ihre Sitzung.";
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.course.information.view.new.course.info.text");
     }
 
     /**
      * Gets the text.
+     *
      * @return String
      */
     public String getCourseInformationViewEditCourseInfoText(String... args) {
-        return String.format("Sie arbeiten gerade mit der Schulung '%s'.<br />Mit diesem Dialog können Sie die Schulungsinformationen " +
-                "bearbeiten oder eine neue Sitzung starten.", args);
+        return String.format(getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.course.information.view.edit.course.info.text"), args);
     }
 
     /**
      * Gets the text.
+     *
      * @return String
      */
     public String getCourseInformationViewIntroductionText() {
-        return "Geben Sie hier eine Schulung mit ihren Rahmendaten an.";
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.course.information.view.introduction.text");
     }
 
     /**
      * Gets the text.
+     *
      * @return String
      */
     public String getCourseInformationViewCourseTitleLabel() {
-        return "Schulungstitel:";
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.course.information.view.course.title.label");
     }
 
     /**
      * Gets the text.
+     *
      * @return String
      */
     public String getCourseInformationViewCourseUrlLabel() {
-        return "URL:";
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.course.information.view.course.url.label");
     }
 
     /**
      * Gets the text.
+     *
      * @return String
      */
     public String getCourseInformationViewCourseLanguageLabel() {
-        return "Primäre Sprache:";
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.course.information.view.course.language.label");
     }
 
     /**
      * Gets the text.
+     *
      * @return String
      */
     public String getCourseInformationViewBtnNextLabel() {
-        return "Weiter";
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.course.information.view.course.button.next.label");
     }
 
     /**
      * Gets the text.
+     *
      * @return String
      */
     public String getCourseInformationViewBtnNewSessionLabel() {
-        return "Neue Sitzung starten";
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.course.information.view.course.button.new.session.label");
     }
 
     /**
      * Gets the text.
+     *
      * @return String
      */
     public String getCourseInformationViewEnglishLanguageLabel() {
-        return "Englisch";
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.course.information.view.course.language.english.label");
     }
 
     /**
      * Gets the text.
+     *
      * @return String
      */
     public String getCourseInformationViewGermanLanguageLabel() {
-        return "Deutsch";
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.course.information.view.course.language.german.label");
     }
 
     /**
      * Gets the text.
+     *
      * @return String
      */
     public String getCourseInformationViewErrorNotificationTitle() {
-        return "Fehler";
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.course.information.view.error.notification.title");
     }
 
     /**
      * Gets the text.
+     *
      * @return String
      */
     public String getCourseInformationViewErrorNotificationText() {
-        return "Der Kurs konnte nicht erstellt werden. Bitte prüfen Sie ihre Eingaben!";
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.course.information.view.error.notification.text");
     }
 
     /**
      * Gets the text.
+     *
      * @return String
      */
     public String getCourseContentsViewIntroductionText() {
-        return "Füllen Sie die Schulung mit Inhalten.<br />" +
-                "Sie können entweder Dokumente verschiedener Typen (PDF, DOC) hochladen, aus denen die Volltexte entnommen werden, oder direkt Rohtexte eingeben.";
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.course.contents.view.introduction.text");
     }
 
 
     /**
      * Gets the text.
+     *
      * @return String
      */
     public String getCourseContentsViewAccordionDocumentsTitleLabel() {
-        return "Dokumente hochladen";
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.course.contents.view.accordion.documents.title.label");
     }
 
     /**
      * Gets the text.
+     *
      * @return String
      */
     public String getCourseContentsViewAccordionDocumentsFileUploadLabel() {
-        return "Datei:";
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.course.contents.view.accordion.documents.file.upload.label");
     }
+
     /**
      * Gets the text.
+     *
      * @return String
      */
     public String getCourseContentsViewAccordionDocumentsUploadedListLabel() {
-        return "Hochgeladen:";
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.course.contents.view.accordion.documents.uploaded.list.label");
     }
 
     /**
      * Gets the text.
+     *
      * @return String
      */
     public String getCourseContentsViewAccordionRawTextsTitleLabel() {
-        return "Rohtext eingeben";
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.course.contents.view.accordion.rawtexts.title.label");
     }
 
     /**
      * Gets the text.
+     *
      * @return String
      */
     public String getCourseContentsViewAccordionRawTextsTitleInputLabel() {
-        return "Titel:";
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.course.contents.view.accordion.rawtexts.title.input.label");
     }
 
     /**
      * Gets the text.
+     *
      * @return String
      */
     public String getCourseContentsViewAccordionRawTextsRawTextInputLabel() {
-        return "Rohtext:";
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.course.contents.view.accordion.rawtexts.rawtext.input.label");
     }
 
     /**
      * Gets the text.
+     *
      * @return String
      */
     public String getCourseContentsViewAccordionRawTextsAddButtonLabel() {
-        return "Hinzufügen";
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.course.contents.view.accordion.rawtexts.add.button.label");
     }
 
     /**
      * Gets the text.
+     *
      * @return String
      */
     public String getCourseContentsViewAccordionRawTextsAddedLabel() {
-        return "Hinzugefügt:";
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.course.contents.view.accordion.rawtexts.added.label");
     }
 
     /**
      * Gets the text.
+     *
      * @param params parameters
      * @return String
      */
     public String getCourseContentsInfoBoxCourseAddedText(String... params) {
-        return String.format("Die Schulung '%s' wurde erfolgreich angelegt.", params);
+        return String.format(getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.course.contents.view.info.box.course.added.text"), params);
     }
 
     /**
      * Gets the text.
+     *
      * @return String
      */
     public String getCourseContentsViewAddRawTextErrorNotificationTitle() {
-        return "Fehler";
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.course.contents.view.accordion.rawtexts.add.error.notification.title");
     }
 
     /**
      * Gets the text.
+     *
      * @return String
      */
     public String getCourseContentsViewAddRawTextErrorNotificationText() {
-        return "Ihr Rohtext konnte nicht hinzugefügt werden. Bitte überprüfen Sie Ihre Eingabe.";
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.course.contents.view.accordion.rawtexts.add.error.notification.text");
     }
 
     /**
      * Gets the text.
+     *
      * @return String
      */
     public String getCourseContentsViewRawtextEditWindowTitleText() {
-        return "Eingegebener Rohtext";
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.course.contents.view.accordion.rawtexts.edit.window.title.label");
     }
 
     /**
      * Gets the text.
+     *
      * @return String
      */
     public String getCourseContentsViewRawtextEditWindowTextareaLabel() {
-        return "Rohtext:";
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.course.contents.view.accordion.rawtexts.edit.window.textarea.label");
     }
 
     /**
      * Gets the text.
+     *
      * @return String
      */
     public String getCourseContentsViewDocumentsEditWindowTitleText() {
-        return "Hochgeladenes Dokument";
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.course.contents.view.accordion.documents.edit.window.title.label");
     }
 
     /**
      * Gets the text.
+     *
      * @return String
      */
     public String getCourseContentsViewDocumentsEditWindowTextareaLabel() {
-        return "Extrahierter Inhalt:";
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.course.contents.view.accordion.documents.edit.window.textarea.label");
     }
 
     /**
      * Gets the text.
+     *
      * @return String
      */
     public String getEditWindowChangeButtonLabel() {
-        return "Ändern";
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.edit.window.change.button.label");
     }
 
     /**
      * Gets the text.
+     *
      * @return String
      */
     public String getEditWindowDeleteButtonLabel() {
-        return "Löschen";
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.edit.window.delete.button.label");
     }
 
     /**
      * Gets the text.
+     *
      * @return String
      */
     public String getCourseContentsViewDeleteRawTextErrorNotificationTitle() {
-        return "Fehler";
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.course.contents.view.accordion.rawtexts.delete.error.notification.title");
     }
 
     /**
      * Gets the text.
+     *
      * @return String
      */
     public String getCourseContentsViewDeleteRawTextErrorNotificationText() {
-        return "Ihr Rohtext konnte nicht gelöscht werden.";
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.course.contents.view.accordion.rawtexts.delete.error.notification.text");
     }
 
     /**
      * Gets the text.
+     *
      * @return String
      */
     public String getCourseContentsViewUploadFileErrorNotificationTitle() {
-        return "Fehler";
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.course.contents.view.accordion.documents.upload.file.error.notification.title");
     }
 
     /**
      * Gets the text.
+     *
      * @return String
      */
     public String getCourseContentsViewUploadFileErrorNotificationText() {
-        return "Ihre Datei konnte nicht hochgeladen werden.";
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.course.contents.view.accordion.documents.upload.file.error.notification.text");
     }
 
     /**
      * Gets the text.
+     *
      * @param params
      * @return String
      */
     public String getCourseContentsViewUploadFileSuccessNotificationText(String params) {
-        return String.format("'%s' wurde erfolgreich hochgeladen. Starte Verarbeitung...", params);
+        return String.format(getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.course.contents.view.accordion.documents.upload.file.success.notification.text"), params);
     }
 
     /**
      * Gets the text.
+     *
      * @param params
      * @return String
      */
     public String getCourseContentsViewUploadFileProcessSuccessNotificationText(String params) {
-        return String.format("'%s' wurde erfolgreich hochgeladen und verarbeitet.", params);
+        return String.format(getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.course.contents.view.accordion.documents.upload.file.and.process.success.notification.text"), params);
     }
 
     /**
      * Gets the text
+     *
      * @param params
      * @return
      */
     public String getCourseContentsViewUploadFileProcessErrorNotificationText(String params) {
-        return String.format("'%s' konnte nicht verarbeitet werden.", params);
+        return String.format(getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.course.contents.view.accordion.documents.upload.file.and.process.error.notification.text"), params);
     }
 
     /**
      * Gets the text
+     *
      * @return String
      */
     public String getCourseContentsViewFileEditWindowTextareaLabel() {
-        return "Extrahierter Inhalt:";
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.course.contents.view.accordion.documents.edit.window.textarea.label");
     }
 
     /**
      * Gets the text
+     *
      * @return String
      */
     public String getCourseContentsViewFileEditWindowTitleText() {
-        return "Hochgeladenes Dokument";
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.course.contents.view.accordion.documents.edit.window.title.label");
     }
 }
