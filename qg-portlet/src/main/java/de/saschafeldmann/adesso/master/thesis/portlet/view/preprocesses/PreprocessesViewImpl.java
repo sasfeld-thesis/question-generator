@@ -2,11 +2,13 @@ package de.saschafeldmann.adesso.master.thesis.portlet.view.preprocesses;
 
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.shared.ui.label.ContentMode;
+import com.vaadin.ui.Component;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
 import de.saschafeldmann.adesso.master.thesis.portlet.model.preprocesses.ProcessActivationElement;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.Messages;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.AbstractStepView;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.*;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.window.Table;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 
@@ -32,16 +34,23 @@ import javax.annotation.PostConstruct;
 public class PreprocessesViewImpl extends AbstractStepView implements PreprocessesView{
     public static final String VIEW_NAME = "PreprocessesView";
     private static final String CSS_STYLE_NAME_HORICONTAL_OPTION_GROUP = "horicontal-option-group";
+    private static final Object TABLE_CONTAINER_PROPERTY_LEFT = "accordion-process-left-column";
+    private static final Object TABLE_CONTAINER_PROPERTY_RIGHT = "accordion-process-right-column";
+
     private final InfoBox infoBox;
     private final Label introductionLabel;
     private final Accordion accordion;
 
     private final VerticalLayout accordionActivationLayout;
-    private final VerticalLayout accordionProcessChainLayout;
+    private final Table accordionProcessChainLayout;
 
     private final HorizontalLayout bottomButtonGroupLayout;
     private final Button btnNext;
     private final Button btnPrevious;
+    private final Button btnStartProcessChain;
+
+    private final Label finishedLabel;
+
     private PreprocessesViewListener viewListener;
 
     @Autowired
@@ -52,10 +61,12 @@ public class PreprocessesViewImpl extends AbstractStepView implements Preprocess
             final Label introductionLabel,
             final Accordion accordion,
             final VerticalLayout accordionActivationLayout,
-            final VerticalLayout accordionProcessChainLayout,
+            final Table accordionProcessChainLayout,
             final HorizontalLayout bottomButtonGroupLayout,
             final Button btnNext,
-            final Button btnPrevious
+            final Button btnPrevious,
+            final Button btnStartProcessChain,
+            final Label finishedLabel
     ) {
         super(messages, versionLabel);
 
@@ -67,6 +78,8 @@ public class PreprocessesViewImpl extends AbstractStepView implements Preprocess
         this.bottomButtonGroupLayout = bottomButtonGroupLayout;
         this.btnNext = btnNext;
         this.btnPrevious = btnPrevious;
+        this.btnStartProcessChain = btnStartProcessChain;
+        this.finishedLabel = finishedLabel;
     }
 
     @PostConstruct
@@ -99,7 +112,26 @@ public class PreprocessesViewImpl extends AbstractStepView implements Preprocess
     }
 
     private void initializeProcessChainPart() {
+        initializeProcessChainTable();
+
         accordion.addTab(accordionProcessChainLayout, messages.getPreproccesesViewAccordionProcesschainLabel());
+    }
+
+    private void initializeProcessChainTable() {
+        accordionProcessChainLayout.addContainerProperty(TABLE_CONTAINER_PROPERTY_LEFT, Component.class, null);
+        accordionProcessChainLayout.addContainerProperty(TABLE_CONTAINER_PROPERTY_RIGHT, Component.class, null);
+
+        btnStartProcessChain.setCaption(messages.getPreproccesesViewAccordionProcesschainButtonStartLabel());
+        finishedLabel.setCaption(messages.getPreproccesesViewAccordionProcesschainFinishedLabel());
+
+        // add first row (left cell: start process button; right cell: label)
+        accordionProcessChainLayout.addItem(
+                new Object[] {
+                    btnStartProcessChain,
+                    finishedLabel
+                },
+                1
+        );
     }
 
 
