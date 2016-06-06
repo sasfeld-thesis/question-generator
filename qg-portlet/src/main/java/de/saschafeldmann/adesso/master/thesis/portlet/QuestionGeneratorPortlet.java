@@ -14,6 +14,7 @@ import de.saschafeldmann.adesso.master.thesis.portlet.presenter.course.informati
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.preprocesses.PreprocessesPresenter;
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.preprocesses.PreprocessesPresenterImpl;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.VaadinProperties;
+import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.Messages;
 import de.saschafeldmann.adesso.master.thesis.portlet.util.Factory;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.course.contents.CourseContentsView;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.course.contents.CourseContentsViewImpl;
@@ -54,12 +55,15 @@ import java.net.URL;
 public class QuestionGeneratorPortlet extends UI {
     private Navigator viewNavigator;
     private QuestionGenerationSession questionGenerationSession;
+    private Messages messages;
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
-        initSession();
-
         ApplicationContext applicationContext = initializeApplicationContext(vaadinRequest);
+        // make sure to inject dependencies before initializing views
+        injectOtherDependencies(applicationContext);
+
+        initSession();
         initializeViewNavigator();
         initializeViews(applicationContext);
     }
@@ -116,11 +120,27 @@ public class QuestionGeneratorPortlet extends UI {
         this.viewNavigator.addView(PreprocessesViewImpl.VIEW_NAME, preprocessesView);
     }
 
+    private void injectOtherDependencies(ApplicationContext applicationContext) {
+        messages = applicationContext.getBean(Messages.class);
+    }
+
+    public Messages getMessages() {
+        return messages;
+    }
+
     /**
      * Gets the current portlet context.
      * @return
      */
     public static PortletContext getContext() {
         return VaadinPortlet.getCurrent().getPortletContext();
+    }
+
+    /**
+     * Get the current question generator portlet
+     * @return
+     */
+    public static QuestionGeneratorPortlet getCurrentPortlet() {
+        return (QuestionGeneratorPortlet) getCurrent();
     }
 }

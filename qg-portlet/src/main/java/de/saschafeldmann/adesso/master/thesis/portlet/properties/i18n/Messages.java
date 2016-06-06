@@ -1,10 +1,13 @@
 package de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n;
 
+import de.saschafeldmann.adesso.master.thesis.portlet.QuestionGeneratorPortlet;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.MessagesDeProperties;
 import de.saschafeldmann.adesso.master.thesis.portlet.util.PropertiesReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+
+import java.util.Map;
 
 /**
  * Project:        Masterthesis of Sascha Feldmann
@@ -34,6 +37,14 @@ public class Messages {
     private static final String MENU_ITEM_QUESTION_GENERATION_LABEL = "de.saschafeldmann.adesso.master.thesis.portlet.menu.item.question.generation.label";
 
     /**
+     * Gets the current messages instance - portlet scoped.
+     * @return Messages
+     */
+    public static Messages getInstance() {
+        return QuestionGeneratorPortlet.getCurrentPortlet().getMessages();
+    }
+
+    /**
      * Gets the message properties for the current user's language.
      * <p>
      * TODO implement logic to determine current language and get specialised properties reader
@@ -42,6 +53,15 @@ public class Messages {
      */
     private PropertiesReader getMessageProperties() {
         return messageDeProperties;
+    }
+
+    /**
+     * Gets the message for the given message key.
+     * @param displayLabelMessageKey
+     * @return String
+     */
+    public String get(String displayLabelMessageKey) {
+        return getMessageProperties().fetchValue(displayLabelMessageKey);
     }
 
     /**
@@ -670,11 +690,41 @@ public class Messages {
         return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.preprocesses.view.accordion.processchain.edit.window.button.delete.tooltip");
     }
 
+    /**
+     * Gets the text
+     *
+     * @return String
+     */
     public String getButtonBackTitle() {
         return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.footer.button.back.label");
     }
 
+    /**
+     * Gets the text
+     *
+     * @return String
+     */
     public String getButtonNextTitle() {
         return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.footer.button.next.label");
     }
+
+    /**
+     * Gets the text
+     *
+     * @return String
+     */
+    public String getPreprocessesViewAccordionActivationOptiongroupYesLabel() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.preprocesses.view.accordion.activation.optiongroup.yes.label");
+    }
+
+    /**
+     * Gets the text
+     *
+     * @return String
+     */
+    public String getPreprocessesViewAccordionActivationOptiongroupNoLabel() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.preprocesses.view.accordion.activation.optiongroup.no.label");
+    }
+
+
 }

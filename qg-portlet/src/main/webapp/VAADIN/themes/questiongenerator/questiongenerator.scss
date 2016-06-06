@@ -112,4 +112,11 @@
   .course-contents-file-upload-progress-bar {
     width: $courseContentsProgressBarWidth;
   }
+
+  /**
+  * Special class for horicontal option groups.
+  */
+  .horicontal-option-group .v-select-option {
+    display: inline-block;
+  }
 }

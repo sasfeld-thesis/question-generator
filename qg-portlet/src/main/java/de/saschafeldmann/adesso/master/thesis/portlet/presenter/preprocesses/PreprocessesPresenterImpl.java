@@ -3,6 +3,7 @@ package de.saschafeldmann.adesso.master.thesis.portlet.presenter.preprocesses;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
 import de.saschafeldmann.adesso.master.thesis.portlet.model.preprocesses.ProcessActivationElement;
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.AbstractStepPresenter;
+import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.Messages;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.course.information.CourseInformationViewImpl;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.preprocesses.PreprocessesView;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.preprocesses.PreprocessesViewImpl;
@@ -10,6 +11,9 @@ import de.saschafeldmann.adesso.master.thesis.portlet.view.preprocesses.Preproce
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Project:        Masterthesis of Sascha Feldmann
@@ -30,6 +34,8 @@ import org.springframework.stereotype.Component;
 @Scope("prototype")
 public class PreprocessesPresenterImpl extends AbstractStepPresenter implements PreprocessesPresenter, PreprocessesViewListener {
     private PreprocessesView preprocessesView;
+    @Autowired
+    private Messages messages;
 
     /**
      * Creates a new preprocesses presenter.
@@ -47,8 +53,51 @@ public class PreprocessesPresenterImpl extends AbstractStepPresenter implements 
         this.preprocessesView.setMenuListener(this);
         this.preprocessesView.setCurrentSessionStatus(questionGenerationSession.getStatus());
         this.preprocessesView.setViewListener(this);
+
+        loadProcessActivationElements();
+
         this.preprocessesView.reset();
         return this.preprocessesView;
+    }
+
+    private void loadProcessActivationElements() {
+        List<ProcessActivationElement> processActivationElements = new ArrayList<ProcessActivationElement>();
+
+        addLanguageDetectionActivationElement(processActivationElements);
+        addPartOfSpeechActivationElement(processActivationElements);
+        addNamedEntityRecognitionActivationElement(processActivationElements);
+
+        this.preprocessesView.setProcessActivationElements(processActivationElements);
+    }
+
+    private void addLanguageDetectionActivationElement(List<ProcessActivationElement> processActivationElements) {
+        ProcessActivationElement processActivationElement = new ProcessActivationElement.ProcessActivationElementBuilder()
+                .withActivationLabel(messages.getPreproccesesViewAccordionActivationOptiongroupLanguageDetectionLabel())
+                .withIsActivatedPerDefault(false)
+                .withTooltip(messages.getPreproccesesViewAccordionActivationOptiongroupLanguageDetectionTooltip())
+                .build();
+
+        processActivationElements.add(processActivationElement);
+    }
+
+    private void addPartOfSpeechActivationElement(List<ProcessActivationElement> processActivationElements) {
+        ProcessActivationElement processActivationElement = new ProcessActivationElement.ProcessActivationElementBuilder()
+                .withActivationLabel(messages.getPreproccesesViewAccordionActivationOptiongroupPartOfSpeechDetectionLabel())
+                .withIsActivatedPerDefault(false)
+                .withTooltip(messages.getPreproccesesViewAccordionActivationOptiongroupPartOfSpeechDetectionTooltip())
+                .build();
+
+        processActivationElements.add(processActivationElement);
+    }
+
+    private void addNamedEntityRecognitionActivationElement(List<ProcessActivationElement> processActivationElements) {
+        ProcessActivationElement processActivationElement = new ProcessActivationElement.ProcessActivationElementBuilder()
+                .withActivationLabel(messages.getPreproccesesViewAccordionActivationOptiongroupNamedEntitiesDetectionLabel())
+                .withIsActivatedPerDefault(false)
+                .withTooltip(messages.getPreproccesesViewAccordionActivationOptiongroupNamedEntitiesDetectionTooltip())
+                .build();
+
+        processActivationElements.add(processActivationElement);
     }
 
     @Override

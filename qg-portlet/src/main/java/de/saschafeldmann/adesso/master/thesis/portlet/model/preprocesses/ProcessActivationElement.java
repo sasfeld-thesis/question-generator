@@ -1,5 +1,8 @@
 package de.saschafeldmann.adesso.master.thesis.portlet.model.preprocesses;
 
+import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.Messages;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import static com.google.common.base.Preconditions.*;
 /**
  * Project:        Masterthesis of Sascha Feldmann
@@ -17,6 +20,42 @@ import static com.google.common.base.Preconditions.*;
  * Model to connect a process from the qg-preprocesses module with a view element to de- or activate it.
  */
 public class ProcessActivationElement {
+    public enum ActivationOptionGroupItem {
+        /**
+         * Activates the process.
+         */
+        YES("de.saschafeldmann.adesso.master.thesis.portlet.preprocesses.view.accordion.activation.optiongroup.yes.label"),
+        /**
+         * Deactivates the process.
+         */
+        NO("de.saschafeldmann.adesso.master.thesis.portlet.preprocesses.view.accordion.activation.optiongroup.no.label");
+
+
+        private final String displayLabelMessageKey;
+
+        /**
+         * Creates a new group item enum.
+         *
+         * @param displayLabelMessageKey the message key to the label that is shown to the user.
+         */
+        ActivationOptionGroupItem(String displayLabelMessageKey) {
+            this.displayLabelMessageKey = displayLabelMessageKey;
+        }
+
+        /**
+         * Gets the the message key to the label that is shown to the user.
+         * @return String
+         */
+        public String getDisplayLabelMessageKey() {
+            return displayLabelMessageKey;
+        }
+
+        public String toString() {
+            return Messages.getInstance().get(displayLabelMessageKey);
+        }
+    };
+
+    private ActivationOptionGroupItem activationOptionGroupItem;
     private final String activationLabel;
     private final Boolean isActivatedPerDefault;
     private final String tooltip;
@@ -49,6 +88,22 @@ public class ProcessActivationElement {
      */
     public String getTooltip() {
         return tooltip;
+    }
+
+    /**
+     * Sets the option group item that the user selected, e.g. YES means: the process was activated by the user.
+     * @param activationOptionGroupItem the user's selection
+     */
+    public void setActivationOptionGroupItem(ActivationOptionGroupItem activationOptionGroupItem) {
+        this.activationOptionGroupItem = activationOptionGroupItem;
+    }
+
+    /**
+     * Gets the option group item selected by the user.
+     * @return
+     */
+    public ActivationOptionGroupItem getActivationOptionGroupItem() {
+        return activationOptionGroupItem;
     }
 
     /**

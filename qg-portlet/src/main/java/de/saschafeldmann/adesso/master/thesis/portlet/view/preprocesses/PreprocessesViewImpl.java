@@ -31,6 +31,7 @@ import javax.annotation.PostConstruct;
 @Scope("prototype")
 public class PreprocessesViewImpl extends AbstractStepView implements PreprocessesView{
     public static final String VIEW_NAME = "PreprocessesView";
+    private static final String CSS_STYLE_NAME_HORICONTAL_OPTION_GROUP = "horicontal-option-group";
     private final InfoBox infoBox;
     private final Label introductionLabel;
     private final Accordion accordion;
@@ -103,8 +104,31 @@ public class PreprocessesViewImpl extends AbstractStepView implements Preprocess
 
 
     @Override
-    public void setProcessActivationElements(Iterable<ProcessActivationElement> elements) {
+    public void setProcessActivationElements(final Iterable<ProcessActivationElement> elements) {
+        for (ProcessActivationElement activationElement: elements) {
+            setProcessActivationElement(activationElement);
+        }
 
+        reset();
+    }
+
+    private void setProcessActivationElement(final ProcessActivationElement activationElement) {
+        HorizontalLayout horizontalLayout = new HorizontalLayout();
+
+        // add label
+        Label activationElementLabel = new Label(activationElement.getActivationLabel());
+        horizontalLayout.addComponent(activationElementLabel);
+
+        // add yes-no option group
+        OptionGroup activationOptionGroup = new OptionGroup();
+
+        activationOptionGroup.addStyleName(CSS_STYLE_NAME_HORICONTAL_OPTION_GROUP);
+        activationOptionGroup.addItem(ProcessActivationElement.ActivationOptionGroupItem.YES.toString());
+        activationOptionGroup.addItem(ProcessActivationElement.ActivationOptionGroupItem.NO.toString());
+
+        horizontalLayout.addComponent(activationOptionGroup);
+
+        accordionActivationLayout.addComponent(horizontalLayout);
     }
 
     @Override

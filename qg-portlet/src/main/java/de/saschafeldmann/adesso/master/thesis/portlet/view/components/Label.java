@@ -38,4 +38,12 @@ public class Label extends com.vaadin.ui.Label {
     public Label(String infoText, ContentMode mode) {
         super(infoText, mode);
     }
+
+    /**
+     * Creates a new label with the given string to be displayed.
+     * @param activationLabel
+     */
+    public Label(String activationLabel) {
+        super(activationLabel);
+    }
 }
