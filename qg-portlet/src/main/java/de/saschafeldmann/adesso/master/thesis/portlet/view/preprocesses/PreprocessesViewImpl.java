@@ -3,12 +3,22 @@ package de.saschafeldmann.adesso.master.thesis.portlet.view.preprocesses;
 import com.vaadin.data.Property;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.shared.ui.label.ContentMode;
-import com.vaadin.ui.Component;
+import com.vaadin.ui.*;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
 import de.saschafeldmann.adesso.master.thesis.portlet.model.preprocesses.ProcessActivationElement;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.Messages;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.AbstractStepView;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.*;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.Accordion;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.Button;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.HorizontalLayout;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.Label;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.ListSelect;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.OptionGroup;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.TextArea;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.VerticalLayout;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.window.EditWindow;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.window.EditWindowListener;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.window.Table;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -46,11 +56,15 @@ public class PreprocessesViewImpl extends AbstractStepView implements Preprocess
     private final InfoBox accordionActivationLayoutInfoBox;
 
     private final Table accordionProcessChainLayoutTable;
+    private final TextArea accordionProcessChainLogTextarea;
+    private final ListSelect accordionProcessChainFinishedSelect;
 
     private final HorizontalLayout bottomButtonGroupLayout;
     private final Button btnNext;
     private final Button btnPrevious;
     private final Button btnStartProcessChain;
+
+    private final EditWindow editWindow;
 
     private final Label finishedLabel;
 
@@ -66,10 +80,13 @@ public class PreprocessesViewImpl extends AbstractStepView implements Preprocess
             final VerticalLayout accordionActivationLayout,
             final InfoBox accordionActivationLayoutInfoBox,
             final Table accordionProcessChainLayoutTable,
+            final TextArea accordionProcessChainLogTextarea,
+            final ListSelect accordionProcessChainFinishedSelect,
             final HorizontalLayout bottomButtonGroupLayout,
             final Button btnNext,
             final Button btnPrevious,
             final Button btnStartProcessChain,
+            final EditWindow editWindow,
             final Label finishedLabel
     ) {
         super(messages, versionLabel);
@@ -80,10 +97,13 @@ public class PreprocessesViewImpl extends AbstractStepView implements Preprocess
         this.accordionActivationLayout = accordionActivationLayout;
         this.accordionActivationLayoutInfoBox = accordionActivationLayoutInfoBox;
         this.accordionProcessChainLayoutTable = accordionProcessChainLayoutTable;
+        this.accordionProcessChainLogTextarea = accordionProcessChainLogTextarea;
+        this.accordionProcessChainFinishedSelect = accordionProcessChainFinishedSelect;
         this.bottomButtonGroupLayout = bottomButtonGroupLayout;
         this.btnNext = btnNext;
         this.btnPrevious = btnPrevious;
         this.btnStartProcessChain = btnStartProcessChain;
+        this.editWindow = editWindow;
         this.finishedLabel = finishedLabel;
     }
 
@@ -93,6 +113,7 @@ public class PreprocessesViewImpl extends AbstractStepView implements Preprocess
         initializeAccordion();
 
         initializeBottomButtonGroup();
+        registerListeners();
     }
 
     private void initializeIntroductionLabel() {
@@ -142,8 +163,76 @@ public class PreprocessesViewImpl extends AbstractStepView implements Preprocess
                 },
                 1
         );
+
+        // add second row (left cell: log textarea, right cell: drop down)
+        accordionProcessChainLayoutTable.addItem(
+                new Object[] {
+                        accordionProcessChainLogTextarea,
+                        accordionProcessChainFinishedSelect
+                },
+                2
+        );
     }
 
+
+    private void registerListeners() {
+        btnStartProcessChain.addClickListener(new com.vaadin.ui.Button.ClickListener() {
+            @Override
+            public void buttonClick(com.vaadin.ui.Button.ClickEvent clickEvent) {
+                // reset the log shown to the user
+                accordionProcessChainLogTextarea.setValue("");
+
+                viewListener.onProcessChainStartButtonClick();
+            }
+        });
+
+        accordionProcessChainFinishedSelect.addValueChangeListener(new Property.ValueChangeListener() {
+            @Override
+            public void valueChange(Property.ValueChangeEvent valueChangeEvent) {
+                if (null != valueChangeEvent.getProperty()) {
+                    LearningContent selectedContent = (LearningContent) valueChangeEvent.getProperty().getValue();
+
+                    if (null != selectedContent) {
+                        showProcessedTextEditWindow(selectedContent);
+                    }
+                }
+
+                // reset selection
+                accordionProcessChainFinishedSelect.select(accordionProcessChainFinishedSelect.getNullSelectionItemId());
+            }
+        });
+    }
+
+    private void showProcessedTextEditWindow(final LearningContent selectedContent) {
+        String title = selectedContent.getTitle();
+        String annotatedText = selectedContent.getRawText(); // TODO add annotated text to model
+        editWindow.setTextareaLabel(messages.getPreproccesesViewAccordionProcesschainEditWindowTextareaTitle());
+        editWindow.setTitle(messages.getPreproccesesViewAccordionProcesschainEditWindowTitle() + " - " + title);
+        editWindow.setTextareaInput(annotatedText);
+
+        // set window listener which delegates to the view listener
+        editWindow.setEditWindowListener(new EditWindowListener() {
+            /**
+             * @see EditWindowListener#onEditButtonClicked(String)
+             */
+            public void onEditButtonClicked(String textareaInput) {
+                viewListener.onEditLearningContentClick(selectedContent, textareaInput);
+            }
+
+            /**
+             * @see EditWindowListener#onDeleteButtonClicked()
+             */
+            public void onDeleteButtonClicked() {
+                viewListener.onDeleteLearningContentClick(selectedContent);
+            }
+        });
+
+        editWindow.reset();   // initializes / resets the windows layout
+        editWindow.center();  // displays the window on the screen center
+
+        // displays the window
+        UI.getCurrent().addWindow(editWindow);
+    }
 
     @Override
     public void addProcessActivationElements(final Iterable<ProcessActivationElement> elements) {
@@ -172,6 +261,13 @@ public class PreprocessesViewImpl extends AbstractStepView implements Preprocess
         activationOptionGroup.addItem(activationElement.getProcessActivationElementStateActivated());
         activationOptionGroup.addItem(activationElement.getProcessActivationElementStateDeactivated());
 
+        // set default selection
+        if (activationElement.isActivatedPerDefault()) {
+            activationOptionGroup.setValue(activationElement.getProcessActivationElementStateActivated());
+        } else {
+            activationOptionGroup.setValue(activationElement.getProcessActivationElementStateDeactivated());
+        }
+
         // immediatly fire an AJAX event to notify the server about option changes
         activationOptionGroup.setImmediate(true);
         activationOptionGroup.addValueChangeListener(new Property.ValueChangeListener() {
@@ -196,12 +292,17 @@ public class PreprocessesViewImpl extends AbstractStepView implements Preprocess
 
     @Override
     public void addProcessChainLogEntry(String logEntry) {
-
+        accordionProcessChainLogTextarea.setValue(
+                accordionProcessChainLogTextarea.getValue()
+                + "\n"
+                + logEntry
+        );
     }
 
     @Override
-    public void showProcessedLearningContents(Iterable<LearningContent> learningContents) {
-
+    public void showProcessedLearningContents(final Iterable<LearningContent> learningContents) {
+        accordionProcessChainFinishedSelect.removeAllItems();
+        accordionProcessChainFinishedSelect.addItems(learningContents);
     }
 
     @Override

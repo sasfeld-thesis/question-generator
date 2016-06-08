@@ -26,9 +26,15 @@ public interface PreprocessesViewListener {
     void onProcessChainStartButtonClick();
 
     /***
-     * Triggered if the user selected a processed learning content to be edited.
+     * Triggered if the user edited a processed learning content.
      */
-    void onEditLearningContentClick(final LearningContent learningContentToBeEdited);
+    void onEditLearningContentClick(final LearningContent learningContentToBeEdited, String textareaInput);
+
+    /**
+     * Triggered if the user wants to delete a process learning content.
+     * @param selectedContent the content to be deleted
+     */
+    void onDeleteLearningContentClick(LearningContent selectedContent);
 
     /**
      * Triggered if the user activated or deactivated the given {@link ProcessActivationElement}

@@ -94,6 +94,8 @@ public class ProcessActivationElement {
     private final String activationLabel;
     private final Boolean isActivatedPerDefault;
     private final String tooltip;
+    private final String startedLogEntry;
+    private final String finishedLogEntry;
     private final ProcessActivationElementState processActivationElementStateActivated;
     private final ProcessActivationElementState processActivationElementStateDeactivated;
     private ProcessActivationElementState processActivationElementState;
@@ -102,6 +104,8 @@ public class ProcessActivationElement {
         this.activationLabel = processActivationElementBuilder.activationLabel;
         this.isActivatedPerDefault = processActivationElementBuilder.isActivatedPerDefault;
         this.tooltip = processActivationElementBuilder.tooltip;
+        this.startedLogEntry = processActivationElementBuilder.startedLogEntry;
+        this.finishedLogEntry = processActivationElementBuilder.finishedLogEntry;
         this.processActivationElementStateActivated = new ProcessActivationElementState(this, ActivationOptionGroupItem.YES);
         this.processActivationElementStateDeactivated = new ProcessActivationElementState(this, ActivationOptionGroupItem.NO);
     }
@@ -118,16 +122,32 @@ public class ProcessActivationElement {
      * Gets the activated per default setting.
      * @return Boolean
      */
-    public Boolean getActivatedPerDefault() {
+    public Boolean isActivatedPerDefault() {
         return isActivatedPerDefault;
     }
 
     /**
-     * Gets the explaining tooltip texet shown to the user.
+     * Gets the internationalized explaining tooltip texet shown to the user.
      * @return String
      */
     public String getTooltip() {
         return tooltip;
+    }
+
+    /**
+     * Gets the internationalized log entry shown to the user if the process was started.
+     * @return String
+     */
+    public String getStartedLogEntry() {
+        return startedLogEntry;
+    }
+
+    /**
+     * Gets the internationalized log entry shown to the user if the process was finished successfully.
+     * @return String
+     */
+    public String getFinishedLogEntry() {
+        return finishedLogEntry;
     }
 
     /**
@@ -147,7 +167,7 @@ public class ProcessActivationElement {
     }
 
     /**
-     * Sets the user's selected state.
+     * Sets the user's or default (currently active) selected state.
      * @param processActivationElementState state
      */
     public void setProcessActivationElementState(ProcessActivationElementState processActivationElementState) {
@@ -169,6 +189,8 @@ public class ProcessActivationElement {
         private String activationLabel;
         private Boolean isActivatedPerDefault;
         private String tooltip;
+        private String startedLogEntry;
+        private String finishedLogEntry;
 
         /**
          * Sets the label to be displayed to the end user to activate / deactive the process.
@@ -206,6 +228,32 @@ public class ProcessActivationElement {
             checkNotNull(tooltip, "tooltip must not be null.");
 
             this.tooltip = tooltip;
+
+            return this;
+        }
+
+        /**
+         * Sets the internationalized log entry shown to the user if the process was started.
+         * @param startedLogEntry String
+         * @return this
+         */
+        public ProcessActivationElementBuilder withStartedLogEntry(final String startedLogEntry) {
+            checkNotNull(startedLogEntry, "startedLogEntry must not be null.");
+
+            this.startedLogEntry = startedLogEntry;
+
+            return this;
+        }
+
+        /**
+         * Sets the internationalized log entry shown to the user if the process was finished.
+         * @param finishedLogEntry String
+         * @return this
+         */
+        public ProcessActivationElementBuilder withFinishedLogEntry(final String finishedLogEntry) {
+            checkNotNull(finishedLogEntry, "finishedLogEntry must not be null.");
+
+            this.finishedLogEntry = finishedLogEntry;
 
             return this;
         }

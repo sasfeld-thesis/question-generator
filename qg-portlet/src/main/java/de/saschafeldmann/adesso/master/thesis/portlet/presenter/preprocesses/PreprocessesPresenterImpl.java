@@ -1,6 +1,7 @@
 package de.saschafeldmann.adesso.master.thesis.portlet.presenter.preprocesses;
 
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
+import de.saschafeldmann.adesso.master.thesis.portlet.model.QuestionGenerationSession;
 import de.saschafeldmann.adesso.master.thesis.portlet.model.preprocesses.ProcessActivationElement;
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.AbstractStepPresenter;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.Messages;
@@ -77,8 +78,11 @@ public class PreprocessesPresenterImpl extends AbstractStepPresenter implements 
                 .withActivationLabel(messages.getPreproccesesViewAccordionActivationOptiongroupLanguageDetectionLabel())
                 .withIsActivatedPerDefault(false)
                 .withTooltip(messages.getPreproccesesViewAccordionActivationOptiongroupLanguageDetectionTooltip())
+                .withStartedLogEntry(messages.getPreproccesesViewAccordionProcesschainLogLanguageDetectionStarted())
+                .withFinishedLogEntry(messages.getPreproccesesViewAccordionProcesschainLogLanguageDetectionFinished())
                 .build();
 
+        setDefaultProcessActivationElementState(processActivationElement);
         processActivationElements.add(processActivationElement);
     }
 
@@ -87,8 +91,11 @@ public class PreprocessesPresenterImpl extends AbstractStepPresenter implements 
                 .withActivationLabel(messages.getPreproccesesViewAccordionActivationOptiongroupPartOfSpeechDetectionLabel())
                 .withIsActivatedPerDefault(false)
                 .withTooltip(messages.getPreproccesesViewAccordionActivationOptiongroupPartOfSpeechDetectionTooltip())
+                .withStartedLogEntry(messages.getPreproccesesViewAccordionProcesschainLogPartofspeechDetectionStarted())
+                .withFinishedLogEntry(messages.getPreproccesesViewAccordionProcesschainLogPartofspeechDetectionFinished())
                 .build();
 
+        setDefaultProcessActivationElementState(processActivationElement);
         processActivationElements.add(processActivationElement);
     }
 
@@ -97,19 +104,73 @@ public class PreprocessesPresenterImpl extends AbstractStepPresenter implements 
                 .withActivationLabel(messages.getPreproccesesViewAccordionActivationOptiongroupNamedEntitiesDetectionLabel())
                 .withIsActivatedPerDefault(false)
                 .withTooltip(messages.getPreproccesesViewAccordionActivationOptiongroupNamedEntitiesDetectionTooltip())
+                .withStartedLogEntry(messages.getPreproccesesViewAccordionProcesschainLogNamedEntityRecognitionStarted())
+                .withFinishedLogEntry(messages.getPreproccesesViewAccordionProcesschainLogNamedEntityRecognitionFinished())
                 .build();
 
+        setDefaultProcessActivationElementState(processActivationElement);
         processActivationElements.add(processActivationElement);
     }
 
+    private void setDefaultProcessActivationElementState(ProcessActivationElement processActivationElement) {
+        if (processActivationElement.isActivatedPerDefault()) {
+            processActivationElement.setProcessActivationElementState(processActivationElement.getProcessActivationElementStateActivated());
+        } else {
+            processActivationElement.setProcessActivationElementState(processActivationElement.getProcessActivationElementStateDeactivated());
+        }
+    }
+
+
     @Override
     public void onProcessChainStartButtonClick() {
+        LOGGER.info("onProcessChainStartButtonClick");
 
+        preprocessesView.addProcessChainLogEntry(messages.getPreproccesesViewAccordionProcesschainLogChainStarted());
+
+        for (ProcessActivationElement processActivationElement: getUsersActivatedProcesses()) {
+            triggerProcess(processActivationElement);
+        }
+
+        preprocessesView.addProcessChainLogEntry(messages.getPreproccesesViewAccordionProcesschainLogChainFinished());
+
+        // TODO update processed learning contents
+        updateProcessedLearningContents();
+    }
+
+    private void updateProcessedLearningContents() {
+        // TODO maybe filter the ones with errors
+       preprocessesView.showProcessedLearningContents(questionGenerationSession.getCourse().getLearningContents());
+    }
+
+    private ProcessActivationElement[] getUsersActivatedProcesses() {
+        List<ProcessActivationElement> activatedProcessActivationElements = new ArrayList<ProcessActivationElement>();
+
+        for (ProcessActivationElement processActivationElement: this.processActivationElements) {
+            if (processActivationElement.getProcessActivationElementState().getActivationOptionGroupItem()
+                    .equals(ProcessActivationElement.ActivationOptionGroupItem.YES)) {
+                activatedProcessActivationElements.add(processActivationElement);
+            }
+        }
+
+        return activatedProcessActivationElements.toArray(new ProcessActivationElement[activatedProcessActivationElements.size()]);
+    }
+
+    private void triggerProcess(ProcessActivationElement processActivationElement) {
+        preprocessesView.addProcessChainLogEntry(processActivationElement.getStartedLogEntry());
+
+        // TODO call service facade in qg-preprocesses module
+
+        preprocessesView.addProcessChainLogEntry(processActivationElement.getFinishedLogEntry());
     }
 
     @Override
-    public void onEditLearningContentClick(LearningContent learningContentToBeEdited) {
+    public void onEditLearningContentClick(LearningContent learningContentToBeEdited, String textareaInput) {
+        LOGGER.info("onEditLearningContentClick(): will edit {}", learningContentToBeEdited.getTitle());
+    }
 
+    @Override
+    public void onDeleteLearningContentClick(LearningContent selectedContent) {
+        LOGGER.info("onDeleteLearningContentClick(): will delete {}", selectedContent.getTitle());
     }
 
     @Override
