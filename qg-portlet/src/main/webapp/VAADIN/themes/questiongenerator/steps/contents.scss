@@ -1,0 +1,48 @@
+/**
+ * Project:        Masterthesis of Sascha Feldmann
+ * Creation date:  24.05.2016
+ * Author:         Sascha Feldmann (sascha.feldmann@gmx.de)
+ * <br /><br />
+ * University:
+ * Hochschule für Technik und Wirtschaft, Berlin
+ * Fachbereich 4
+ * Studiengang Internationale Medieninformatik (Master)
+ * <br /><br />
+ * Company:
+ * adesso AG
+ * <br /><br />
+ * Styles for the contents step.
+ */
+
+
+// Define the theme as mixin so that it can be included in other files
+@mixin contents {
+  .course-contents-file-upload-progress-bar {
+    width: $courseContentsProgressBarWidth;
+  }
+
+
+  .course-contents-accordion {
+    input[type="text"] {
+      width: $courseContentsAccordionInputWidth;
+    }
+
+    textarea {
+      width: $courseContentsAccordionInputWidth;
+    }
+  }
+
+  .course-contents-raw-texts-right {
+    margin-left: $courseContentsAccordionRightCellMargin;
+  }
+
+  .course-contents-accordion-documents {
+    input[type="file"] {
+      width: $courseContentsAccordionInputWidth;
+    }
+
+    select {
+      width: $courseContentsAccordionInputWidth;
+    }
+  }
+}

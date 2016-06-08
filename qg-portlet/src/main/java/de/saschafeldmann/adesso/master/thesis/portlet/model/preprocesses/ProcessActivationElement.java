@@ -50,20 +50,60 @@ public class ProcessActivationElement {
             return displayLabelMessageKey;
         }
 
+        @Override
         public String toString() {
             return Messages.getInstance().get(displayLabelMessageKey);
         }
     };
 
-    private ActivationOptionGroupItem activationOptionGroupItem;
+    /**
+     * Class for the connection between {@link ProcessActivationElement} and {@link ActivationOptionGroupItem}.
+     */
+    public class ProcessActivationElementState {
+        private ProcessActivationElement parentProcessActivationElement;
+        private ActivationOptionGroupItem activationOptionGroupItem;
+
+        private ProcessActivationElementState(ProcessActivationElement parentProcessActivationElement, ActivationOptionGroupItem activationOptionGroupItem) {
+            this.parentProcessActivationElement = parentProcessActivationElement;
+            this.activationOptionGroupItem = activationOptionGroupItem;
+        }
+
+        /**
+         * Gets the process activation element.
+         * @return
+         */
+        public ProcessActivationElement getParentProcessActivationElement() {
+            return parentProcessActivationElement;
+        }
+
+        /**
+         * Gets the option group item selected by the user.
+         * @return the state
+         */
+        public ActivationOptionGroupItem getActivationOptionGroupItem() {
+            return activationOptionGroupItem;
+        }
+
+        @Override
+        public String toString() {
+            return getActivationOptionGroupItem().toString();
+        }
+    }
+
+
     private final String activationLabel;
     private final Boolean isActivatedPerDefault;
     private final String tooltip;
+    private final ProcessActivationElementState processActivationElementStateActivated;
+    private final ProcessActivationElementState processActivationElementStateDeactivated;
+    private ProcessActivationElementState processActivationElementState;
 
     private ProcessActivationElement(ProcessActivationElementBuilder processActivationElementBuilder) {
         this.activationLabel = processActivationElementBuilder.activationLabel;
         this.isActivatedPerDefault = processActivationElementBuilder.isActivatedPerDefault;
         this.tooltip = processActivationElementBuilder.tooltip;
+        this.processActivationElementStateActivated = new ProcessActivationElementState(this, ActivationOptionGroupItem.YES);
+        this.processActivationElementStateDeactivated = new ProcessActivationElementState(this, ActivationOptionGroupItem.NO);
     }
 
     /**
@@ -91,19 +131,35 @@ public class ProcessActivationElement {
     }
 
     /**
-     * Sets the option group item that the user selected, e.g. YES means: the process was activated by the user.
-     * @param activationOptionGroupItem the user's selection
+     * Gets the process activation element state for the 'yes' option.
+     * @return the state for the 'yes' option
      */
-    public void setActivationOptionGroupItem(ActivationOptionGroupItem activationOptionGroupItem) {
-        this.activationOptionGroupItem = activationOptionGroupItem;
+    public ProcessActivationElementState getProcessActivationElementStateActivated() {
+        return processActivationElementStateActivated;
     }
 
     /**
-     * Gets the option group item selected by the user.
-     * @return
+     * Gets the process activation element state for the 'no' option.
+     * @return the state for the 'no' option
      */
-    public ActivationOptionGroupItem getActivationOptionGroupItem() {
-        return activationOptionGroupItem;
+    public ProcessActivationElementState getProcessActivationElementStateDeactivated() {
+        return processActivationElementStateDeactivated;
+    }
+
+    /**
+     * Sets the user's selected state.
+     * @param processActivationElementState state
+     */
+    public void setProcessActivationElementState(ProcessActivationElementState processActivationElementState) {
+        this.processActivationElementState = processActivationElementState;
+    }
+
+    /**
+     * Gets the user's selected state.
+     * @return state
+     */
+    public ProcessActivationElementState getProcessActivationElementState() {
+        return processActivationElementState;
     }
 
     /**

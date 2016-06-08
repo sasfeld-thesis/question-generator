@@ -17,12 +17,16 @@
 @import "variables";
 @import "addons";
 @import "../valo/valo";
+@import "steps/contents";
+@import "steps/preprocesses";
 
 
 // Define the theme as mixin so that it can be included in other files
 @mixin questiongenerator {
   @include addons;
   @include valo;
+  @include contents;
+  @include preprocesses;
 
   /*
   * Main container: outer vertical layout of each (Java Vaadin class) AbstractStepView
@@ -66,30 +70,6 @@
     margin-left: $rightButtonMargin;
   }
 
-  .course-contents-accordion {
-    input[type="text"] {
-      width: $courseContentsAccordionInputWidth;
-    }
-
-    textarea {
-      width: $courseContentsAccordionInputWidth;
-    }
-  }
-
-  .course-contents-raw-texts-right {
-    margin-left: $courseContentsAccordionRightCellMargin;
-  }
-
-  .course-contents-accordion-documents {
-    input[type="file"] {
-      width: $courseContentsAccordionInputWidth;
-    }
-
-    select {
-      width: $courseContentsAccordionInputWidth;
-    }
-  }
-
   /*
    * Edit dialog window.
    */
@@ -109,14 +89,4 @@
     padding-left: $boxMargins;
   }
 
-  .course-contents-file-upload-progress-bar {
-    width: $courseContentsProgressBarWidth;
-  }
-
-  /**
-  * Special class for horicontal option groups.
-  */
-  .horicontal-option-group .v-select-option {
-    display: inline-block;
-  }
 }

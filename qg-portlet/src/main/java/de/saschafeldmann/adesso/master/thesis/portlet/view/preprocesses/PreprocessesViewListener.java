@@ -34,7 +34,7 @@ public interface PreprocessesViewListener {
      * Triggered if the user activated or deactivated the given {@link ProcessActivationElement}
      * @param processActivationElement the processActivationElement
      */
-    void onActivationElementChange(final ProcessActivationElement processActivationElement);
+    void onActivationElementChange(final ProcessActivationElement.ProcessActivationElementState processActivationElement);
 
     /**
      * Called if the view gets the user's focus.

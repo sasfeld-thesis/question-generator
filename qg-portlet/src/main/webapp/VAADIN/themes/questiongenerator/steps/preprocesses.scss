@@ -1,0 +1,28 @@
+/**
+ * Project:        Masterthesis of Sascha Feldmann
+ * Creation date:  24.05.2016
+ * Author:         Sascha Feldmann (sascha.feldmann@gmx.de)
+ * <br /><br />
+ * University:
+ * Hochschule für Technik und Wirtschaft, Berlin
+ * Fachbereich 4
+ * Studiengang Internationale Medieninformatik (Master)
+ * <br /><br />
+ * Company:
+ * adesso AG
+ * <br /><br />
+ * Styles for the preprocesses step.
+ */
+
+
+// Define the theme as mixin so that it can be included in other files
+@mixin preprocesses {
+  /**
+ * Special class for horicontal option groups.
+ */
+  .horicontal-option-group {
+    .v-select-option {
+      display: inline-block;
+    }
+  }
+}

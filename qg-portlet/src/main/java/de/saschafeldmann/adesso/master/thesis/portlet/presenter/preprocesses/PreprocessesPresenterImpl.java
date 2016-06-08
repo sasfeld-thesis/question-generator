@@ -4,10 +4,10 @@ import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningCont
 import de.saschafeldmann.adesso.master.thesis.portlet.model.preprocesses.ProcessActivationElement;
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.AbstractStepPresenter;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.Messages;
-import de.saschafeldmann.adesso.master.thesis.portlet.view.course.information.CourseInformationViewImpl;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.preprocesses.PreprocessesView;
-import de.saschafeldmann.adesso.master.thesis.portlet.view.preprocesses.PreprocessesViewImpl;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.preprocesses.PreprocessesViewListener;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -33,9 +33,11 @@ import java.util.List;
 @Component
 @Scope("prototype")
 public class PreprocessesPresenterImpl extends AbstractStepPresenter implements PreprocessesPresenter, PreprocessesViewListener {
+    private static final Logger LOGGER = LoggerFactory.getLogger(PreprocessesPresenterImpl.class);
     private PreprocessesView preprocessesView;
     @Autowired
     private Messages messages;
+    private ArrayList<ProcessActivationElement> processActivationElements;
 
     /**
      * Creates a new preprocesses presenter.
@@ -61,13 +63,13 @@ public class PreprocessesPresenterImpl extends AbstractStepPresenter implements 
     }
 
     private void loadProcessActivationElements() {
-        List<ProcessActivationElement> processActivationElements = new ArrayList<ProcessActivationElement>();
+        this.processActivationElements = new ArrayList<ProcessActivationElement>();
 
         addLanguageDetectionActivationElement(processActivationElements);
         addPartOfSpeechActivationElement(processActivationElements);
         addNamedEntityRecognitionActivationElement(processActivationElements);
 
-        this.preprocessesView.setProcessActivationElements(processActivationElements);
+        this.preprocessesView.addProcessActivationElements(processActivationElements);
     }
 
     private void addLanguageDetectionActivationElement(List<ProcessActivationElement> processActivationElements) {
@@ -111,8 +113,15 @@ public class PreprocessesPresenterImpl extends AbstractStepPresenter implements 
     }
 
     @Override
-    public void onActivationElementChange(ProcessActivationElement processActivationElement) {
+    public void onActivationElementChange(ProcessActivationElement.ProcessActivationElementState processActivationElementState) {
+        LOGGER.info("onActivationElementChange(): option for {} was changed to {}",
+                processActivationElementState.getParentProcessActivationElement().getActivationLabel(),
+                processActivationElementState.getActivationOptionGroupItem()
+                );
 
+
+        processActivationElementState.getParentProcessActivationElement().setProcessActivationElementState(processActivationElementState);
+        preprocessesView.showProcessActivationSuccessMessage();
     }
 
     @Override

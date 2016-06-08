@@ -26,7 +26,7 @@ public interface PreprocessesView extends ViewWithMenu {
      * can (de-) activate them.
      * @param elements iterable
      */
-    void setProcessActivationElements(Iterable<ProcessActivationElement> elements);
+    void addProcessActivationElements(Iterable<ProcessActivationElement> elements);
 
     /**
      * Displays the activation success message.

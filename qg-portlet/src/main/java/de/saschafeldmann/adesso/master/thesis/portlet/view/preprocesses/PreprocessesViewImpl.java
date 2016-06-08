@@ -1,5 +1,6 @@
 package de.saschafeldmann.adesso.master.thesis.portlet.view.preprocesses;
 
+import com.vaadin.data.Property;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Component;
@@ -42,7 +43,9 @@ public class PreprocessesViewImpl extends AbstractStepView implements Preprocess
     private final Accordion accordion;
 
     private final VerticalLayout accordionActivationLayout;
-    private final Table accordionProcessChainLayout;
+    private final InfoBox accordionActivationLayoutInfoBox;
+
+    private final Table accordionProcessChainLayoutTable;
 
     private final HorizontalLayout bottomButtonGroupLayout;
     private final Button btnNext;
@@ -61,7 +64,8 @@ public class PreprocessesViewImpl extends AbstractStepView implements Preprocess
             final Label introductionLabel,
             final Accordion accordion,
             final VerticalLayout accordionActivationLayout,
-            final Table accordionProcessChainLayout,
+            final InfoBox accordionActivationLayoutInfoBox,
+            final Table accordionProcessChainLayoutTable,
             final HorizontalLayout bottomButtonGroupLayout,
             final Button btnNext,
             final Button btnPrevious,
@@ -74,7 +78,8 @@ public class PreprocessesViewImpl extends AbstractStepView implements Preprocess
         this.introductionLabel = introductionLabel;
         this.accordion = accordion;
         this.accordionActivationLayout = accordionActivationLayout;
-        this.accordionProcessChainLayout = accordionProcessChainLayout;
+        this.accordionActivationLayoutInfoBox = accordionActivationLayoutInfoBox;
+        this.accordionProcessChainLayoutTable = accordionProcessChainLayoutTable;
         this.bottomButtonGroupLayout = bottomButtonGroupLayout;
         this.btnNext = btnNext;
         this.btnPrevious = btnPrevious;
@@ -108,24 +113,29 @@ public class PreprocessesViewImpl extends AbstractStepView implements Preprocess
     }
 
     private void initializeActivationPart() {
+        accordionActivationLayout.addComponent(accordionActivationLayoutInfoBox);
+
         accordion.addTab(accordionActivationLayout, messages.getPreproccesesViewAccordionActivationLabel());
     }
 
     private void initializeProcessChainPart() {
         initializeProcessChainTable();
 
-        accordion.addTab(accordionProcessChainLayout, messages.getPreproccesesViewAccordionProcesschainLabel());
+        accordion.addTab(accordionProcessChainLayoutTable, messages.getPreproccesesViewAccordionProcesschainLabel());
     }
 
     private void initializeProcessChainTable() {
-        accordionProcessChainLayout.addContainerProperty(TABLE_CONTAINER_PROPERTY_LEFT, Component.class, null);
-        accordionProcessChainLayout.addContainerProperty(TABLE_CONTAINER_PROPERTY_RIGHT, Component.class, null);
+        accordionProcessChainLayoutTable.setColumnHeaderMode(com.vaadin.ui.Table.ColumnHeaderMode.HIDDEN);
+
+        // define columns
+        accordionProcessChainLayoutTable.addContainerProperty(TABLE_CONTAINER_PROPERTY_LEFT, Component.class, null);
+        accordionProcessChainLayoutTable.addContainerProperty(TABLE_CONTAINER_PROPERTY_RIGHT, Component.class, null);
 
         btnStartProcessChain.setCaption(messages.getPreproccesesViewAccordionProcesschainButtonStartLabel());
         finishedLabel.setCaption(messages.getPreproccesesViewAccordionProcesschainFinishedLabel());
 
         // add first row (left cell: start process button; right cell: label)
-        accordionProcessChainLayout.addItem(
+        accordionProcessChainLayoutTable.addItem(
                 new Object[] {
                     btnStartProcessChain,
                     finishedLabel
@@ -136,27 +146,42 @@ public class PreprocessesViewImpl extends AbstractStepView implements Preprocess
 
 
     @Override
-    public void setProcessActivationElements(final Iterable<ProcessActivationElement> elements) {
+    public void addProcessActivationElements(final Iterable<ProcessActivationElement> elements) {
         for (ProcessActivationElement activationElement: elements) {
-            setProcessActivationElement(activationElement);
+            addProcessActivationElement(activationElement);
         }
 
         reset();
     }
 
-    private void setProcessActivationElement(final ProcessActivationElement activationElement) {
+    private void addProcessActivationElement(final ProcessActivationElement activationElement) {
         HorizontalLayout horizontalLayout = new HorizontalLayout();
 
         // add label
         Label activationElementLabel = new Label(activationElement.getActivationLabel());
+        activationElementLabel.setDescription(activationElement.getTooltip());
+
         horizontalLayout.addComponent(activationElementLabel);
 
         // add yes-no option group
         OptionGroup activationOptionGroup = new OptionGroup();
 
         activationOptionGroup.addStyleName(CSS_STYLE_NAME_HORICONTAL_OPTION_GROUP);
-        activationOptionGroup.addItem(ProcessActivationElement.ActivationOptionGroupItem.YES.toString());
-        activationOptionGroup.addItem(ProcessActivationElement.ActivationOptionGroupItem.NO.toString());
+        activationOptionGroup.setDescription(activationElement.getTooltip());
+
+        activationOptionGroup.addItem(activationElement.getProcessActivationElementStateActivated());
+        activationOptionGroup.addItem(activationElement.getProcessActivationElementStateDeactivated());
+
+        // immediatly fire an AJAX event to notify the server about option changes
+        activationOptionGroup.setImmediate(true);
+        activationOptionGroup.addValueChangeListener(new Property.ValueChangeListener() {
+            @Override
+            public void valueChange(Property.ValueChangeEvent valueChangeEvent) {
+                ProcessActivationElement.ProcessActivationElementState state = (ProcessActivationElement.ProcessActivationElementState) valueChangeEvent.getProperty().getValue();
+
+                viewListener.onActivationElementChange(state);
+            }
+        });
 
         horizontalLayout.addComponent(activationOptionGroup);
 
@@ -165,7 +190,8 @@ public class PreprocessesViewImpl extends AbstractStepView implements Preprocess
 
     @Override
     public void showProcessActivationSuccessMessage() {
-
+        accordionActivationLayoutInfoBox.setInfo();
+        accordionActivationLayoutInfoBox.setCaption(messages.getPreproccesesViewAccordionActivationSetSuccessInfo());
     }
 
     @Override
