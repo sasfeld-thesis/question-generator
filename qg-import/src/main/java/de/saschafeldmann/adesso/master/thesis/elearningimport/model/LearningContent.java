@@ -21,6 +21,7 @@ import com.google.common.base.Strings;
  *
  */
 public class LearningContent {
+    private final static String ANNOTATED_TEXT_DELETED = "!!!!deleted!!!!";
 
     public enum Type {
         /**
@@ -35,6 +36,7 @@ public class LearningContent {
 
     private final String title;
     private final String rawText;
+    private String annotatedText = "";
     private final Type type;
 
     private LearningContent(LearningContentBuilder learningContentBuilder) {
@@ -57,6 +59,37 @@ public class LearningContent {
      */
     public String getRawText() {
         return rawText;
+    }
+
+    /**
+     * Sets the annotated text (e.g. by part of speech characters).
+     * @param annotatedText String
+     */
+    public void setAnnotatedText(String annotatedText) {
+        this.annotatedText = annotatedText;
+    }
+
+    /**
+     * Gets the annotated text (e.g. by part of speech characters).
+     * @return
+     */
+    public String getAnnotatedText() {
+        return annotatedText;
+    }
+
+    /**
+     * Deletes and marks the annotated text as deleted.
+     */
+    public void deleteAnnotatedText() {
+        this.setAnnotatedText(ANNOTATED_TEXT_DELETED);
+    }
+
+    /**
+     * Whether this learning content has annotated text (was not deleted).
+     * @return
+     */
+    public boolean hasAnnotatedText() {
+        return !getAnnotatedText().equals(ANNOTATED_TEXT_DELETED);
     }
 
     /**

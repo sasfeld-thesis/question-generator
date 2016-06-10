@@ -24,6 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 
 import javax.annotation.PostConstruct;
+import java.util.Collection;
 
 /**
  * Project:        Masterthesis of Sascha Feldmann
@@ -45,8 +46,10 @@ import javax.annotation.PostConstruct;
 public class PreprocessesViewImpl extends AbstractStepView implements PreprocessesView{
     public static final String VIEW_NAME = "PreprocessesView";
     private static final String CSS_STYLE_NAME_HORICONTAL_OPTION_GROUP = "horicontal-option-group";
-    private static final Object TABLE_CONTAINER_PROPERTY_LEFT = "accordion-process-left-column";
-    private static final Object TABLE_CONTAINER_PROPERTY_RIGHT = "accordion-process-right-column";
+    private static final String CSS_STYLE_NAME_PROCESSCHAIN_TABLE = "processchain-table";
+    private static final Object PROCESS_CHAIN_TABLE_CONTAINER_PROPERTY_LEFT = "accordion-process-left-column";
+    private static final Object PROCESS_CHAIN_TABLE_CONTAINER_PROPERTY_RIGHT = "accordion-process-right-column";
+    private static final int PROCESS_CHAIN_TABLE_CELL_WIDTH = 300;
 
     private final InfoBox infoBox;
     private final Label introductionLabel;
@@ -146,11 +149,12 @@ public class PreprocessesViewImpl extends AbstractStepView implements Preprocess
     }
 
     private void initializeProcessChainTable() {
+        accordionProcessChainLayoutTable.addStyleName(CSS_STYLE_NAME_PROCESSCHAIN_TABLE);
         accordionProcessChainLayoutTable.setColumnHeaderMode(com.vaadin.ui.Table.ColumnHeaderMode.HIDDEN);
 
         // define columns
-        accordionProcessChainLayoutTable.addContainerProperty(TABLE_CONTAINER_PROPERTY_LEFT, Component.class, null);
-        accordionProcessChainLayoutTable.addContainerProperty(TABLE_CONTAINER_PROPERTY_RIGHT, Component.class, null);
+        accordionProcessChainLayoutTable.addContainerProperty(PROCESS_CHAIN_TABLE_CONTAINER_PROPERTY_LEFT, Component.class, null);
+        accordionProcessChainLayoutTable.addContainerProperty(PROCESS_CHAIN_TABLE_CONTAINER_PROPERTY_RIGHT, Component.class, null);
 
         btnStartProcessChain.setCaption(messages.getPreproccesesViewAccordionProcesschainButtonStartLabel());
         finishedLabel.setCaption(messages.getPreproccesesViewAccordionProcesschainFinishedLabel());
@@ -172,6 +176,10 @@ public class PreprocessesViewImpl extends AbstractStepView implements Preprocess
                 },
                 2
         );
+
+        // set column width
+        accordionProcessChainLayoutTable.setColumnWidth(PROCESS_CHAIN_TABLE_CONTAINER_PROPERTY_LEFT, PROCESS_CHAIN_TABLE_CELL_WIDTH);
+        accordionProcessChainLayoutTable.setColumnWidth(PROCESS_CHAIN_TABLE_CONTAINER_PROPERTY_RIGHT, PROCESS_CHAIN_TABLE_CELL_WIDTH);
     }
 
 
@@ -190,10 +198,12 @@ public class PreprocessesViewImpl extends AbstractStepView implements Preprocess
             @Override
             public void valueChange(Property.ValueChangeEvent valueChangeEvent) {
                 if (null != valueChangeEvent.getProperty()) {
-                    LearningContent selectedContent = (LearningContent) valueChangeEvent.getProperty().getValue();
+                    if (valueChangeEvent.getProperty().getValue() instanceof LearningContent) {
+                        LearningContent selectedContent = (LearningContent) valueChangeEvent.getProperty().getValue();
 
-                    if (null != selectedContent) {
-                        showProcessedTextEditWindow(selectedContent);
+                        if (null != selectedContent) {
+                            showProcessedTextEditWindow(selectedContent);
+                        }
                     }
                 }
 
@@ -205,7 +215,7 @@ public class PreprocessesViewImpl extends AbstractStepView implements Preprocess
 
     private void showProcessedTextEditWindow(final LearningContent selectedContent) {
         String title = selectedContent.getTitle();
-        String annotatedText = selectedContent.getRawText(); // TODO add annotated text to model
+        String annotatedText = selectedContent.getAnnotatedText();
         editWindow.setTextareaLabel(messages.getPreproccesesViewAccordionProcesschainEditWindowTextareaTitle());
         editWindow.setTitle(messages.getPreproccesesViewAccordionProcesschainEditWindowTitle() + " - " + title);
         editWindow.setTextareaInput(annotatedText);
@@ -300,7 +310,7 @@ public class PreprocessesViewImpl extends AbstractStepView implements Preprocess
     }
 
     @Override
-    public void showProcessedLearningContents(final Iterable<LearningContent> learningContents) {
+    public void showProcessedLearningContents(final Collection<LearningContent> learningContents) {
         accordionProcessChainFinishedSelect.removeAllItems();
         accordionProcessChainFinishedSelect.addItems(learningContents);
     }

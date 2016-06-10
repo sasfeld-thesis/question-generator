@@ -4,6 +4,8 @@ import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningCont
 import de.saschafeldmann.adesso.master.thesis.portlet.model.preprocesses.ProcessActivationElement;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.ViewWithMenu;
 
+import java.util.Collection;
+
 /**
  * Project:        Masterthesis of Sascha Feldmann
  * Creation date:  04.06.2016
@@ -43,7 +45,7 @@ public interface PreprocessesView extends ViewWithMenu {
      * Shows the given processed learning contents.
      * @param learningContents processed learning contents
      */
-    void showProcessedLearningContents(Iterable<LearningContent> learningContents);
+    void showProcessedLearningContents(Collection<LearningContent> learningContents);
 
     /**
      * Resets / initializes the view layout.

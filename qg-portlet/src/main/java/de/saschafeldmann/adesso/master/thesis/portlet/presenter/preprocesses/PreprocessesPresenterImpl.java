@@ -1,7 +1,8 @@
 package de.saschafeldmann.adesso.master.thesis.portlet.presenter.preprocesses;
 
+import com.google.common.base.Predicate;
+import com.google.common.collect.Collections2;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
-import de.saschafeldmann.adesso.master.thesis.portlet.model.QuestionGenerationSession;
 import de.saschafeldmann.adesso.master.thesis.portlet.model.preprocesses.ProcessActivationElement;
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.AbstractStepPresenter;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.Messages;
@@ -39,6 +40,13 @@ public class PreprocessesPresenterImpl extends AbstractStepPresenter implements 
     @Autowired
     private Messages messages;
     private ArrayList<ProcessActivationElement> processActivationElements;
+    private static final Predicate<LearningContent> FILTER_DELETED_ANNOTATED_TEXTS_PREDICATE =
+            new Predicate<LearningContent>() {
+                @Override
+                public boolean apply(LearningContent learningContent) {
+                    return learningContent.hasAnnotatedText();
+                }
+            };
 
     /**
      * Creates a new preprocesses presenter.
@@ -133,13 +141,11 @@ public class PreprocessesPresenterImpl extends AbstractStepPresenter implements 
 
         preprocessesView.addProcessChainLogEntry(messages.getPreproccesesViewAccordionProcesschainLogChainFinished());
 
-        // TODO update processed learning contents
         updateProcessedLearningContents();
     }
 
     private void updateProcessedLearningContents() {
-        // TODO maybe filter the ones with errors
-       preprocessesView.showProcessedLearningContents(questionGenerationSession.getCourse().getLearningContents());
+       preprocessesView.showProcessedLearningContents(Collections2.filter(questionGenerationSession.getCourse().getLearningContents(), FILTER_DELETED_ANNOTATED_TEXTS_PREDICATE));
     }
 
     private ProcessActivationElement[] getUsersActivatedProcesses() {
@@ -166,11 +172,20 @@ public class PreprocessesPresenterImpl extends AbstractStepPresenter implements 
     @Override
     public void onEditLearningContentClick(LearningContent learningContentToBeEdited, String textareaInput) {
         LOGGER.info("onEditLearningContentClick(): will edit {}", learningContentToBeEdited.getTitle());
+
+        learningContentToBeEdited.setAnnotatedText(textareaInput);
     }
 
     @Override
     public void onDeleteLearningContentClick(LearningContent selectedContent) {
         LOGGER.info("onDeleteLearningContentClick(): will delete {}", selectedContent.getTitle());
+
+        selectedContent.deleteAnnotatedText();
+        updateAnnotatedTexts();
+    }
+
+    private void updateAnnotatedTexts() {
+        updateProcessedLearningContents();
     }
 
     @Override
