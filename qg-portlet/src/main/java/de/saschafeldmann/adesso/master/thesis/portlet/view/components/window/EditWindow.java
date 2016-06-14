@@ -21,7 +21,7 @@ import javax.annotation.PostConstruct;
  * Company:
  * adesso AG
  * <br /><br />
- * An edit modal view.
+ * An edit modal view / window / dialog.
  * Contains a simple textarea, edit and delete buttons.
  */
 @Component
@@ -146,5 +146,21 @@ public class EditWindow extends Window {
         buttonGroupLayout.addComponent(btnDelete);
 
         formLayout.addComponent(buttonGroupLayout);
+    }
+
+    /**
+     * Sets a tooltip / description text on the window's edit button.
+     * @param tooltip String
+     */
+    public void setEditButtonTooltip(final String tooltip) {
+        this.btnEdit.setDescription(tooltip);
+    }
+
+    /**
+     * Sets a tooltip / description text on the window's delete button.
+     * @param tooltip String
+     */
+    public void setDeleteButtonTooltip(final String tooltip) {
+        this.btnDelete.setDescription(tooltip);
     }
 }

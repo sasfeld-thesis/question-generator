@@ -224,6 +224,8 @@ public class PreprocessesViewImpl extends AbstractStepView implements Preprocess
         editWindow.setTextareaLabel(messages.getPreproccesesViewAccordionProcesschainEditWindowTextareaTitle());
         editWindow.setTitle(messages.getPreproccesesViewAccordionProcesschainEditWindowTitle() + " - " + title);
         editWindow.setTextareaInput(annotatedText);
+        editWindow.setEditButtonTooltip(messages.getPreproccesesViewAccordionProcesschainEditWindowEditButtonTooltip());
+        editWindow.setDeleteButtonTooltip(messages.getPreproccesesViewAccordionProcesschainEditWindowDeleteButtonTooltip());
 
         // set window listener which delegates to the view listener
         editWindow.setEditWindowListener(new EditWindowListener() {
