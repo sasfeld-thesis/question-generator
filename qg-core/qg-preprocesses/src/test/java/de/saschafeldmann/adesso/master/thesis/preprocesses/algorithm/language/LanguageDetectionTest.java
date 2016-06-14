@@ -41,8 +41,8 @@ public class LanguageDetectionTest {
     private LanguageDetection languageDetectionAlgorithm;
 
     @Before
-    public void setUp() {
-        this.languageDetectionAlgorithm = new LanguageDetection();
+    public void setUp() throws Exception {
+        this.languageDetectionAlgorithm = new LanguageDetection(new LanguageDetectionPropertiesImpl());
     }
 
     @After
