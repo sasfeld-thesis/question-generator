@@ -11,6 +11,7 @@ import de.saschafeldmann.adesso.master.thesis.portlet.view.AbstractStepView;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.*;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.Accordion;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.Button;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.FormLayout;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.HorizontalLayout;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.Label;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.ListSelect;
@@ -56,6 +57,7 @@ public class PreprocessesViewImpl extends AbstractStepView implements Preprocess
     private final Accordion accordion;
 
     private final VerticalLayout accordionActivationLayout;
+    private final FormLayout accordionActivationFormLayout;
     private final InfoBox accordionActivationLayoutInfoBox;
 
     private final Table accordionProcessChainLayoutTable;
@@ -81,6 +83,7 @@ public class PreprocessesViewImpl extends AbstractStepView implements Preprocess
             final Label introductionLabel,
             final Accordion accordion,
             final VerticalLayout accordionActivationLayout,
+            final FormLayout accordionActivationFormLayout,
             final InfoBox accordionActivationLayoutInfoBox,
             final Table accordionProcessChainLayoutTable,
             final TextArea accordionProcessChainLogTextarea,
@@ -98,6 +101,7 @@ public class PreprocessesViewImpl extends AbstractStepView implements Preprocess
         this.introductionLabel = introductionLabel;
         this.accordion = accordion;
         this.accordionActivationLayout = accordionActivationLayout;
+        this.accordionActivationFormLayout = accordionActivationFormLayout;
         this.accordionActivationLayoutInfoBox = accordionActivationLayoutInfoBox;
         this.accordionProcessChainLayoutTable = accordionProcessChainLayoutTable;
         this.accordionProcessChainLogTextarea = accordionProcessChainLogTextarea;
@@ -138,6 +142,7 @@ public class PreprocessesViewImpl extends AbstractStepView implements Preprocess
 
     private void initializeActivationPart() {
         accordionActivationLayout.addComponent(accordionActivationLayoutInfoBox);
+        accordionActivationLayout.addComponent(accordionActivationFormLayout);
 
         accordion.addTab(accordionActivationLayout, messages.getPreproccesesViewAccordionActivationLabel());
     }
@@ -254,18 +259,11 @@ public class PreprocessesViewImpl extends AbstractStepView implements Preprocess
     }
 
     private void addProcessActivationElement(final ProcessActivationElement activationElement) {
-        HorizontalLayout horizontalLayout = new HorizontalLayout();
-
-        // add label
-        Label activationElementLabel = new Label(activationElement.getActivationLabel());
-        activationElementLabel.setDescription(activationElement.getTooltip());
-
-        horizontalLayout.addComponent(activationElementLabel);
-
         // add yes-no option group
         OptionGroup activationOptionGroup = new OptionGroup();
 
         activationOptionGroup.addStyleName(CSS_STYLE_NAME_HORICONTAL_OPTION_GROUP);
+        activationOptionGroup.setCaption(activationElement.getActivationLabel());
         activationOptionGroup.setDescription(activationElement.getTooltip());
 
         activationOptionGroup.addItem(activationElement.getProcessActivationElementStateActivated());
@@ -289,9 +287,7 @@ public class PreprocessesViewImpl extends AbstractStepView implements Preprocess
             }
         });
 
-        horizontalLayout.addComponent(activationOptionGroup);
-
-        accordionActivationLayout.addComponent(horizontalLayout);
+        accordionActivationFormLayout.addComponent(activationOptionGroup);
     }
 
     @Override
