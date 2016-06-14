@@ -1,4 +1,4 @@
-package de.saschafeldmann.adesso.master.thesis.portlet.util;
+package de.saschafeldmann.adesso.master.thesis.util.properties;
 
 import java.util.List;
 import java.util.Map;
@@ -41,7 +41,9 @@ public interface PropertiesReaderApi {
 
     /**
      * <p>Fetch multiple values for a given property key.<br />
-     * Multiple values are given when the config value points to a list of values.</p>
+     * Multiple values are given when the config value points to a list of values.<br />
+     * Example: test.1 = somevalue, test.2 = someothervalue <br />
+     * fetchMultipleValues("test") will result in a list of String with entries "somevalue" and "someothervalue".</p>
      * @param propertyKey String
      * @return a list of values. The value list will contain at least 1 element.
      * @throws IllegalArgumentException

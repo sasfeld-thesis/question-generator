@@ -1,12 +1,9 @@
 package de.saschafeldmann.adesso.master.thesis.portlet.properties;
 
-import de.saschafeldmann.adesso.master.thesis.portlet.util.PropertiesReader;
-import de.saschafeldmann.adesso.master.thesis.portlet.util.PropertiesReaderApi;
+import de.saschafeldmann.adesso.master.thesis.util.properties.PropertiesReader;
+import de.saschafeldmann.adesso.master.thesis.util.properties.PropertiesReaderApi;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-
-import java.io.File;
-import java.io.InputStream;
 
 /**
  * Project:        Masterthesis of Sascha Feldmann

@@ -1,13 +1,10 @@
 package de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n;
 
 import de.saschafeldmann.adesso.master.thesis.portlet.QuestionGeneratorPortlet;
-import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.MessagesDeProperties;
-import de.saschafeldmann.adesso.master.thesis.portlet.util.PropertiesReader;
+import de.saschafeldmann.adesso.master.thesis.util.properties.PropertiesReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-
-import java.util.Map;
 
 /**
  * Project:        Masterthesis of Sascha Feldmann

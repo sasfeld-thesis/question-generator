@@ -1,6 +1,5 @@
-package de.saschafeldmann.adesso.master.thesis.portlet.util;
+package de.saschafeldmann.adesso.master.thesis.util.properties;
 
-import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -59,7 +58,7 @@ public abstract class PropertiesReader implements PropertiesReaderApi {
             properties.load(new FileInputStream(inputFile));
         } catch (IOException e) { // log critical message
             LOGGER.error("PropertiesReader(): could not load properties - exception:\n{}",
-                    ExceptionUtils.getStackTrace(e));
+                    e);
         }
     }
     /**
@@ -78,13 +77,13 @@ public abstract class PropertiesReader implements PropertiesReaderApi {
             properties.load(new InputStreamReader(inputStream, PROPERTY_FILES_ENCODING));
         } catch (Exception e) { // log critical message
             LOGGER.error("PropertiesReader(): could not load properties - exception:\n{}",
-                    ExceptionUtils.getStackTrace(e));
+                    e);
 
             throw e; // make sure to throw exception: the properties are required to run the portlet
         }
     }
 
-
+    @Override
     public String fetchValue(String property) {
         String value = this.properties.getProperty(property.trim()
                 .toLowerCase());
@@ -97,7 +96,7 @@ public abstract class PropertiesReader implements PropertiesReaderApi {
         return value;
     }
 
-
+    @Override
     public Map<String, String> fetchValues() {
         if (null == this.propertiesMap) { // be lazy
             this.propertiesMap = new HashMap<String, String>();
@@ -116,7 +115,7 @@ public abstract class PropertiesReader implements PropertiesReaderApi {
         return this.propertiesMap;
     }
 
-
+    @Override
     public List<String> fetchMultipleValues(String propertyKey) {
         List<String> returnValues = new ArrayList<String>();
         Map<String, String> propertiesMap = this.fetchValues();
@@ -164,6 +163,7 @@ public abstract class PropertiesReader implements PropertiesReaderApi {
         return returnValues;
     }
 
+    @Override
     public <T> T getConfiguredClass(String classPropertyKey, Object... params) {
         String classProperty = this.fetchValue(classPropertyKey);
         try { // try to instanciate an instance from the property value

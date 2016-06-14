@@ -10,6 +10,7 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>qg-util</module>
         <module>qg-core</module>
         <module>qg-import</module>
         <module>qg-portlet</module>

@@ -1,8 +1,7 @@
 package de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n;
 
-import de.saschafeldmann.adesso.master.thesis.portlet.properties.QuestionGeneratorProperties;
-import de.saschafeldmann.adesso.master.thesis.portlet.util.PropertiesReader;
-import de.saschafeldmann.adesso.master.thesis.portlet.util.PropertiesReaderApi;
+import de.saschafeldmann.adesso.master.thesis.util.properties.PropertiesReader;
+import de.saschafeldmann.adesso.master.thesis.util.properties.PropertiesReaderApi;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
