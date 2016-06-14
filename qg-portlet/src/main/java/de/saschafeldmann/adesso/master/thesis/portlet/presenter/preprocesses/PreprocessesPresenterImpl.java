@@ -14,7 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -133,15 +135,26 @@ public class PreprocessesPresenterImpl extends AbstractStepPresenter implements 
     public void onProcessChainStartButtonClick() {
         LOGGER.info("onProcessChainStartButtonClick");
 
-        preprocessesView.addProcessChainLogEntry(messages.getPreproccesesViewAccordionProcesschainLogChainStarted());
+        addLogEntryToView(messages.getPreproccesesViewAccordionProcesschainLogChainStarted());
 
         for (ProcessActivationElement processActivationElement: getUsersActivatedProcesses()) {
             triggerProcess(processActivationElement);
         }
 
-        preprocessesView.addProcessChainLogEntry(messages.getPreproccesesViewAccordionProcesschainLogChainFinished());
+        addLogEntryToView(messages.getPreproccesesViewAccordionProcesschainLogChainFinished());
 
         updateProcessedLearningContents();
+    }
+
+    private void addLogEntryToView(final String logMessage) {
+        preprocessesView.addProcessChainLogEntry(buidTimeString(), logMessage);
+    }
+
+    private String buidTimeString() {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(messages.getLocaleTimeFormat());
+        String time = simpleDateFormat.format(new Date(System.currentTimeMillis()));
+
+        return messages.getLocaleTimePrefix() + time + messages.getLocaleTimeSuffix();
     }
 
     private void updateProcessedLearningContents() {
@@ -162,11 +175,11 @@ public class PreprocessesPresenterImpl extends AbstractStepPresenter implements 
     }
 
     private void triggerProcess(ProcessActivationElement processActivationElement) {
-        preprocessesView.addProcessChainLogEntry(processActivationElement.getStartedLogEntry());
+        addLogEntryToView(processActivationElement.getStartedLogEntry());
 
         // TODO call service facade in qg-preprocesses module
 
-        preprocessesView.addProcessChainLogEntry(processActivationElement.getFinishedLogEntry());
+        addLogEntryToView(processActivationElement.getFinishedLogEntry());
     }
 
     @Override

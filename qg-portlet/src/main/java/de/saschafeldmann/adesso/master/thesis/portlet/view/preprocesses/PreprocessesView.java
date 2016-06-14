@@ -39,7 +39,7 @@ public interface PreprocessesView extends ViewWithMenu {
      * Adds and displays a log entry informing about the process chain progress.
      * @param logEntry String the entry to be shown.
      */
-    void addProcessChainLogEntry(final String logEntry);
+    void addProcessChainLogEntry(String time, String logEntry);
 
     /**
      * Shows the given processed learning contents.

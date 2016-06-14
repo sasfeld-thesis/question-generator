@@ -301,10 +301,11 @@ public class PreprocessesViewImpl extends AbstractStepView implements Preprocess
     }
 
     @Override
-    public void addProcessChainLogEntry(String logEntry) {
+    public void addProcessChainLogEntry(final String time, final String logEntry) {
         accordionProcessChainLogTextarea.setValue(
                 accordionProcessChainLogTextarea.getValue()
-                + "\n"
+                + (accordionProcessChainLogTextarea.getValue().trim().length() > 0 ? "\n" : "")
+                + time + ": "
                 + logEntry
         );
     }

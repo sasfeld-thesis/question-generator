@@ -65,6 +65,30 @@ public class Messages {
     }
 
     /**
+     * Gets the locale string.
+     * @return String
+     */
+    public String getLocaleTimeFormat() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.locale.time.format");
+    }
+
+    /**
+     * Gets the locale string.
+     * @return String
+     */
+    public String getLocaleTimePrefix() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.locale.time.prefix");
+    }
+
+    /**
+     * Gets the locale string.
+     * @return String
+     */
+    public String getLocaleTimeSuffix() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.locale.time.suffix");
+    }
+
+    /**
      * Gets the menu item label.
      *
      * @return String
