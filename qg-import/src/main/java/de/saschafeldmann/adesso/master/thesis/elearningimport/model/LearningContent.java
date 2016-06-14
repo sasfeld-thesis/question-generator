@@ -85,6 +85,13 @@ public class LearningContent {
     }
 
     /**
+     * Resets the annotated text.
+     */
+    public void resetAnnotatedText() {
+        this.setAnnotatedText("");
+    }
+
+    /**
      * Whether this learning content has annotated text (was not deleted).
      * @return
      */

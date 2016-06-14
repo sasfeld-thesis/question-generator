@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -47,6 +48,13 @@ public class PreprocessesPresenterImpl extends AbstractStepPresenter implements 
                 @Override
                 public boolean apply(LearningContent learningContent) {
                     return learningContent.hasAnnotatedText();
+                }
+            };
+    private static final Predicate<LearningContent> FILTER_NOT_DELETED_ANNOTATED_TEXTS_PREDICATE =
+            new Predicate<LearningContent>() {
+                @Override
+                public boolean apply(LearningContent learningContent) {
+                    return !learningContent.hasAnnotatedText();
                 }
             };
 
@@ -217,5 +225,18 @@ public class PreprocessesPresenterImpl extends AbstractStepPresenter implements 
     public void onViewFocus() {
         preprocessesView.setCurrentSessionStatus(questionGenerationSession.getStatus());
         preprocessesView.reset();
+
+        resetDeletedLearningContents();
+    }
+
+    /**
+     * Resets the {@link LearningContent} instances deleted by the user so that he/she can reprocess them after content changes.
+     */
+    private void resetDeletedLearningContents() {
+        Collection<LearningContent> deletedLearningContents = Collections2.filter(questionGenerationSession.getCourse().getLearningContents(), FILTER_NOT_DELETED_ANNOTATED_TEXTS_PREDICATE);
+
+        for (LearningContent deletedLearningContent: deletedLearningContents) {
+            deletedLearningContent.resetAnnotatedText();
+        }
     }
 }
