@@ -1,8 +1,6 @@
 package de.saschafeldmann.adesso.master.thesis.portlet.view.course.information;
 
-import com.vaadin.navigator.View;
 import com.vaadin.ui.Component;
-import de.saschafeldmann.adesso.master.thesis.elearningimport.model.Language;
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.course.information.CourseInformationPresenter;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.ViewWithMenu;
 

@@ -37,6 +37,7 @@ public class LearningContent {
     private final String title;
     private final String rawText;
     private String annotatedText = "";
+    private Language determinedLanguage;
     private final Type type;
 
     private LearningContent(LearningContentBuilder learningContentBuilder) {
@@ -71,10 +72,27 @@ public class LearningContent {
 
     /**
      * Gets the annotated text (e.g. by part of speech characters).
-     * @return
+     * @return String
      */
     public String getAnnotatedText() {
         return annotatedText;
+    }
+
+    /**
+     * Sets the determined / infered language.
+     * @param determinedLanguage the determined language
+     */
+    public void setDeterminedLanguage(Language determinedLanguage) {
+        this.determinedLanguage = determinedLanguage;
+    }
+
+    /**
+     * Gets the determined language.
+     * Make sure that an determination algorithm was run before so that an appropriate value is set.
+     * @return the determined language
+     */
+    public Language getDeterminedLanguage() {
+        return determinedLanguage;
     }
 
     /**
@@ -93,7 +111,7 @@ public class LearningContent {
 
     /**
      * Whether this learning content has annotated text (was not deleted).
-     * @return
+     * @return the annotated text
      */
     public boolean hasAnnotatedText() {
         return !getAnnotatedText().equals(ANNOTATED_TEXT_DELETED);

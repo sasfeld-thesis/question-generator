@@ -18,4 +18,13 @@
         <module>qg-preprocesses</module>
     </modules>
 
+    <dependencies>
+        <!-- internal dependency -->
+        <dependency>
+            <groupId>de.saschafeldmann.adesso.master.thesis.software</groupId>
+            <artifactId>qg-import</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
+
 </project>

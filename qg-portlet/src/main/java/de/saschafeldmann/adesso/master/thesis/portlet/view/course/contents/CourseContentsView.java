@@ -3,7 +3,6 @@ package de.saschafeldmann.adesso.master.thesis.portlet.view.course.contents;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.ViewWithMenu;
 
-import java.io.File;
 import java.util.List;
 
 /**

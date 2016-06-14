@@ -2,7 +2,6 @@ package de.saschafeldmann.adesso.master.thesis.elearningimport.model;
 
 import static org.junit.Assert.*;
 
-import com.google.common.collect.ImmutableCollection;
 import org.junit.Test;
 
 import java.util.ArrayList;
