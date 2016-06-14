@@ -623,6 +623,15 @@ public class Messages {
 
     /**
      * Gets the text
+     * @param params the params
+     * @return String
+     */
+    public String getPreproccesesViewAccordionProcesschainLogLanguageDetectionFailed(String... params) {
+        return String.format(getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.preprocesses.view.accordion.processchain.log.language.detection.failed"), params);
+    }
+
+    /**
+     * Gets the text
      *
      * @return String
      */

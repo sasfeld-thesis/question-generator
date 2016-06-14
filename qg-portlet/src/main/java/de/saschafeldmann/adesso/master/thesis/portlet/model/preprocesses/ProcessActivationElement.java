@@ -1,6 +1,7 @@
 package de.saschafeldmann.adesso.master.thesis.portlet.model.preprocesses;
 
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.Messages;
+import de.saschafeldmann.adesso.master.thesis.preprocesses.algorithm.PreprocessingAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import static com.google.common.base.Preconditions.*;
@@ -93,6 +94,7 @@ public class ProcessActivationElement {
 
     private final String activationLabel;
     private final Boolean isActivatedPerDefault;
+    private final PreprocessingAlgorithm processAlgorithm;
     private final String tooltip;
     private final String startedLogEntry;
     private final String finishedLogEntry;
@@ -103,6 +105,7 @@ public class ProcessActivationElement {
     private ProcessActivationElement(ProcessActivationElementBuilder processActivationElementBuilder) {
         this.activationLabel = processActivationElementBuilder.activationLabel;
         this.isActivatedPerDefault = processActivationElementBuilder.isActivatedPerDefault;
+        this.processAlgorithm = processActivationElementBuilder.processAlgorithm;
         this.tooltip = processActivationElementBuilder.tooltip;
         this.startedLogEntry = processActivationElementBuilder.startedLogEntry;
         this.finishedLogEntry = processActivationElementBuilder.finishedLogEntry;
@@ -124,6 +127,14 @@ public class ProcessActivationElement {
      */
     public Boolean isActivatedPerDefault() {
         return isActivatedPerDefault;
+    }
+
+    /**
+     * Gets the underlying algorithm to be run.
+     * @return the underyling algorithm
+     */
+    public PreprocessingAlgorithm getProcessAlgorithm() {
+        return processAlgorithm;
     }
 
     /**
@@ -191,6 +202,7 @@ public class ProcessActivationElement {
         private String tooltip;
         private String startedLogEntry;
         private String finishedLogEntry;
+        private PreprocessingAlgorithm processAlgorithm;
 
         /**
          * Sets the label to be displayed to the end user to activate / deactive the process.
@@ -215,6 +227,20 @@ public class ProcessActivationElement {
             checkNotNull(isActivatedPerDefault, "isActivatedPerDefault must not be null.");
 
             this.isActivatedPerDefault = isActivatedPerDefault;
+
+            return this;
+        }
+
+        /**
+         * Sets the algorithm implementation that should be run.
+         * @see PreprocessingAlgorithm for more information
+         * @param processAlgorithm the underlying algorithm implementation within the qg-preprocesses module
+         * @return this
+         */
+        public ProcessActivationElementBuilder withAlgorithm(final PreprocessingAlgorithm processAlgorithm) {
+            checkNotNull(processAlgorithm, "processAlgorithm must not be null.");
+
+            this.processAlgorithm = processAlgorithm;
 
             return this;
         }
@@ -263,6 +289,13 @@ public class ProcessActivationElement {
          * @return the new {@link ProcessActivationElement}
          */
         public ProcessActivationElement build() {
+            checkNotNull(activationLabel, "activationLabel must not be null.");
+            checkNotNull(isActivatedPerDefault, "isActivatedPerDefault must not be null.");
+            checkNotNull(processAlgorithm, "processAlgorithm must not be null.");
+            checkNotNull(tooltip, "tooltip must not be null.");
+            checkNotNull(startedLogEntry, "startedLogEntry must not be null.");
+            checkNotNull(finishedLogEntry, "finishedLogEntry must not be null.");
+
             return new ProcessActivationElement(this);
         }
     }

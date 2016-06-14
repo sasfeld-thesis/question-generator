@@ -2,12 +2,15 @@ package de.saschafeldmann.adesso.master.thesis.portlet.presenter.preprocesses;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
+import de.saschafeldmann.adesso.master.thesis.elearningimport.model.Language;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
 import de.saschafeldmann.adesso.master.thesis.portlet.model.preprocesses.ProcessActivationElement;
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.AbstractStepPresenter;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.Messages;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.preprocesses.PreprocessesView;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.preprocesses.PreprocessesViewListener;
+import de.saschafeldmann.adesso.master.thesis.preprocesses.algorithm.language.LanguageDetection;
+import de.saschafeldmann.adesso.master.thesis.preprocesses.algorithm.language.UndeterminableLanguageException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +18,10 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+
+import static de.saschafeldmann.adesso.master.thesis.elearningimport.model.Language.ENGLISH;
+import static de.saschafeldmann.adesso.master.thesis.elearningimport.model.Language.GERMAN;
 
 /**
  * Project:        Masterthesis of Sascha Feldmann
@@ -43,6 +46,10 @@ public class PreprocessesPresenterImpl extends AbstractStepPresenter implements 
     @Autowired
     private Messages messages;
     private ArrayList<ProcessActivationElement> processActivationElements;
+
+    @Autowired
+    private LanguageDetection languageDetectionAlgorithm;
+
     private static final Predicate<LearningContent> FILTER_DELETED_ANNOTATED_TEXTS_PREDICATE =
             new Predicate<LearningContent>() {
                 @Override
@@ -95,6 +102,7 @@ public class PreprocessesPresenterImpl extends AbstractStepPresenter implements 
         ProcessActivationElement processActivationElement = new ProcessActivationElement.ProcessActivationElementBuilder()
                 .withActivationLabel(messages.getPreproccesesViewAccordionActivationOptiongroupLanguageDetectionLabel())
                 .withIsActivatedPerDefault(false)
+                .withAlgorithm(languageDetectionAlgorithm)
                 .withTooltip(messages.getPreproccesesViewAccordionActivationOptiongroupLanguageDetectionTooltip())
                 .withStartedLogEntry(messages.getPreproccesesViewAccordionProcesschainLogLanguageDetectionStarted())
                 .withFinishedLogEntry(messages.getPreproccesesViewAccordionProcesschainLogLanguageDetectionFinished())
@@ -108,6 +116,7 @@ public class PreprocessesPresenterImpl extends AbstractStepPresenter implements 
         ProcessActivationElement processActivationElement = new ProcessActivationElement.ProcessActivationElementBuilder()
                 .withActivationLabel(messages.getPreproccesesViewAccordionActivationOptiongroupPartOfSpeechDetectionLabel())
                 .withIsActivatedPerDefault(false)
+                .withAlgorithm(languageDetectionAlgorithm) // TODO change
                 .withTooltip(messages.getPreproccesesViewAccordionActivationOptiongroupPartOfSpeechDetectionTooltip())
                 .withStartedLogEntry(messages.getPreproccesesViewAccordionProcesschainLogPartofspeechDetectionStarted())
                 .withFinishedLogEntry(messages.getPreproccesesViewAccordionProcesschainLogPartofspeechDetectionFinished())
@@ -121,6 +130,7 @@ public class PreprocessesPresenterImpl extends AbstractStepPresenter implements 
         ProcessActivationElement processActivationElement = new ProcessActivationElement.ProcessActivationElementBuilder()
                 .withActivationLabel(messages.getPreproccesesViewAccordionActivationOptiongroupNamedEntitiesDetectionLabel())
                 .withIsActivatedPerDefault(false)
+                .withAlgorithm(languageDetectionAlgorithm) // TODO change
                 .withTooltip(messages.getPreproccesesViewAccordionActivationOptiongroupNamedEntitiesDetectionTooltip())
                 .withStartedLogEntry(messages.getPreproccesesViewAccordionProcesschainLogNamedEntityRecognitionStarted())
                 .withFinishedLogEntry(messages.getPreproccesesViewAccordionProcesschainLogNamedEntityRecognitionFinished())
@@ -137,7 +147,6 @@ public class PreprocessesPresenterImpl extends AbstractStepPresenter implements 
             processActivationElement.setProcessActivationElementState(processActivationElement.getProcessActivationElementStateDeactivated());
         }
     }
-
 
     @Override
     public void onProcessChainStartButtonClick() {
@@ -186,8 +195,56 @@ public class PreprocessesPresenterImpl extends AbstractStepPresenter implements 
         addLogEntryToView(processActivationElement.getStartedLogEntry());
 
         // TODO call service facade in qg-preprocesses module
+        executeProcessForAllLearningContents(processActivationElement);
 
-        addLogEntryToView(processActivationElement.getFinishedLogEntry());
+        if (processActivationElement.getProcessAlgorithm().equals(this.languageDetectionAlgorithm)) {
+            addLogEntryToView(String.format(processActivationElement.getFinishedLogEntry(), getDeterminedLanguages()));
+        } else {
+            addLogEntryToView(processActivationElement.getFinishedLogEntry());
+        }
+
+    }
+
+    private void executeProcessForAllLearningContents(ProcessActivationElement processActivationElement) {
+        for (LearningContent learningContent: questionGenerationSession.getCourse().getLearningContents()) {
+            try {
+                processActivationElement.getProcessAlgorithm().execute(learningContent);
+            } catch (UndeterminableLanguageException undeterminalLanguageException) {
+                // language detection: the language could not be detected
+                addLogEntryToView(messages.getPreproccesesViewAccordionProcesschainLogLanguageDetectionFailed(learningContent.getTitle()));
+            }
+        }
+    }
+
+    private String getDeterminedLanguages() {
+        Set<Language> detectedLanguages = getDeterminedLanguagesSet();
+        return buildDeterminedLanguagesString(detectedLanguages);
+    }
+
+    private String buildDeterminedLanguagesString(Set<Language> detectedLanguages) {
+        String langs = "";
+
+        if (detectedLanguages.contains(GERMAN)) {
+            langs += messages.getCourseInformationViewGermanLanguageLabel();
+        }
+
+        if (detectedLanguages.contains(ENGLISH)) {
+            langs += (langs.length() != 0 ? ", " : "") + messages.getCourseInformationViewEnglishLanguageLabel();
+        }
+
+        return langs;
+    }
+
+    private Set<Language> getDeterminedLanguagesSet() {
+        Set<Language> detectedLanguages = new HashSet<>();
+
+        for (LearningContent learningContent: questionGenerationSession.getCourse().getLearningContents()) {
+            if (null != learningContent.getDeterminedLanguage()) {
+                detectedLanguages.add(learningContent.getDeterminedLanguage());
+            }
+        }
+
+        return detectedLanguages;
     }
 
     @Override
