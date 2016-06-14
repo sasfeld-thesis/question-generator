@@ -1,5 +1,6 @@
 package de.saschafeldmann.adesso.master.thesis.portlet.view.preprocesses;
 
+import de.saschafeldmann.adesso.master.thesis.elearningimport.model.Language;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
 import de.saschafeldmann.adesso.master.thesis.portlet.model.preprocesses.ProcessActivationElement;
 
@@ -46,4 +47,11 @@ public interface PreprocessesViewListener {
      * Called if the view gets the user's focus.
      */
     void onViewFocus();
+
+    /**
+     * Triggered if the user changed the given content's language.
+     * @param selectedContent given content
+     * @param itemChanged the new language
+     */
+    void onEditLearningContentLanguageClick(LearningContent selectedContent, Language newLanguage);
 }

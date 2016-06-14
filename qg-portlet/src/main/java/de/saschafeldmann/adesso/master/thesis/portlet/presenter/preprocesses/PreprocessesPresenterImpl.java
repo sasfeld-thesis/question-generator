@@ -255,6 +255,13 @@ public class PreprocessesPresenterImpl extends AbstractStepPresenter implements 
     }
 
     @Override
+    public void onEditLearningContentLanguageClick(LearningContent selectedContent, Language newLanguage) {
+        LOGGER.info("onEditLearningContentLanguageClick(): will edit {}", selectedContent.getTitle());
+
+        selectedContent.setDeterminedLanguage(newLanguage);
+    }
+
+    @Override
     public void onDeleteLearningContentClick(LearningContent selectedContent) {
         LOGGER.info("onDeleteLearningContentClick(): will delete {}", selectedContent.getTitle());
 

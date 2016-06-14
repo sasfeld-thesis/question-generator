@@ -1,6 +1,7 @@
 package de.saschafeldmann.adesso.master.thesis.portlet.view.course.information;
 
 import com.vaadin.navigator.ViewChangeListener;
+import de.saschafeldmann.adesso.master.thesis.portlet.model.LanguageWrapper;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.Messages;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.AbstractStepView;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.*;
@@ -91,12 +92,10 @@ public class CourseInformationViewImpl extends AbstractStepView implements Cours
     private void initializeLanguageSelect() {
         this.inputCourseLanguageSelect.setCaption(messages.getCourseInformationViewCourseLanguageLabel());
 
-        String germanLanguageLabel = messages.getCourseInformationViewGermanLanguageLabel();
-        this.inputCourseLanguageSelect.addItem(germanLanguageLabel);
-        this.inputCourseLanguageSelect.addItem(messages.getCourseInformationViewEnglishLanguageLabel());
+        this.inputCourseLanguageSelect.addItems(LanguageWrapper.getAllLanguageItems());
 
         this.inputCourseLanguageSelect.setRows(2);
-        this.inputCourseLanguageSelect.select(germanLanguageLabel);
+        this.inputCourseLanguageSelect.select(LanguageWrapper.getGermanWrapper());
     }
 
     private void registerListeners() {
@@ -182,7 +181,7 @@ public class CourseInformationViewImpl extends AbstractStepView implements Cours
 
     @Override
     public String getInputLanguage() {
-        return (String) inputCourseLanguageSelect.getValue();
+        return ((LanguageWrapper) inputCourseLanguageSelect.getValue()).toString();
     }
 
     @Override

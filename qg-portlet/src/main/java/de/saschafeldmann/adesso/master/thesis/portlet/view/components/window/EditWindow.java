@@ -31,13 +31,13 @@ public class EditWindow extends Window {
     private final Messages messages;
     private String title;
     private String textareaLabel;
-    private EditWindowListener editWindowListener;
+    protected EditWindowListener editWindowListener;
 
-    private final TextArea textArea;
-    private final Button btnEdit;
-    private final Button btnDelete;
-    private final FormLayout formLayout;
-    private final HorizontalLayout buttonGroupLayout;
+    protected final TextArea textArea;
+    protected final Button btnEdit;
+    protected final Button btnDelete;
+    protected final FormLayout formLayout;
+    protected final HorizontalLayout buttonGroupLayout;
     private String textareaInput;
 
     /**
@@ -63,7 +63,7 @@ public class EditWindow extends Window {
         addStyleNames();
     }
 
-    private void setListeners() {
+    protected void setListeners() {
         btnEdit.addClickListener(new com.vaadin.ui.Button.ClickListener() {
             public void buttonClick(com.vaadin.ui.Button.ClickEvent clickEvent) {
                 // notify listener and close the window
@@ -130,7 +130,7 @@ public class EditWindow extends Window {
         this.setContent(formLayout);
     }
 
-    private void setCaptionsAndValues() {
+    protected void setCaptionsAndValues() {
         setCaption(title);
         textArea.setCaption(textareaLabel);
         textArea.setValue(textareaInput);
@@ -139,7 +139,7 @@ public class EditWindow extends Window {
         btnDelete.setCaption(messages.getEditWindowDeleteButtonLabel());
     }
 
-    private void arrangeLayout() {
+    protected void arrangeLayout() {
         formLayout.addComponent(textArea);
 
         buttonGroupLayout.addComponent(btnEdit);

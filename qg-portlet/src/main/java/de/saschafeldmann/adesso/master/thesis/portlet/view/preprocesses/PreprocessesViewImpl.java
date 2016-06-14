@@ -4,7 +4,9 @@ import com.vaadin.data.Property;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
+import de.saschafeldmann.adesso.master.thesis.elearningimport.model.Language;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
+import de.saschafeldmann.adesso.master.thesis.portlet.model.LanguageWrapper;
 import de.saschafeldmann.adesso.master.thesis.portlet.model.preprocesses.ProcessActivationElement;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.Messages;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.AbstractStepView;
@@ -18,9 +20,9 @@ import de.saschafeldmann.adesso.master.thesis.portlet.view.components.ListSelect
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.OptionGroup;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.TextArea;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.VerticalLayout;
-import de.saschafeldmann.adesso.master.thesis.portlet.view.components.window.EditWindow;
-import de.saschafeldmann.adesso.master.thesis.portlet.view.components.window.EditWindowListener;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.window.*;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.window.Table;
+import org.apache.commons.codec.language.bm.Lang;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 
@@ -69,7 +71,7 @@ public class PreprocessesViewImpl extends AbstractStepView implements Preprocess
     private final Button btnPrevious;
     private final Button btnStartProcessChain;
 
-    private final EditWindow editWindow;
+    private final EditWindowWithSelectBox editWindow;
 
     private PreprocessesViewListener viewListener;
 
@@ -90,7 +92,7 @@ public class PreprocessesViewImpl extends AbstractStepView implements Preprocess
             final Button btnNext,
             final Button btnPrevious,
             final Button btnStartProcessChain,
-            final EditWindow editWindow
+            final EditWindowWithSelectBox editWindow
     ) {
         super(messages, versionLabel);
 
@@ -223,19 +225,42 @@ public class PreprocessesViewImpl extends AbstractStepView implements Preprocess
         editWindow.setTextareaInput(annotatedText);
         editWindow.setEditButtonTooltip(messages.getPreproccesesViewAccordionProcesschainEditWindowEditButtonTooltip());
         editWindow.setDeleteButtonTooltip(messages.getPreproccesesViewAccordionProcesschainEditWindowDeleteButtonTooltip());
+        editWindow.setListSelectLabel(messages.getPreproccesesViewAccordionProcesschainEditWindowLanguageTitle());
+
+        editWindow.resetListSelectItems();
+        editWindow.addListSelectItem(LanguageWrapper.DEFAULT_SELECTION);
+
+        for (LanguageWrapper item: LanguageWrapper.getAllLanguageItems()) {
+            editWindow.addListSelectItem(item);
+        }
+        editWindow.setListSelectRows(3);
+
+        Language determinedLearningContentLanguage = selectedContent.getDeterminedLanguage();
+
+        if (null != determinedLearningContentLanguage) {
+            editWindow.setListSelectSelection(LanguageWrapper.forLanguage(determinedLearningContentLanguage));
+            editWindow.setInfoBoxText(null);
+        } else {
+            // user needs to manually select the language since it could not be determined
+            editWindow.setInfoBoxText(messages.getPreproccesesViewAccordionProcesschainEditWindowLanguageInfoBox());
+        }
 
         // set window listener which delegates to the view listener
-        editWindow.setEditWindowListener(new EditWindowListener() {
-            /**
-             * @see EditWindowListener#onEditButtonClicked(String)
-             */
+        editWindow.setEditWindowListener(new EditWindowWithSelectBoxListener() {
+            @Override
+            public void onSelectBoxItemChanged(Object itemChanged) {
+                if (null != itemChanged && itemChanged instanceof LanguageWrapper && !itemChanged.equals(LanguageWrapper.DEFAULT_SELECTION)) {
+                    // language is not the default one
+                    viewListener.onEditLearningContentLanguageClick(selectedContent, ((LanguageWrapper) itemChanged).getLanguage());
+                }
+            }
+
+            @Override
             public void onEditButtonClicked(String textareaInput) {
                 viewListener.onEditLearningContentClick(selectedContent, textareaInput);
             }
 
-            /**
-             * @see EditWindowListener#onDeleteButtonClicked()
-             */
+            @Override
             public void onDeleteButtonClicked() {
                 viewListener.onDeleteLearningContentClick(selectedContent);
             }

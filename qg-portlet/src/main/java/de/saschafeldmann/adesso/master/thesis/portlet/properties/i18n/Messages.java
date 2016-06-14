@@ -725,6 +725,24 @@ public class Messages {
      *
      * @return String
      */
+    public String getPreproccesesViewAccordionProcesschainEditWindowLanguageTitle() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.preprocesses.view.accordion.processchain.edit.window.language.title");
+    }
+
+    /**
+     * Gets the text
+     *
+     * @return String
+     */
+    public String getPreproccesesViewAccordionProcesschainEditWindowLanguageInfoBox() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.preprocesses.view.accordion.processchain.edit.window.language.infobox");
+    }
+
+    /**
+     * Gets the text
+     *
+     * @return String
+     */
     public String getButtonBackTitle() {
         return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.footer.button.back.label");
     }
@@ -755,6 +773,5 @@ public class Messages {
     public String getPreprocessesViewAccordionActivationOptiongroupNoLabel() {
         return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.preprocesses.view.accordion.activation.optiongroup.no.label");
     }
-
 
 }
