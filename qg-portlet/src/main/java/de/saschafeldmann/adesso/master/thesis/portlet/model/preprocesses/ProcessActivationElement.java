@@ -100,6 +100,7 @@ public class ProcessActivationElement {
     private final String finishedLogEntry;
     private final ProcessActivationElementState processActivationElementStateActivated;
     private final ProcessActivationElementState processActivationElementStateDeactivated;
+    private final ProcessActivationStateChangeListener stateChangeListener;
     private ProcessActivationElementState processActivationElementState;
 
     private ProcessActivationElement(ProcessActivationElementBuilder processActivationElementBuilder) {
@@ -111,6 +112,7 @@ public class ProcessActivationElement {
         this.finishedLogEntry = processActivationElementBuilder.finishedLogEntry;
         this.processActivationElementStateActivated = new ProcessActivationElementState(this, ActivationOptionGroupItem.YES);
         this.processActivationElementStateDeactivated = new ProcessActivationElementState(this, ActivationOptionGroupItem.NO);
+        this.stateChangeListener = processActivationElementBuilder.stateChangeListener;
     }
 
     /**
@@ -183,6 +185,8 @@ public class ProcessActivationElement {
      */
     public void setProcessActivationElementState(ProcessActivationElementState processActivationElementState) {
         this.processActivationElementState = processActivationElementState;
+
+        stateChangeListener.onStateChanged(this);
     }
 
     /**
@@ -203,6 +207,7 @@ public class ProcessActivationElement {
         private String startedLogEntry;
         private String finishedLogEntry;
         private PreprocessingAlgorithm processAlgorithm;
+        private ProcessActivationStateChangeListener stateChangeListener;
 
         /**
          * Sets the label to be displayed to the end user to activate / deactive the process.
@@ -280,6 +285,19 @@ public class ProcessActivationElement {
             checkNotNull(finishedLogEntry, "finishedLogEntry must not be null.");
 
             this.finishedLogEntry = finishedLogEntry;
+
+            return this;
+        }
+
+        /**
+         * Sets the listener informed on state changes.
+         * @param stateChangeListener {@link ProcessActivationStateChangeListener}
+         * @return this
+         */
+        public ProcessActivationElementBuilder withStateChangeListener(final ProcessActivationStateChangeListener stateChangeListener) {
+            checkNotNull(stateChangeListener, "stateChangeListener must not be null.");
+
+            this.stateChangeListener = stateChangeListener;
 
             return this;
         }

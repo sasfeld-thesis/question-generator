@@ -13,6 +13,8 @@ import edu.stanford.nlp.pipeline.StanfordCoreNLP;
 import edu.stanford.nlp.util.CoreMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 import java.util.*;
 
@@ -34,6 +36,8 @@ import java.util.*;
  *
  * http://stanfordnlp.github.io/CoreNLP/
  */
+@Component
+@Scope("prototype")
 public class NlpPreprocessingAlgorithm implements PreprocessingAlgorithm {
     private static final Logger LOGGER = LoggerFactory.getLogger(NlpPreprocessingAlgorithm.class);
 

@@ -5,12 +5,14 @@ import com.google.common.collect.Collections2;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.Language;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
 import de.saschafeldmann.adesso.master.thesis.portlet.model.preprocesses.ProcessActivationElement;
+import de.saschafeldmann.adesso.master.thesis.portlet.model.preprocesses.ProcessActivationStateChangeListener;
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.AbstractStepPresenter;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.Messages;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.preprocesses.PreprocessesView;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.preprocesses.PreprocessesViewListener;
 import de.saschafeldmann.adesso.master.thesis.preprocesses.algorithm.language.LanguageDetection;
 import de.saschafeldmann.adesso.master.thesis.preprocesses.algorithm.language.UndeterminableLanguageException;
+import de.saschafeldmann.adesso.master.thesis.preprocesses.algorithm.nlp.NlpPreprocessingAlgorithm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +51,8 @@ public class PreprocessesPresenterImpl extends AbstractStepPresenter implements 
 
     @Autowired
     private LanguageDetection languageDetectionAlgorithm;
+    @Autowired
+    private NlpPreprocessingAlgorithm nlpPreprocessingAlgorithm;
 
     private static final Predicate<LearningContent> FILTER_DELETED_ANNOTATED_TEXTS_PREDICATE =
             new Predicate<LearningContent>() {
@@ -82,10 +86,16 @@ public class PreprocessesPresenterImpl extends AbstractStepPresenter implements 
         this.preprocessesView.setCurrentSessionStatus(questionGenerationSession.getStatus());
         this.preprocessesView.setViewListener(this);
 
+        initPreprocessAlgorithms();
         loadProcessActivationElements();
 
         this.preprocessesView.reset();
         return this.preprocessesView;
+    }
+
+    private void initPreprocessAlgorithms() {
+        nlpPreprocessingAlgorithm.setActivateNamedEntityRecognition(false);
+        nlpPreprocessingAlgorithm.setActivatePartOfSpeechTagging(false);
     }
 
     private void loadProcessActivationElements() {
@@ -116,10 +126,16 @@ public class PreprocessesPresenterImpl extends AbstractStepPresenter implements 
         ProcessActivationElement processActivationElement = new ProcessActivationElement.ProcessActivationElementBuilder()
                 .withActivationLabel(messages.getPreproccesesViewAccordionActivationOptiongroupPartOfSpeechDetectionLabel())
                 .withIsActivatedPerDefault(false)
-                .withAlgorithm(languageDetectionAlgorithm) // TODO change
+                .withAlgorithm(nlpPreprocessingAlgorithm)
                 .withTooltip(messages.getPreproccesesViewAccordionActivationOptiongroupPartOfSpeechDetectionTooltip())
                 .withStartedLogEntry(messages.getPreproccesesViewAccordionProcesschainLogPartofspeechDetectionStarted())
                 .withFinishedLogEntry(messages.getPreproccesesViewAccordionProcesschainLogPartofspeechDetectionFinished())
+                .withStateChangeListener(new ProcessActivationStateChangeListener() {
+                    @Override
+                    public void onStateChanged(ProcessActivationElement changed) {
+                        nlpPreprocessingAlgorithm.setActivatePartOfSpeechTagging(true);
+                    }
+                })
                 .build();
 
         setDefaultProcessActivationElementState(processActivationElement);
@@ -130,10 +146,16 @@ public class PreprocessesPresenterImpl extends AbstractStepPresenter implements 
         ProcessActivationElement processActivationElement = new ProcessActivationElement.ProcessActivationElementBuilder()
                 .withActivationLabel(messages.getPreproccesesViewAccordionActivationOptiongroupNamedEntitiesDetectionLabel())
                 .withIsActivatedPerDefault(false)
-                .withAlgorithm(languageDetectionAlgorithm) // TODO change
+                .withAlgorithm(nlpPreprocessingAlgorithm)
                 .withTooltip(messages.getPreproccesesViewAccordionActivationOptiongroupNamedEntitiesDetectionTooltip())
                 .withStartedLogEntry(messages.getPreproccesesViewAccordionProcesschainLogNamedEntityRecognitionStarted())
                 .withFinishedLogEntry(messages.getPreproccesesViewAccordionProcesschainLogNamedEntityRecognitionFinished())
+                .withStateChangeListener(new ProcessActivationStateChangeListener() {
+                    @Override
+                    public void onStateChanged(ProcessActivationElement changed) {
+                        nlpPreprocessingAlgorithm.setActivateNamedEntityRecognition(true);
+                    }
+                })
                 .build();
 
         setDefaultProcessActivationElementState(processActivationElement);
@@ -194,7 +216,6 @@ public class PreprocessesPresenterImpl extends AbstractStepPresenter implements 
     private void triggerProcess(ProcessActivationElement processActivationElement) {
         addLogEntryToView(processActivationElement.getStartedLogEntry());
 
-        // TODO call service facade in qg-preprocesses module
         executeProcessForAllLearningContents(processActivationElement);
 
         if (processActivationElement.getProcessAlgorithm().equals(this.languageDetectionAlgorithm)) {
@@ -282,6 +303,7 @@ public class PreprocessesPresenterImpl extends AbstractStepPresenter implements 
 
 
         processActivationElementState.getParentProcessActivationElement().setProcessActivationElementState(processActivationElementState);
+
         preprocessesView.showProcessActivationSuccessMessage();
     }
 
