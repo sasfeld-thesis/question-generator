@@ -186,7 +186,9 @@ public class ProcessActivationElement {
     public void setProcessActivationElementState(ProcessActivationElementState processActivationElementState) {
         this.processActivationElementState = processActivationElementState;
 
-        stateChangeListener.onStateChanged(this);
+        if (null != stateChangeListener) {
+            stateChangeListener.onStateChanged(this);
+        }
     }
 
     /**
