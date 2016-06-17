@@ -52,8 +52,29 @@ public class NlpPreprocessingAlgorithmTest {
         System.out.println("annotated text:");
         System.out.println(annotatedGermanLearningContent.getAnnotatedText());
 
-        // then the annotated text should have been set correctly
-        assertEquals("", annotatedGermanLearningContent.getAnnotatedText());
+        // then the annotated text should contain the following part of speeches
+        String[] nouns = {"Text",
+                "Import-Funktionalität",
+                "Funktion",
+                "Masterthesis",
+                "Software",
+                "Testfragen",
+                "Kurse",
+                "Schulungsinhalte",
+                "Konzepte",
+                "Technologien"};
+        assertContainsPosTags(annotatedGermanLearningContent.getAnnotatedText(), "NN", nouns);
+        String[] namedEntities = {"Berlin"};
+        assertContainsPosTags(annotatedGermanLearningContent.getAnnotatedText(), "NE", namedEntities);
+    }
+
+    private void assertContainsPosTags(final String annotatedText, final String partOfSpeechTag, final String[] annotatedTokens) {
+        for (String annotatedToken: annotatedTokens) {
+            assertTrue("The annotated text should contain the part of speech tag " + partOfSpeechTag + " annotated on the token " + annotatedToken,
+                    annotatedText.contains("<" + partOfSpeechTag + ">"
+                    + annotatedToken
+                    + "</" + partOfSpeechTag + ">"));
+        }
     }
 
     private LearningContent newGermanLearningContent() {

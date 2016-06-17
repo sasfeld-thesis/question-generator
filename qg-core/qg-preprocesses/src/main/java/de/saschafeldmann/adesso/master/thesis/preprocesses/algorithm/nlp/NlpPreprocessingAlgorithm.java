@@ -34,6 +34,12 @@ import java.util.*;
  */
 public class NlpPreprocessingAlgorithm implements PreprocessingAlgorithm {
     private static final Joiner STANFORD_ANNOTATORS_PROPERTY_JOINER = Joiner.on(", ");
+    // Huge German Corpus
+    private static final String GERMAN_PART_OF_SPEECH_MODEL = "edu/stanford/nlp/models/pos-tagger/german/german-hgc.tagger";
+    // Huge German Corpus
+    private static final String GERMAN_NAMED_ENTITY_RECOGNITION_MODEL = "edu/stanford/nlp/models/ner/german.hgc_175m_600.crf.ser.gz";
+    // MUC-7 class model
+    private static final String ENGLISH_NAMED_ENTITY_RECOGNITION_MODEL = "/u/nlp/data/ner/goodClassifiers/muc.distsim.crf.ser.gz";
 
     private Boolean activatePartOfSpeechTagging = false;
     private Boolean activateNamedEntityRecognition = false;
@@ -67,10 +73,31 @@ public class NlpPreprocessingAlgorithm implements PreprocessingAlgorithm {
         checkNotNull(determinedLanguage, "The language of the given learning content must not be null.");
 
         Properties stanfordCoreNlpPoperties = new Properties();
-        stanfordCoreNlpPoperties.setProperty("-props", getPropertyForLanguage(determinedLanguage));
         stanfordCoreNlpPoperties.setProperty("annotators", getAnnotatorsProperty());
+        addPropertiesForLanguage(stanfordCoreNlpPoperties, determinedLanguage);
 
         return new StanfordCoreNLP(stanfordCoreNlpPoperties);
+    }
+
+    /**
+     * Add language-specific properties.
+     * @param stanfordCoreNlpPoperties the properties to be put into the Stanford NLP pipeline
+     * @param determinedLanguage the language of the content to be processed
+     */
+    private void addPropertiesForLanguage(Properties stanfordCoreNlpPoperties, Language determinedLanguage) {
+        switch (determinedLanguage) {
+            case ENGLISH:
+                // see https://github.com/stanfordnlp/CoreNLP/blob/master/src/edu/stanford/nlp/pipeline/StanfordCoreNLP.properties
+                //stanfordCoreNlpPoperties.put("pos.model", "/u/nlp/data/pos-tagger/wsj3t0-18-left3words/left3words-distsim-wsj-0-18.tagger");
+                stanfordCoreNlpPoperties.put("ner.model", ENGLISH_NAMED_ENTITY_RECOGNITION_MODEL);
+                break;
+            case GERMAN:
+              // see https://github.com/stanfordnlp/CoreNLP/blob/master/src/edu/stanford/nlp/pipeline/StanfordCoreNLP-german.properties
+              stanfordCoreNlpPoperties.put("tokenize.language",  "de");
+              stanfordCoreNlpPoperties.put("pos.model", GERMAN_PART_OF_SPEECH_MODEL);
+              stanfordCoreNlpPoperties.put("ner.model", GERMAN_NAMED_ENTITY_RECOGNITION_MODEL); // Huge German Corpus
+              break;
+        }
     }
 
     /**
@@ -93,25 +120,6 @@ public class NlpPreprocessingAlgorithm implements PreprocessingAlgorithm {
         }
 
         return STANFORD_ANNOTATORS_PROPERTY_JOINER.join(annotatorProperties);
-    }
-
-    /**
-     * Builds the "-props" property to be put into the {@link StanfordCoreNLP} instance
-     * by setting the correct model for the given determinedLanguage.
-     * @param determinedLanguage language of the learning content to be processed, English or German
-     * @return String
-     */
-    private String getPropertyForLanguage(Language determinedLanguage) {
-        switch (determinedLanguage) {
-            case ENGLISH:
-                System.out.println("english");
-                return "StanfordCoreNLP-english.properties";
-            case GERMAN:
-                System.out.println("german");
-                return "StanfordCoreNLP-german.properties";
-            default:
-                return "";
-        }
     }
 
     /**
