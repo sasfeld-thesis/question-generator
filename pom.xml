@@ -54,6 +54,8 @@
         <portlet.war.name>qg-portlet</portlet.war.name>
         <!-- 1.0 is the default version and should be overwritten by the mvn build command using mvn ... -D=travisBuildVersion=[travisBuildVersion] -->
         <travisBuildVersion>1.0</travisBuildVersion>
+        <!-- Stanford NLP version -->
+        <stanford.nlp.version>3.6.0</stanford.nlp.version>
         <!-- build timestamp that can be used -->
         <buildTimestamp>${maven.build.timestamp}</buildTimestamp>
         <maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>

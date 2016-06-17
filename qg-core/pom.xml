@@ -19,6 +19,19 @@
     </modules>
 
     <dependencies>
+        <!-- Stanford NLP library -->
+        <dependency>
+            <groupId>edu.stanford.nlp</groupId>
+            <artifactId>stanford-corenlp</artifactId>
+            <version>${stanford.nlp.version}</version>
+        </dependency>
+        <!-- Language-trained models (German, Spain, Chinese) for Stanford NLP -->
+        <dependency>
+            <groupId>edu.stanford.nlp</groupId>
+            <artifactId>stanford-corenlp</artifactId>
+            <version>${stanford.nlp.version}</version>
+            <classifier>models</classifier>
+        </dependency>
         <!-- internal dependency -->
         <dependency>
             <groupId>de.saschafeldmann.adesso.master.thesis.software</groupId>
