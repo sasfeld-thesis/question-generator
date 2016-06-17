@@ -22,7 +22,6 @@ import de.saschafeldmann.adesso.master.thesis.portlet.view.components.TextArea;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.VerticalLayout;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.window.*;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.window.Table;
-import org.apache.commons.codec.language.bm.Lang;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 
@@ -219,7 +218,7 @@ public class PreprocessesViewImpl extends AbstractStepView implements Preprocess
 
     private void showProcessedTextEditWindow(final LearningContent selectedContent) {
         String title = selectedContent.getTitle();
-        String annotatedText = selectedContent.getAnnotatedText();
+        String annotatedText = selectedContent.getPartOfSpeechAnnotatedText();
         editWindow.setTextareaLabel(messages.getPreproccesesViewAccordionProcesschainEditWindowTextareaTitle());
         editWindow.setTitle(messages.getPreproccesesViewAccordionProcesschainEditWindowTitle() + " - " + title);
         editWindow.setTextareaInput(annotatedText);

@@ -40,17 +40,19 @@ public class NlpPreprocessingAlgorithmTest {
             "\n" +
             "Im letzen Schritt wird die Language Generation Komponente - hoffentlich - syntaktisch korrekte Fragen erstellen.";
 
+    private NlpPreprocessingAlgorithm nlpPreprocessingAlgorithm;
+
     @Test
     public void testExecutePartOfSpeechTaggingForGermanLearningContent() {
         // given algorithm with activated part of speech tagging
-        PreprocessingAlgorithm nlpPreprocessingAlgorithm = newInstanceForPartOfSpeechTagging();
+        PreprocessingAlgorithm nlpPreprocessingAlgorithm = getInstanceForPartOfSpeechTagging();
         // given a German learning content
         LearningContent germanLearningContent = newGermanLearningContent();
 
         // when execute is called
         final LearningContent annotatedGermanLearningContent = nlpPreprocessingAlgorithm.execute(germanLearningContent);
-        System.out.println("annotated text:");
-        System.out.println(annotatedGermanLearningContent.getAnnotatedText());
+        System.out.println("POS annotated text:");
+        System.out.println(annotatedGermanLearningContent.getPartOfSpeechAnnotatedText());
 
         // then the annotated text should contain the following part of speeches
         String[] nouns = {"Text",
@@ -63,14 +65,76 @@ public class NlpPreprocessingAlgorithmTest {
                 "Schulungsinhalte",
                 "Konzepte",
                 "Technologien"};
-        assertContainsPosTags(annotatedGermanLearningContent.getAnnotatedText(), "NN", nouns);
+        assertContainsTags(annotatedGermanLearningContent.getPartOfSpeechAnnotatedText(), "NN", nouns);
         String[] namedEntities = {"Berlin"};
-        assertContainsPosTags(annotatedGermanLearningContent.getAnnotatedText(), "NE", namedEntities);
+        assertContainsTags(annotatedGermanLearningContent.getPartOfSpeechAnnotatedText(), "NE", namedEntities);
     }
 
-    private void assertContainsPosTags(final String annotatedText, final String partOfSpeechTag, final String[] annotatedTokens) {
+    @Test
+    public void testExecuteNamedEntityRecognitionForGermanLearningContent() {
+        // given algorithm with activated named entity recognition
+        PreprocessingAlgorithm nlpPreprocessingAlgorithm = getInstanceForNamedEntityRecognition();
+        // given a German learning content
+        LearningContent germanLearningContent = newGermanLearningContent();
+
+        // when execute is called
+        final LearningContent annotatedGermanLearningContent = nlpPreprocessingAlgorithm.execute(germanLearningContent);
+        System.out.println("NER annotated text:");
+        System.out.println(annotatedGermanLearningContent.getNamedEntityAnnotatedText());
+
+        // then the annotated text should contain the following part of speeches
+        String[] namedLocalizations = {"Berlin"};
+        assertContainsTags(annotatedGermanLearningContent.getNamedEntityAnnotatedText(), "I-LOC", namedLocalizations);
+        String[] namedDates = {"2016"};
+        assertContainsTags(annotatedGermanLearningContent.getNamedEntityAnnotatedText(), "DATE", namedDates);
+    }
+
+    @Test
+    public void testExecutePartOfSpeechTaggingForEnglishLearningContent() {
+        // given algorithm with activated part of speech tagging
+        PreprocessingAlgorithm nlpPreprocessingAlgorithm = getInstanceForPartOfSpeechTagging();
+        // given a German learning content
+        LearningContent englishLearningContent = newEnglishLearningContent();
+
+        // when execute is called
+        final LearningContent annotatedEnglishLarningContent = nlpPreprocessingAlgorithm.execute(englishLearningContent);
+        System.out.println("POS annotated text:");
+        System.out.println(annotatedEnglishLarningContent.getPartOfSpeechAnnotatedText());
+
+        // then the annotated text should contain the following part of speeches
+        String[] nouns = {"import",
+                "functionality",
+                "part",
+                "master",
+                "thesis",
+                "software",
+                "question",
+                "course"};
+        assertContainsTags(annotatedEnglishLarningContent.getPartOfSpeechAnnotatedText(), "NN", nouns);
+    }
+
+    @Test
+    public void testExecuteNamedEntityRecognitionForEnglishLearningContent() {
+        // given algorithm with activated named entity recognition
+        PreprocessingAlgorithm nlpPreprocessingAlgorithm = getInstanceForNamedEntityRecognition();
+        // given a German learning content
+        LearningContent englishLearningContent = newEnglishLearningContent();
+
+        // when execute is called
+        final LearningContent annotatedEnglishLearningContent = nlpPreprocessingAlgorithm.execute(englishLearningContent);
+        System.out.println("NER annotated text:");
+        System.out.println(annotatedEnglishLearningContent.getNamedEntityAnnotatedText());
+
+        // then the annotated text should contain the following part of speeches
+        String[] namedLocalizations = {"Berlin"};
+        assertContainsTags(annotatedEnglishLearningContent.getNamedEntityAnnotatedText(), "LOCATION", namedLocalizations);
+        String[] namedDates = {"2016"};
+        assertContainsTags(annotatedEnglishLearningContent.getNamedEntityAnnotatedText(), "DATE", namedDates);
+    }
+
+    private void assertContainsTags(final String annotatedText, final String partOfSpeechTag, final String[] annotatedTokens) {
         for (String annotatedToken: annotatedTokens) {
-            assertTrue("The annotated text should contain the part of speech tag " + partOfSpeechTag + " annotated on the token " + annotatedToken,
+            assertTrue("The annotated text should contain the tag " + partOfSpeechTag + " annotated on the token " + annotatedToken,
                     annotatedText.contains("<" + partOfSpeechTag + ">"
                     + annotatedToken
                     + "</" + partOfSpeechTag + ">"));
@@ -88,9 +152,40 @@ public class NlpPreprocessingAlgorithmTest {
         return learningContent;
     }
 
-    private PreprocessingAlgorithm newInstanceForPartOfSpeechTagging() {
-        NlpPreprocessingAlgorithm nlpPreprocessingAlgorithm = new NlpPreprocessingAlgorithm();
+    private LearningContent newEnglishLearningContent() {
+        LearningContent learningContent = new LearningContent.LearningContentBuilder()
+                .withType(LearningContent.Type.DIRECT_RAWTEXT)
+                .withTitle("English test")
+                .withRawText(TEST_CONTENT_ENGLISH)
+                .build();
+        learningContent.setDeterminedLanguage(Language.ENGLISH);
+
+        return learningContent;
+    }
+
+    private PreprocessingAlgorithm getInstanceForPartOfSpeechTagging() {
+        NlpPreprocessingAlgorithm nlpPreprocessingAlgorithm = newInstance();
+
         nlpPreprocessingAlgorithm.setActivatePartOfSpeechTagging(true);
+        nlpPreprocessingAlgorithm.setActivateNamedEntityRecognition(false);
+
+        return nlpPreprocessingAlgorithm;
+    }
+
+    private PreprocessingAlgorithm getInstanceForNamedEntityRecognition() {
+        NlpPreprocessingAlgorithm nlpPreprocessingAlgorithm = newInstance();
+
+        nlpPreprocessingAlgorithm.setActivatePartOfSpeechTagging(false);
+        nlpPreprocessingAlgorithm.setActivateNamedEntityRecognition(true);
+
+        return nlpPreprocessingAlgorithm;
+    }
+
+    private NlpPreprocessingAlgorithm newInstance() {
+        // since its expensive to create an algorithm class, do it only once
+        if (null == nlpPreprocessingAlgorithm) {
+            nlpPreprocessingAlgorithm = new NlpPreprocessingAlgorithm();
+        }
 
         return nlpPreprocessingAlgorithm;
     }

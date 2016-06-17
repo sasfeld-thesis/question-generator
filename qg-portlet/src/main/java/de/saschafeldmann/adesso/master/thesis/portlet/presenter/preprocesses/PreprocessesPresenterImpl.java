@@ -251,7 +251,7 @@ public class PreprocessesPresenterImpl extends AbstractStepPresenter implements 
     public void onEditLearningContentClick(LearningContent learningContentToBeEdited, String textareaInput) {
         LOGGER.info("onEditLearningContentClick(): will edit {}", learningContentToBeEdited.getTitle());
 
-        learningContentToBeEdited.setAnnotatedText(textareaInput);
+        learningContentToBeEdited.setPartOfSpeechAnnotatedText(textareaInput);
     }
 
     @Override

@@ -36,7 +36,8 @@ public class LearningContent {
 
     private final String title;
     private final String rawText;
-    private String annotatedText = "";
+    private String partOfSpeechAnnotatedText = "";
+    private String namedEntityAnnotatedText = "";
     private Language determinedLanguage;
     private final Type type;
 
@@ -64,18 +65,34 @@ public class LearningContent {
 
     /**
      * Sets the annotated text (e.g. by part of speech characters).
-     * @param annotatedText String
+     * @param partOfSpeechAnnotatedText String
      */
-    public void setAnnotatedText(String annotatedText) {
-        this.annotatedText = annotatedText;
+    public void setPartOfSpeechAnnotatedText(String partOfSpeechAnnotatedText) {
+        this.partOfSpeechAnnotatedText = partOfSpeechAnnotatedText;
     }
 
     /**
      * Gets the annotated text (e.g. by part of speech characters).
      * @return String
      */
-    public String getAnnotatedText() {
-        return annotatedText;
+    public String getPartOfSpeechAnnotatedText() {
+        return partOfSpeechAnnotatedText;
+    }
+
+    /**
+     * Sets the Named entity recognition annotated text.
+     * @param namedEntityAnnotatedText String
+     */
+    public void setNamedEntityAnnotatedText(String namedEntityAnnotatedText) {
+        this.namedEntityAnnotatedText = namedEntityAnnotatedText;
+    }
+
+    /**
+     * Gets the named entity recognition annotated text.
+     * @return String
+     */
+    public String getNamedEntityAnnotatedText() {
+        return namedEntityAnnotatedText;
     }
 
     /**
@@ -99,14 +116,14 @@ public class LearningContent {
      * Deletes and marks the annotated text as deleted.
      */
     public void deleteAnnotatedText() {
-        this.setAnnotatedText(ANNOTATED_TEXT_DELETED);
+        this.setPartOfSpeechAnnotatedText(ANNOTATED_TEXT_DELETED);
     }
 
     /**
      * Resets the annotated text.
      */
     public void resetAnnotatedText() {
-        this.setAnnotatedText("");
+        this.setPartOfSpeechAnnotatedText("");
     }
 
     /**
@@ -114,7 +131,7 @@ public class LearningContent {
      * @return the annotated text
      */
     public boolean hasAnnotatedText() {
-        return !getAnnotatedText().equals(ANNOTATED_TEXT_DELETED);
+        return !getPartOfSpeechAnnotatedText().equals(ANNOTATED_TEXT_DELETED);
     }
 
     /**

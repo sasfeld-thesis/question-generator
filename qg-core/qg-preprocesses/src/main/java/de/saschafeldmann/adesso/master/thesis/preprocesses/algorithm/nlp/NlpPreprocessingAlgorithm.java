@@ -11,6 +11,8 @@ import edu.stanford.nlp.ling.CoreLabel;
 import edu.stanford.nlp.pipeline.Annotation;
 import edu.stanford.nlp.pipeline.StanfordCoreNLP;
 import edu.stanford.nlp.util.CoreMap;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
@@ -33,16 +35,22 @@ import java.util.*;
  * http://stanfordnlp.github.io/CoreNLP/
  */
 public class NlpPreprocessingAlgorithm implements PreprocessingAlgorithm {
+    private static final Logger LOGGER = LoggerFactory.getLogger(NlpPreprocessingAlgorithm.class);
+
     private static final Joiner STANFORD_ANNOTATORS_PROPERTY_JOINER = Joiner.on(", ");
-    // Huge German Corpus
+    // Huge German Corpus - for all possible taggers see JAR file stanford-german-2016-01-19-models.jar
     private static final String GERMAN_PART_OF_SPEECH_MODEL = "edu/stanford/nlp/models/pos-tagger/german/german-hgc.tagger";
-    // Huge German Corpus
+    // Huge German Corpus - for all possible NER classifiers see JAR file stanford-german-2016-01-19-models.jar
     private static final String GERMAN_NAMED_ENTITY_RECOGNITION_MODEL = "edu/stanford/nlp/models/ner/german.hgc_175m_600.crf.ser.gz";
-    // MUC-7 class model
-    private static final String ENGLISH_NAMED_ENTITY_RECOGNITION_MODEL = "/u/nlp/data/ner/goodClassifiers/muc.distsim.crf.ser.gz";
+    // MUC-7 class model - for all possible taggers see JAR file stanford-english-corenlp-2016-01-10-models.jar
+    private static final String ENGLISH_NAMED_ENTITY_RECOGNITION_MODEL = "edu/stanford/nlp/models/ner/english.muc.7class.distsim.crf.ser.gz";
+    // English POS model - for all possible NER classifiers see JAR file stanford-english-corenlp-2016-01-10-models.jar
+    private static final String ENGLISH_PART_OF_SPEECH_MODEL = "edu/stanford/nlp/models/pos-tagger/english-bidirectional/english-bidirectional-distsim.tagger";
 
     private Boolean activatePartOfSpeechTagging = false;
     private Boolean activateNamedEntityRecognition = false;
+
+    private final Map<Language, StanfordCoreNLP> stanfordPipelineMap = new HashMap<>();
 
     /**
      * Whether named entity recognition should be done.
@@ -62,16 +70,32 @@ public class NlpPreprocessingAlgorithm implements PreprocessingAlgorithm {
 
     @Override
     public LearningContent execute(LearningContent learningContent) {
-        final StanfordCoreNLP stanfordCoreNLP = createStanfordCoreNlpInstanceForLanguage(learningContent.getDeterminedLanguage());
+        final StanfordCoreNLP stanfordCoreNLP = getStanfordCoreNlpInstanceForLanguage(learningContent.getDeterminedLanguage());
 
-        final String annotatedText = annotateRawText(stanfordCoreNLP, learningContent);
-        learningContent.setAnnotatedText(annotatedText);
+        annotateRawText(stanfordCoreNLP, learningContent);
         return learningContent;
     }
 
-    private StanfordCoreNLP createStanfordCoreNlpInstanceForLanguage(Language determinedLanguage) {
+    /**
+     * Gets the stanford core nlp instance for the given language.
+     * Uses a map to store the pipeline since its creation is very expensive.
+     *
+     * @param determinedLanguage the language for which the pipeline should be created
+     * @return the pipeline
+     */
+    private StanfordCoreNLP getStanfordCoreNlpInstanceForLanguage(Language determinedLanguage) {
         checkNotNull(determinedLanguage, "The language of the given learning content must not be null.");
 
+        if (!stanfordPipelineMap.containsKey(determinedLanguage)) {
+            LOGGER.info("getStanfordCoreNlpInstanceForLanguage(): EXPENSIVE CREATION - creating new stanford natural language processing pipeline for language {}", determinedLanguage);
+            stanfordPipelineMap.put(determinedLanguage, createNewStanfordNlpPipeline(determinedLanguage));
+            LOGGER.info("getStanfordCoreNlpInstanceForLanguage(): finished natural language processing pipeline creation");
+        }
+
+        return stanfordPipelineMap.get(determinedLanguage);
+    }
+
+    private StanfordCoreNLP createNewStanfordNlpPipeline(Language determinedLanguage) {
         Properties stanfordCoreNlpPoperties = new Properties();
         stanfordCoreNlpPoperties.setProperty("annotators", getAnnotatorsProperty());
         addPropertiesForLanguage(stanfordCoreNlpPoperties, determinedLanguage);
@@ -88,7 +112,7 @@ public class NlpPreprocessingAlgorithm implements PreprocessingAlgorithm {
         switch (determinedLanguage) {
             case ENGLISH:
                 // see https://github.com/stanfordnlp/CoreNLP/blob/master/src/edu/stanford/nlp/pipeline/StanfordCoreNLP.properties
-                //stanfordCoreNlpPoperties.put("pos.model", "/u/nlp/data/pos-tagger/wsj3t0-18-left3words/left3words-distsim-wsj-0-18.tagger");
+                stanfordCoreNlpPoperties.put("pos.model", ENGLISH_PART_OF_SPEECH_MODEL);
                 stanfordCoreNlpPoperties.put("ner.model", ENGLISH_NAMED_ENTITY_RECOGNITION_MODEL);
                 break;
             case GERMAN:
@@ -109,15 +133,14 @@ public class NlpPreprocessingAlgorithm implements PreprocessingAlgorithm {
         final List<String> annotatorProperties = new ArrayList<>();
         // required: tokenizes the raw text (isolates words)
         annotatorProperties.add("tokenize");
-        // reqzired: splits sentences.
+        // required: splits sentences.
         annotatorProperties.add("ssplit");
-
-        if (activatePartOfSpeechTagging) {
-            annotatorProperties.add("pos");
-        }
-        if (activateNamedEntityRecognition) {
-            annotatorProperties.add("ner");
-        }
+        // activate: Part-of-Speech tagging
+        annotatorProperties.add("pos");
+        // required for NER: word Lemma
+        annotatorProperties.add("lemma");
+        // activate: Named Entity Recognition
+        annotatorProperties.add("ner");
 
         return STANFORD_ANNOTATORS_PROPERTY_JOINER.join(annotatorProperties);
     }
@@ -128,13 +151,15 @@ public class NlpPreprocessingAlgorithm implements PreprocessingAlgorithm {
      * @param learningContent (raw) learning content
      * @return annotated text
      */
-    private String annotateRawText(StanfordCoreNLP stanfordCoreNLP, LearningContent learningContent) {
+    private void annotateRawText(StanfordCoreNLP stanfordCoreNLP, LearningContent learningContent) {
         final String rawText = learningContent.getRawText();
         final Annotation annotation = new Annotation(rawText);
 
         stanfordCoreNLP.annotate(annotation);
 
-        final StringBuilder annotatedTextBuilder = new StringBuilder();
+        // store named entity and part of speech annotated texts in different strings
+        final StringBuilder posAnnotatedTextBuilder = new StringBuilder();
+        final StringBuilder nerAnnotatedTextBuilder = new StringBuilder();
         final List<CoreMap> sentences = annotation.get(CoreAnnotations.SentencesAnnotation.class);
 
         for (CoreMap sentence: sentences) {
@@ -142,13 +167,28 @@ public class NlpPreprocessingAlgorithm implements PreprocessingAlgorithm {
             for (CoreLabel token: sentence.get(CoreAnnotations.TokensAnnotation.class)) {
                 // iterate over tokens / words in the current sentence
                 String tokenText = token.get(CoreAnnotations.TextAnnotation.class); // the raw word itself
-                String partOfSpeechTag = token.get(CoreAnnotations.PartOfSpeechAnnotation.class); // the part of speech tag itself
-                createXmlTagForAnnotation(annotatedTextBuilder, tokenText, partOfSpeechTag);
+
+                if (activatePartOfSpeechTagging) {
+                    String partOfSpeechTag = token.get(CoreAnnotations.PartOfSpeechAnnotation.class); // the part of speech tag itself
+                    createXmlTagForAnnotation(posAnnotatedTextBuilder, tokenText, partOfSpeechTag);
+                }
+                if (activateNamedEntityRecognition) {
+                    String namedEntityTag = token.get(CoreAnnotations.NamedEntityTagAnnotation.class); // the named entity tag itself
+                    createXmlTagForAnnotation(nerAnnotatedTextBuilder, tokenText, namedEntityTag);
+                }
             }
-            annotatedTextBuilder.append("\n");
+
+            nerAnnotatedTextBuilder.append("\n");
+            posAnnotatedTextBuilder.append("\n");
         }
 
-        return annotatedTextBuilder.toString();
+        if (activatePartOfSpeechTagging) {
+            learningContent.setPartOfSpeechAnnotatedText(posAnnotatedTextBuilder.toString());
+        }
+
+        if (activateNamedEntityRecognition) {
+            learningContent.setNamedEntityAnnotatedText(nerAnnotatedTextBuilder.toString());
+        }
     }
 
     private void createXmlTagForAnnotation(StringBuilder annotatedTextBuilder, String tokenText, String annotation) {

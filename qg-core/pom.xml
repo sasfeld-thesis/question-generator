@@ -19,25 +19,6 @@
     </modules>
 
     <dependencies>
-        <!-- Stanford NLP library -->
-        <dependency>
-            <groupId>edu.stanford.nlp</groupId>
-            <artifactId>stanford-corenlp</artifactId>
-            <version>${stanford.nlp.version}</version>
-        </dependency>
-        <!-- Language-trained models (English, German) for Stanford NLP -->
-        <dependency>
-            <groupId>edu.stanford.nlp</groupId>
-            <artifactId>stanford-corenlp</artifactId>
-            <version>${stanford.nlp.version}</version>
-            <classifier>models-english</classifier>
-        </dependency>
-        <dependency>
-            <groupId>edu.stanford.nlp</groupId>
-            <artifactId>stanford-corenlp</artifactId>
-            <version>${stanford.nlp.version}</version>
-            <classifier>models-german</classifier>
-        </dependency>
         <!-- internal dependency -->
         <dependency>
             <groupId>de.saschafeldmann.adesso.master.thesis.software</groupId>
