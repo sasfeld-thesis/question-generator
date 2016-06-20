@@ -20,6 +20,8 @@
   * Accordion
   **/
   .v-accordion {
+    margin-top: $accordionMarginTop;
+
     .v-accordion-item-open {
       background-color: $activeMenuItemColor;
     }

@@ -76,13 +76,13 @@ public class CourseContentsViewImpl extends AbstractStepView implements CourseCo
     private final EditWindow editWindow;
 
     private final HorizontalLayout buttonGroupLayout;
+    private final Button btnPrevious;
     private final Button btnNext;
     private CourseContentsViewListener viewListener;
     private String courseTitle;
 
     @Autowired
     public CourseContentsViewImpl(final Messages messages, final VersionLabel versionLabel, final InfoBox infoBox,
-                                  final Label introductionLabel,
                                   final Accordion accordion,
                                   final HorizontalLayout buttonGroupLayout,
                                   final HorizontalLayout accordionDocumentsLayout,
@@ -99,11 +99,12 @@ public class CourseContentsViewImpl extends AbstractStepView implements CourseCo
                                   final FormLayout accordionRawTextsRightSideFormLayout,
                                   final ListSelect accordionRawTextsRightSideAddedList,
                                   final EditWindow editWindow,
-                                  final Button btnNext) {
+                                  final Button btnPrevious,
+                                  final Button btnNext
+    ) {
         super(messages, versionLabel);
 
         this.infoBox = infoBox;
-        this.introductionLabel = introductionLabel;
         this.accordion = accordion;
         this.buttonGroupLayout = buttonGroupLayout;
         this.accordionDocumentsLayout = accordionDocumentsLayout;
@@ -120,17 +121,19 @@ public class CourseContentsViewImpl extends AbstractStepView implements CourseCo
         this.accordionRawTextsRightSideFormLayout = accordionRawTextsRightSideFormLayout;
         this.accordionRawTextsRightSideAddedList = accordionRawTextsRightSideAddedList;
         this.editWindow = editWindow;
+        this.btnPrevious = btnPrevious;
         this.btnNext = btnNext;
+
+        this.introductionLabel = new Label(messages.getCourseContentsViewIntroductionText(), ContentMode.HTML);
     }
 
     @PostConstruct
     private void initialize() {
-        this.introductionLabel.setContentMode(ContentMode.HTML);
-        this.introductionLabel.setCaption(messages.getCourseContentsViewIntroductionText());
-
         initializeAccordion();
 
         setStyles();
+
+        this.btnPrevious.setCaption(messages.getCourseInformationViewBtnPreviousLabel());
         this.btnNext.setCaption(messages.getCourseInformationViewBtnNextLabel());
 
         registerListeners();
@@ -182,6 +185,13 @@ public class CourseContentsViewImpl extends AbstractStepView implements CourseCo
     }
 
     private void registerListeners() {
+        btnPrevious.addClickListener(new com.vaadin.ui.Button.ClickListener() {
+            @Override
+            public void buttonClick(com.vaadin.ui.Button.ClickEvent clickEvent) {
+                viewListener.onBackButtonClicked();
+            }
+        });
+
         btnNext.addClickListener(new com.vaadin.ui.Button.ClickListener() {
             public void buttonClick(com.vaadin.ui.Button.ClickEvent clickEvent) {
                 viewListener.onNextButtonClicked();

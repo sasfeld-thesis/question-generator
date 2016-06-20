@@ -8,6 +8,8 @@ import de.saschafeldmann.adesso.master.thesis.portlet.presenter.AbstractStepPres
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.Messages;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.course.contents.CourseContentsView;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.course.contents.CourseContentsViewListener;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.course.information.CourseInformationView;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.course.information.CourseInformationViewImpl;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.preprocesses.PreprocessesViewImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -173,6 +175,13 @@ public class CourseContentsPresenterImpl extends AbstractStepPresenter implement
                     Notification.Type.ERROR_MESSAGE
             );
         }
+    }
+
+    @Override
+    public void onBackButtonClicked() {
+        LOGGER.info("onBackButtonClicked()");
+
+        getNavigator().navigateTo(CourseInformationViewImpl.VIEW_NAME);
     }
 
     @Override

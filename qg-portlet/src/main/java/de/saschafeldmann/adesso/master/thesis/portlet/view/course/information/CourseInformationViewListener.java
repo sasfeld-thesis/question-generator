@@ -18,7 +18,6 @@ package de.saschafeldmann.adesso.master.thesis.portlet.view.course.information;
  * Here, the user can enter information on the course for which he or she wants to trigger the question generation process.
  */
 public interface CourseInformationViewListener {
-
     /**
      * On next button clicked action.
      */

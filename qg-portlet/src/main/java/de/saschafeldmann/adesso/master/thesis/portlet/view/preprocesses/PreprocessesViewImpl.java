@@ -83,7 +83,6 @@ public class PreprocessesViewImpl extends AbstractStepView implements Preprocess
             final Messages messages,
             final VersionLabel versionLabel,
             final InfoBox infoBox,
-            final Label introductionLabel,
             final Accordion accordion,
             final VerticalLayout accordionActivationLayout,
             final FormLayout accordionActivationFormLayout,
@@ -100,7 +99,6 @@ public class PreprocessesViewImpl extends AbstractStepView implements Preprocess
         super(messages, versionLabel);
 
         this.infoBox = infoBox;
-        this.introductionLabel = introductionLabel;
         this.accordion = accordion;
         this.accordionActivationLayout = accordionActivationLayout;
         this.accordionActivationFormLayout = accordionActivationFormLayout;
@@ -113,21 +111,16 @@ public class PreprocessesViewImpl extends AbstractStepView implements Preprocess
         this.btnPrevious = btnPrevious;
         this.btnStartProcessChain = btnStartProcessChain;
         this.editWindow = editWindow;
+
+        this.introductionLabel = new Label(messages.getPreproccesesViewIntroductionText(), ContentMode.HTML);
     }
 
     @PostConstruct
     private void initialize() {
-        initializeIntroductionLabel();
         initializeAccordion();
 
         initializeBottomButtonGroup();
         registerListeners();
-    }
-
-    private void initializeIntroductionLabel() {
-        this.introductionLabel.setContentMode(ContentMode.HTML);
-        this.introductionLabel.setCaption(messages.getPreproccesesViewIntroductionText());
-
     }
 
     private void initializeAccordion() {
@@ -191,6 +184,20 @@ public class PreprocessesViewImpl extends AbstractStepView implements Preprocess
 
 
     private void registerListeners() {
+        btnPrevious.addClickListener(new com.vaadin.ui.Button.ClickListener() {
+            @Override
+            public void buttonClick(com.vaadin.ui.Button.ClickEvent clickEvent) {
+                viewListener.onBackButtonClicked();
+            }
+        });
+
+        btnNext.addClickListener(new com.vaadin.ui.Button.ClickListener() {
+            @Override
+            public void buttonClick(com.vaadin.ui.Button.ClickEvent clickEvent) {
+                viewListener.onNextButtonClicked();
+            }
+        });
+
         btnStartProcessChain.addClickListener(new com.vaadin.ui.Button.ClickListener() {
             @Override
             public void buttonClick(com.vaadin.ui.Button.ClickEvent clickEvent) {

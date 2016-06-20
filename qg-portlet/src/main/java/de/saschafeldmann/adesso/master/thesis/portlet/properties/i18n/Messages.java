@@ -186,6 +186,14 @@ public class Messages {
 
     /**
      * Gets the text.
+     * @return
+     */
+    public String getCourseInformationViewBtnPreviousLabel() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.course.information.view.course.button.previous.label");
+    }
+
+    /**
+     * Gets the text.
      *
      * @return String
      */

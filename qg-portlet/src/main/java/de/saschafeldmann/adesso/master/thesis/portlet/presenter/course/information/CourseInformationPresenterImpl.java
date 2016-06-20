@@ -126,6 +126,12 @@ public class CourseInformationPresenterImpl extends AbstractStepPresenter implem
     @Override
     public void onNewSessionButtonClicked() {
         LOGGER.info("onNewSessionButtonClicked()");
+        resetSession();
+    }
+
+    private void resetSession() {
+        this.questionGenerationSession.setCourse(null);
+        this.courseInformationView.reset();
     }
 
     @Override

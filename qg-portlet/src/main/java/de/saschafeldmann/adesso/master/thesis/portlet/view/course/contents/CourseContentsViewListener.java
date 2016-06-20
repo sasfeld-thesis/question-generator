@@ -53,6 +53,11 @@ public interface CourseContentsViewListener {
     void onContentRawTextDeleteClick(final LearningContent learningContent);
 
     /**
+     * On back button clicked action.
+     */
+    void onBackButtonClicked();
+
+    /**
      * On next button clicked action.
      */
     void onNextButtonClicked();

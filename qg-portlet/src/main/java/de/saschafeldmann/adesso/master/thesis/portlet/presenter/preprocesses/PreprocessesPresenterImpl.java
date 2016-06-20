@@ -8,6 +8,7 @@ import de.saschafeldmann.adesso.master.thesis.portlet.model.preprocesses.Process
 import de.saschafeldmann.adesso.master.thesis.portlet.model.preprocesses.ProcessActivationStateChangeListener;
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.AbstractStepPresenter;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.Messages;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.course.information.CourseInformationViewImpl;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.preprocesses.PreprocessesView;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.preprocesses.PreprocessesViewListener;
 import de.saschafeldmann.adesso.master.thesis.preprocesses.algorithm.language.LanguageDetection;
@@ -290,6 +291,18 @@ public class PreprocessesPresenterImpl extends AbstractStepPresenter implements 
         LOGGER.info("onEditLearningContentLanguageClick(): will edit {}", selectedContent.getTitle());
 
         selectedContent.setDeterminedLanguage(newLanguage);
+    }
+
+    @Override
+    public void onBackButtonClicked() {
+        LOGGER.info("onBackButtonClicked()");
+
+        getNavigator().navigateTo(CourseInformationViewImpl.VIEW_NAME);
+    }
+
+    @Override
+    public void onNextButtonClicked() {
+        // TODO
     }
 
     @Override

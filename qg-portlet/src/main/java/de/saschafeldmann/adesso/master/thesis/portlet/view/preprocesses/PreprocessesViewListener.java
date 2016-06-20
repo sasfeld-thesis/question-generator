@@ -54,7 +54,17 @@ public interface PreprocessesViewListener {
     /**
      * Triggered if the user changed the given content's language.
      * @param selectedContent given content
-     * @param itemChanged the new language
+     * @param newLanguage the new language
      */
     void onEditLearningContentLanguageClick(LearningContent selectedContent, Language newLanguage);
+
+    /**
+     * On back button clicked action.
+     */
+    void onBackButtonClicked();
+
+    /**
+     * On next button clicked action.
+     */
+    void onNextButtonClicked();
 }
