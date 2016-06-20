@@ -22,6 +22,8 @@ import de.saschafeldmann.adesso.master.thesis.portlet.view.components.TextArea;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.VerticalLayout;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.window.*;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.window.Table;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 
@@ -46,6 +48,8 @@ import java.util.Collection;
 @org.springframework.stereotype.Component
 @Scope("prototype")
 public class PreprocessesViewImpl extends AbstractStepView implements PreprocessesView{
+    private static final Logger LOGGER = LoggerFactory.getLogger(PreprocessesViewImpl.class);
+
     public static final String VIEW_NAME = "PreprocessesView";
     private static final String CSS_STYLE_NAME_HORICONTAL_OPTION_GROUP = "horicontal-option-group";
     private static final String CSS_STYLE_NAME_PROCESSCHAIN_TABLE = "processchain-table";
@@ -237,8 +241,14 @@ public class PreprocessesViewImpl extends AbstractStepView implements Preprocess
         Language determinedLearningContentLanguage = selectedContent.getDeterminedLanguage();
 
         if (null != determinedLearningContentLanguage) {
-            editWindow.setListSelectSelection(LanguageWrapper.forLanguage(determinedLearningContentLanguage));
+            try {
+                editWindow.setListSelectSelection(LanguageWrapper.forLanguage(determinedLearningContentLanguage));
+            } catch (Exception e) {
+                LOGGER.error("showProcessedTextEditWindow(): could not set language list selection to {}", determinedLearningContentLanguage);
+            }
+
             editWindow.setInfoBoxText(null);
+
         } else {
             // user needs to manually select the language since it could not be determined
             editWindow.setInfoBoxText(messages.getPreproccesesViewAccordionProcesschainEditWindowLanguageInfoBox());

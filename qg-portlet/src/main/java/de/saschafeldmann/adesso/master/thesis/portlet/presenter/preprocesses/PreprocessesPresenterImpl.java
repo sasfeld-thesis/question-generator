@@ -12,6 +12,7 @@ import de.saschafeldmann.adesso.master.thesis.portlet.view.preprocesses.Preproce
 import de.saschafeldmann.adesso.master.thesis.portlet.view.preprocesses.PreprocessesViewListener;
 import de.saschafeldmann.adesso.master.thesis.preprocesses.algorithm.language.LanguageDetection;
 import de.saschafeldmann.adesso.master.thesis.preprocesses.algorithm.language.UndeterminableLanguageException;
+import de.saschafeldmann.adesso.master.thesis.preprocesses.algorithm.model.PreprocessingOptions;
 import de.saschafeldmann.adesso.master.thesis.preprocesses.algorithm.nlp.NlpException;
 import de.saschafeldmann.adesso.master.thesis.preprocesses.algorithm.nlp.NlpPreprocessingAlgorithm;
 import org.slf4j.Logger;
@@ -54,6 +55,8 @@ public class PreprocessesPresenterImpl extends AbstractStepPresenter implements 
     private LanguageDetection languageDetectionAlgorithm;
     @Autowired
     private NlpPreprocessingAlgorithm nlpPreprocessingAlgorithm;
+    @Autowired
+    private PreprocessingOptions preprocessingOptions;
 
     private static final Predicate<LearningContent> FILTER_DELETED_ANNOTATED_TEXTS_PREDICATE =
             new Predicate<LearningContent>() {
@@ -95,8 +98,8 @@ public class PreprocessesPresenterImpl extends AbstractStepPresenter implements 
     }
 
     private void initPreprocessAlgorithms() {
-        nlpPreprocessingAlgorithm.setActivateNamedEntityRecognition(false);
-        nlpPreprocessingAlgorithm.setActivatePartOfSpeechTagging(false);
+        preprocessingOptions.setActivateNamedEntityRecognition(false);
+        preprocessingOptions.setActivatePartOfSpeechTagging(false);
     }
 
     private void loadProcessActivationElements() {
@@ -134,7 +137,7 @@ public class PreprocessesPresenterImpl extends AbstractStepPresenter implements 
                 .withStateChangeListener(new ProcessActivationStateChangeListener() {
                     @Override
                     public void onStateChanged(ProcessActivationElement changed) {
-                        nlpPreprocessingAlgorithm.setActivatePartOfSpeechTagging(true);
+                        preprocessingOptions.setActivatePartOfSpeechTagging(true);
                     }
                 })
                 .build();
@@ -154,7 +157,7 @@ public class PreprocessesPresenterImpl extends AbstractStepPresenter implements 
                 .withStateChangeListener(new ProcessActivationStateChangeListener() {
                     @Override
                     public void onStateChanged(ProcessActivationElement changed) {
-                        nlpPreprocessingAlgorithm.setActivateNamedEntityRecognition(true);
+                        preprocessingOptions.setActivateNamedEntityRecognition(true);
                     }
                 })
                 .build();
@@ -230,7 +233,7 @@ public class PreprocessesPresenterImpl extends AbstractStepPresenter implements 
     private void executeProcessForAllLearningContents(ProcessActivationElement processActivationElement) {
         for (LearningContent learningContent: questionGenerationSession.getCourse().getLearningContents()) {
             try {
-                processActivationElement.getProcessAlgorithm().execute(learningContent);
+                processActivationElement.getProcessAlgorithm().execute(learningContent, preprocessingOptions);
             } catch (UndeterminableLanguageException undeterminalLanguageException) {
                 LOGGER.error("executeProcessForAllLearningContents(): language detection failed due to exception\n {}", undeterminalLanguageException);
                 // language detection: the language could not be detected

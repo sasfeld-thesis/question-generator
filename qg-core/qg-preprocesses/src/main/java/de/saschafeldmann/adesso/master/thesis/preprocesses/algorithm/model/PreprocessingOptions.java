@@ -1,5 +1,8 @@
 package de.saschafeldmann.adesso.master.thesis.preprocesses.algorithm.model;
 
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
 /**
  * Project:        Masterthesis of Sascha Feldmann
  * Creation date:  20.06.2016
@@ -16,6 +19,8 @@ package de.saschafeldmann.adesso.master.thesis.preprocesses.algorithm.model;
  * Options plain old java object that is given to an algorithm ({@link de.saschafeldmann.adesso.master.thesis.preprocesses.algorithm.PreprocessingAlgorithm}
  * in its execute() method to be thread-safe and support singleton-scoped algorithms.
  */
+@Component
+@Scope("prototype")
 public class PreprocessingOptions {
     private Boolean activatePartOfSpeechTagging = false;
     private Boolean activateNamedEntityRecognition = false;

@@ -1,9 +1,8 @@
 package de.saschafeldmann.adesso.master.thesis.portlet.model;
 
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.Language;
-import de.saschafeldmann.adesso.master.thesis.portlet.QuestionGeneratorPortlet;
+import de.saschafeldmann.adesso.master.thesis.portlet.QuestionGeneratorPortletVaadinUi;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.Messages;
-import org.apache.commons.codec.language.bm.Lang;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +56,7 @@ public class LanguageWrapper {
 
     @Override
     public String toString() {
-        Messages messages = QuestionGeneratorPortlet.getCurrentPortlet().getMessages();
+        Messages messages = QuestionGeneratorPortletVaadinUi.getCurrentPortlet().getMessages();
 
         switch (language) {
             case ENGLISH:

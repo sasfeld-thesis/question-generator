@@ -5,6 +5,6 @@
 <display>
     <!-- defines the category under which the portlet will be shown in the liferay UI -->
     <category name="Vaadin">
-        <portlet id="de.saschafeldmann.adesso.master.thesis.portlet.QuestionGeneratorPortlet"/>
+        <portlet id="de.saschafeldmann.adesso.master.thesis.portlet.QuestionGeneratorPortletVaadinUi"/>
     </category>
 </display>

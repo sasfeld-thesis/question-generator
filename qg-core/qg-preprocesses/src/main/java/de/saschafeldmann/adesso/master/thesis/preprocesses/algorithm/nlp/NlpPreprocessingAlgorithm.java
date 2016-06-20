@@ -69,11 +69,14 @@ public class NlpPreprocessingAlgorithm implements PreprocessingAlgorithm {
 
     @PostConstruct
     public void initializeStanfordModels() {
-        if (!stanfordPipelineMap.containsKey(Language.ENGLISH)) {
-            initializeForLanguage(Language.ENGLISH);
-        }
-        if (!stanfordPipelineMap.containsKey(Language.GERMAN)) {
-            initializeForLanguage(Language.GERMAN);
+        synchronized (this) {
+            // be thread-safe. Anyway, if this component is set to singleton and managed by Spring MVC, there shouln't be any multi-threading problem here.
+            if (!stanfordPipelineMap.containsKey(Language.ENGLISH)) {
+                initializeForLanguage(Language.ENGLISH);
+            }
+            if (!stanfordPipelineMap.containsKey(Language.GERMAN)) {
+                initializeForLanguage(Language.GERMAN);
+            }
         }
     }
 

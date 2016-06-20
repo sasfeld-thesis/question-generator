@@ -7,7 +7,7 @@
     <portlet>
         <!-- Matches definition in portlet.xml. -->
         <!-- Note: Must not be the same as servlet name. -->
-        <portlet-name>de.saschafeldmann.adesso.master.thesis.portlet.QuestionGeneratorPortlet</portlet-name>
+        <portlet-name>de.saschafeldmann.adesso.master.thesis.portlet.QuestionGeneratorPortletVaadinUi</portlet-name>
 
         <!-- vaadin portlets must be instanceable, but not ajaxable -->
         <instanceable>true</instanceable>

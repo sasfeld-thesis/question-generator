@@ -1,6 +1,6 @@
 package de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n;
 
-import de.saschafeldmann.adesso.master.thesis.portlet.QuestionGeneratorPortlet;
+import de.saschafeldmann.adesso.master.thesis.portlet.QuestionGeneratorPortletVaadinUi;
 import de.saschafeldmann.adesso.master.thesis.util.properties.PropertiesReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -38,7 +38,7 @@ public class Messages {
      * @return Messages
      */
     public static Messages getInstance() {
-        return QuestionGeneratorPortlet.getCurrentPortlet().getMessages();
+        return QuestionGeneratorPortletVaadinUi.getCurrentPortlet().getMessages();
     }
 
     /**

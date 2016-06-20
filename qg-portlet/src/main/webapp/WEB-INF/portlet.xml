@@ -4,15 +4,15 @@
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd">
     <portlet>
-        <portlet-name>de.saschafeldmann.adesso.master.thesis.portlet.QuestionGeneratorPortlet</portlet-name>
+        <portlet-name>de.saschafeldmann.adesso.master.thesis.portlet.QuestionGeneratorPortletVaadinUi</portlet-name>
         <display-name>E-Learning Question Generator Portlet</display-name>
         <!-- the portlet must be mapped to the VaadinPortlet class -->
-        <portlet-class>com.vaadin.server.VaadinPortlet</portlet-class>
+        <portlet-class>de.saschafeldmann.adesso.master.thesis.portlet.QuestionGeneratorPortlet</portlet-class>
 
         <init-param>
             <!-- The application class with package name. -->
             <name>UI</name>
-            <value>de.saschafeldmann.adesso.master.thesis.portlet.QuestionGeneratorPortlet</value>
+            <value>de.saschafeldmann.adesso.master.thesis.portlet.QuestionGeneratorPortletVaadinUi</value>
         </init-param>
 
         <supports>
