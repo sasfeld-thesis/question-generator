@@ -137,6 +137,16 @@ public class CourseContentsViewImpl extends AbstractStepView implements CourseCo
         this.btnNext.setCaption(messages.getCourseInformationViewBtnNextLabel());
 
         registerListeners();
+
+        disableActionsButtons();
+    }
+
+    private void enableActionButtons() {
+        btnNext.setEnabled(true);
+    }
+
+    private void disableActionsButtons() {
+        btnNext.setEnabled(false);
     }
 
     private void setStyles() {
@@ -237,6 +247,14 @@ public class CourseContentsViewImpl extends AbstractStepView implements CourseCo
         });
 
         accordionDocumentsLeftSideFileUpload.setFileUploadListener(this);
+    }
+
+    private void triggerActionButtonsEnabledState() {
+        if (accordionDocumentsLeftSideUploadedList.size() > 0 || accordionRawTextsRightSideAddedList.size() > 0) {
+            enableActionButtons();
+        } else {
+            disableActionsButtons();
+        }
     }
 
     private void clearRawTextInputs() {
@@ -343,12 +361,16 @@ public class CourseContentsViewImpl extends AbstractStepView implements CourseCo
     public void showContentFiles(List<LearningContent> learningContentFiles) {
         accordionDocumentsLeftSideUploadedList.removeAllItems();
         accordionDocumentsLeftSideUploadedList.addItems(learningContentFiles);
+
+        triggerActionButtonsEnabledState();
     }
 
     @Override
     public void showContentRawTexts(List<LearningContent> learningRawTexts) {
         accordionRawTextsRightSideAddedList.removeAllItems();
         accordionRawTextsRightSideAddedList.addItems(learningRawTexts);
+
+        triggerActionButtonsEnabledState();
     }
 
     @Override

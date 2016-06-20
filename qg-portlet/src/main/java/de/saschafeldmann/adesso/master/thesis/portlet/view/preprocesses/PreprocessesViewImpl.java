@@ -121,12 +121,21 @@ public class PreprocessesViewImpl extends AbstractStepView implements Preprocess
 
         initializeBottomButtonGroup();
         registerListeners();
+        disableActionsButtons();
     }
 
     private void initializeAccordion() {
         initializeActivationPart();
 
         initializeProcessChainPart();
+    }
+
+    private void enableActionButtons() {
+        btnNext.setEnabled(true);
+    }
+
+    private void disableActionsButtons() {
+        btnNext.setEnabled(false);
     }
 
     private void initializeBottomButtonGroup() {
@@ -359,6 +368,16 @@ public class PreprocessesViewImpl extends AbstractStepView implements Preprocess
     public void showProcessedLearningContents(final Collection<LearningContent> learningContents) {
         accordionProcessChainFinishedSelect.removeAllItems();
         accordionProcessChainFinishedSelect.addItems(learningContents);
+
+        triggerActionButtonsEnabledState();
+    }
+
+    private void triggerActionButtonsEnabledState() {
+        if (accordionProcessChainFinishedSelect.size() > 0 || accordionProcessChainFinishedSelect.size() > 0) {
+            enableActionButtons();
+        } else {
+            disableActionsButtons();
+        }
     }
 
     @Override

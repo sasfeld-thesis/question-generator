@@ -1,5 +1,7 @@
 package de.saschafeldmann.adesso.master.thesis.portlet.view.course.information;
 
+import static com.google.common.base.Strings.*;
+import com.vaadin.data.Property;
 import com.vaadin.navigator.ViewChangeListener;
 import de.saschafeldmann.adesso.master.thesis.portlet.model.LanguageWrapper;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.Messages;
@@ -89,6 +91,16 @@ public class CourseInformationViewImpl extends AbstractStepView implements Cours
         this.btnNewSession.setCaption(messages.getCourseInformationViewBtnNewSessionLabel());
 
         registerListeners();
+        disableActionsButtons();
+    }
+
+
+    private void enableActionButtons() {
+        btnNext.setEnabled(true);
+    }
+
+    private void disableActionsButtons() {
+        btnNext.setEnabled(false);
     }
 
     private void initializeLanguageSelect() {
@@ -101,6 +113,17 @@ public class CourseInformationViewImpl extends AbstractStepView implements Cours
     }
 
     private void registerListeners() {
+        inputCourseTitle.addValueChangeListener(new Property.ValueChangeListener() {
+            @Override
+            public void valueChange(Property.ValueChangeEvent valueChangeEvent) {
+                if (isNullOrEmpty(inputCourseTitle.getValue())) {
+                    disableActionsButtons();
+                } else {
+                    enableActionButtons();
+                }
+            }
+        });
+
         btnNext.addClickListener(new Button.ClickListener() {
             public void buttonClick(Button.ClickEvent clickEvent) {
                 viewListener.onNextButtonClicked();
