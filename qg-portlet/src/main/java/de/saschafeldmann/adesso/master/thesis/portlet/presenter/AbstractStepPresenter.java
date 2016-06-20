@@ -23,7 +23,7 @@ import de.saschafeldmann.adesso.master.thesis.portlet.view.preprocesses.Preproce
  * This abstract presenter defines the basic components that each view in the application has, e.g. the current step indicator etc.
  * It is a {@link de.saschafeldmann.adesso.master.thesis.portlet.view.MenuListener} and therefore manages menu clicks.
  */
-public class AbstractStepPresenter implements MenuListener, VaadinViewPresenter {
+public abstract class AbstractStepPresenter implements MenuListener, VaadinViewPresenter {
     private Navigator navigator;
     protected QuestionGenerationSession questionGenerationSession;
 

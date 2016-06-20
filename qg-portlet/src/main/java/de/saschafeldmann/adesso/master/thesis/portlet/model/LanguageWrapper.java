@@ -56,7 +56,7 @@ public class LanguageWrapper {
 
     @Override
     public String toString() {
-        Messages messages = QuestionGeneratorPortletVaadinUi.getCurrentPortlet().getMessages();
+        Messages messages = QuestionGeneratorPortletVaadinUi.getCurrentPortletVaadinUi().getMessages();
 
         switch (language) {
             case ENGLISH:

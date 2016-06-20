@@ -321,7 +321,12 @@ public class CourseContentsViewImpl extends AbstractStepView implements CourseCo
 
         addComponent(accordion);
 
-        addComponent(btnNext);
+        addFooterWithButtonGroup();
+    }
+
+    private void addFooterWithButtonGroup() {
+        addButtonsAtBottom(buttonGroupLayout, btnPrevious, btnNext);
+        addComponent(buttonGroupLayout);
 
         addFooter();
     }
@@ -379,5 +384,11 @@ public class CourseContentsViewImpl extends AbstractStepView implements CourseCo
         // display error box
         this.accordionDocumentsRightSideInfoBox.setError();
         this.accordionDocumentsRightSideInfoBox.setCaption(error);
+    }
+
+    @Override
+    public void resetInputs() {
+        this.accordionDocumentsLeftSideUploadedList.removeAllItems();
+        this.accordionRawTextsRightSideAddedList.removeAllItems();
     }
 }

@@ -8,7 +8,8 @@ import de.saschafeldmann.adesso.master.thesis.portlet.model.preprocesses.Process
 import de.saschafeldmann.adesso.master.thesis.portlet.model.preprocesses.ProcessActivationStateChangeListener;
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.AbstractStepPresenter;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.Messages;
-import de.saschafeldmann.adesso.master.thesis.portlet.view.course.information.CourseInformationViewImpl;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.ViewWithMenu;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.course.contents.CourseContentsViewImpl;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.preprocesses.PreprocessesView;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.preprocesses.PreprocessesViewListener;
 import de.saschafeldmann.adesso.master.thesis.preprocesses.algorithm.language.LanguageDetection;
@@ -297,7 +298,7 @@ public class PreprocessesPresenterImpl extends AbstractStepPresenter implements 
     public void onBackButtonClicked() {
         LOGGER.info("onBackButtonClicked()");
 
-        getNavigator().navigateTo(CourseInformationViewImpl.VIEW_NAME);
+        getNavigator().navigateTo(CourseContentsViewImpl.VIEW_NAME);
     }
 
     @Override
@@ -347,5 +348,10 @@ public class PreprocessesPresenterImpl extends AbstractStepPresenter implements 
         for (LearningContent deletedLearningContent: deletedLearningContents) {
             deletedLearningContent.resetAnnotatedText();
         }
+    }
+
+    @Override
+    public ViewWithMenu getView() {
+        return preprocessesView;
     }
 }

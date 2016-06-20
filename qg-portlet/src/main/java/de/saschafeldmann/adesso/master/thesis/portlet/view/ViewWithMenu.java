@@ -31,4 +31,9 @@ public interface ViewWithMenu extends View {
      * @param currentSessionStatus the current session status
      */
     void setCurrentSessionStatus(QuestionGenerationSession.Status currentSessionStatus);
+
+    /**
+     * Resets all inputs in the current view.
+     */
+    void resetInputs();
 }

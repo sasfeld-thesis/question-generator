@@ -6,6 +6,7 @@ import de.saschafeldmann.adesso.master.thesis.elearningimport.model.Course;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.AbstractStepPresenter;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.Messages;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.ViewWithMenu;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.course.contents.CourseContentsView;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.course.contents.CourseContentsViewListener;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.course.information.CourseInformationView;
@@ -267,4 +268,8 @@ public class CourseContentsPresenterImpl extends AbstractStepPresenter implement
         return courseRawTexts;
     }
 
+    @Override
+    public ViewWithMenu getView() {
+        return courseContentsView;
+    }
 }

@@ -2,6 +2,7 @@ package de.saschafeldmann.adesso.master.thesis.portlet.presenter;
 
 import com.vaadin.navigator.Navigator;
 import de.saschafeldmann.adesso.master.thesis.portlet.model.QuestionGenerationSession;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.ViewWithMenu;
 
 /**
  * Project:        Masterthesis of Sascha Feldmann
@@ -27,7 +28,7 @@ public interface VaadinViewPresenter {
 
     /**
      * Gets the vaadin view navigator.
-     * @return
+     * @return the navigator
      */
     Navigator getNavigator();
 
@@ -37,4 +38,10 @@ public interface VaadinViewPresenter {
      * @param questionGenerationSession the {@link QuestionGenerationSession}
      */
     void setQuestionGenerationSession(QuestionGenerationSession questionGenerationSession);
+
+    /**
+     * Gets the view.
+     * @return the view
+     */
+    ViewWithMenu getView();
 }

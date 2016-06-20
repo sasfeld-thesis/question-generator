@@ -402,4 +402,10 @@ public class PreprocessesViewImpl extends AbstractStepView implements Preprocess
     public void enter(ViewChangeListener.ViewChangeEvent viewChangeEvent) {
         viewListener.onViewFocus();
     }
+
+    @Override
+    public void resetInputs() {
+        this.accordionProcessChainLogTextarea.setValue("");
+        this.accordionProcessChainFinishedSelect.removeAllItems();
+    }
 }

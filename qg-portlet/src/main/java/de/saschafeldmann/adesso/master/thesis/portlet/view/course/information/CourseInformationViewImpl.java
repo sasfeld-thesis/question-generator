@@ -30,6 +30,8 @@ import javax.annotation.PostConstruct;
 @Scope("prototype")
 public class CourseInformationViewImpl extends AbstractStepView implements CourseInformationView {
     private static final java.lang.String CSS_BUTTON_GROUP_STYLENAME = "course-information-view-button-group";
+    private static final LanguageWrapper DEFAULT_LANGUAGE_ITEM = LanguageWrapper.getGermanWrapper();
+
 
     /**
      * The view mode for this view.
@@ -95,7 +97,7 @@ public class CourseInformationViewImpl extends AbstractStepView implements Cours
         this.inputCourseLanguageSelect.addItems(LanguageWrapper.getAllLanguageItems());
 
         this.inputCourseLanguageSelect.setRows(2);
-        this.inputCourseLanguageSelect.select(LanguageWrapper.getGermanWrapper());
+        this.inputCourseLanguageSelect.select(DEFAULT_LANGUAGE_ITEM);
     }
 
     private void registerListeners() {
@@ -187,5 +189,12 @@ public class CourseInformationViewImpl extends AbstractStepView implements Cours
     @Override
     public void setCourseTitle(String courseTitle) {
         this.courseTitle = courseTitle;
+    }
+
+    @Override
+    public void resetInputs() {
+        this.inputCourseUrl.setValue("");
+        this.inputCourseTitle.setValue("");
+        this.inputCourseLanguageSelect.setValue(DEFAULT_LANGUAGE_ITEM);
     }
 }

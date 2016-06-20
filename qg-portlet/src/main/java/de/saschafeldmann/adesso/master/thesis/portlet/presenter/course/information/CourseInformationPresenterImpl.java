@@ -4,9 +4,11 @@ import com.vaadin.ui.Notification;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.ImporterService;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.ImporterServiceImpl;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.Language;
+import de.saschafeldmann.adesso.master.thesis.portlet.QuestionGeneratorPortletVaadinUi;
 import de.saschafeldmann.adesso.master.thesis.portlet.model.QuestionGenerationSession;
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.AbstractStepPresenter;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.Messages;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.ViewWithMenu;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.course.contents.CourseContentsViewImpl;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.course.information.CourseInformationView;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.course.information.CourseInformationViewImpl;
@@ -126,11 +128,18 @@ public class CourseInformationPresenterImpl extends AbstractStepPresenter implem
     @Override
     public void onNewSessionButtonClicked() {
         LOGGER.info("onNewSessionButtonClicked()");
+        resetInputs();
         resetSession();
+    }
+
+    private void resetInputs() {
+        QuestionGeneratorPortletVaadinUi.getCurrentPortletVaadinUi().resetAllInputs();
     }
 
     private void resetSession() {
         this.questionGenerationSession.setCourse(null);
+
+        this.courseInformationView.setCurrentSessionStatus(questionGenerationSession.getStatus());
         this.courseInformationView.reset();
     }
 
@@ -149,4 +158,8 @@ public class CourseInformationPresenterImpl extends AbstractStepPresenter implem
         this.courseInformationView.reset();
     }
 
+    @Override
+    public ViewWithMenu getView() {
+        return courseInformationView;
+    }
 }

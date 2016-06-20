@@ -38,7 +38,7 @@ public class Messages {
      * @return Messages
      */
     public static Messages getInstance() {
-        return QuestionGeneratorPortletVaadinUi.getCurrentPortlet().getMessages();
+        return QuestionGeneratorPortletVaadinUi.getCurrentPortletVaadinUi().getMessages();
     }
 
     /**

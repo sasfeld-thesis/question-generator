@@ -53,6 +53,9 @@ public class QuestionGeneratorPortletVaadinUi extends UI {
     private Navigator viewNavigator;
     private QuestionGenerationSession questionGenerationSession;
     private Messages messages;
+    private CourseContentsPresenter courseContentsPresenter;
+    private CourseInformationPresenter courseInformationPresenter;
+    private PreprocessesPresenter preprocessesPresenter;
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
@@ -86,7 +89,7 @@ public class QuestionGeneratorPortletVaadinUi extends UI {
     }
 
     private void initializeCourseInformationView(ApplicationContext applicationContext) {
-        CourseInformationPresenter courseInformationPresenter = applicationContext.getBean(CourseInformationPresenterImpl.class);
+        this.courseInformationPresenter = applicationContext.getBean(CourseInformationPresenterImpl.class);
         courseInformationPresenter.setQuestionGenerationSession(questionGenerationSession);
         courseInformationPresenter.setNavigator(this.viewNavigator);
 
@@ -100,7 +103,7 @@ public class QuestionGeneratorPortletVaadinUi extends UI {
     }
 
     private void initializeCourseContentsView(ApplicationContext applicationContext) {
-        CourseContentsPresenter courseContentsPresenter = applicationContext.getBean(CourseContentsPresenterImpl.class);
+        this.courseContentsPresenter = applicationContext.getBean(CourseContentsPresenterImpl.class);
         courseContentsPresenter.setQuestionGenerationSession(questionGenerationSession);
         courseContentsPresenter.setNavigator(this.viewNavigator);
 
@@ -109,7 +112,7 @@ public class QuestionGeneratorPortletVaadinUi extends UI {
     }
 
     private void initializePreprocessesView(ApplicationContext applicationContext) {
-        PreprocessesPresenter preprocessesPresenter = applicationContext.getBean(PreprocessesPresenterImpl.class);
+        this.preprocessesPresenter = applicationContext.getBean(PreprocessesPresenterImpl.class);
         preprocessesPresenter.setQuestionGenerationSession(questionGenerationSession);
         preprocessesPresenter.setNavigator(this.viewNavigator);
 
@@ -137,7 +140,16 @@ public class QuestionGeneratorPortletVaadinUi extends UI {
      * Get the current question generator portlet
      * @return
      */
-    public static QuestionGeneratorPortletVaadinUi getCurrentPortlet() {
+    public static QuestionGeneratorPortletVaadinUi getCurrentPortletVaadinUi() {
         return (QuestionGeneratorPortletVaadinUi) getCurrent();
+    }
+
+    /**
+     * Resets all inputs done by the user so far.
+     */
+    public void resetAllInputs() {
+        courseInformationPresenter.getView().resetInputs();
+        courseContentsPresenter.getView().resetInputs();
+        preprocessesPresenter.getView().resetInputs();
     }
 }
