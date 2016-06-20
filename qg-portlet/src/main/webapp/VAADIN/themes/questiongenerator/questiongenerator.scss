@@ -19,6 +19,9 @@
 @import "../valo/valo";
 @import "steps/contents";
 @import "steps/preprocesses";
+@import "components/accordion";
+@import "components/editwindow";
+@import "components/infobox";
 
 
 // Define the theme as mixin so that it can be included in other files
@@ -27,33 +30,15 @@
   @include valo;
   @include contents;
   @include preprocesses;
+  @include accordion;
+  @include editwindow;
+  @include infobox;
 
   /*
   * Main container: outer vertical layout of each (Java Vaadin class) AbstractStepView
   */
   .maincontainer {
     margin: $boxMargins;
-  }
-
-  /**
-   * Infobox component (Java Vaadin class: InfoBox)
-   */
-  .infobox {
-    margin-top: $boxMargins;
-    margin-bottom: $boxMargins;
-
-    padding: $boxPaddings;
-    border: $boxBordersWidth $boxBordersStyle;
-
-    height: 5em;
-
-    .v-icon {
-      font-size: $infoBoxIconFontSize;
-    }
-
-    .v-slot {
-      margin-right: $boxMargins;
-    }
   }
 
   .v-menubar {
@@ -70,25 +55,6 @@
 
   .right-button {
     margin-left: $rightButtonMargin;
-  }
-
-  /*
-   * Edit dialog window.
-   */
-  .edit-window {
-    width: $editDialogWindowWidth !important;
-
-    .v-formlayout {
-      margin-left: $boxMargins !important;
-    }
-
-    textarea {
-      width: $courseContentsAccordionInputWidth !important;
-    }
-  }
-
-  .v-accordion-item-content {
-    padding-left: $boxMargins;
   }
 
 }
