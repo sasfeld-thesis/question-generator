@@ -698,8 +698,16 @@ public class Messages {
      *
      * @return String
      */
-    public String getPreproccesesViewAccordionProcesschainEditWindowTextareaTitle() {
-        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.preprocesses.view.accordion.processchain.edit.window.textarea.title");
+    public String getPreproccesesViewAccordionProcesschainEditWindowTextareaPosTitle() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.preprocesses.view.accordion.processchain.edit.window.textarea.pos.title");
+    }
+    /**
+     * Gets the text
+     *
+     * @return String
+     */
+    public String getPreproccesesViewAccordionProcesschainEditWindowTextareaNerTitle() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.preprocesses.view.accordion.processchain.edit.window.textarea.ner.title");
     }
 
     /**

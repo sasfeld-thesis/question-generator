@@ -278,10 +278,11 @@ public class PreprocessesPresenterImpl extends AbstractStepPresenter implements 
     }
 
     @Override
-    public void onEditLearningContentClick(LearningContent learningContentToBeEdited, String textareaInput) {
+    public void onEditLearningContentClick(LearningContent learningContentToBeEdited, String partOfSpeechInput, String namedEntitiesInput) {
         LOGGER.info("onEditLearningContentClick(): will edit {}", learningContentToBeEdited.getTitle());
 
-        learningContentToBeEdited.setPartOfSpeechAnnotatedText(textareaInput);
+        learningContentToBeEdited.setPartOfSpeechAnnotatedText(partOfSpeechInput);
+        learningContentToBeEdited.setNamedEntityAnnotatedText(namedEntitiesInput);
     }
 
     @Override

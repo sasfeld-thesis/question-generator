@@ -28,8 +28,11 @@ public interface PreprocessesViewListener {
 
     /***
      * Triggered if the user edited a processed learning content.
+     * @param learningContentToBeEdited {@link LearningContent}
+     * @param namedEntitiesInput String
+     * @param partOfSpeechInput String
      */
-    void onEditLearningContentClick(final LearningContent learningContentToBeEdited, String textareaInput);
+    void onEditLearningContentClick(final LearningContent learningContentToBeEdited, final String partOfSpeechInput, final String namedEntitiesInput);
 
     /**
      * Triggered if the user wants to delete a process learning content.

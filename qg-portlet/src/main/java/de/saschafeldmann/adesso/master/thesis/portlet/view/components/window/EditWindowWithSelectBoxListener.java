@@ -22,4 +22,11 @@ public interface EditWindowWithSelectBoxListener extends  EditWindowListener{
      * @param itemChanged the item that was changed
      */
     void onSelectBoxItemChanged(Object itemChanged);
+
+    /**
+     * Triggered if the user clicked the edit button.
+     * @param textareInput the user's input
+     * @param textareInput the second textarea input
+     */
+    void onEditButtonClicked(final String textareInput, final String secondTextAreaInput);
 }

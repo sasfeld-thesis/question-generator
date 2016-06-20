@@ -222,10 +222,14 @@ public class PreprocessesViewImpl extends AbstractStepView implements Preprocess
 
     private void showProcessedTextEditWindow(final LearningContent selectedContent) {
         String title = selectedContent.getTitle();
-        String annotatedText = selectedContent.getPartOfSpeechAnnotatedText();
-        editWindow.setTextareaLabel(messages.getPreproccesesViewAccordionProcesschainEditWindowTextareaTitle());
+        String posAnnotatedText = selectedContent.getPartOfSpeechAnnotatedText();
+        String nerAnnotatedText = selectedContent.getNamedEntityAnnotatedText();
+
+        editWindow.setTextareaLabel(messages.getPreproccesesViewAccordionProcesschainEditWindowTextareaPosTitle());
+        editWindow.setSecondTextareaLabel(messages.getPreproccesesViewAccordionProcesschainEditWindowTextareaNerTitle());
         editWindow.setTitle(messages.getPreproccesesViewAccordionProcesschainEditWindowTitle() + " - " + title);
-        editWindow.setTextareaInput(annotatedText);
+        editWindow.setTextareaInput(posAnnotatedText);
+        editWindow.setSecondTextareaInput(nerAnnotatedText);
         editWindow.setEditButtonTooltip(messages.getPreproccesesViewAccordionProcesschainEditWindowEditButtonTooltip());
         editWindow.setDeleteButtonTooltip(messages.getPreproccesesViewAccordionProcesschainEditWindowDeleteButtonTooltip());
         editWindow.setListSelectLabel(messages.getPreproccesesViewAccordionProcesschainEditWindowLanguageTitle());
@@ -265,8 +269,13 @@ public class PreprocessesViewImpl extends AbstractStepView implements Preprocess
             }
 
             @Override
+            public void onEditButtonClicked(String textareInput, String secondTextAreaInput) {
+                viewListener.onEditLearningContentClick(selectedContent, textareInput, secondTextAreaInput);
+            }
+
+            @Override
             public void onEditButtonClicked(String textareaInput) {
-                viewListener.onEditLearningContentClick(selectedContent, textareaInput);
+                throw new UnsupportedOperationException("The dialog should trigger onEditButtonClicked(String textareInput, String secondTextAreaInput)");
             }
 
             @Override
