@@ -21,13 +21,31 @@
    */
   .edit-window {
     width: $editDialogWindowWidth !important;
+    height: $editDialogWindowHeight !important;
 
     .v-formlayout {
       margin-left: $boxMargins !important;
     }
 
     textarea {
-      width: $courseContentsAccordionInputWidth !important;
+      width: $editDialogTextareaWidth !important;
+      height: $editDialogTextareaHeight !important;
+    }
+  }
+  /*
+   * Edit dialog window with two textareas and select list.
+   */
+  .edit-window-with-two-areas-and-selectlist {
+    width: $editDialogWindowWidth !important;
+    height: $editDialogWindowHeight + 5  !important;
+
+    .v-formlayout {
+      margin-left: $boxMargins !important;
+    }
+
+    textarea {
+      width: $editDialogTextareaWidth !important;
+      height: $editDialogTextareaHeight / 2 !important;
     }
   }
 }

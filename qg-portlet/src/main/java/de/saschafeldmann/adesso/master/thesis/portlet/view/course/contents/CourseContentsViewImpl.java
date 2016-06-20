@@ -7,6 +7,7 @@ import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.UI;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.Messages;
+import de.saschafeldmann.adesso.master.thesis.portlet.util.VaadinUtil;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.AbstractStepView;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.*;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.Accordion;
@@ -290,7 +291,7 @@ public class CourseContentsViewImpl extends AbstractStepView implements CourseCo
         editWindow.center();  // displays the window on the screen center
 
         // displays the window
-        UI.getCurrent().addWindow(editWindow);
+        VaadinUtil.addWindow(editWindow);
     }
 
     private void showFileEditWindow(final LearningContent selectedContent) {

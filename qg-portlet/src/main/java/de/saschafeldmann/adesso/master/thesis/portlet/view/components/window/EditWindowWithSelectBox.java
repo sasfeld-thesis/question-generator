@@ -36,6 +36,7 @@ import java.util.List;
 @Component
 @Scope("prototype")
 public class EditWindowWithSelectBox extends EditWindow {
+    private static final java.lang.String CSS_STYLE_NAME = "edit-window-with-two-areas-and-selectlist";
     @Autowired
     private ListSelect listSelect;
     @Autowired
@@ -81,6 +82,11 @@ public class EditWindowWithSelectBox extends EditWindow {
                 close();
             }
         });
+    }
+
+    protected void addStyleNames() {
+        super.addStyleNames();
+        setStyleName(CSS_STYLE_NAME);
     }
 
     /**

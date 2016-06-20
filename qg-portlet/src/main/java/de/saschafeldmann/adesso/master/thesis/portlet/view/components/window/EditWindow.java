@@ -81,7 +81,7 @@ public class EditWindow extends Window {
         });
     }
 
-    private void addStyleNames() {
+    protected void addStyleNames() {
         setStyleName(CSS_EDIT_WINDOW_STYLENAME);
         btnDelete.addStyleName(CommonStyleNames.BUTTON_GROUP_RIGHT_BUTTON_STYLENAME);
     }

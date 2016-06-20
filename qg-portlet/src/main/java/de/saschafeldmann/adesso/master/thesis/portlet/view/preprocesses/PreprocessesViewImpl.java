@@ -9,6 +9,7 @@ import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningCont
 import de.saschafeldmann.adesso.master.thesis.portlet.model.LanguageWrapper;
 import de.saschafeldmann.adesso.master.thesis.portlet.model.preprocesses.ProcessActivationElement;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.Messages;
+import de.saschafeldmann.adesso.master.thesis.portlet.util.VaadinUtil;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.AbstractStepView;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.*;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.Accordion;
@@ -304,7 +305,7 @@ public class PreprocessesViewImpl extends AbstractStepView implements Preprocess
         editWindow.center();  // displays the window on the screen center
 
         // displays the window
-        UI.getCurrent().addWindow(editWindow);
+        VaadinUtil.addWindow(editWindow);
     }
 
     @Override
