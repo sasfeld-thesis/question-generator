@@ -171,6 +171,7 @@ public class EditWindowWithSelectBox extends EditWindow {
 
     protected void arrangeLayout() {
         formLayout.addComponent(textArea);
+        formLayout.addComponent(secondTextArea);
         formLayout.addComponent(listSelect);
 
         if (null != infoBoxText) {

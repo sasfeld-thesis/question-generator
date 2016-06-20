@@ -41,12 +41,18 @@ public class NlpPreprocessingAlgorithmTest {
             "\n" +
             "Im letzen Schritt wird die Language Generation Komponente - hoffentlich - syntaktisch korrekte Fragen erstellen.";
 
-    private NlpPreprocessingAlgorithm nlpPreprocessingAlgorithm;
+    private static final NlpPreprocessingAlgorithm nlpPreprocessingAlgorithm = newInstance();
+
+    private static NlpPreprocessingAlgorithm newInstance() {
+        NlpPreprocessingAlgorithm nlpPreprocessingAlgorithm = new NlpPreprocessingAlgorithm();
+        nlpPreprocessingAlgorithm.initializeStanfordModels();
+
+        return nlpPreprocessingAlgorithm;
+    }
 
     @Test
     public void testExecutePartOfSpeechTaggingForGermanLearningContent() {
         // given algorithm with activated part of speech tagging
-        PreprocessingAlgorithm nlpPreprocessingAlgorithm = newInstance();
         PreprocessingOptions preprocessingOptions = getInstanceForPartOfSpeechTagging();
 
         // given a German learning content
@@ -76,7 +82,6 @@ public class NlpPreprocessingAlgorithmTest {
     @Test
     public void testExecuteNamedEntityRecognitionForGermanLearningContent() {
         // given algorithm with activated named entity recognition
-        PreprocessingAlgorithm nlpPreprocessingAlgorithm = newInstance();
         PreprocessingOptions preprocessingOptions = getInstanceForNamedEntityRecognition();
 
         // given a German learning content
@@ -97,7 +102,6 @@ public class NlpPreprocessingAlgorithmTest {
     @Test
     public void testExecutePartOfSpeechTaggingForEnglishLearningContent() {
         // given algorithm with activated part of speech tagging
-        PreprocessingAlgorithm nlpPreprocessingAlgorithm = newInstance();
         PreprocessingOptions preprocessingOptions = getInstanceForPartOfSpeechTagging();
         // given a German learning content
         LearningContent englishLearningContent = newEnglishLearningContent();
@@ -122,7 +126,6 @@ public class NlpPreprocessingAlgorithmTest {
     @Test
     public void testExecuteNamedEntityRecognitionForEnglishLearningContent() {
         // given algorithm with activated named entity recognition
-        PreprocessingAlgorithm nlpPreprocessingAlgorithm = newInstance();
         PreprocessingOptions preprocessingOptions = getInstanceForNamedEntityRecognition();
         // given a German learning content
         LearningContent englishLearningContent = newEnglishLearningContent();
@@ -186,15 +189,5 @@ public class NlpPreprocessingAlgorithmTest {
         preprocessingOptions.setActivateNamedEntityRecognition(true);
 
         return preprocessingOptions;
-    }
-
-    private NlpPreprocessingAlgorithm newInstance() {
-        // since its expensive to create an algorithm class, do it only once
-        if (null == nlpPreprocessingAlgorithm) {
-            nlpPreprocessingAlgorithm = new NlpPreprocessingAlgorithm();
-            nlpPreprocessingAlgorithm.initializeStanfordModels();
-        }
-
-        return nlpPreprocessingAlgorithm;
     }
 }
