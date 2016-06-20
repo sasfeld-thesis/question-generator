@@ -45,6 +45,8 @@
     padding: $boxPaddings;
     border: $boxBordersWidth $boxBordersStyle;
 
+    height: 5em;
+
     .v-icon {
       font-size: $infoBoxIconFontSize;
     }
