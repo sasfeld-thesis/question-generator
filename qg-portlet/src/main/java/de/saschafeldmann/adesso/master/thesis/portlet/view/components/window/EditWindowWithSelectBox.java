@@ -73,7 +73,6 @@ public class EditWindowWithSelectBox extends EditWindow {
                 ((EditWindowWithSelectBoxListener) editWindowListener).onSelectBoxItemChanged(valueChangeEvent.getProperty().getValue());
             }
         });
-        btnEdit.removeListener(com.vaadin.ui.Button.ClickListener.class, btnEdit);
 
         btnEdit.addClickListener(new com.vaadin.ui.Button.ClickListener() {
             public void buttonClick(com.vaadin.ui.Button.ClickEvent clickEvent) {

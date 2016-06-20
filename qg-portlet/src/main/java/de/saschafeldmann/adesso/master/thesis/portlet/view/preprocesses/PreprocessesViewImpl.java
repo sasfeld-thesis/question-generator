@@ -292,7 +292,7 @@ public class PreprocessesViewImpl extends AbstractStepView implements Preprocess
 
             @Override
             public void onEditButtonClicked(String textareaInput) {
-                throw new UnsupportedOperationException("The dialog should trigger onEditButtonClicked(String textareInput, String secondTextAreaInput)");
+                // do not do anything, onEditButtonClicked(String textareInput, String secondTextAreaInput) should be called, too.
             }
 
             @Override
