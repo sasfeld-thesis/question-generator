@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.Language;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
+import de.saschafeldmann.adesso.master.thesis.preprocesses.algorithm.model.PreprocessingOptions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -39,6 +40,7 @@ public class LanguageDetectionTest {
             "\n" +
             "Im letzen Schritt wird die Language Generation Komponente - hoffentlich - syntaktisch korrekte Fragen erstellen.";
     private LanguageDetection languageDetectionAlgorithm;
+    private PreprocessingOptions preprocessingOptions = new PreprocessingOptions();
 
     @Before
     public void setUp() throws Exception {
@@ -53,7 +55,7 @@ public class LanguageDetectionTest {
     @Test
     public void testExecuteThrowsUndeterminableExceptionForChineseText() {
         try {
-            this.languageDetectionAlgorithm.execute(getChineseLearningContent());
+            this.languageDetectionAlgorithm.execute(getChineseLearningContent(), preprocessingOptions);
             fail("LanguageDetection should throw an UndeterminaleLanguageException for chinese characters.");
         } catch (UndeterminableLanguageException e) {
             // expected
@@ -67,7 +69,7 @@ public class LanguageDetectionTest {
 
     @Test
     public void testExecuteDetectsGermanLanguage() {
-        LearningContent learningContent = this.languageDetectionAlgorithm.execute(getGermanLearningContent());
+        LearningContent learningContent = this.languageDetectionAlgorithm.execute(getGermanLearningContent(), preprocessingOptions);
 
         assertEquals("The LanguageDetection should have set the determined language to German", Language.GERMAN, learningContent.getDeterminedLanguage());
     }
@@ -78,7 +80,7 @@ public class LanguageDetectionTest {
 
     @Test
     public void testExecuteDetectsEnglishLanguage() {
-        LearningContent learningContent = this.languageDetectionAlgorithm.execute(getEnglishLearningContent());
+        LearningContent learningContent = this.languageDetectionAlgorithm.execute(getEnglishLearningContent(), preprocessingOptions);
 
         assertEquals("The LanguageDetection should have set the determined language to English", Language.ENGLISH, learningContent.getDeterminedLanguage());
     }

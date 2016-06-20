@@ -1,6 +1,7 @@
 package de.saschafeldmann.adesso.master.thesis.preprocesses.algorithm;
 
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
+import de.saschafeldmann.adesso.master.thesis.preprocesses.algorithm.model.PreprocessingOptions;
 
 /**
  * Project:        Masterthesis of Sascha Feldmann
@@ -25,7 +26,8 @@ public interface PreprocessingAlgorithm {
      * Execute the algorith. Take the raw text stored in the given learningContent as input.
      * Write back the outputs to the learning content returned.
      * @param learningContent raw learning content
+     * @param preprocessingOptions options instance for the algorithm to be thread-safe and support singleton-scoped algorithms.
      * @return enriched learning content
      */
-    LearningContent execute(LearningContent learningContent);
+    LearningContent execute(LearningContent learningContent, PreprocessingOptions preprocessingOptions);
 }

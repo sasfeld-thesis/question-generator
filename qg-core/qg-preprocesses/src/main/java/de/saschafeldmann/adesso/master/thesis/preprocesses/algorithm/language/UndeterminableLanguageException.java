@@ -19,6 +19,10 @@ package de.saschafeldmann.adesso.master.thesis.preprocesses.algorithm.language;
  * of the language's most common words).
  */
 public class UndeterminableLanguageException extends RuntimeException {
+    /**
+     * Creates the exception.
+     * @param s the message
+     */
     public UndeterminableLanguageException(String s) {
         super(s);
     }

@@ -6,6 +6,7 @@ import com.google.common.base.Joiner;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.Language;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
 import de.saschafeldmann.adesso.master.thesis.preprocesses.algorithm.PreprocessingAlgorithm;
+import de.saschafeldmann.adesso.master.thesis.preprocesses.algorithm.model.PreprocessingOptions;
 import edu.stanford.nlp.ling.CoreAnnotations;
 import edu.stanford.nlp.ling.CoreLabel;
 import edu.stanford.nlp.pipeline.Annotation;
@@ -16,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.util.*;
 
 /**
@@ -35,9 +37,20 @@ import java.util.*;
  * Uses the Stanford NLP library and trained models for both the German and English languages.
  *
  * http://stanfordnlp.github.io/CoreNLP/
+ *
+ * <br /><br />
+ * <strong>Important:</strong>
+ * <br /><br />
+ * Stanford NLP POS tagger and NER classifier models need a lot of Heap memory. I measured at least 1,2 GB for German only
+ * plus 1 GB for English.
+ * Therefore, the Java process running this application should get a maximum heap size (-Xmx)  of at least 3 GB.
+ * <br /><br />
+ * Additionally, this class here should be defined as singleton and initialized in the application only <strong>once</strong>.<br />
+ * The implementation must be threadsafe so that multiple users can trigger the NLP via this singleton instance.
+ *
  */
 @Component
-@Scope("prototype")
+@Scope("singleton")
 public class NlpPreprocessingAlgorithm implements PreprocessingAlgorithm {
     private static final Logger LOGGER = LoggerFactory.getLogger(NlpPreprocessingAlgorithm.class);
 
@@ -51,32 +64,38 @@ public class NlpPreprocessingAlgorithm implements PreprocessingAlgorithm {
     // English POS model - for all possible NER classifiers see JAR file stanford-english-corenlp-2016-01-10-models.jar
     private static final String ENGLISH_PART_OF_SPEECH_MODEL = "edu/stanford/nlp/models/pos-tagger/english-bidirectional/english-bidirectional-distsim.tagger";
 
-    private Boolean activatePartOfSpeechTagging = false;
-    private Boolean activateNamedEntityRecognition = false;
 
     private final Map<Language, StanfordCoreNLP> stanfordPipelineMap = new HashMap<>();
 
-    /**
-     * Whether named entity recognition should be done.
-     * @param activateNamedEntityRecognition boolean
-     */
-    public void setActivateNamedEntityRecognition(boolean activateNamedEntityRecognition) {
-        this.activateNamedEntityRecognition = activateNamedEntityRecognition;
+    @PostConstruct
+    public void initializeStanfordModels() {
+        if (!stanfordPipelineMap.containsKey(Language.ENGLISH)) {
+            initializeForLanguage(Language.ENGLISH);
+        }
+        if (!stanfordPipelineMap.containsKey(Language.GERMAN)) {
+            initializeForLanguage(Language.GERMAN);
+        }
+    }
+
+    private void initializeForLanguage(Language language) {
+        // really expensive operation
+        LOGGER.info("initializeStanfordModels(): EXPENSIVE CREATION - creating new stanford natural language processing pipeline for language {}", language);
+        stanfordPipelineMap.put(language, createNewStanfordNlpPipeline(language));
+        LOGGER.info("initializeStanfordModels(): finished natural language processing pipeline creation");
     }
 
     /**
-     * Whether part of speech tagging should be done.
-     * @param activatePartOfSpeechTagging boolean
+     *
+     * @param learningContent raw learning content
+     * @param  preprocessingOptions the options
+     * @return the enriched learning content
+     * @throws NlpException if the NLP didn't work
      */
-    public void setActivatePartOfSpeechTagging(boolean activatePartOfSpeechTagging) {
-        this.activatePartOfSpeechTagging = activatePartOfSpeechTagging;
-    }
-
     @Override
-    public LearningContent execute(LearningContent learningContent) {
+    public LearningContent execute(final LearningContent learningContent, final PreprocessingOptions preprocessingOptions) {
         final StanfordCoreNLP stanfordCoreNLP = getStanfordCoreNlpInstanceForLanguage(learningContent.getDeterminedLanguage());
 
-        annotateRawText(stanfordCoreNLP, learningContent);
+        annotateRawText(stanfordCoreNLP, learningContent, preprocessingOptions);
         return learningContent;
     }
 
@@ -91,9 +110,9 @@ public class NlpPreprocessingAlgorithm implements PreprocessingAlgorithm {
         checkNotNull(determinedLanguage, "The language of the given learning content must not be null.");
 
         if (!stanfordPipelineMap.containsKey(determinedLanguage)) {
-            LOGGER.info("getStanfordCoreNlpInstanceForLanguage(): EXPENSIVE CREATION - creating new stanford natural language processing pipeline for language {}", determinedLanguage);
-            stanfordPipelineMap.put(determinedLanguage, createNewStanfordNlpPipeline(determinedLanguage));
-            LOGGER.info("getStanfordCoreNlpInstanceForLanguage(): finished natural language processing pipeline creation");
+            LOGGER.error("getStanfordCoreNlpInstanceForLanguage(): no Stanford NLP instance for language {} found. Please check if initializeStanfordModels() is implemented correctly.",
+                    determinedLanguage);
+            throw new NlpException("No Stanford NLP instance for language " + determinedLanguage + " found");
         }
 
         return stanfordPipelineMap.get(determinedLanguage);
@@ -155,7 +174,10 @@ public class NlpPreprocessingAlgorithm implements PreprocessingAlgorithm {
      * @param learningContent (raw) learning content
      * @return annotated text
      */
-    private void annotateRawText(StanfordCoreNLP stanfordCoreNLP, LearningContent learningContent) {
+    private void annotateRawText(StanfordCoreNLP stanfordCoreNLP, LearningContent learningContent, PreprocessingOptions preprocessingOptions) {
+        final boolean activatePartOfSpeechTagging = preprocessingOptions.getActivatePartOfSpeechTagging();
+        final boolean activateNamedEntityRecognition = preprocessingOptions.getActivateNamedEntityRecognition();
+
         final String rawText = learningContent.getRawText();
         final Annotation annotation = new Annotation(rawText);
 

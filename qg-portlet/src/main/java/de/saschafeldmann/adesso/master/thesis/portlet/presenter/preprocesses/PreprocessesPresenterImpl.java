@@ -12,6 +12,7 @@ import de.saschafeldmann.adesso.master.thesis.portlet.view.preprocesses.Preproce
 import de.saschafeldmann.adesso.master.thesis.portlet.view.preprocesses.PreprocessesViewListener;
 import de.saschafeldmann.adesso.master.thesis.preprocesses.algorithm.language.LanguageDetection;
 import de.saschafeldmann.adesso.master.thesis.preprocesses.algorithm.language.UndeterminableLanguageException;
+import de.saschafeldmann.adesso.master.thesis.preprocesses.algorithm.nlp.NlpException;
 import de.saschafeldmann.adesso.master.thesis.preprocesses.algorithm.nlp.NlpPreprocessingAlgorithm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -231,8 +232,13 @@ public class PreprocessesPresenterImpl extends AbstractStepPresenter implements 
             try {
                 processActivationElement.getProcessAlgorithm().execute(learningContent);
             } catch (UndeterminableLanguageException undeterminalLanguageException) {
+                LOGGER.error("executeProcessForAllLearningContents(): language detection failed due to exception\n {}", undeterminalLanguageException);
                 // language detection: the language could not be detected
                 addLogEntryToView(messages.getPreproccesesViewAccordionProcesschainLogLanguageDetectionFailed(learningContent.getTitle()));
+            } catch (NlpException nlpException) {
+                LOGGER.error("executeProcessForAllLearningContents(): natural language processing failed due to exception\n {}", nlpException);
+                // NER or POS didn't work
+                addLogEntryToView(messages.getPreprocessesViewAccordionProcesschainLogNlpFailed());
             }
         }
     }

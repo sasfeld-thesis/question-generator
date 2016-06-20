@@ -774,4 +774,12 @@ public class Messages {
         return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.preprocesses.view.accordion.activation.optiongroup.no.label");
     }
 
+    /**
+     * Gets the text
+     * @return String
+     */
+    public String getPreprocessesViewAccordionProcesschainLogNlpFailed() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.preprocesses.view.accordion.processchain.log.nlp.failed");
+    }
+
 }

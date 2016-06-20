@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.Language;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
 import de.saschafeldmann.adesso.master.thesis.preprocesses.algorithm.PreprocessingAlgorithm;
+import de.saschafeldmann.adesso.master.thesis.preprocesses.algorithm.model.PreprocessingOptions;
 import org.junit.Test;
 
 /**
@@ -45,12 +46,14 @@ public class NlpPreprocessingAlgorithmTest {
     @Test
     public void testExecutePartOfSpeechTaggingForGermanLearningContent() {
         // given algorithm with activated part of speech tagging
-        PreprocessingAlgorithm nlpPreprocessingAlgorithm = getInstanceForPartOfSpeechTagging();
+        PreprocessingAlgorithm nlpPreprocessingAlgorithm = newInstance();
+        PreprocessingOptions preprocessingOptions = getInstanceForPartOfSpeechTagging();
+
         // given a German learning content
         LearningContent germanLearningContent = newGermanLearningContent();
 
         // when execute is called
-        final LearningContent annotatedGermanLearningContent = nlpPreprocessingAlgorithm.execute(germanLearningContent);
+        final LearningContent annotatedGermanLearningContent = nlpPreprocessingAlgorithm.execute(germanLearningContent, preprocessingOptions);
         System.out.println("POS annotated text:");
         System.out.println(annotatedGermanLearningContent.getPartOfSpeechAnnotatedText());
 
@@ -73,12 +76,14 @@ public class NlpPreprocessingAlgorithmTest {
     @Test
     public void testExecuteNamedEntityRecognitionForGermanLearningContent() {
         // given algorithm with activated named entity recognition
-        PreprocessingAlgorithm nlpPreprocessingAlgorithm = getInstanceForNamedEntityRecognition();
+        PreprocessingAlgorithm nlpPreprocessingAlgorithm = newInstance();
+        PreprocessingOptions preprocessingOptions = getInstanceForNamedEntityRecognition();
+
         // given a German learning content
         LearningContent germanLearningContent = newGermanLearningContent();
 
         // when execute is called
-        final LearningContent annotatedGermanLearningContent = nlpPreprocessingAlgorithm.execute(germanLearningContent);
+        final LearningContent annotatedGermanLearningContent = nlpPreprocessingAlgorithm.execute(germanLearningContent, preprocessingOptions);
         System.out.println("NER annotated text:");
         System.out.println(annotatedGermanLearningContent.getNamedEntityAnnotatedText());
 
@@ -92,12 +97,13 @@ public class NlpPreprocessingAlgorithmTest {
     @Test
     public void testExecutePartOfSpeechTaggingForEnglishLearningContent() {
         // given algorithm with activated part of speech tagging
-        PreprocessingAlgorithm nlpPreprocessingAlgorithm = getInstanceForPartOfSpeechTagging();
+        PreprocessingAlgorithm nlpPreprocessingAlgorithm = newInstance();
+        PreprocessingOptions preprocessingOptions = getInstanceForPartOfSpeechTagging();
         // given a German learning content
         LearningContent englishLearningContent = newEnglishLearningContent();
 
         // when execute is called
-        final LearningContent annotatedEnglishLarningContent = nlpPreprocessingAlgorithm.execute(englishLearningContent);
+        final LearningContent annotatedEnglishLarningContent = nlpPreprocessingAlgorithm.execute(englishLearningContent, preprocessingOptions);
         System.out.println("POS annotated text:");
         System.out.println(annotatedEnglishLarningContent.getPartOfSpeechAnnotatedText());
 
@@ -116,12 +122,13 @@ public class NlpPreprocessingAlgorithmTest {
     @Test
     public void testExecuteNamedEntityRecognitionForEnglishLearningContent() {
         // given algorithm with activated named entity recognition
-        PreprocessingAlgorithm nlpPreprocessingAlgorithm = getInstanceForNamedEntityRecognition();
+        PreprocessingAlgorithm nlpPreprocessingAlgorithm = newInstance();
+        PreprocessingOptions preprocessingOptions = getInstanceForNamedEntityRecognition();
         // given a German learning content
         LearningContent englishLearningContent = newEnglishLearningContent();
 
         // when execute is called
-        final LearningContent annotatedEnglishLearningContent = nlpPreprocessingAlgorithm.execute(englishLearningContent);
+        final LearningContent annotatedEnglishLearningContent = nlpPreprocessingAlgorithm.execute(englishLearningContent, preprocessingOptions);
         System.out.println("NER annotated text:");
         System.out.println(annotatedEnglishLearningContent.getNamedEntityAnnotatedText());
 
@@ -163,28 +170,29 @@ public class NlpPreprocessingAlgorithmTest {
         return learningContent;
     }
 
-    private PreprocessingAlgorithm getInstanceForPartOfSpeechTagging() {
-        NlpPreprocessingAlgorithm nlpPreprocessingAlgorithm = newInstance();
+    private PreprocessingOptions getInstanceForPartOfSpeechTagging() {
+        PreprocessingOptions preprocessingOptions = new PreprocessingOptions();
 
-        nlpPreprocessingAlgorithm.setActivatePartOfSpeechTagging(true);
-        nlpPreprocessingAlgorithm.setActivateNamedEntityRecognition(false);
+        preprocessingOptions.setActivatePartOfSpeechTagging(true);
+        preprocessingOptions.setActivateNamedEntityRecognition(false);
 
-        return nlpPreprocessingAlgorithm;
+        return preprocessingOptions;
     }
 
-    private PreprocessingAlgorithm getInstanceForNamedEntityRecognition() {
-        NlpPreprocessingAlgorithm nlpPreprocessingAlgorithm = newInstance();
+    private PreprocessingOptions getInstanceForNamedEntityRecognition() {
+        PreprocessingOptions preprocessingOptions = new PreprocessingOptions();
 
-        nlpPreprocessingAlgorithm.setActivatePartOfSpeechTagging(false);
-        nlpPreprocessingAlgorithm.setActivateNamedEntityRecognition(true);
+        preprocessingOptions.setActivatePartOfSpeechTagging(false);
+        preprocessingOptions.setActivateNamedEntityRecognition(true);
 
-        return nlpPreprocessingAlgorithm;
+        return preprocessingOptions;
     }
 
     private NlpPreprocessingAlgorithm newInstance() {
         // since its expensive to create an algorithm class, do it only once
         if (null == nlpPreprocessingAlgorithm) {
             nlpPreprocessingAlgorithm = new NlpPreprocessingAlgorithm();
+            nlpPreprocessingAlgorithm.initializeStanfordModels();
         }
 
         return nlpPreprocessingAlgorithm;

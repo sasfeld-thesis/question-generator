@@ -3,6 +3,7 @@ package de.saschafeldmann.adesso.master.thesis.preprocesses.algorithm.language;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.Language;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
 import de.saschafeldmann.adesso.master.thesis.preprocesses.algorithm.PreprocessingAlgorithm;
+import de.saschafeldmann.adesso.master.thesis.preprocesses.algorithm.model.PreprocessingOptions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -52,7 +53,7 @@ public class LanguageDetection implements PreprocessingAlgorithm {
      * @return the learning content model with a set language
      */
     @Override
-    public LearningContent execute(final LearningContent learningContent) throws UndeterminableLanguageException {
+    public LearningContent execute(final LearningContent learningContent, final PreprocessingOptions preprocessingOptions) throws UndeterminableLanguageException {
         if (isGerman(learningContent)) {
             learningContent.setDeterminedLanguage(Language.GERMAN);
         } else if (isEnglish(learningContent)) {
