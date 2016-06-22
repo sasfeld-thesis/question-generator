@@ -77,11 +77,12 @@ public class LearningContentTest {
 
         // then the flag language coud not be determined should be false
         assertFalse(learningContent.isLanguageCouldNotBeDetermined());
+        assertEquals(Language.ENGLISH, learningContent.getDeterminedLanguage());
     }
 
     @Test
     public void testSetFallbackLanguageSetsLanguageCouldNotBeDetermined() {
-        // given a learning cotnent with determined language
+        // given a learning content with determined language
         LearningContent learningContent = newLearningContent();
         Course course = newCourse();
 
@@ -98,5 +99,50 @@ public class LearningContentTest {
                 .withLanguage(Language.GERMAN)
                 .withViewUrl("Test url")
                 .build();
+    }
+
+    @Test
+    public void testDeletedAnnotatedTextSetsHasAnnotatedTextFlag() {
+        // given a learning content with determined language
+        LearningContent learningContent = newLearningContent();
+
+        // when annotated text is deleted
+        learningContent.deleteAnnotatedText();
+
+        // then the flag has annotated text should be false
+        assertFalse(learningContent.hasAnnotatedText());
+
+        // and pos part of speech and NER fields should have been set to the internal deleted value
+        assertEquals("!!!!deleted!!!!", learningContent.getNamedEntityAnnotatedText());
+        assertEquals("!!!!deleted!!!!", learningContent.getPartOfSpeechAnnotatedText());
+    }
+
+    @Test
+    public void testSetPartOfSpeechAnnotatedTextLeadsToWasNotDeletedFlag() {
+        // given a learning content with determined language
+        LearningContent learningContent = newLearningContent();
+
+        // when annotated text is set
+        learningContent.setPartOfSpeechAnnotatedText("<NN>noun</NN>");
+        learningContent.setNamedEntityAnnotatedText("<DATE>2016</DATE>");
+
+        // then the flag has annotated text should be true
+        assertTrue(learningContent.hasAnnotatedText());
+        assertEquals("<NN>noun</NN>", learningContent.getPartOfSpeechAnnotatedText());
+        assertEquals("<DATE>2016</DATE>", learningContent.getNamedEntityAnnotatedText());
+    }
+
+    @Test
+    public void testResetAnnotatedTextResetsBothPosAndNerTexts() {
+        LearningContent learningContent = newLearningContent();
+
+        // when annotated text is set and afterwards reset
+        learningContent.setPartOfSpeechAnnotatedText("<NN>noun</NN>");
+        learningContent.setNamedEntityAnnotatedText("<DATE>2016</DATE>");
+        learningContent.resetAnnotatedText();
+
+        // then the annotated texts should be the empty string
+        assertEquals("", learningContent.getNamedEntityAnnotatedText());
+        assertEquals("", learningContent.getPartOfSpeechAnnotatedText());
     }
 }

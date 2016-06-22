@@ -119,6 +119,7 @@ public class LearningContent {
      */
     public void deleteAnnotatedText() {
         this.setPartOfSpeechAnnotatedText(ANNOTATED_TEXT_DELETED);
+        this.setNamedEntityAnnotatedText(ANNOTATED_TEXT_DELETED);
     }
 
     /**
@@ -126,6 +127,7 @@ public class LearningContent {
      */
     public void resetAnnotatedText() {
         this.setPartOfSpeechAnnotatedText("");
+        this.setNamedEntityAnnotatedText("");
     }
 
     /**
