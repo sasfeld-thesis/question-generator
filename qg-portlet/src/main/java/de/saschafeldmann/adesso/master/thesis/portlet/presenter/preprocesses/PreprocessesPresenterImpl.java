@@ -237,7 +237,8 @@ public class PreprocessesPresenterImpl extends AbstractStepPresenter implements 
             try {
                 processActivationElement.getProcessAlgorithm().execute(learningContent, preprocessingOptions);
             } catch (UndeterminableLanguageException undeterminalLanguageException) {
-                LOGGER.error("executeProcessForAllLearningContents(): language detection failed due to exception\n {}. Will fallback to course's default language.", undeterminalLanguageException);
+                LOGGER.error("executeProcessForAllLearningContents(): language detection failed due to exception\n {}. Will fallback to course's primary language {}.",
+                        undeterminalLanguageException, questionGenerationSession.getCourse().getPrimaryLanguage());
                 // language detection: the language could not be detected
                 addLogEntryToView(messages.getPreproccesesViewAccordionProcesschainLogLanguageDetectionFailed(learningContent.getTitle()));
                 // use the course's primary language instead
