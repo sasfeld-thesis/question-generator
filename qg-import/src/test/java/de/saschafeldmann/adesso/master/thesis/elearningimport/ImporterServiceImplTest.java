@@ -62,7 +62,7 @@ public class ImporterServiceImplTest {
         // then the expected course should have been built
         assertEquals(COURSE_TITLE, course.getTitle());
         assertEquals(COURSE_VIEW_URL, course.getViewUrl());
-        assertEquals(COURSE_LANGUAGE, course.getLanguage());
+        assertEquals(COURSE_LANGUAGE, course.getPrimaryLanguage());
     }
 
     @Test

@@ -27,13 +27,13 @@ import java.util.List;
 public class Course {
     private String title;
     private String viewUrl;
-    private Language language;
+    private Language primaryLanguage;
     private final List<LearningContent> learningContents;
 
     private Course(CourseBuilder courseBuilder) {
         this.title = courseBuilder.title;
         this.viewUrl = courseBuilder.viewUrl;
-        this.language = courseBuilder.language;
+        this.primaryLanguage = courseBuilder.language;
         this.learningContents = new ArrayList<LearningContent>();
     }
 
@@ -72,21 +72,21 @@ public class Course {
     }
 
     /**
-     * Gets the (primary) language of the course.
-     * It is necessary to be predefined so that the natural language processing is more effective.
+     * Gets the (primary) primaryLanguage of the course.
+     * It is necessary to be predefined so that the natural primaryLanguage processing is more effective.
      * @return String
      */
-    public Language getLanguage() {
-        return language;
+    public Language getPrimaryLanguage() {
+        return primaryLanguage;
     }
 
     /**
-     * Sets (primary) language of the course.
-     * It is necessary to be predefined so that the natural language processing is more effective.
-     * @param language the language
+     * Sets (primary) primaryLanguage of the course.
+     * It is necessary to be predefined so that the natural primaryLanguage processing is more effective.
+     * @param primaryLanguage the primaryLanguage
      */
-    public void setLanguage(Language language) {
-        this.language = language;
+    public void setPrimaryLanguage(Language primaryLanguage) {
+        this.primaryLanguage = primaryLanguage;
     }
 
     /**
@@ -130,7 +130,7 @@ public class Course {
 
         if (!title.equals(course.title)) return false;
         if (!viewUrl.equals(course.viewUrl)) return false;
-        return language == course.language;
+        return primaryLanguage == course.primaryLanguage;
 
     }
 
@@ -138,7 +138,7 @@ public class Course {
     public int hashCode() {
         int result = title.hashCode();
         result = 31 * result + viewUrl.hashCode();
-        result = 31 * result + language.hashCode();
+        result = 31 * result + primaryLanguage.hashCode();
         return result;
     }
 
@@ -146,7 +146,7 @@ public class Course {
     public String toString() {
         return "Course{" + "title='" + title + '\'' +
                 ", viewUrl='" + viewUrl + '\'' +
-                ", language=" + language +
+                ", primaryLanguage=" + primaryLanguage +
                 '}';
     }
 
@@ -195,7 +195,7 @@ public class Course {
          */
         public CourseBuilder withLanguage(final Language language) {
             if (null == language) {
-                throw new NullPointerException("The value for the parameter language must not be null!");
+                throw new NullPointerException("The value for the parameter primaryLanguage must not be null!");
             }
 
             this.language = language;

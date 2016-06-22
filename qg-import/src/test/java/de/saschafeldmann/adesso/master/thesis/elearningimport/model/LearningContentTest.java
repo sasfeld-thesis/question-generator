@@ -2,8 +2,7 @@ package de.saschafeldmann.adesso.master.thesis.elearningimport.model;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 /**
  * Project:        Masterthesis of Sascha Feldmann
@@ -25,15 +24,19 @@ public class LearningContentTest {
     @Test
     public void testCourseBuilderIsSuccessful() {
         // given a learning content build
-        LearningContent learningContent = new LearningContent.LearningContentBuilder()
-                .withTitle("Test title")
-                .withRawText("Test raw text")
-                .withType(LearningContent.Type.FILE).build();
+        LearningContent learningContent = newLearningContent();
 
         // then assert that the expected course instane was build
         assertEquals("Test title", learningContent.getTitle());
         assertEquals("Test raw text", learningContent.getRawText());
         assertEquals(LearningContent.Type.FILE, learningContent.getType());
+    }
+
+    protected LearningContent newLearningContent() {
+        return new LearningContent.LearningContentBuilder()
+                    .withTitle("Test title")
+                    .withRawText("Test raw text")
+                    .withType(LearningContent.Type.FILE).build();
     }
 
     @Test
@@ -62,5 +65,38 @@ public class LearningContentTest {
         } catch (NullPointerException e) {
             // then we should run into an exception
         }
+    }
+
+    @Test
+    public void testSetDeterminedLanguageSetsLanguageCouldNotBeDetermined() {
+        // given a learning cotnent with determined language
+        LearningContent learningContent = newLearningContent();
+
+        // when a determined language is set
+        learningContent.setDeterminedLanguage(Language.ENGLISH);
+
+        // then the flag language coud not be determined should be false
+        assertFalse(learningContent.isLanguageCouldNotBeDetermined());
+    }
+
+    @Test
+    public void testSetFallbackLanguageSetsLanguageCouldNotBeDetermined() {
+        // given a learning cotnent with determined language
+        LearningContent learningContent = newLearningContent();
+        Course course = newCourse();
+
+        // when fallback is called
+        learningContent.setFallbackLanguage(course);
+
+        // then the flag language coud not be determined should be false
+        assertTrue(learningContent.isLanguageCouldNotBeDetermined());
+    }
+
+    private Course newCourse() {
+        return new Course.CourseBuilder()
+                .withTitle("Test title")
+                .withLanguage(Language.GERMAN)
+                .withViewUrl("Test url")
+                .build();
     }
 }

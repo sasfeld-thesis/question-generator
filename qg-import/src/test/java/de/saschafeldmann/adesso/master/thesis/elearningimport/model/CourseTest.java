@@ -49,14 +49,14 @@ public class CourseTest {
 
         // then assert that the expected course instane was build
         assertEquals("Test title", course.getTitle());
-        assertEquals(Language.GERMAN, course.getLanguage());
+        assertEquals(Language.GERMAN, course.getPrimaryLanguage());
         assertEquals("Test url", course.getViewUrl());
     }
 
     private Course getCourse() {
-        return new Course.CourseBuilder()
-                .withTitle("Test title")
-                .withLanguage(Language.GERMAN)
+            return new Course.CourseBuilder()
+                    .withTitle("Test title")
+                    .withLanguage(Language.GERMAN)
                 .withViewUrl("Test url")
                 .build();
     }

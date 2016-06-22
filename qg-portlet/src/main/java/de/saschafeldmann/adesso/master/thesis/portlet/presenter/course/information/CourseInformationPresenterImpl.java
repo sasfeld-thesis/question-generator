@@ -114,7 +114,7 @@ public class CourseInformationPresenterImpl extends AbstractStepPresenter implem
         // update
         this.questionGenerationSession.getCourse().setTitle(courseInformationView.getInputTitle());
         this.questionGenerationSession.getCourse().setViewUrl(courseInformationView.getInputViewUrl());
-        this.questionGenerationSession.getCourse().setLanguage(getLanguage(courseInformationView.getInputLanguage()));
+        this.questionGenerationSession.getCourse().setPrimaryLanguage(getLanguage(courseInformationView.getInputLanguage()));
     }
 
     private Language getLanguage(String inputLanguage) {

@@ -40,6 +40,7 @@ public class LearningContent {
     private String namedEntityAnnotatedText = "";
     private Language determinedLanguage;
     private final Type type;
+    private boolean languageCouldNotBeDetermined = false;
 
     private LearningContent(LearningContentBuilder learningContentBuilder) {
         this.title = learningContentBuilder.title;
@@ -101,6 +102,7 @@ public class LearningContent {
      */
     public void setDeterminedLanguage(Language determinedLanguage) {
         this.determinedLanguage = determinedLanguage;
+        languageCouldNotBeDetermined = false;
     }
 
     /**
@@ -135,11 +137,28 @@ public class LearningContent {
     }
 
     /**
+     * Whether the language of the raw text could not be determined and it was fell back to the course's primary language.
+     * @return boolean
+     */
+    public boolean isLanguageCouldNotBeDetermined() {
+        return languageCouldNotBeDetermined;
+    }
+
+    /**
      * Gets the type of this learning content.
      * @return Type
      */
     public Type getType() {
         return type;
+    }
+
+    /**
+     * Sets the fallback language as given in the course.
+     * @param course the course which's primary language will be used instead
+     */
+    public void setFallbackLanguage(final Course course) {
+        determinedLanguage = course.getPrimaryLanguage();
+        languageCouldNotBeDetermined = true;
     }
 
     /**

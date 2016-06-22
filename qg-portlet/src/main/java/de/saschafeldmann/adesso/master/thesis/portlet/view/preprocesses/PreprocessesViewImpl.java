@@ -259,9 +259,9 @@ public class PreprocessesViewImpl extends AbstractStepView implements Preprocess
         }
         editWindow.setListSelectRows(3);
 
-        Language determinedLearningContentLanguage = selectedContent.getDeterminedLanguage();
+        if (!selectedContent.isLanguageCouldNotBeDetermined()) {
+            Language determinedLearningContentLanguage = selectedContent.getDeterminedLanguage();
 
-        if (null != determinedLearningContentLanguage) {
             try {
                 editWindow.setListSelectSelection(LanguageWrapper.forLanguage(determinedLearningContentLanguage));
             } catch (Exception e) {
@@ -269,7 +269,6 @@ public class PreprocessesViewImpl extends AbstractStepView implements Preprocess
             }
 
             editWindow.setInfoBoxText(null);
-
         } else {
             // user needs to manually select the language since it could not be determined
             editWindow.setInfoBoxText(messages.getPreproccesesViewAccordionProcesschainEditWindowLanguageInfoBox());
