@@ -28,6 +28,7 @@ public class LanguageDetectionPropertiesImpl extends PropertiesReader implements
     private static final String PROPERTIES_FILE_NAME = "/languagedetection.properties";
     private static final String PROPERTY_KEY_GERMAN_COMMON_WORDS = "de.saschafeldmann.adesso.master.thesis.preprocesses.languagedetection.common.german";
     private static final String PROPERTY_KEY_ENGLISH_COMMON_WORDS = "de.saschafeldmann.adesso.master.thesis.preprocesses.languagedetection.common.english";
+    private static final String PROPERTY_KEY_DELTA_IN_PERCENT = "de.saschafeldmann.adesso.master.thesis.preprocesses.languagedetection.coverage.delta.percent";
 
     /**
      * Create a new config reader which reads from a '.property' - file. <br />
@@ -46,6 +47,11 @@ public class LanguageDetectionPropertiesImpl extends PropertiesReader implements
     @Override
     public List<String> getEnglishCommonWords() {
         return fetchMultipleValues(PROPERTY_KEY_ENGLISH_COMMON_WORDS);
+    }
+
+    @Override
+    public int getCoverageDeltaInPercent() {
+        return Integer.parseInt(fetchValue(PROPERTY_KEY_DELTA_IN_PERCENT));
     }
 
 }

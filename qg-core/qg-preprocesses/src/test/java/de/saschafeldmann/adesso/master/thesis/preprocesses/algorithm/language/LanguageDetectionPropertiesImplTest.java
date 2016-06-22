@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.List;
 
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * Project:        Masterthesis of Sascha Feldmann
@@ -56,5 +57,31 @@ public class LanguageDetectionPropertiesImplTest {
 
     private void assertContains(String expectedValue, Collection<String> givenValues) {
         assertTrue(givenValues.toString() + " should contain " + expectedValue, givenValues.contains(expectedValue));
+    }
+
+    @Test
+    public void testGetCoverageInPercentIsConfiguredCorrectlyAsInteger() throws Exception {
+        // given the language detection properties
+        LanguageDetectionProperties languageDetectionProperties = newLanguageDetectionProperties();
+
+        // when is called
+        try {
+            int delta = languageDetectionProperties.getCoverageDeltaInPercent();
+        } catch (NumberFormatException e) {
+            // then a number format exception must not be thrown
+            fail("getCoverageDeltaInPercent(): did not return an integer since the configured properties is not a valid integer. Please fix in file languagedetection.properties.");
+        }
+    }
+
+    @Test
+    public void testGetCoverageInPercentMustNotBeNegativeOrZero() throws Exception {
+        // given the language detection properties
+        LanguageDetectionProperties languageDetectionProperties = newLanguageDetectionProperties();
+
+        // when is called
+        int delta = languageDetectionProperties.getCoverageDeltaInPercent();
+
+        // then delta must not be negative
+        assertTrue("The configured delta must not be negative or zero. Please fil in file languagedetection.properties!", delta > 0);
     }
 }

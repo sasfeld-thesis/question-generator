@@ -33,8 +33,6 @@ import java.util.List;
 @Component
 @Scope("singleton")
 public class LanguageDetection implements PreprocessingAlgorithm {
-    // delta (coverage of a language's most common words in target raw text) that must be exceeded to determine the language
-    private static final int DELTA_PERCENT = 30;
     private static final String REGEX_TO_SPLIT_WORDS = "[\\s\\d,.-;:_!?]+";
 
     private final LanguageDetectionProperties languageDetectionProperties;
@@ -87,7 +85,7 @@ public class LanguageDetection implements PreprocessingAlgorithm {
         double coverage = numberOfWordsContainedInCorpus / numberOfWords;
         long coverageInPercent = Math.round(coverage * 100.0);
 
-        return coverageInPercent >= DELTA_PERCENT;
+        return coverageInPercent >= languageDetectionProperties.getCoverageDeltaInPercent();
     }
 
     private String[] getWordsInRawText(LearningContent learningContent) {

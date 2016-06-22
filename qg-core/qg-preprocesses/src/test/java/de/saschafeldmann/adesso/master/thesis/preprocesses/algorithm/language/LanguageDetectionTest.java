@@ -39,6 +39,9 @@ public class LanguageDetectionTest {
             "Die Software erlaubt e-Learning-Administratoren, automatische Testfragen für deren angebotene Kurse erstellen zu lassen. Dazu müssen diese zunächst Schulungsinhalte einpflegen, sodass Konzepte mithilfe von Natural Language Processing und semantischen Technologien erkannt werden können.\n" +
             "\n" +
             "Im letzen Schritt wird die Language Generation Komponente - hoffentlich - syntaktisch korrekte Fragen erstellen.";
+    private static final String SHORT_TEST_CONTENT_ENGLISH = "This is a test.";
+    private static final String SHORT_TEST_CONTENT_GERMAN = "Das ist ein Test.";
+
     private LanguageDetection languageDetectionAlgorithm;
     private PreprocessingOptions preprocessingOptions = new PreprocessingOptions();
 
@@ -69,24 +72,30 @@ public class LanguageDetectionTest {
 
     @Test
     public void testExecuteDetectsGermanLanguage() {
-        LearningContent learningContent = this.languageDetectionAlgorithm.execute(getGermanLearningContent(), preprocessingOptions);
+        LearningContent learningContent = this.languageDetectionAlgorithm.execute(newLearningContent(TEST_CONTENT_GERMAN), preprocessingOptions);
 
         assertEquals("The LanguageDetection should have set the determined language to German", Language.GERMAN, learningContent.getDeterminedLanguage());
     }
 
-    private LearningContent getGermanLearningContent() {
-        return newLearningContent(TEST_CONTENT_GERMAN);
-    }
-
     @Test
     public void testExecuteDetectsEnglishLanguage() {
-        LearningContent learningContent = this.languageDetectionAlgorithm.execute(getEnglishLearningContent(), preprocessingOptions);
+        LearningContent learningContent = this.languageDetectionAlgorithm.execute(newLearningContent(TEST_CONTENT_ENGLISH), preprocessingOptions);
 
         assertEquals("The LanguageDetection should have set the determined language to English", Language.ENGLISH, learningContent.getDeterminedLanguage());
     }
 
-    private LearningContent getEnglishLearningContent() {
-        return newLearningContent(TEST_CONTENT_ENGLISH);
+    @Test
+    public void testExecuteDetectsGermanLanguageForAVeryShortSentence() {
+        LearningContent learningContent = this.languageDetectionAlgorithm.execute(newLearningContent(SHORT_TEST_CONTENT_GERMAN), preprocessingOptions);
+
+        assertEquals("The LanguageDetection should have set the determined language to German", Language.GERMAN, learningContent.getDeterminedLanguage());
+    }
+
+    @Test
+    public void testExecuteDetectsEnglishLanguageForAVeryShortSentence() {
+        LearningContent learningContent = this.languageDetectionAlgorithm.execute(newLearningContent(SHORT_TEST_CONTENT_ENGLISH), preprocessingOptions);
+
+        assertEquals("The LanguageDetection should have set the determined language to English", Language.ENGLISH, learningContent.getDeterminedLanguage());
     }
 
     private LearningContent newLearningContent(final String content) {

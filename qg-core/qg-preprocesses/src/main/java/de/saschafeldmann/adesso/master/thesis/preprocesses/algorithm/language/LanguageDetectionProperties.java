@@ -29,4 +29,11 @@ public interface LanguageDetectionProperties {
      * @return List of String
      */
     List<String> getEnglishCommonWords();
+
+    /**
+     * Gets the coverage delta in percent that must be exceeded to determine a {@link de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent}
+     * to have a certain {@link de.saschafeldmann.adesso.master.thesis.elearningimport.model.Language}.
+     * @return int the delta
+     */
+    int getCoverageDeltaInPercent();
 }
