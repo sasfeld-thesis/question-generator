@@ -26,4 +26,19 @@
     }
   }
 
+  .log-text-area {
+    width: $preprocessesLogWidth !important;
+    height: $preprocessesLogHeight !important;
+  }
+
+  .processed-select-list {
+    select {
+      height: $preprocessesSelectListHeight !important;
+      width: $preprocessesSelectListWidth !important;
+    }
+  }
+
+  .v-table-cell-content {
+    padding: 0.5em;
+  }
 }

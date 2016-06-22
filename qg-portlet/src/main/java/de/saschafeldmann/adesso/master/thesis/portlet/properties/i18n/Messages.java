@@ -62,6 +62,14 @@ public class Messages {
     }
 
     /**
+     * Gets the text.
+     * @return String
+     */
+    public String getFooterInfoText() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.footer.info.text");
+    }
+
+    /**
      * Gets the locale string.
      * @return String
      */

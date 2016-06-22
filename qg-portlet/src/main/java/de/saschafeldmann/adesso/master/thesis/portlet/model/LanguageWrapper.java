@@ -4,8 +4,7 @@ import de.saschafeldmann.adesso.master.thesis.elearningimport.model.Language;
 import de.saschafeldmann.adesso.master.thesis.portlet.QuestionGeneratorPortletVaadinUi;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.Messages;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Project:        Masterthesis of Sascha Feldmann
@@ -105,4 +104,18 @@ public class LanguageWrapper {
         return new LanguageWrapper(Language.ENGLISH);
     }
 
+    /**
+     * Gets a collection of language wrapper for the given languages.
+     * @param detectedLanguages the detected languages
+     * @return language wrappers
+     */
+    public static Collection<LanguageWrapper> forLanguages(Iterable<Language> detectedLanguages) {
+        List<LanguageWrapper> languageWrappers = new ArrayList<>();
+
+        for (Language detectedlanguage: detectedLanguages) {
+            languageWrappers.add(forLanguage(detectedlanguage));
+        }
+
+        return languageWrappers;
+    }
 }

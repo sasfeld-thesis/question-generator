@@ -1,9 +1,11 @@
 package de.saschafeldmann.adesso.master.thesis.portlet.presenter.preprocesses;
 
+import com.google.common.base.Joiner;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.Language;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
+import de.saschafeldmann.adesso.master.thesis.portlet.model.LanguageWrapper;
 import de.saschafeldmann.adesso.master.thesis.portlet.model.preprocesses.ProcessActivationElement;
 import de.saschafeldmann.adesso.master.thesis.portlet.model.preprocesses.ProcessActivationStateChangeListener;
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.AbstractStepPresenter;
@@ -74,6 +76,8 @@ public class PreprocessesPresenterImpl extends AbstractStepPresenter implements 
                     return !learningContent.hasAnnotatedText();
                 }
             };
+
+    private static final Joiner DETECTED_LANGUAGES_JOINER = Joiner.on(", ").skipNulls();
 
     /**
      * Creates a new preprocesses presenter.
@@ -208,10 +212,15 @@ public class PreprocessesPresenterImpl extends AbstractStepPresenter implements 
     }
 
     private String buidTimeString() {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(messages.getLocaleTimeFormat());
-        String time = simpleDateFormat.format(new Date(System.currentTimeMillis()));
+        final SimpleDateFormat simpleDateFormat = new SimpleDateFormat(messages.getLocaleTimeFormat());
+        final String time = simpleDateFormat.format(new Date(System.currentTimeMillis()));
 
-        return messages.getLocaleTimePrefix() + time + messages.getLocaleTimeSuffix();
+        final String localeTimePrefix = messages.getLocaleTimePrefix().trim();
+        final String whitespace = " ";
+        final String emptyString = "";
+        final String localeTimeSuffix = messages.getLocaleTimeSuffix().trim();
+        return localeTimePrefix + (localeTimePrefix.length() > 0 ? whitespace : emptyString) + time
+                + (localeTimeSuffix.length() > 0 ? whitespace : emptyString) + localeTimeSuffix;
     }
 
     private void updateProcessedLearningContents() {
@@ -252,7 +261,7 @@ public class PreprocessesPresenterImpl extends AbstractStepPresenter implements 
                 LOGGER.error("executeProcessForAllLearningContents(): language detection failed due to exception\n {}. Will fallback to course's primary language {}.",
                         undeterminalLanguageException, questionGenerationSession.getCourse().getPrimaryLanguage());
                 // language detection: the language could not be detected
-                addLogEntryToView(messages.getPreproccesesViewAccordionProcesschainLogLanguageDetectionFailed(learningContent.getTitle(), questionGenerationSession.getCourse().getPrimaryLanguage().toString()));
+                addLogEntryToView(messages.getPreproccesesViewAccordionProcesschainLogLanguageDetectionFailed(learningContent.getTitle(), getLanguageLabel(questionGenerationSession.getCourse().getPrimaryLanguage())));
                 // use the course's primary language instead
                 learningContent.setFallbackLanguage(questionGenerationSession.getCourse());
             } catch (NlpException nlpException) {
@@ -263,23 +272,17 @@ public class PreprocessesPresenterImpl extends AbstractStepPresenter implements 
         }
     }
 
+    private String getLanguageLabel(final Language primaryLanguage) {
+        return LanguageWrapper.forLanguage(primaryLanguage).toString();
+    }
+
     private String getDeterminedLanguages() {
         Set<Language> detectedLanguages = getDeterminedLanguagesSet();
         return buildDeterminedLanguagesString(detectedLanguages);
     }
 
     private String buildDeterminedLanguagesString(Set<Language> detectedLanguages) {
-        String langs = "";
-
-        if (detectedLanguages.contains(GERMAN)) {
-            langs += messages.getCourseInformationViewGermanLanguageLabel();
-        }
-
-        if (detectedLanguages.contains(ENGLISH)) {
-            langs += (langs.length() != 0 ? ", " : "") + messages.getCourseInformationViewEnglishLanguageLabel();
-        }
-
-        return langs;
+        return DETECTED_LANGUAGES_JOINER.join(LanguageWrapper.forLanguages(detectedLanguages));
     }
 
     private Set<Language> getDeterminedLanguagesSet() {

@@ -1,5 +1,6 @@
 package de.saschafeldmann.adesso.master.thesis.portlet.view;
 
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import de.saschafeldmann.adesso.master.thesis.portlet.model.QuestionGenerationSession;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.Messages;
@@ -7,6 +8,7 @@ import de.saschafeldmann.adesso.master.thesis.portlet.view.components.CommonStyl
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.VersionLabel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * Project:        Masterthesis of Sascha Feldmann
@@ -66,7 +68,6 @@ public abstract class AbstractStepView extends VerticalLayout implements ViewWit
     private MenuClickListener menuClickListener;
     private MenuListener outsideMenuListener;
     private VersionLabel versionLabel;
-
 
     public AbstractStepView(Messages messages, VersionLabel versionLabel) {
         this.messages = messages;
@@ -175,5 +176,11 @@ public abstract class AbstractStepView extends VerticalLayout implements ViewWit
 
     protected void addFooter() {
         addVersionLabel();
+        addFooterInfoLabel();
+    }
+
+    private void addFooterInfoLabel() {
+        Label footerInfoLabel = new Label(messages.getFooterInfoText(), ContentMode.HTML);
+        this.addComponent(footerInfoLabel);
     }
 }

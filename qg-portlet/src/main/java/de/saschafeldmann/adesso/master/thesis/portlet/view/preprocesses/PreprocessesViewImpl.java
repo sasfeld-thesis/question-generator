@@ -56,7 +56,10 @@ public class PreprocessesViewImpl extends AbstractStepView implements Preprocess
     private static final String CSS_STYLE_NAME_PROCESSCHAIN_TABLE = "processchain-table";
     private static final Object PROCESS_CHAIN_TABLE_CONTAINER_PROPERTY_LEFT = "accordion-process-left-column";
     private static final Object PROCESS_CHAIN_TABLE_CONTAINER_PROPERTY_RIGHT = "accordion-process-right-column";
-    private static final int PROCESS_CHAIN_TABLE_CELL_WIDTH = 300;
+    private static final String CSS_STYLE_NAME_LOG_TEXTAREA = "log-text-area";
+    private static final String CSS_STYLE_NAME_PROCESSED_SELECT = "processed-select-list";
+    private static final int PROCESS_CHAIN_TABLE_LEFT_COLUMN_WIDTH_PIXELS = 600;
+    private static final int PROCESS_CHAIN_TABLE_RIGHT_COLUMN_WIDTH_PIXELS = 300;
 
     private final InfoBox infoBox;
     private final Label introductionLabel;
@@ -123,6 +126,14 @@ public class PreprocessesViewImpl extends AbstractStepView implements Preprocess
         initializeBottomButtonGroup();
         registerListeners();
         disableActionsButtons();
+
+        setStyles();
+    }
+
+    private void setStyles() {
+        accordionProcessChainLogTextarea.addStyleName(CSS_STYLE_NAME_LOG_TEXTAREA);
+        accordionProcessChainFinishedSelect.addStyleName(CSS_STYLE_NAME_PROCESSED_SELECT);
+        accordionProcessChainLayoutTable.addStyleName(CSS_STYLE_NAME_PROCESSCHAIN_TABLE);
     }
 
     private void initializeAccordion() {
@@ -158,7 +169,6 @@ public class PreprocessesViewImpl extends AbstractStepView implements Preprocess
     }
 
     private void initializeProcessChainTable() {
-        accordionProcessChainLayoutTable.addStyleName(CSS_STYLE_NAME_PROCESSCHAIN_TABLE);
         accordionProcessChainLayoutTable.setColumnHeaderMode(com.vaadin.ui.Table.ColumnHeaderMode.HIDDEN);
 
         // define columns
@@ -188,8 +198,8 @@ public class PreprocessesViewImpl extends AbstractStepView implements Preprocess
         );
 
         // set column width
-        accordionProcessChainLayoutTable.setColumnWidth(PROCESS_CHAIN_TABLE_CONTAINER_PROPERTY_LEFT, PROCESS_CHAIN_TABLE_CELL_WIDTH);
-        accordionProcessChainLayoutTable.setColumnWidth(PROCESS_CHAIN_TABLE_CONTAINER_PROPERTY_RIGHT, PROCESS_CHAIN_TABLE_CELL_WIDTH);
+        accordionProcessChainLayoutTable.setColumnWidth(PROCESS_CHAIN_TABLE_CONTAINER_PROPERTY_LEFT, PROCESS_CHAIN_TABLE_LEFT_COLUMN_WIDTH_PIXELS);
+        accordionProcessChainLayoutTable.setColumnWidth(PROCESS_CHAIN_TABLE_CONTAINER_PROPERTY_RIGHT, PROCESS_CHAIN_TABLE_RIGHT_COLUMN_WIDTH_PIXELS);
     }
 
 
