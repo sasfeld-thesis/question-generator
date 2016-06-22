@@ -139,7 +139,13 @@ public class PreprocessesPresenterImpl extends AbstractStepPresenter implements 
                 .withStateChangeListener(new ProcessActivationStateChangeListener() {
                     @Override
                     public void onStateChanged(ProcessActivationElement changed) {
-                        preprocessingOptions.setActivatePartOfSpeechTagging(true);
+                        if (changed.getProcessActivationElementState().equals(changed.getProcessActivationElementStateActivated())) {
+                            LOGGER.info("stateChangeListener: activating part of speech tagging...");
+                            preprocessingOptions.setActivatePartOfSpeechTagging(true);
+                        } else {
+                            LOGGER.info("stateChangeListener: disabling part of speech tagging...");
+                            preprocessingOptions.setActivatePartOfSpeechTagging(false);
+                        }
                     }
                 })
                 .build();
@@ -159,7 +165,13 @@ public class PreprocessesPresenterImpl extends AbstractStepPresenter implements 
                 .withStateChangeListener(new ProcessActivationStateChangeListener() {
                     @Override
                     public void onStateChanged(ProcessActivationElement changed) {
-                        preprocessingOptions.setActivateNamedEntityRecognition(true);
+                        if (changed.getProcessActivationElementState().equals(changed.getProcessActivationElementStateActivated())) {
+                            LOGGER.info("stateChangeListener: activating named entity recognition...");
+                            preprocessingOptions.setActivateNamedEntityRecognition(true);
+                        } else {
+                            LOGGER.info("stateChangeListener: disabling named entity recognition...");
+                            preprocessingOptions.setActivateNamedEntityRecognition(false);
+                        }
                     }
                 })
                 .build();
