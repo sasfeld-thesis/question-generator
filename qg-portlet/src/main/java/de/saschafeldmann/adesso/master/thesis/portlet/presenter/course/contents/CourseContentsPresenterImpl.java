@@ -4,6 +4,7 @@ import com.vaadin.ui.Notification;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.ImporterService;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.Course;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
+import de.saschafeldmann.adesso.master.thesis.portlet.model.QuestionGenerationSession;
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.AbstractStepPresenter;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.Messages;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.ViewWithMenu;
@@ -187,6 +188,10 @@ public class CourseContentsPresenterImpl extends AbstractStepPresenter implement
 
     @Override
     public void onNextButtonClicked() {
+        LOGGER.info("onNextButtonClicked()");
+
+        questionGenerationSession.setStatus(QuestionGenerationSession.Status.CONTENTS_ADDED);
+
         getNavigator().navigateTo(PreprocessesViewImpl.VIEW_NAME);
     }
 
@@ -236,7 +241,14 @@ public class CourseContentsPresenterImpl extends AbstractStepPresenter implement
      * Updates the direct raw texts.
      */
     private void updateCourseRawTexts() {
-        courseContentsView.showContentRawTexts(getDirectRawTextsFromSession());
+        List<LearningContent> directRawTextsFromSession = getDirectRawTextsFromSession();
+
+        if (directRawTextsFromSession.size() == 0) {
+            questionGenerationSession.setStatus(QuestionGenerationSession.Status.BASIC_INFORMATION_ADDED);
+        }
+
+        courseContentsView.showContentRawTexts(directRawTextsFromSession);
+        courseContentsView.setCurrentSessionStatus(questionGenerationSession.getStatus());
         courseContentsView.reset();
     }
 
@@ -244,7 +256,14 @@ public class CourseContentsPresenterImpl extends AbstractStepPresenter implement
      * Updates the file upload raw texts.
      */
     private void updateCourseFileUploadRawTexts() {
-        courseContentsView.showContentFiles(getFileUploadRawTextsFromSession());
+        List<LearningContent> fileUploadRawTextsFromSession = getFileUploadRawTextsFromSession();
+
+        if (fileUploadRawTextsFromSession.size() == 0) {
+            questionGenerationSession.setStatus(QuestionGenerationSession.Status.BASIC_INFORMATION_ADDED);
+        }
+
+        courseContentsView.showContentFiles(fileUploadRawTextsFromSession);
+        courseContentsView.setCurrentSessionStatus(questionGenerationSession.getStatus());
         courseContentsView.reset();
     }
 

@@ -160,6 +160,14 @@ public class QuestionGeneratorPortletVaadinUi extends UI {
     }
 
     /**
+     * Gets the detection presenter instance.
+     * @return detection presenter
+     */
+    public DetectionPresenter getDetectionPresenter() {
+        return detectionPresenter;
+    }
+
+    /**
      * Resets all inputs done by the user so far.
      */
     public void resetAllInputs() {

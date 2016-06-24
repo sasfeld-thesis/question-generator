@@ -2,6 +2,7 @@ package de.saschafeldmann.adesso.master.thesis.portlet.model;
 
 import com.google.common.base.Strings;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.Course;
+import de.saschafeldmann.adesso.master.thesis.portlet.QuestionGeneratorPortletVaadinUi;
 
 /**
  * Project:        Masterthesis of Sascha Feldmann
@@ -101,19 +102,6 @@ public class QuestionGenerationSession {
      * @return status the {@link Status}
      */
     public Status getStatus() {
-        return determineStatus();
-    }
-
-    private Status determineStatus() {
-        if (null == course || Strings.isNullOrEmpty(course.getTitle())) {
-            return Status.STARTED;
-        }
-        else if (null == course.getLearningContents() || 0 == course.getLearningContents().size()) {
-            return Status.BASIC_INFORMATION_ADDED;
-        } else {
-            return Status.CONTENTS_ADDED;
-
-            // TODO logic for other status
-        }
+        return status;
     }
 }

@@ -6,12 +6,14 @@ import com.google.common.collect.Collections2;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.Language;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
 import de.saschafeldmann.adesso.master.thesis.portlet.model.LanguageWrapper;
+import de.saschafeldmann.adesso.master.thesis.portlet.model.QuestionGenerationSession;
 import de.saschafeldmann.adesso.master.thesis.portlet.model.preprocesses.ProcessActivationElement;
 import de.saschafeldmann.adesso.master.thesis.portlet.model.preprocesses.ProcessActivationStateChangeListener;
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.AbstractStepPresenter;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.Messages;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.ViewWithMenu;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.course.contents.CourseContentsViewImpl;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.detection.DetectionViewImpl;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.preprocesses.PreprocessesView;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.preprocesses.PreprocessesViewListener;
 import de.saschafeldmann.adesso.master.thesis.preprocesses.algorithm.language.LanguageDetection;
@@ -224,7 +226,13 @@ public class PreprocessesPresenterImpl extends AbstractStepPresenter implements 
     }
 
     private void updateProcessedLearningContents() {
-       preprocessesView.showProcessedLearningContents(Collections2.filter(questionGenerationSession.getCourse().getLearningContents(), FILTER_DELETED_ANNOTATED_TEXTS_PREDICATE));
+        Collection<LearningContent> notDeletedLearningContents = Collections2.filter(questionGenerationSession.getCourse().getLearningContents(), FILTER_DELETED_ANNOTATED_TEXTS_PREDICATE);
+
+        if (notDeletedLearningContents.size() == 0) {
+            questionGenerationSession.setStatus(QuestionGenerationSession.Status.CONTENTS_ADDED);
+        }
+
+        preprocessesView.showProcessedLearningContents(notDeletedLearningContents);
     }
 
     private ProcessActivationElement[] getUsersActivatedProcesses() {
@@ -321,7 +329,11 @@ public class PreprocessesPresenterImpl extends AbstractStepPresenter implements 
 
     @Override
     public void onNextButtonClicked() {
-        // TODO
+        LOGGER.info("onNextButtonClicked()");
+
+        questionGenerationSession.setStatus(QuestionGenerationSession.Status.PREPROCESSES_DONE);
+        
+        getNavigator().navigateTo(DetectionViewImpl.VIEW_NAME);
     }
 
     @Override

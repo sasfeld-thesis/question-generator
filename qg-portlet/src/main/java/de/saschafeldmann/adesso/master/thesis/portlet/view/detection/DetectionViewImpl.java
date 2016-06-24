@@ -11,10 +11,10 @@ import de.saschafeldmann.adesso.master.thesis.portlet.view.AbstractStepView;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.*;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.window.EditWindowWithSelectBox;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.window.Table;
-import de.saschafeldmann.adesso.master.thesis.portlet.view.preprocesses.PreprocessesViewImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
@@ -33,8 +33,10 @@ import java.util.Map;
  * Company:
  * adesso AG
  * <br /><br />
- * [short description]
+ * An implementation of the {@link DetectionView}
  */
+@org.springframework.stereotype.Component
+@Scope("prototype")
 public class DetectionViewImpl extends AbstractStepView implements DetectionView {
     private static final Logger LOGGER = LoggerFactory.getLogger(DetectionViewImpl.class);
 

@@ -1,6 +1,7 @@
 package de.saschafeldmann.adesso.master.thesis.portlet.presenter.detection;
 
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
+import de.saschafeldmann.adesso.master.thesis.portlet.model.QuestionGenerationSession;
 import de.saschafeldmann.adesso.master.thesis.portlet.model.detection.DetectionActivationElement;
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.AbstractStepPresenter;
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.preprocesses.PreprocessesPresenterImpl;
@@ -11,6 +12,8 @@ import de.saschafeldmann.adesso.master.thesis.portlet.view.detection.DetectionVi
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +33,8 @@ import java.util.List;
  * <br /><br />
  * Implementation of the {@link DetectionPresenter}.
  */
+@Component
+@Scope("prototype")
 public class DetectionPresenterImpl extends AbstractStepPresenter implements DetectionPresenter, DetectionViewListener {
     private static final Logger LOGGER = LoggerFactory.getLogger(DetectionPresenterImpl.class);
 
@@ -37,6 +42,7 @@ public class DetectionPresenterImpl extends AbstractStepPresenter implements Det
     @Autowired
     private Messages messages;
     private List<DetectionActivationElement> detectionActivationElementList;
+    private boolean detectionFinished = false;
 
     @Autowired
     public DetectionPresenterImpl(
@@ -97,6 +103,9 @@ public class DetectionPresenterImpl extends AbstractStepPresenter implements Det
     @Override
     public void onViewFocus() {
         LOGGER.info("onViewFocus()");
+
+        detectionView.setCurrentSessionStatus(questionGenerationSession.getStatus());
+        detectionView.reset();
     }
 
     @Override
@@ -107,5 +116,7 @@ public class DetectionPresenterImpl extends AbstractStepPresenter implements Det
     @Override
     public void onNextButtonClicked() {
         LOGGER.info("onNextButtonClicked()");
+
+        questionGenerationSession.setStatus(QuestionGenerationSession.Status.DETECTION_DONE);
     }
 }

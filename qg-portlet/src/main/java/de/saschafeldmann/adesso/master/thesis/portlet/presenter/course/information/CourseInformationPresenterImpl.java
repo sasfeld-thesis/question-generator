@@ -77,6 +77,7 @@ public class CourseInformationPresenterImpl extends AbstractStepPresenter implem
 
         try {
             updateCourseModel();
+            questionGenerationSession.setStatus(QuestionGenerationSession.Status.BASIC_INFORMATION_ADDED);
 
             getNavigator().navigateTo(CourseContentsViewImpl.VIEW_NAME);
         } catch (Exception e) {
@@ -138,6 +139,7 @@ public class CourseInformationPresenterImpl extends AbstractStepPresenter implem
 
     private void resetSession() {
         this.questionGenerationSession.setCourse(null);
+        questionGenerationSession.setStatus(QuestionGenerationSession.Status.STARTED);
 
         this.courseInformationView.setCurrentSessionStatus(questionGenerationSession.getStatus());
         this.courseInformationView.reset();
