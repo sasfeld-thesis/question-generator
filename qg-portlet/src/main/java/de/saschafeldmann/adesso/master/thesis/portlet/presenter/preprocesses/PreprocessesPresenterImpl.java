@@ -50,7 +50,7 @@ import static de.saschafeldmann.adesso.master.thesis.elearningimport.model.Langu
 @Scope("prototype")
 public class PreprocessesPresenterImpl extends AbstractStepPresenter implements PreprocessesPresenter, PreprocessesViewListener {
     private static final Logger LOGGER = LoggerFactory.getLogger(PreprocessesPresenterImpl.class);
-    private PreprocessesView preprocessesView;
+    private final PreprocessesView preprocessesView;
     @Autowired
     private Messages messages;
     private ArrayList<ProcessActivationElement> processActivationElements;
