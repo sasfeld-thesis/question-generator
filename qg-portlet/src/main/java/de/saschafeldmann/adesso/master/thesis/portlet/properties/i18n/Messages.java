@@ -1118,4 +1118,68 @@ public class Messages {
         return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.detection.view.accordion.detection.chain.edit.window.table.edit.row.cardinalitysentences.window.originalsentence.label");
     }
 
+    /**
+     * Gets the text
+     * @return String
+     */
+    public String getDetectionViewAccordionDetectionChainEditWindowTableColumnEditRowCardinalitySentencesWindowsCompositeLabel() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.detection.view.accordion.detection.chain.edit.window.table.edit.row.cardinalitysentences.window.composite.label");
+    }
+
+    /**
+     * Gets the text
+     * @return String
+     */
+    public String getDetectionViewAccordionDetectionChainEditWindowTableColumnEditRowCardinalitySentencesWindowCompositionLabel() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.detection.view.accordion.detection.chain.edit.window.table.edit.row.cardinalitysentences.window.composition.label");
+    }
+
+    /**
+     * Gets the text
+     * @return String
+     */
+    public String getDetectionViewAccordionDetectionChainEditWindowTableColumnEditRowCardinalitySentencesWindowOriginalCompositeCardinalityLabel() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.detection.view.accordion.detection.chain.edit.window.table.edit.row.cardinalitysentences.window.composite.cardinality.label");
+    }
+
+    /**
+     * Gets the text
+     * @return String
+     */
+    public String getDetectionViewAccordionDetectionChainEditWindowTableColumnEditRowCardinalitySentencesWindowOriginalCompositionCardinalityLabel() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.detection.view.accordion.detection.chain.edit.window.table.edit.row.cardinalitysentences.window.composition.cardinality.label");
+    }
+
+    /**
+     * Gets the text
+     * @return String
+     */
+    public String getDetectionViewAccordionDetectionChainEditWindowTableColumnEditRowCardinalitySentencesWindowOriginalEditButtonLabel() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.detection.view.accordion.detection.chain.edit.window.table.edit.row.cardinalitysentences.window.edit.button.label");
+    }
+
+    /**
+     * Gets the text
+     * @return String
+     */
+    public String getDetectionViewAccordionDetectionChainEditWindowTableColumnEditRowCardinalitySentencesWindowOriginalEditButtonTooltip() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.detection.view.accordion.detection.chain.edit.window.table.edit.row.cardinalitysentences.window.edit.button.tooltip");
+    }
+
+    /**
+     * Gets the text
+     * @return String
+     */
+    public String getDetectionViewAccordionDetectionChainEditWindowTableColumnEditRowCardinalitySentencesWindowOriginalDeleteButtonLabel() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.detection.view.accordion.detection.chain.edit.window.table.edit.row.cardinalitysentences.window.delete.button.label");
+    }
+
+    /**
+     * Gets the text
+     * @return String
+     */
+    public String getDetectionViewAccordionDetectionChainEditWindowTableColumnEditRowCardinalitySentencesWindowOriginalDeleteButtonTooltip() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.detection.view.accordion.detection.chain.edit.window.table.edit.row.cardinalitysentences.window.delete.button.tooltip");
+    }
+
 }
