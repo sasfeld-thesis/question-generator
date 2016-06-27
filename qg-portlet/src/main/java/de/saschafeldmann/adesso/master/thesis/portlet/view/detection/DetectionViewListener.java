@@ -21,10 +21,10 @@ import de.saschafeldmann.adesso.master.thesis.portlet.model.detection.DetectionA
 public interface DetectionViewListener {
 
     /**
-     * Triggered if the user activated or deactivated the given {@link DetectionActivationElement}.
+     * Triggered if the user activated or deactivated the given {@link de.saschafeldmann.adesso.master.thesis.portlet.model.detection.DetectionActivationElement.DetectionActivationElementState}.
      * @param detectionActivationElement the detectionActivationElement
      */
-    void onDetectionActivationElementChange(final DetectionActivationElement detectionActivationElement);
+    void onDetectionActivationElementChange(final DetectionActivationElement.DetectionActivationElementState detectionActivationElement);
 
     /**
      * Triggered if the user clicked the detection chain start button.

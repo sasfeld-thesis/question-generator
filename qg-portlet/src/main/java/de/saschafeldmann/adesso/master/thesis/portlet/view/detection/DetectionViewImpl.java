@@ -6,6 +6,7 @@ import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Component;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
 import de.saschafeldmann.adesso.master.thesis.portlet.model.detection.DetectionActivationElement;
+import de.saschafeldmann.adesso.master.thesis.portlet.model.preprocesses.ProcessActivationElement;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.Messages;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.AbstractStepView;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.*;
@@ -102,8 +103,7 @@ public class DetectionViewImpl extends AbstractStepView implements DetectionView
         this.btnPrevious = btnPrevious;
         this.btnStartProcessChain = btnStartProcessChain;
 
-        // TODO
-        this.introductionLabel = new Label(messages.getPreproccesesViewIntroductionText(), ContentMode.HTML);
+        this.introductionLabel = new Label(messages.getDetectionViewIntroductionText(), ContentMode.HTML);
     }
 
     @PostConstruct
@@ -119,22 +119,20 @@ public class DetectionViewImpl extends AbstractStepView implements DetectionView
 
     private void initializeAccordion() {
         initializeDetectionActivationPart();
-
         initializeDetectionChainPart();
     }
 
-    private void initializeDetectionChainPart() {
+    private void initializeDetectionActivationPart() {
         accordionActivationLayout.addComponent(accordionActivationLayoutInfoBox);
         accordionActivationLayout.addComponent(accordionActivationFormLayout);
 
-        accordion.addTab(accordionActivationLayout, messages.getPreproccesesViewAccordionActivationLabel());
+        accordion.addTab(accordionActivationLayout, messages.getDetectionViewAccordionActivationLabel());
     }
 
-    private void initializeDetectionActivationPart() {
+    private void initializeDetectionChainPart() {
         initializeDetectionChainTable();
 
-        accordion.addTab(accordionDetectionChainLayoutTable, messages.getPreproccesesViewAccordionProcesschainLabel());
-
+        accordion.addTab(accordionDetectionChainLayoutTable, messages.getDetectionViewAccordionDetectionChainLabel());
     }
 
     private void initializeDetectionChainTable() {
@@ -144,9 +142,9 @@ public class DetectionViewImpl extends AbstractStepView implements DetectionView
         accordionDetectionChainLayoutTable.addContainerProperty(PROCESS_CHAIN_TABLE_CONTAINER_PROPERTY_LEFT, Component.class, null);
         accordionDetectionChainLayoutTable.addContainerProperty(PROCESS_CHAIN_TABLE_CONTAINER_PROPERTY_RIGHT, Component.class, null);
 
-        btnStartProcessChain.setCaption(messages.getPreproccesesViewAccordionProcesschainButtonStartLabel());
+        btnStartProcessChain.setCaption(messages.getDetectionViewAccordionDetectionChainButtonStartLabel());
 
-        Label finishedLabel = new Label(messages.getPreproccesesViewAccordionProcesschainFinishedLabel());
+        Label finishedLabel = new Label(messages.getDetectionViewAccordionDetectionChainFinishedLabel());
 
         // add first row (left cell: start process button; right cell: label)
         accordionDetectionChainLayoutTable.addItem(
@@ -236,13 +234,50 @@ public class DetectionViewImpl extends AbstractStepView implements DetectionView
     }
 
     @Override
-    public void setDetectionActivationElements(Iterable<DetectionActivationElement> detectionActivationElements) {
+    public void setDetectionActivationElements(final Iterable<DetectionActivationElement> detectionActivationElements) {
+        for (DetectionActivationElement detectionActivationElement: detectionActivationElements) {
+            addDetectionActivationElement(detectionActivationElement);
+        }
+
         reset();
+    }
+
+    private void addDetectionActivationElement(final DetectionActivationElement detectionActivationElement) {
+        // add yes-no option group
+        OptionGroup activationOptionGroup = new OptionGroup();
+
+        activationOptionGroup.addStyleName(CSS_STYLE_NAME_HORICONTAL_OPTION_GROUP);
+        activationOptionGroup.setCaption(detectionActivationElement.getActivationLabel());
+        activationOptionGroup.setDescription(detectionActivationElement.getTooltip());
+
+        activationOptionGroup.addItem(detectionActivationElement.getDetectionActivationElementStateActivated());
+        activationOptionGroup.addItem(detectionActivationElement.getDetectionActivationElementStateDeactivated());
+
+        // set default selection
+        if (detectionActivationElement.isActivatedPerDefault()) {
+            activationOptionGroup.setValue(detectionActivationElement.getDetectionActivationElementStateActivated());
+        } else {
+            activationOptionGroup.setValue(detectionActivationElement.getDetectionActivationElementStateDeactivated());
+        }
+
+        // immediatly fire an AJAX event to notify the server about option changes
+        activationOptionGroup.setImmediate(true);
+        activationOptionGroup.addValueChangeListener(new Property.ValueChangeListener() {
+            @Override
+            public void valueChange(Property.ValueChangeEvent valueChangeEvent) {
+                DetectionActivationElement.DetectionActivationElementState state = (DetectionActivationElement.DetectionActivationElementState) valueChangeEvent.getProperty().getValue();
+
+                viewListener.onDetectionActivationElementChange(state);
+            }
+        });
+
+        accordionActivationFormLayout.addComponent(activationOptionGroup);
     }
 
     @Override
     public void showDetectionActivationSuccessMessage() {
-
+        accordionActivationLayoutInfoBox.setInfo();
+        accordionActivationLayoutInfoBox.setCaption(messages.getDetectionViewAccordionActivationSetSuccessInfo());
     }
 
     @Override

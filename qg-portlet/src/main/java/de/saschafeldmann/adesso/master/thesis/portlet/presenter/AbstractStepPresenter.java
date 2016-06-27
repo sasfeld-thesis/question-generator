@@ -5,6 +5,7 @@ import de.saschafeldmann.adesso.master.thesis.portlet.model.QuestionGenerationSe
 import de.saschafeldmann.adesso.master.thesis.portlet.view.MenuListener;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.course.contents.CourseContentsViewImpl;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.course.information.CourseInformationViewImpl;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.detection.DetectionViewImpl;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.preprocesses.PreprocessesViewImpl;
 
 /**
@@ -52,7 +53,7 @@ public abstract class AbstractStepPresenter implements MenuListener, VaadinViewP
      * @see MenuListener#onDetectionClicked()
      */
     public void onDetectionClicked() {
-
+        getNavigator().navigateTo(DetectionViewImpl.VIEW_NAME);
     }
 
     /**

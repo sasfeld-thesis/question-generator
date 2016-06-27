@@ -3,6 +3,7 @@ package de.saschafeldmann.adesso.master.thesis.portlet.presenter.detection;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
 import de.saschafeldmann.adesso.master.thesis.portlet.model.QuestionGenerationSession;
 import de.saschafeldmann.adesso.master.thesis.portlet.model.detection.DetectionActivationElement;
+import de.saschafeldmann.adesso.master.thesis.portlet.model.preprocesses.ProcessActivationElement;
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.AbstractStepPresenter;
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.preprocesses.PreprocessesPresenterImpl;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.Messages;
@@ -78,16 +79,50 @@ public class DetectionPresenterImpl extends AbstractStepPresenter implements Det
     }
 
     private void addFillSentenceDetectionActivationElement(List<DetectionActivationElement> detectionActivationElementList) {
+        // TODO couple underlying algorithm from qg-detection module
+        DetectionActivationElement detectionActivationElement = new DetectionActivationElement.DetectionActivationElementBuilder()
+                .withActivationLabel(messages.getDetectionViewAccordionActivationOptiongroupFillsentencesLabel())
+                .withIsActivatedPerDefault(false)
+                .withTooltip(messages.getDetectionViewAccordionActivationOptiongroupFillsentencesTooltip())
+                .withStartedLogEntry(messages.getDetectionViewAccordionDetectionChainLogChainFillsentencesStarted())
+                .withFinishedLogEntry(messages.getDetectionViewAccordionDetectionChainLogChainFillsentencesFinished())
+                .build();
 
+        setDefaultProcessActivationElementState(detectionActivationElement);
+        detectionActivationElementList.add(detectionActivationElement);
     }
 
     private void addCardinalitySentencesDetectionActivationElement(List<DetectionActivationElement> detectionActivationElementList) {
+        // TODO couple underlying algorithm from qg-detection module
+        DetectionActivationElement detectionActivationElement = new DetectionActivationElement.DetectionActivationElementBuilder()
+                .withActivationLabel(messages.getDetectionViewAccordionActivationOptiongroupCardinalitySentencesLabel())
+                .withIsActivatedPerDefault(false)
+                .withTooltip(messages.getDetectionViewAccordionActivationOptiongroupCardinalitySentencesTooltip())
+                .withStartedLogEntry(messages.getDetectionViewAccordionDetectionChainLogChainCardinalitySentencesStarted())
+                .withFinishedLogEntry(messages.getDetectionViewAccordionDetectionChainLogChainCardinalitySentencesFinished())
+                .build();
 
+        setDefaultProcessActivationElementState(detectionActivationElement);
+        detectionActivationElementList.add(detectionActivationElement);
+    }
+
+    private void setDefaultProcessActivationElementState(DetectionActivationElement detectionActivationElement) {
+        if (detectionActivationElement.isActivatedPerDefault()) {
+            detectionActivationElement.setDetectionActivationElementState(detectionActivationElement.getDetectionActivationElementStateActivated());
+        } else {
+            detectionActivationElement.setDetectionActivationElementState(detectionActivationElement.getDetectionActivationElementStateDeactivated());
+        }
     }
 
     @Override
-    public void onDetectionActivationElementChange(DetectionActivationElement detectionActivationElement) {
-        LOGGER.info("onDetectionActivationElementChange()");
+    public void onDetectionActivationElementChange(DetectionActivationElement.DetectionActivationElementState detectionActivationElementState) {
+        LOGGER.info("onDetectionActivationElementChange(): option for {} was changed to {}",
+                detectionActivationElementState.getParentProcessActivationElement().getActivationLabel(),
+                detectionActivationElementState.getActivationOptionGroupItem());
+
+        detectionActivationElementState.getParentProcessActivationElement().setDetectionActivationElementState(detectionActivationElementState);
+
+        detectionView.showDetectionActivationSuccessMessage();
     }
 
     @Override
