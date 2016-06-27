@@ -2,11 +2,13 @@ package de.saschafeldmann.adesso.master.thesis.portlet.presenter;
 
 import com.vaadin.navigator.Navigator;
 import de.saschafeldmann.adesso.master.thesis.portlet.model.QuestionGenerationSession;
+import de.saschafeldmann.adesso.master.thesis.portlet.util.TimeUtil;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.MenuListener;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.course.contents.CourseContentsViewImpl;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.course.information.CourseInformationViewImpl;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.detection.DetectionViewImpl;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.preprocesses.PreprocessesViewImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * Project:        Masterthesis of Sascha Feldmann
@@ -27,6 +29,8 @@ import de.saschafeldmann.adesso.master.thesis.portlet.view.preprocesses.Preproce
 public abstract class AbstractStepPresenter implements MenuListener, VaadinViewPresenter {
     private Navigator navigator;
     protected QuestionGenerationSession questionGenerationSession;
+    @Autowired
+    protected TimeUtil timeUtil;
 
     /**
      * @see MenuListener#onCourseInformationClicked()

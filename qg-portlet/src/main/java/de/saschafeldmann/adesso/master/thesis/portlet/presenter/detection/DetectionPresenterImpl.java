@@ -1,5 +1,6 @@
 package de.saschafeldmann.adesso.master.thesis.portlet.presenter.detection;
 
+import com.google.common.collect.Collections2;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
 import de.saschafeldmann.adesso.master.thesis.portlet.model.QuestionGenerationSession;
 import de.saschafeldmann.adesso.master.thesis.portlet.model.detection.DetectionActivationElement;
@@ -16,8 +17,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.*;
+
+import static de.saschafeldmann.adesso.master.thesis.portlet.util.FilterUtil.FILTER_DELETED_ANNOTATED_TEXTS_PREDICATE;
 
 /**
  * Project:        Masterthesis of Sascha Feldmann
@@ -44,6 +47,8 @@ public class DetectionPresenterImpl extends AbstractStepPresenter implements Det
     private Messages messages;
     private List<DetectionActivationElement> detectionActivationElementList;
     private boolean detectionFinished = false;
+    // TODO replace object by concept interface
+    private Map<LearningContent, List<Object>> detectedConceptsContentsMap;
 
     @Autowired
     public DetectionPresenterImpl(
@@ -128,11 +133,59 @@ public class DetectionPresenterImpl extends AbstractStepPresenter implements Det
     @Override
     public void onDetectionChainStartButtonClicked() {
         LOGGER.info("onDetectionChainStartButtonClicked()");
+        initProcessedLearningContentsMap();
+
+        addLogEntryToView(messages.getDetectionViewAccordionDetectionChainLogChainStartedStarted());
+
+        for (DetectionActivationElement detectionActivationElement: getUsersActivatedDetectionElements()) {
+            triggerProcess(detectionActivationElement);
+        }
+
+        addLogEntryToView(messages.getDetectionViewAccordionDetectionChainFinishedLabel());
+        updateProcessedLearningContents();
+    }
+
+    private void initProcessedLearningContentsMap() {
+        this.detectedConceptsContentsMap = new HashMap<>();
+
+    }
+
+    private void updateProcessedLearningContents() {
+        detectionView.showProcessedLearningContents(detectedConceptsContentsMap);
+    }
+
+    private void triggerProcess(DetectionActivationElement detectionActivationElement) {
+        addLogEntryToView(detectionActivationElement.getStartedLogEntry());
+
+        executeProcessForAllNlpTaggedLearningContents(detectionActivationElement);
+
+        addLogEntryToView(detectionActivationElement.getFinishedLogEntry());
+    }
+
+    private void executeProcessForAllNlpTaggedLearningContents(DetectionActivationElement detectionActivationElement) {
+        Collection<LearningContent> annotatedLearningContents = Collections2.filter(questionGenerationSession.getCourse().getLearningContents(), FILTER_DELETED_ANNOTATED_TEXTS_PREDICATE);
+
+        for (LearningContent learningContent: annotatedLearningContents) {
+            // TODO run detection algorithm
+            LOGGER.info("executeProcessForAllNlpTaggedLearningContents(): will run detection algorithm on the given learning content {}", learningContent.getTitle());
+            putLearningContentToConceptsMap(learningContent, "just for testing");
+        }
+    }
+
+    // TODO replace detected by detection interface
+    private void putLearningContentToConceptsMap(LearningContent learningContent, Object detectedConcept) {
+        if (!detectedConceptsContentsMap.containsKey(learningContent)) {
+            detectedConceptsContentsMap.put(learningContent, new ArrayList<Object>());
+        }
+
+        detectedConceptsContentsMap.get(learningContent).add(detectedConcept);
     }
 
     @Override
     public void onFinishedLearningContentSelected(LearningContent learningContent) {
-        LOGGER.info("onFinishedLearningContentSelected()");
+        LOGGER.info("onFinishedLearningContentSelected(): learning content {} was selected.", learningContent.getTitle());
+
+        // TODO delegate to edit presenter
     }
 
     @Override
@@ -154,4 +207,21 @@ public class DetectionPresenterImpl extends AbstractStepPresenter implements Det
 
         questionGenerationSession.setStatus(QuestionGenerationSession.Status.DETECTION_DONE);
     }
+
+    private DetectionActivationElement[] getUsersActivatedDetectionElements() {
+        List<DetectionActivationElement> activatedProcessActivationElements = new ArrayList<>();
+
+        for (DetectionActivationElement detectionActivationElement: this.detectionActivationElementList) {
+            if (detectionActivationElement.getDetectionActivationElementState().getActivationOptionGroupItem()
+                    .equals(ProcessActivationElement.ActivationOptionGroupItem.YES)) {
+                activatedProcessActivationElements.add(detectionActivationElement);
+            }
+        }
+
+        return activatedProcessActivationElements.toArray(new DetectionActivationElement[activatedProcessActivationElements.size()]);
+    }
+
+    private void addLogEntryToView(final String logMessage) {
+        detectionView.addDetectionChainLogEntry(timeUtil.buildTimeEntryForUserLogs(), logMessage);
+   }
 }

@@ -32,6 +32,8 @@ import java.util.*;
 
 import static de.saschafeldmann.adesso.master.thesis.elearningimport.model.Language.ENGLISH;
 import static de.saschafeldmann.adesso.master.thesis.elearningimport.model.Language.GERMAN;
+import static de.saschafeldmann.adesso.master.thesis.portlet.util.FilterUtil.FILTER_DELETED_ANNOTATED_TEXTS_PREDICATE;
+import static de.saschafeldmann.adesso.master.thesis.portlet.util.FilterUtil.FILTER_NOT_DELETED_ANNOTATED_TEXTS_PREDICATE;
 
 /**
  * Project:        Masterthesis of Sascha Feldmann
@@ -63,21 +65,6 @@ public class PreprocessesPresenterImpl extends AbstractStepPresenter implements 
     private NlpPreprocessingAlgorithm nlpPreprocessingAlgorithm;
     @Autowired
     private PreprocessingOptions preprocessingOptions;
-
-    private static final Predicate<LearningContent> FILTER_DELETED_ANNOTATED_TEXTS_PREDICATE =
-            new Predicate<LearningContent>() {
-                @Override
-                public boolean apply(LearningContent learningContent) {
-                    return learningContent.hasAnnotatedText();
-                }
-            };
-    private static final Predicate<LearningContent> FILTER_NOT_DELETED_ANNOTATED_TEXTS_PREDICATE =
-            new Predicate<LearningContent>() {
-                @Override
-                public boolean apply(LearningContent learningContent) {
-                    return !learningContent.hasAnnotatedText();
-                }
-            };
 
     private static final Joiner DETECTED_LANGUAGES_JOINER = Joiner.on(", ").skipNulls();
 
@@ -210,19 +197,7 @@ public class PreprocessesPresenterImpl extends AbstractStepPresenter implements 
     }
 
     private void addLogEntryToView(final String logMessage) {
-        preprocessesView.addProcessChainLogEntry(buidTimeString(), logMessage);
-    }
-
-    private String buidTimeString() {
-        final SimpleDateFormat simpleDateFormat = new SimpleDateFormat(messages.getLocaleTimeFormat());
-        final String time = simpleDateFormat.format(new Date(System.currentTimeMillis()));
-
-        final String localeTimePrefix = messages.getLocaleTimePrefix().trim();
-        final String whitespace = " ";
-        final String emptyString = "";
-        final String localeTimeSuffix = messages.getLocaleTimeSuffix().trim();
-        return localeTimePrefix + (localeTimePrefix.length() > 0 ? whitespace : emptyString) + time
-                + (localeTimeSuffix.length() > 0 ? whitespace : emptyString) + localeTimeSuffix;
+        preprocessesView.addProcessChainLogEntry(timeUtil.buildTimeEntryForUserLogs(), logMessage);
     }
 
     private void updateProcessedLearningContents() {
