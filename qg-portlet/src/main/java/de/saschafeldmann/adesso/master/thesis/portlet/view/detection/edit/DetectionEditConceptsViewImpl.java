@@ -42,27 +42,24 @@ public class DetectionEditConceptsViewImpl extends Window implements DetectionEd
 
     private final Messages messages;
     private final VerticalLayout mainLayout;
-    private final Grid conceptsGrid;
+    private Grid conceptsGrid;
     private DetectionEditConceptsViewListener viewListener;
     private Map<Object, Concept> rowConceptMap;
 
     /**
      * Constructs a new view impl.
      * @param messages the messages
-     * @param grid the grid
      */
     @Autowired
-    public DetectionEditConceptsViewImpl(final VerticalLayout mainLayout, final Messages messages, final Grid grid) {
-        this.mainLayout = mainLayout;
+    public DetectionEditConceptsViewImpl(final VerticalLayout mainLayout, final Messages messages) {
         this.messages = messages;
-        this.conceptsGrid = grid;
+        this.mainLayout = mainLayout;
     }
 
     @PostConstruct
     private void initialize() {
         setCaption(messages.getDetectionViewAccordionDetectionChainEditWindowTitle());
 
-        mainLayout.addComponent(conceptsGrid);
         setContent(mainLayout);
 
         setStyles();
@@ -71,13 +68,18 @@ public class DetectionEditConceptsViewImpl extends Window implements DetectionEd
     @Override
     public void displayDetectedConcepts(final List<Concept> detectedConcepts) {
         rowConceptMap = new HashMap<>();
-        conceptsGrid.removeAllColumns();
+        initializeGrid();
 
         initializeGridColumns();
         addRowsToGrid(detectedConcepts);
 
         // displays the window
         VaadinUtil.addWindow(getWindow());
+    }
+
+    private void initializeGrid() {
+        conceptsGrid = new Grid();
+        mainLayout.addComponent(conceptsGrid);
     }
 
     private void initializeGridColumns() {

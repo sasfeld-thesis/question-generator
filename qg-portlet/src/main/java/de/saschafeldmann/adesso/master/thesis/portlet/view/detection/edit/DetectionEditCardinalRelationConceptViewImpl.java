@@ -130,6 +130,8 @@ public class DetectionEditCardinalRelationConceptViewImpl extends Window impleme
         formLayout.addComponent(originalSentenceInput);
         formLayout.addComponent(compositeInput);
         formLayout.addComponent(compositeCardinalityInput);
+        formLayout.addComponent(compositionInput);
+        formLayout.addComponent(compositionCardinalityInput);
 
         buttonGroupLayout.addComponent(btnEdit);
         buttonGroupLayout.addComponent(btnDelete);
