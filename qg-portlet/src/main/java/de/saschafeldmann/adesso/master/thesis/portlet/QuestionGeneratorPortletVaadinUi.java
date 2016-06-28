@@ -146,9 +146,11 @@ public class QuestionGeneratorPortletVaadinUi extends UI {
     }
 
     private void initializeDetectionSubViews(ApplicationContext applicationContext) {
-        this.detectionEditConceptsPresenter = applicationContext.getBean(DetectionEditConceptsPresenter.class);
-        this.detetectionEditFillTextConceptPresenter = applicationContext.getBean(DetectionEditFillTextConceptPresenterImpl.class);
+        // all presenters must be initialized before detectionEditConceptsPresenter !!!
         this.detetectionEditCardinalRelationConceptPresenter = applicationContext.getBean(DetectionEditCardinalRelationConceptPresenterImpl.class);
+        this.detetectionEditFillTextConceptPresenter = applicationContext.getBean(DetectionEditFillTextConceptPresenterImpl.class);
+
+        this.detectionEditConceptsPresenter = applicationContext.getBean(DetectionEditConceptsPresenter.class);
     }
 
     private void injectOtherDependencies(ApplicationContext applicationContext) {

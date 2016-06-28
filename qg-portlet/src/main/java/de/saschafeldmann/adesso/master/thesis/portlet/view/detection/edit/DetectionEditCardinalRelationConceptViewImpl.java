@@ -44,6 +44,8 @@ public class DetectionEditCardinalRelationConceptViewImpl extends Window impleme
     private final Button btnEdit;
     private final Button btnDelete;
     private final Messages messages;
+    private DetectionEditConceptViewListener<CardinalRelationConcept> viewListener;
+    private CardinalRelationConcept cardinalRelationConcept;
 
     /**
      * Constructs a new detection edit view.
@@ -83,8 +85,25 @@ public class DetectionEditCardinalRelationConceptViewImpl extends Window impleme
         setInputTypes();
         addComponents();
         disableCertainInputs();
+        addListeners();
 
         setContent(formLayout);
+    }
+
+    private void addListeners() {
+        btnEdit.addClickListener(new com.vaadin.ui.Button.ClickListener() {
+            @Override
+            public void buttonClick(com.vaadin.ui.Button.ClickEvent clickEvent) {
+                viewListener.onEditButtonClicked(cardinalRelationConcept);
+            }
+        });
+
+        btnDelete.addClickListener(new com.vaadin.ui.Button.ClickListener() {
+            @Override
+            public void buttonClick(com.vaadin.ui.Button.ClickEvent clickEvent) {
+                viewListener.onDeleteButtonClicked(cardinalRelationConcept);
+            }
+        });
     }
 
     private void setInputTypes() {
@@ -131,8 +150,14 @@ public class DetectionEditCardinalRelationConceptViewImpl extends Window impleme
         compositionInput.setValue(concept.getComposition());
         compositionCardinalityInput.setValue(String.valueOf(concept.getCompositionCardinality()));
 
+        this.cardinalRelationConcept = concept;
         // displays the window
         VaadinUtil.addWindow(this);
+    }
+
+    @Override
+    public void setViewListener(final DetectionEditConceptViewListener<CardinalRelationConcept> viewListener) {
+        this.viewListener = viewListener;
     }
 
     @Override

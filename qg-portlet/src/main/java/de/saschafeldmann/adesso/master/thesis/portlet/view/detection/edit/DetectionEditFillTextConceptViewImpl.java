@@ -40,6 +40,8 @@ public class DetectionEditFillTextConceptViewImpl extends Window implements Dete
     private final Button btnEdit;
     private final Button btnDelete;
     private final Messages messages;
+    private DetectionEditConceptViewListener<FillTextConcept> viewListener;
+    private FillTextConcept fillTextConcept;
 
     /**
      * Constructs a new detection edit view.
@@ -74,8 +76,25 @@ public class DetectionEditFillTextConceptViewImpl extends Window implements Dete
         setLabels();
         addComponents();
         disableCertainInputs();
+        addListeners();
 
         setContent(formLayout);
+    }
+
+    private void addListeners() {
+        btnEdit.addClickListener(new com.vaadin.ui.Button.ClickListener() {
+            @Override
+            public void buttonClick(com.vaadin.ui.Button.ClickEvent clickEvent) {
+                viewListener.onEditButtonClicked(fillTextConcept);
+            }
+        });
+
+        btnDelete.addClickListener(new com.vaadin.ui.Button.ClickListener() {
+            @Override
+            public void buttonClick(com.vaadin.ui.Button.ClickEvent clickEvent) {
+                viewListener.onDeleteButtonClicked(fillTextConcept);
+            }
+        });
     }
 
     private void setLabels() {
@@ -117,8 +136,14 @@ public class DetectionEditFillTextConceptViewImpl extends Window implements Dete
         filltextSentenceInput.setValue(concept.getFillSentence());
         correctAnswerInput.setValue(concept.getCorrectAnswer());
 
+        this.fillTextConcept = concept;
         // displays the window
         VaadinUtil.addWindow(this);
+    }
+
+    @Override
+    public void setViewListener(final DetectionEditConceptViewListener<FillTextConcept> viewListener) {
+        this.viewListener = viewListener;
     }
 
     @Override

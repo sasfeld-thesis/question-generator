@@ -1,6 +1,7 @@
 package de.saschafeldmann.adesso.master.thesis.portlet.presenter.detection.edit;
 
 import de.saschafeldmann.adesso.master.thesis.detection.algorithm.model.FillTextConcept;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.detection.edit.DetectionEditConceptViewListener;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.detection.edit.DetectionEditConceptsViewListener;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.detection.edit.DetectionEditFillTextConceptView;
 import org.slf4j.Logger;
@@ -8,6 +9,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+
+import javax.annotation.PostConstruct;
 
 /**
  * Project:        Masterthesis of Sascha Feldmann
@@ -26,7 +29,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @Scope("prototype")
-public class DetectionEditFillTextConceptPresenterImpl implements DetectionEditConceptPresenter<FillTextConcept>, DetectionEditConceptsViewListener<FillTextConcept> {
+public class DetectionEditFillTextConceptPresenterImpl implements DetectionEditConceptPresenter<FillTextConcept>, DetectionEditConceptViewListener<FillTextConcept> {
     private static final Logger LOGGER = LoggerFactory.getLogger(DetectionEditFillTextConceptPresenterImpl.class);
     private final DetectionEditFillTextConceptView view;
 
@@ -37,6 +40,11 @@ public class DetectionEditFillTextConceptPresenterImpl implements DetectionEditC
     @Autowired
     public DetectionEditFillTextConceptPresenterImpl(final DetectionEditFillTextConceptView view) {
         this.view = view;
+    }
+
+    @PostConstruct
+    private void initialize() {
+        this.view.setViewListener(this);
     }
 
     @Override
@@ -54,5 +62,10 @@ public class DetectionEditFillTextConceptPresenterImpl implements DetectionEditC
         conceptToBeEdited.setCorrectAnswer(view.getCorrectAnswerInput());
 
         view.close();
+    }
+
+    @Override
+    public void onDeleteButtonClicked(FillTextConcept concept) {
+        // TODO
     }
 }

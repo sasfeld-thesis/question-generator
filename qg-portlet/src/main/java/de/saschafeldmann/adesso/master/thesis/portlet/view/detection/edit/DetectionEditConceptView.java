@@ -25,6 +25,12 @@ public interface DetectionEditConceptView<ConceptType extends Concept> {
     void displayForConcept(final ConceptType concept);
 
     /**
+     * Sets the view listener.
+     * @param viewListener the view listener
+     */
+    void setViewListener(final DetectionEditConceptViewListener<ConceptType> viewListener);
+
+    /**
      * Closes the view / popup window.
      */
     void close();

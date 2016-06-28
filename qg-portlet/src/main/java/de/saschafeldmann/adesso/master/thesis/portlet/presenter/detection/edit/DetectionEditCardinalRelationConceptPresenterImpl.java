@@ -3,12 +3,15 @@ package de.saschafeldmann.adesso.master.thesis.portlet.presenter.detection.edit;
 import de.saschafeldmann.adesso.master.thesis.detection.algorithm.model.CardinalRelationConcept;
 import de.saschafeldmann.adesso.master.thesis.detection.algorithm.model.FillTextConcept;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.detection.edit.DetectionEditCardinalRelationConceptView;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.detection.edit.DetectionEditConceptViewListener;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.detection.edit.DetectionEditConceptsViewListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+
+import javax.annotation.PostConstruct;
 
 /**
  * Project:        Masterthesis of Sascha Feldmann
@@ -27,7 +30,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @Scope("prototype")
-public class DetectionEditCardinalRelationConceptPresenterImpl implements DetectionEditConceptPresenter<CardinalRelationConcept>, DetectionEditConceptsViewListener<CardinalRelationConcept> {
+public class DetectionEditCardinalRelationConceptPresenterImpl implements DetectionEditConceptPresenter<CardinalRelationConcept>, DetectionEditConceptViewListener<CardinalRelationConcept> {
     private static final Logger LOGGER = LoggerFactory.getLogger(DetectionEditCardinalRelationConceptPresenterImpl.class);
     private final DetectionEditCardinalRelationConceptView view;
 
@@ -38,6 +41,11 @@ public class DetectionEditCardinalRelationConceptPresenterImpl implements Detect
     @Autowired
     public DetectionEditCardinalRelationConceptPresenterImpl(final DetectionEditCardinalRelationConceptView view) {
         this.view = view;
+    }
+
+    @PostConstruct
+    private void initialize() {
+        view.setViewListener(this);
     }
 
     @Override
@@ -57,5 +65,10 @@ public class DetectionEditCardinalRelationConceptPresenterImpl implements Detect
         conceptToBeEdited.setCompositeCardinality(view.getCompositeCardinalityUserInput());
 
         view.close();
+    }
+
+    @Override
+    public void onDeleteButtonClicked(CardinalRelationConcept concept) {
+        // TODO
     }
 }
