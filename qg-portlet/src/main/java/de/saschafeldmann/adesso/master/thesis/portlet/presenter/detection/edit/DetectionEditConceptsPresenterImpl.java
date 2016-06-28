@@ -5,6 +5,8 @@ import de.saschafeldmann.adesso.master.thesis.detection.algorithm.model.Cardinal
 import de.saschafeldmann.adesso.master.thesis.detection.algorithm.model.FillTextConcept;
 import de.saschafeldmann.adesso.master.thesis.detection.algorithm.model.api.Concept;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
+import de.saschafeldmann.adesso.master.thesis.portlet.QuestionGeneratorPortlet;
+import de.saschafeldmann.adesso.master.thesis.portlet.QuestionGeneratorPortletVaadinUi;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.Messages;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.detection.edit.DetectionEditConceptsViewListener;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.detection.edit.DetectionEditConceptsView;
@@ -41,7 +43,8 @@ public class DetectionEditConceptsPresenterImpl implements DetectionEditConcepts
     private final DetectionEditConceptsView view;
     private final Messages messages;
 
-    private final Map<Class<? extends Concept>, Object> conceptEditViewMap;
+    private final Map<Class<? extends Concept>, DetectionEditConceptPresenter> conceptEditViewMap;
+    private List<Concept> detectedConcepts;
 
     /**
      * Creates a new presenter.
@@ -53,8 +56,8 @@ public class DetectionEditConceptsPresenterImpl implements DetectionEditConcepts
         this.messages = messages;
 
         conceptEditViewMap = new HashMap<>();
-        conceptEditViewMap.put(FillTextConcept.class, "TODO: replace by view");
-        conceptEditViewMap.put(CardinalRelationConcept.class, "TODO: replace by view");
+        conceptEditViewMap.put(FillTextConcept.class, QuestionGeneratorPortletVaadinUi.getCurrentPortletVaadinUi().getDetectionEditFillTextConceptPresenter());
+        conceptEditViewMap.put(CardinalRelationConcept.class, QuestionGeneratorPortletVaadinUi.getCurrentPortletVaadinUi().getDetectionEditCardinalRelationConceptPresenter());
     }
 
     @PostConstruct
@@ -66,8 +69,8 @@ public class DetectionEditConceptsPresenterImpl implements DetectionEditConcepts
     public void displayDetectedConcepts(final LearningContent learningContent, final List<Concept> detectedConcepts) {
         LOGGER.info("displayDetectedConcepts(): displaying detected concepts.");
 
-        view.displayDetectedConcepts(detectedConcepts);
-        applyInitialSorting();
+        this.detectedConcepts = detectedConcepts;
+        refresh();
     }
 
     private void applyInitialSorting() {
@@ -83,7 +86,12 @@ public class DetectionEditConceptsPresenterImpl implements DetectionEditConcepts
     public void onEditButtonClicked(final Concept conceptToBeEdited) {
         LOGGER.info("displayDetectedConcepts(): onEditButtonClicked");
 
-        // TODO delegate to DetectionEditConceptPresenter when present
+        conceptEditViewMap.get(conceptToBeEdited.getClass()).displayEditViewForConcept(conceptToBeEdited);
+        refresh();
+    }
 
+    private void refresh() {
+        view.displayDetectedConcepts(detectedConcepts);
+        applyInitialSorting();
     }
 }

@@ -4,7 +4,6 @@ import de.saschafeldmann.adesso.master.thesis.detection.algorithm.model.Cardinal
 import de.saschafeldmann.adesso.master.thesis.detection.algorithm.model.FillTextConcept;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.detection.edit.DetectionEditCardinalRelationConceptView;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.detection.edit.DetectionEditConceptsViewListener;
-import de.saschafeldmann.adesso.master.thesis.portlet.view.detection.edit.DetectionEditFillTextConceptView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +27,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @Scope("prototype")
-public class DetectionEditCardinalRelationConceptPresenterImpl implements DetectionEditConcept<CardinalRelationConcept>, DetectionEditConceptsViewListener<CardinalRelationConcept> {
+public class DetectionEditCardinalRelationConceptPresenterImpl implements DetectionEditConceptPresenter<CardinalRelationConcept>, DetectionEditConceptsViewListener<CardinalRelationConcept> {
     private static final Logger LOGGER = LoggerFactory.getLogger(DetectionEditCardinalRelationConceptPresenterImpl.class);
     private final DetectionEditCardinalRelationConceptView view;
 

@@ -1,7 +1,6 @@
 package de.saschafeldmann.adesso.master.thesis.portlet.presenter.detection.edit;
 
 import de.saschafeldmann.adesso.master.thesis.detection.algorithm.model.FillTextConcept;
-import de.saschafeldmann.adesso.master.thesis.portlet.view.detection.edit.DetectionEditConceptView;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.detection.edit.DetectionEditConceptsViewListener;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.detection.edit.DetectionEditFillTextConceptView;
 import org.slf4j.Logger;
@@ -27,7 +26,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @Scope("prototype")
-public class DetectionEditFillTextConceptPresenterImpl implements DetectionEditConcept<FillTextConcept>, DetectionEditConceptsViewListener<FillTextConcept> {
+public class DetectionEditFillTextConceptPresenterImpl implements DetectionEditConceptPresenter<FillTextConcept>, DetectionEditConceptsViewListener<FillTextConcept> {
     private static final Logger LOGGER = LoggerFactory.getLogger(DetectionEditFillTextConceptPresenterImpl.class);
     private final DetectionEditFillTextConceptView view;
 

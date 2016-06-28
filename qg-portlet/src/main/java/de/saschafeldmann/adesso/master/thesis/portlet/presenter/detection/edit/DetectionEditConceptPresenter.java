@@ -17,7 +17,7 @@ import de.saschafeldmann.adesso.master.thesis.detection.algorithm.model.api.Conc
  * <br /><br />
  * Interface for all detection edit presenters.
  */
-public interface DetectionEditConcept<ConceptType extends Concept> {
+public interface DetectionEditConceptPresenter<ConceptType extends Concept> {
     /**
      * Displays the edit view for the given concept.
      * @param concept the given concept

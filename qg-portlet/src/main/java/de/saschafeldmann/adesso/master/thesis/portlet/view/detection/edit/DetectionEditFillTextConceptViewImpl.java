@@ -3,6 +3,7 @@ package de.saschafeldmann.adesso.master.thesis.portlet.view.detection.edit;
 import com.vaadin.ui.Window;
 import de.saschafeldmann.adesso.master.thesis.detection.algorithm.model.FillTextConcept;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.Messages;
+import de.saschafeldmann.adesso.master.thesis.portlet.util.VaadinUtil;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.Button;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.FormLayout;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.HorizontalLayout;
@@ -115,6 +116,9 @@ public class DetectionEditFillTextConceptViewImpl extends Window implements Dete
         originalSentenceInput.setValue(concept.getOriginalSentence());
         filltextSentenceInput.setValue(concept.getFillSentence());
         correctAnswerInput.setValue(concept.getCorrectAnswer());
+
+        // displays the window
+        VaadinUtil.addWindow(this);
     }
 
     @Override
