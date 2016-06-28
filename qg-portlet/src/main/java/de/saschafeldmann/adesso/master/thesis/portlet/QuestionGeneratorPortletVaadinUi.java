@@ -11,9 +11,8 @@ import de.saschafeldmann.adesso.master.thesis.portlet.presenter.course.contents.
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.course.contents.CourseContentsPresenterImpl;
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.course.information.CourseInformationPresenter;
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.course.information.CourseInformationPresenterImpl;
-import de.saschafeldmann.adesso.master.thesis.portlet.presenter.detection.DetectionEditConceptsPresenter;
+import de.saschafeldmann.adesso.master.thesis.portlet.presenter.detection.edit.DetectionEditConceptsPresenter;
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.detection.DetectionPresenter;
-import de.saschafeldmann.adesso.master.thesis.portlet.presenter.detection.DetectionPresenterImpl;
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.preprocesses.PreprocessesPresenter;
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.preprocesses.PreprocessesPresenterImpl;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.VaadinProperties;

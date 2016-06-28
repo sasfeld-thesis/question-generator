@@ -1,12 +1,14 @@
-package de.saschafeldmann.adesso.master.thesis.portlet.view.detection;
+package de.saschafeldmann.adesso.master.thesis.portlet.view.detection.edit;
 
 import com.vaadin.ui.Window;
+import com.vaadin.ui.renderers.ButtonRenderer;
+import com.vaadin.ui.renderers.ClickableRenderer;
+import com.vaadin.ui.renderers.HtmlRenderer;
 import de.saschafeldmann.adesso.master.thesis.detection.algorithm.model.CardinalRelationConcept;
 import de.saschafeldmann.adesso.master.thesis.detection.algorithm.model.FillTextConcept;
 import de.saschafeldmann.adesso.master.thesis.detection.algorithm.model.api.Concept;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.Messages;
 import de.saschafeldmann.adesso.master.thesis.portlet.util.VaadinUtil;
-import de.saschafeldmann.adesso.master.thesis.portlet.view.components.Button;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.Grid;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.VerticalLayout;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +16,9 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Project:        Masterthesis of Sascha Feldmann
@@ -34,10 +38,13 @@ import java.util.List;
 @Component
 @Scope("prototype")
 public class DetectionEditConceptsViewImpl extends Window implements DetectionEditConceptsView {
+    private static final String CSS_STYLE_CONCEPTS_VIEW_NAME = "edit-concepts-window";
+
     private final Messages messages;
     private final VerticalLayout mainLayout;
     private final Grid conceptsGrid;
     private DetectionEditConceptsViewListener viewListener;
+    private Map<Object, Concept> rowConceptMap;
 
     /**
      * Constructs a new view impl.
@@ -57,10 +64,13 @@ public class DetectionEditConceptsViewImpl extends Window implements DetectionEd
 
         mainLayout.addComponent(conceptsGrid);
         setContent(mainLayout);
+
+        setStyles();
     }
 
     @Override
     public void displayDetectedConcepts(final List<Concept> detectedConcepts) {
+        rowConceptMap = new HashMap<>();
         conceptsGrid.removeAllColumns();
 
         initializeGridColumns();
@@ -71,12 +81,25 @@ public class DetectionEditConceptsViewImpl extends Window implements DetectionEd
     }
 
     private void initializeGridColumns() {
-        conceptsGrid.addColumn(messages.getDetectionViewAccordionDetectionChainEditWindowTableColumnConceptHeader(), String.class);
-        conceptsGrid.addColumn(messages.getDetectionViewAccordionDetectionChainEditWindowTableColumnOriginalSentenceHeader(), String.class);
-        conceptsGrid.addColumn(messages.getDetectionViewAccordionDetectionChainEditWindowTableColumnAttributesHeader(), String.class);
-        conceptsGrid.addColumn(messages.getDetectionViewAccordionDetectionChainEditWindowTableColumnEditHeader(), Button.class);
-    }
+        conceptsGrid.setSelectionMode(com.vaadin.ui.Grid.SelectionMode.NONE);
 
+        com.vaadin.ui.Grid.Column columnConceptName = conceptsGrid.addColumn(messages.getDetectionViewAccordionDetectionChainEditWindowTableColumnConceptHeader(), String.class);
+        com.vaadin.ui.Grid.Column columnOriginalSentence = conceptsGrid.addColumn(messages.getDetectionViewAccordionDetectionChainEditWindowTableColumnOriginalSentenceHeader(), String.class);
+        com.vaadin.ui.Grid.Column columnAttributes = conceptsGrid.addColumn(messages.getDetectionViewAccordionDetectionChainEditWindowTableColumnAttributesHeader(), String.class);
+        columnAttributes.setRenderer(new HtmlRenderer()); // allows HTML rendering in grid cells
+
+        com.vaadin.ui.Grid.Column columnEdit = conceptsGrid.addColumn(messages.getDetectionViewAccordionDetectionChainEditWindowTableColumnEditHeader(), String.class);
+        columnEdit.setRenderer(new ButtonRenderer(new ClickableRenderer.RendererClickListener() { // renders a button in grid cell
+            @Override
+            public void click(ClickableRenderer.RendererClickEvent rendererClickEvent) {
+                // determine the concept that this row represents and fire the event
+                Object rowId = rendererClickEvent.getItemId();
+                Concept detectedConcept = rowConceptMap.get(rowId);
+
+                viewListener.onEditButtonClicked(detectedConcept);
+            }
+        }));
+    }
 
     private void addRowsToGrid(List<Concept> detectedConcepts) {
         for (Concept detectedConcept: detectedConcepts) {
@@ -85,16 +108,9 @@ public class DetectionEditConceptsViewImpl extends Window implements DetectionEd
     }
 
     private void addRowToGrid(final Concept detectedConcept) {
-        final Button editButton = new Button(messages.getDetectionViewAccordionDetectionChainEditWindowTableColumnEditEditButtonLabel());
-        editButton.addClickListener(new com.vaadin.ui.Button.ClickListener() {
-            @Override
-            public void buttonClick(com.vaadin.ui.Button.ClickEvent clickEvent) {
-                viewListener.onEditButtonClicked(detectedConcept);
-            }
-        });
-
-        conceptsGrid.addRow(getConceptTitle(detectedConcept), detectedConcept.getOriginalSentence(), getConceptAttributes(detectedConcept),
-                editButton);
+        Object rowId = conceptsGrid.addRow(getConceptTitle(detectedConcept), detectedConcept.getOriginalSentence(), getConceptAttributes(detectedConcept),
+                messages.getDetectionViewAccordionDetectionChainEditWindowTableColumnEditEditButtonLabel());
+        rowConceptMap.put(rowId, detectedConcept);
     }
 
     private String getConceptTitle(Concept detectedConcept) {
@@ -136,7 +152,11 @@ public class DetectionEditConceptsViewImpl extends Window implements DetectionEd
         stringBuilder.append(key)
                     .append(": ")
                     .append(value)
-                    .append("\n");
+                    .append("<br />");
+    }
+
+    private void setStyles() {
+        addStyleName(CSS_STYLE_CONCEPTS_VIEW_NAME);
     }
 
     @Override
@@ -147,5 +167,10 @@ public class DetectionEditConceptsViewImpl extends Window implements DetectionEd
     @Override
     public void setViewListener(DetectionEditConceptsViewListener viewListener) {
         this.viewListener = viewListener;
+    }
+
+    @Override
+    public Grid getDetectedConceptsGrid() {
+        return conceptsGrid;
     }
 }

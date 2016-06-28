@@ -1,9 +1,9 @@
-package de.saschafeldmann.adesso.master.thesis.portlet.presenter.detection;
+package de.saschafeldmann.adesso.master.thesis.portlet.presenter.detection.edit;
 
-import com.vaadin.ui.Window;
 import de.saschafeldmann.adesso.master.thesis.detection.algorithm.model.api.Concept;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
-import de.saschafeldmann.adesso.master.thesis.portlet.view.detection.DetectionEditConceptsView;
+import de.saschafeldmann.adesso.master.thesis.portlet.presenter.detection.DetectionPresenter;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.detection.edit.DetectionEditConceptsView;
 
 import java.util.List;
 

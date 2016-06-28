@@ -26,8 +26,8 @@ import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningCont
  * the fill text will be "Berlin is the capital of ___?"
  */
 public class FillTextConcept extends AbstractConcept implements Concept {
-    private final String fillSentence;
-    private final String correctAnswer;
+    private String fillSentence;
+    private String correctAnswer;
 
     private FillTextConcept(FillTextConceptBuilder fillTextConceptBuilder) {
         super(fillTextConceptBuilder.learningContent, fillTextConceptBuilder.originalSentence);
@@ -57,6 +57,22 @@ public class FillTextConcept extends AbstractConcept implements Concept {
      */
     public String getCorrectAnswer() {
         return correctAnswer;
+    }
+
+    /**
+     * Sets the fill sentence.
+     * @param fillSentence String
+     */
+    public void setFillSentence(String fillSentence) {
+        this.fillSentence = fillSentence;
+    }
+
+    /**
+     * Sets the correct answer.
+     * @param correctAnswer String
+     */
+    public void setCorrectAnswer(String correctAnswer) {
+        this.correctAnswer = correctAnswer;
     }
 
     /**

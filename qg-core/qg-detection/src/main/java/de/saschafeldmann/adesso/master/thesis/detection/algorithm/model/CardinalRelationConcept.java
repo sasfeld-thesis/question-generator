@@ -22,10 +22,10 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * A cardinal concept are numeric relations that were identified in sentences.<br />
  */
 public class CardinalRelationConcept extends AbstractConcept implements Concept {
-    private final String composite;
-    private final String composition;
-    private final int compositionCardinality;
-    private final int compositeCardinality;
+    private String composite;
+    private String composition;
+    private int compositionCardinality;
+    private int compositeCardinality;
 
     private CardinalRelationConcept(CardinalRelationConceptBuilder conceptBuilder) {
         super(conceptBuilder.learningContent, conceptBuilder.originalSentence);
@@ -79,6 +79,38 @@ public class CardinalRelationConcept extends AbstractConcept implements Concept 
     @Override
     public void getDocumentPlan() {
         // TODO
+    }
+
+    /**
+     * Sets the composition
+     * @param composition String
+     */
+    public void setComposition(String composition) {
+        this.composition = composition;
+    }
+
+    /**
+     * Sets the composition cardinality.
+     * @param compositionCardinality int
+     */
+    public void setCompositionCardinality(int compositionCardinality) {
+        this.compositionCardinality = compositionCardinality;
+    }
+
+    /**
+     * Sets the composite.
+     * @param composite String
+     */
+    public void setComposite(String composite) {
+        this.composite = composite;
+    }
+
+    /**
+     * Sets the composite cardinality.
+     * @param compositeCardinality int
+     */
+    public void setCompositeCardinality(int compositeCardinality) {
+        this.compositeCardinality = compositeCardinality;
     }
 
     public static class CardinalRelationConceptBuilder {

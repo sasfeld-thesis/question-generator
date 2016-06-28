@@ -19,6 +19,7 @@
 @import "../valo/valo";
 @import "steps/contents";
 @import "steps/preprocesses";
+@import "steps/detection";
 @import "components/accordion";
 @import "components/editwindow";
 @import "components/infobox";
@@ -30,6 +31,7 @@
   @include valo;
   @include contents;
   @include preprocesses;
+  @include detection;
   @include accordion;
   @include editwindow;
   @include infobox;

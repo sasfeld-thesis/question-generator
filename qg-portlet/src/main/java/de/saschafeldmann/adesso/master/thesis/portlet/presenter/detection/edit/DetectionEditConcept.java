@@ -1,4 +1,4 @@
-package de.saschafeldmann.adesso.master.thesis.portlet.view.detection;
+package de.saschafeldmann.adesso.master.thesis.portlet.presenter.detection.edit;
 
 import de.saschafeldmann.adesso.master.thesis.detection.algorithm.model.api.Concept;
 
@@ -15,12 +15,12 @@ import de.saschafeldmann.adesso.master.thesis.detection.algorithm.model.api.Conc
  * Company:
  * adesso AG
  * <br /><br />
- * Interface for listeners of a {@link DetectionEditConceptsView}.
+ * Interface for all detection edit presenters.
  */
-public interface DetectionEditConceptsViewListener {
+public interface DetectionEditConcept<ConceptType extends Concept> {
     /**
-     * Triggered if the user clicked the edit button to edit a concept.
-     * @param conceptToBeEdited the previously detected {@link Concept} to be edited
+     * Displays the edit view for the given concept.
+     * @param concept the given concept
      */
-    void onEditButtonClicked(final Concept conceptToBeEdited);
+    void displayEditViewForConcept(ConceptType concept);
 }

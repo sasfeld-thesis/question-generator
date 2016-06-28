@@ -35,4 +35,24 @@ public abstract class AbstractConcept implements Concept {
     public String getOriginalSentence() {
         return this.originalSentence;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        AbstractConcept that = (AbstractConcept) o;
+
+        if (learningContent != null ? !learningContent.equals(that.learningContent) : that.learningContent != null)
+            return false;
+        return originalSentence != null ? originalSentence.equals(that.originalSentence) : that.originalSentence == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = learningContent != null ? learningContent.hashCode() : 0;
+        result = 31 * result + (originalSentence != null ? originalSentence.hashCode() : 0);
+        return result;
+    }
 }

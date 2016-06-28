@@ -1,7 +1,8 @@
-package de.saschafeldmann.adesso.master.thesis.portlet.view.detection;
+package de.saschafeldmann.adesso.master.thesis.portlet.view.detection.edit;
 
 import com.vaadin.ui.Window;
 import de.saschafeldmann.adesso.master.thesis.detection.algorithm.model.api.Concept;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.Grid;
 
 import java.util.List;
 
@@ -39,4 +40,10 @@ public interface DetectionEditConceptsView {
      * @param viewListener the view listener
      */
     void setViewListener(DetectionEditConceptsViewListener viewListener);
+
+    /**
+     * Gets the grid listing all detected {@link Concept}.
+     * @return the grid
+     */
+    Grid getDetectedConceptsGrid();
 }

@@ -1,0 +1,23 @@
+/**
+ * Project:        Masterthesis of Sascha Feldmann
+ * Creation date:  28.06.2016
+ * Author:         Sascha Feldmann (sascha.feldmann@gmx.de)
+ * <br /><br />
+ * University:
+ * Hochschule für Technik und Wirtschaft, Berlin
+ * Fachbereich 4
+ * Studiengang Internationale Medieninformatik (Master)
+ * <br /><br />
+ * Company:
+ * adesso AG
+ * <br /><br />
+ * Styles for the detection step.
+ */
+
+@mixin detection {
+
+  .edit-concepts-window {
+    width: $editDialogWindowWidth !important;
+    height: $editDialogWindowHeight !important;
+  }
+}

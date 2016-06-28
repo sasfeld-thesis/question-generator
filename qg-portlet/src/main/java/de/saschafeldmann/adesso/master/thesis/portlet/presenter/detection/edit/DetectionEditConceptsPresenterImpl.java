@@ -1,16 +1,23 @@
-package de.saschafeldmann.adesso.master.thesis.portlet.presenter.detection;
+package de.saschafeldmann.adesso.master.thesis.portlet.presenter.detection.edit;
 
+import com.vaadin.shared.data.sort.SortDirection;
+import de.saschafeldmann.adesso.master.thesis.detection.algorithm.model.CardinalRelationConcept;
+import de.saschafeldmann.adesso.master.thesis.detection.algorithm.model.FillTextConcept;
 import de.saschafeldmann.adesso.master.thesis.detection.algorithm.model.api.Concept;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
-import de.saschafeldmann.adesso.master.thesis.portlet.view.detection.DetectionEditConceptsViewListener;
-import de.saschafeldmann.adesso.master.thesis.portlet.view.detection.DetectionEditConceptsView;
+import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.Messages;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.detection.edit.DetectionEditConceptsViewListener;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.detection.edit.DetectionEditConceptsView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Project:        Masterthesis of Sascha Feldmann
@@ -32,14 +39,27 @@ import java.util.List;
 public class DetectionEditConceptsPresenterImpl implements DetectionEditConceptsPresenter, DetectionEditConceptsViewListener {
     private static final Logger LOGGER = LoggerFactory.getLogger(DetectionEditConceptsPresenterImpl.class);
     private final DetectionEditConceptsView view;
+    private final Messages messages;
+
+    private final Map<Class<? extends Concept>, Object> conceptEditViewMap;
 
     /**
      * Creates a new presenter.
      * @param detectionEditConceptsView the view which this presenter handles
      */
     @Autowired
-    public DetectionEditConceptsPresenterImpl(final DetectionEditConceptsView detectionEditConceptsView) {
+    public DetectionEditConceptsPresenterImpl(final DetectionEditConceptsView detectionEditConceptsView, final Messages messages) {
         this.view = detectionEditConceptsView;
+        this.messages = messages;
+
+        conceptEditViewMap = new HashMap<>();
+        conceptEditViewMap.put(FillTextConcept.class, "TODO: replace by view");
+        conceptEditViewMap.put(CardinalRelationConcept.class, "TODO: replace by view");
+    }
+
+    @PostConstruct
+    private void initialize() {
+        this.view.setViewListener(this);
     }
 
     @Override
@@ -47,6 +67,11 @@ public class DetectionEditConceptsPresenterImpl implements DetectionEditConcepts
         LOGGER.info("displayDetectedConcepts(): displaying detected concepts.");
 
         view.displayDetectedConcepts(detectedConcepts);
+        applyInitialSorting();
+    }
+
+    private void applyInitialSorting() {
+        view.getDetectedConceptsGrid().sort(messages.getDetectionViewAccordionDetectionChainEditWindowTableColumnConceptHeader(), SortDirection.ASCENDING);
     }
 
     @Override
@@ -59,5 +84,6 @@ public class DetectionEditConceptsPresenterImpl implements DetectionEditConcepts
         LOGGER.info("displayDetectedConcepts(): onEditButtonClicked");
 
         // TODO delegate to DetectionEditConceptPresenter when present
+
     }
 }

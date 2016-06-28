@@ -2,13 +2,13 @@ package de.saschafeldmann.adesso.master.thesis.portlet.presenter.detection;
 
 import com.google.common.collect.Collections2;
 import com.vaadin.ui.Notification;
+import de.saschafeldmann.adesso.master.thesis.detection.algorithm.model.CardinalRelationConcept;
 import de.saschafeldmann.adesso.master.thesis.detection.algorithm.model.FillTextConcept;
 import de.saschafeldmann.adesso.master.thesis.detection.algorithm.model.api.Concept;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
 import de.saschafeldmann.adesso.master.thesis.portlet.QuestionGeneratorPortletVaadinUi;
 import de.saschafeldmann.adesso.master.thesis.portlet.model.QuestionGenerationSession;
 import de.saschafeldmann.adesso.master.thesis.portlet.model.detection.DetectionActivationElement;
-import de.saschafeldmann.adesso.master.thesis.portlet.model.preprocesses.ProcessActivationElement;
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.AbstractStepPresenter;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.Messages;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.ViewWithMenu;
@@ -171,15 +171,27 @@ public class DetectionPresenterImpl extends AbstractStepPresenter implements Det
             LOGGER.info("executeProcessForAllNlpTaggedLearningContents(): will run detection algorithm on the given learning content {}", learningContent.getTitle());
 
             // TODO replace test data
-            putLearningContentToConceptsMap(learningContent, getTestConcept(learningContent));
+            putLearningContentToConceptsMap(learningContent, getTestFillTextConcept(learningContent));
+            putLearningContentToConceptsMap(learningContent, getTestCardinalitySentenceConcept(learningContent));
         }
     }
 
-    private Concept getTestConcept(final LearningContent learningContent) {
+    private Concept getTestFillTextConcept(final LearningContent learningContent) {
         return new FillTextConcept.FillTextConceptBuilder()
                 .withFillSentence("Die Haupstadt von Deutschland ist ___.")
                 .withCorrectAnswer("Berlin")
                 .withOriginalSentence("Die Hauptstadt von Deutschland ist Berlin.")
+                .withLearningContent(learningContent)
+                .build();
+    }
+
+    private Concept getTestCardinalitySentenceConcept(LearningContent learningContent) {
+        return new CardinalRelationConcept.CardinalRelationConceptBuilder()
+                .withComposite("Deutschland")
+                .withCompositeCardinality(1)
+                .withComposition("Bundesländer")
+                .withCompositionCardinality(16)
+                .withOriginalSentence("Deutschland hat 16 Bundesländer")
                 .withLearningContent(learningContent)
                 .build();
     }
