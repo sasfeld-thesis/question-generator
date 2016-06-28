@@ -23,6 +23,13 @@ import org.springframework.stereotype.Component;
 public class Button extends com.vaadin.ui.Button {
 
     /**
+     * Creates a simple button.
+     */
+    public Button() {
+        super();
+    }
+
+    /**
      * Creates a new button with the given label / caption.
      * @param label caption
      */

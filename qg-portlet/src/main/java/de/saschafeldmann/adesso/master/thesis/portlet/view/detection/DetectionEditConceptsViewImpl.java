@@ -5,10 +5,13 @@ import de.saschafeldmann.adesso.master.thesis.detection.algorithm.model.Cardinal
 import de.saschafeldmann.adesso.master.thesis.detection.algorithm.model.FillTextConcept;
 import de.saschafeldmann.adesso.master.thesis.detection.algorithm.model.api.Concept;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.Messages;
+import de.saschafeldmann.adesso.master.thesis.portlet.util.VaadinUtil;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.Button;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.Grid;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.VerticalLayout;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
@@ -28,6 +31,8 @@ import java.util.List;
  * <br /><br />
  * Implementation of an {@link DetectionEditConceptsView}.
  */
+@Component
+@Scope("prototype")
 public class DetectionEditConceptsViewImpl extends Window implements DetectionEditConceptsView {
     private final Messages messages;
     private final VerticalLayout mainLayout;
@@ -60,6 +65,9 @@ public class DetectionEditConceptsViewImpl extends Window implements DetectionEd
 
         initializeGridColumns();
         addRowsToGrid(detectedConcepts);
+
+        // displays the window
+        VaadinUtil.addWindow(getWindow());
     }
 
     private void initializeGridColumns() {

@@ -240,7 +240,7 @@ public class DetectionPresenterImpl extends AbstractStepPresenter implements Det
 
         for (DetectionActivationElement detectionActivationElement: this.detectionActivationElementList) {
             if (detectionActivationElement.getDetectionActivationElementState().getActivationOptionGroupItem()
-                    .equals(ProcessActivationElement.ActivationOptionGroupItem.YES)) {
+                    .equals(DetectionActivationElement.ActivationOptionGroupItem.YES)) {
                 activatedProcessActivationElements.add(detectionActivationElement);
             }
         }
