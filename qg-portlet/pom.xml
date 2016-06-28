@@ -96,6 +96,12 @@
             <artifactId>qg-preprocesses</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <!-- internal dependency -->
+        <dependency>
+            <groupId>de.saschafeldmann.adesso.master.thesis.software</groupId>
+            <artifactId>qg-detection</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 
     <build>

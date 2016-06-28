@@ -1,5 +1,6 @@
 package de.saschafeldmann.adesso.master.thesis.portlet.view.detection;
 
+import de.saschafeldmann.adesso.master.thesis.detection.algorithm.model.api.Concept;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
 import de.saschafeldmann.adesso.master.thesis.portlet.model.detection.DetectionActivationElement;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.ViewWithMenu;
@@ -45,7 +46,7 @@ public interface DetectionView extends ViewWithMenu {
      * Shows the given processed learning contents for which concepts where detected.
      * @param detectedConcepts a map of the learning content as key and a list of detected concepts (from the qg-detection submodule).
      */
-    void showProcessedLearningContents(Map<LearningContent, List<Object>> detectedConcepts);
+    void showProcessedLearningContents(Map<LearningContent, List<Concept>> detectedConcepts);
 
     /**
      * Resets / initializes the view layout.

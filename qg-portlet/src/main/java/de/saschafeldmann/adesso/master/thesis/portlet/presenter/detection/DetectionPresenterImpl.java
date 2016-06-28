@@ -1,12 +1,15 @@
 package de.saschafeldmann.adesso.master.thesis.portlet.presenter.detection;
 
 import com.google.common.collect.Collections2;
+import com.vaadin.ui.Notification;
+import de.saschafeldmann.adesso.master.thesis.detection.algorithm.model.FillTextConcept;
+import de.saschafeldmann.adesso.master.thesis.detection.algorithm.model.api.Concept;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
+import de.saschafeldmann.adesso.master.thesis.portlet.QuestionGeneratorPortletVaadinUi;
 import de.saschafeldmann.adesso.master.thesis.portlet.model.QuestionGenerationSession;
 import de.saschafeldmann.adesso.master.thesis.portlet.model.detection.DetectionActivationElement;
 import de.saschafeldmann.adesso.master.thesis.portlet.model.preprocesses.ProcessActivationElement;
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.AbstractStepPresenter;
-import de.saschafeldmann.adesso.master.thesis.portlet.presenter.preprocesses.PreprocessesPresenterImpl;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.Messages;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.ViewWithMenu;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.detection.DetectionView;
@@ -17,7 +20,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 import static de.saschafeldmann.adesso.master.thesis.portlet.util.FilterUtil.FILTER_DELETED_ANNOTATED_TEXTS_PREDICATE;
@@ -47,8 +49,7 @@ public class DetectionPresenterImpl extends AbstractStepPresenter implements Det
     private Messages messages;
     private List<DetectionActivationElement> detectionActivationElementList;
     private boolean detectionFinished = false;
-    // TODO replace object by concept interface
-    private Map<LearningContent, List<Object>> detectedConceptsContentsMap;
+    private Map<LearningContent, List<Concept>> detectedConceptsContentsMap;
 
     @Autowired
     public DetectionPresenterImpl(
@@ -168,24 +169,50 @@ public class DetectionPresenterImpl extends AbstractStepPresenter implements Det
         for (LearningContent learningContent: annotatedLearningContents) {
             // TODO run detection algorithm
             LOGGER.info("executeProcessForAllNlpTaggedLearningContents(): will run detection algorithm on the given learning content {}", learningContent.getTitle());
-            putLearningContentToConceptsMap(learningContent, "just for testing");
+
+            // TODO replace test data
+            putLearningContentToConceptsMap(learningContent, getTestConcept(learningContent));
         }
     }
 
+    private Concept getTestConcept(final LearningContent learningContent) {
+        return new FillTextConcept.FillTextConceptBuilder()
+                .withFillSentence("Die Haupstadt von Deutschland ist ___.")
+                .withCorrectAnswer("Berlin")
+                .withOriginalSentence("Die Hauptstadt von Deutschland ist Berlin.")
+                .withLearningContent(learningContent)
+                .build();
+    }
+
     // TODO replace detected by detection interface
-    private void putLearningContentToConceptsMap(LearningContent learningContent, Object detectedConcept) {
+    private void putLearningContentToConceptsMap(LearningContent learningContent, Concept detectedConcept) {
         if (!detectedConceptsContentsMap.containsKey(learningContent)) {
-            detectedConceptsContentsMap.put(learningContent, new ArrayList<Object>());
+            detectedConceptsContentsMap.put(learningContent, new ArrayList<Concept>());
         }
 
         detectedConceptsContentsMap.get(learningContent).add(detectedConcept);
     }
 
     @Override
-    public void onFinishedLearningContentSelected(LearningContent learningContent) {
+    public void onFinishedLearningContentSelected(final LearningContent learningContent) {
         LOGGER.info("onFinishedLearningContentSelected(): learning content {} was selected.", learningContent.getTitle());
 
-        // TODO delegate to edit presenter
+        if (!detectedConceptsContentsMap.containsKey(learningContent)) {
+            LOGGER.error("onFinishedLearningContentSelected(): learning content {} is not contained in detected concepts map.", learningContent.getTitle());
+            Notification.show(
+                    messages.getDetectionViewAccordionDetectionChainEditErrorTitle(),
+                    messages.getDetectionViewAccordionDetectionChainEditErrorMessage(),
+                    Notification.Type.ERROR_MESSAGE
+            );
+        } else {
+            LOGGER.info("onFinishedLearningContentSelected(): delegating to edit concepts presenter");
+            QuestionGeneratorPortletVaadinUi.getCurrentPortletVaadinUi().getDetectionEditConceptsPresenter()
+                    .displayDetectedConcepts(learningContent, getConceptsForLearningContent(learningContent));
+        }
+    }
+
+    private List<Concept> getConceptsForLearningContent(LearningContent learningContent) {
+        return detectedConceptsContentsMap.get(learningContent);
     }
 
     @Override

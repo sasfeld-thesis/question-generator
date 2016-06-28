@@ -826,6 +826,22 @@ public class Messages {
      * Gets the text
      * @return String
      */
+    public String getDetectionViewAccordionDetectionChainEditErrorTitle() {
+       return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.detection.view.accordion.detection.chain.edit.error.title");
+    }
+
+    /**
+     * Gets the text
+     * @return String
+     */
+    public String getDetectionViewAccordionDetectionChainEditErrorMessage() {
+       return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.detection.view.accordion.detection.chain.edit.error.message");
+    }
+
+    /**
+     * Gets the text
+     * @return String
+     */
     public String getDetectionViewAccordionActivationLabel() {
        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.detection.view.accordion.activation.label");
     }
@@ -1034,7 +1050,7 @@ public class Messages {
      * Gets the text
      * @return String
      */
-    public String getDetectionViewAccordionDetectionChainEditWindowTableColumnAttributesFillsentencesCardinality() {
+    public String getDetectionViewAccordionDetectionChainEditWindowTableColumnAttributesCardinalitySentencesCardinality() {
        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.detection.view.accordion.detection.chain.edit.window.table.column.attributes.cardinalitysentences.cardinality");
     }
 

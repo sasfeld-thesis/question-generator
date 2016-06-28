@@ -11,6 +11,7 @@ import de.saschafeldmann.adesso.master.thesis.portlet.presenter.course.contents.
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.course.contents.CourseContentsPresenterImpl;
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.course.information.CourseInformationPresenter;
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.course.information.CourseInformationPresenterImpl;
+import de.saschafeldmann.adesso.master.thesis.portlet.presenter.detection.DetectionEditConceptsPresenter;
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.detection.DetectionPresenter;
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.detection.DetectionPresenterImpl;
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.preprocesses.PreprocessesPresenter;
@@ -61,6 +62,7 @@ public class QuestionGeneratorPortletVaadinUi extends UI {
     private CourseInformationPresenter courseInformationPresenter;
     private PreprocessesPresenter preprocessesPresenter;
     private DetectionPresenter detectionPresenter;
+    private DetectionEditConceptsPresenter detectionEditConceptsPresenter;
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
@@ -133,6 +135,12 @@ public class QuestionGeneratorPortletVaadinUi extends UI {
 
         DetectionView detectionView = detectionPresenter.initializeView();
         viewNavigator.addView(DetectionViewImpl.VIEW_NAME, detectionView);
+
+        initializeDetectionSubViews(applicationContext);
+    }
+
+    private void initializeDetectionSubViews(ApplicationContext applicationContext) {
+        this.detectionEditConceptsPresenter = applicationContext.getBean(DetectionEditConceptsPresenter.class);
     }
 
     private void injectOtherDependencies(ApplicationContext applicationContext) {
@@ -165,6 +173,14 @@ public class QuestionGeneratorPortletVaadinUi extends UI {
      */
     public DetectionPresenter getDetectionPresenter() {
         return detectionPresenter;
+    }
+
+    /**
+     * Gets the detection edit concepts presenter.
+     * @return
+     */
+    public DetectionEditConceptsPresenter getDetectionEditConceptsPresenter() {
+        return detectionEditConceptsPresenter;
     }
 
     /**

@@ -22,4 +22,11 @@ import org.springframework.stereotype.Component;
 @Scope("prototype")
 public class Button extends com.vaadin.ui.Button {
 
+    /**
+     * Creates a new button with the given label / caption.
+     * @param label caption
+     */
+    public Button(String label) {
+        super(label);
+    }
 }

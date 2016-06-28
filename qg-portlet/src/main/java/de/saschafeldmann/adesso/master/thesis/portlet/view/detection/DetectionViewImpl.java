@@ -4,6 +4,7 @@ import com.vaadin.data.Property;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Component;
+import de.saschafeldmann.adesso.master.thesis.detection.algorithm.model.api.Concept;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
 import de.saschafeldmann.adesso.master.thesis.portlet.model.detection.DetectionActivationElement;
 import de.saschafeldmann.adesso.master.thesis.portlet.model.preprocesses.ProcessActivationElement;
@@ -291,7 +292,7 @@ public class DetectionViewImpl extends AbstractStepView implements DetectionView
     }
 
     @Override
-    public void showProcessedLearningContents(Map<LearningContent, List<Object>> detectedConcepts) {
+    public void showProcessedLearningContents(Map<LearningContent, List<Concept>> detectedConcepts) {
         accordionDetectionChainFinishedSelect.removeAllItems();
         accordionDetectionChainFinishedSelect.addItems(detectedConcepts.keySet());
 
