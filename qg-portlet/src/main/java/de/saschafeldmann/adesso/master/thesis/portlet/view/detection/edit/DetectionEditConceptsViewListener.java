@@ -1,6 +1,6 @@
 package de.saschafeldmann.adesso.master.thesis.portlet.view.detection.edit;
 
-import de.saschafeldmann.adesso.master.thesis.detection.algorithm.model.api.Concept;
+import de.saschafeldmann.adesso.master.thesis.detection.model.api.Concept;
 
 /**
  * Project:        Masterthesis of Sascha Feldmann

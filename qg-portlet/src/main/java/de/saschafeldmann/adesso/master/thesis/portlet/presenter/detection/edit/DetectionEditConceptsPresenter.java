@@ -1,6 +1,6 @@
 package de.saschafeldmann.adesso.master.thesis.portlet.presenter.detection.edit;
 
-import de.saschafeldmann.adesso.master.thesis.detection.algorithm.model.api.Concept;
+import de.saschafeldmann.adesso.master.thesis.detection.model.api.Concept;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.detection.DetectionPresenter;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.detection.edit.DetectionEditConceptsView;
@@ -21,7 +21,7 @@ import java.util.List;
  * adesso AG
  * <br /><br />
  * The {@link DetectionEditConceptsPresenter} handles a dialog that is shown if the user selected a {@link de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent}
- * within the {@link DetectionPresenter} logic. Here, the user can edit identified {@link de.saschafeldmann.adesso.master.thesis.detection.algorithm.model.api.Concept}
+ * within the {@link DetectionPresenter} logic. Here, the user can edit identified {@link Concept}
  */
 public interface DetectionEditConceptsPresenter {
 

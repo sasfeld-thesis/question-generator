@@ -1,6 +1,6 @@
 package de.saschafeldmann.adesso.master.thesis.portlet.view.detection;
 
-import de.saschafeldmann.adesso.master.thesis.detection.algorithm.model.api.Concept;
+import de.saschafeldmann.adesso.master.thesis.detection.model.api.Concept;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
 import de.saschafeldmann.adesso.master.thesis.portlet.model.detection.DetectionActivationElement;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.ViewWithMenu;

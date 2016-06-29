@@ -1,8 +1,7 @@
 package de.saschafeldmann.adesso.master.thesis.portlet.view.detection.edit;
 
 import com.vaadin.ui.Window;
-import de.saschafeldmann.adesso.master.thesis.detection.algorithm.model.FillTextConcept;
-import de.saschafeldmann.adesso.master.thesis.portlet.QuestionGeneratorPortletVaadinUi;
+import de.saschafeldmann.adesso.master.thesis.detection.model.FillTextConcept;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.Messages;
 import de.saschafeldmann.adesso.master.thesis.portlet.util.VaadinUtil;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.Button;

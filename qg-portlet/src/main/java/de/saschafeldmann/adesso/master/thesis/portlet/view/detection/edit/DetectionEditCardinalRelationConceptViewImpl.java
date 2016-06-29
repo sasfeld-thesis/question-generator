@@ -2,7 +2,7 @@ package de.saschafeldmann.adesso.master.thesis.portlet.view.detection.edit;
 
 import com.vaadin.data.util.ObjectProperty;
 import com.vaadin.ui.Window;
-import de.saschafeldmann.adesso.master.thesis.detection.algorithm.model.CardinalRelationConcept;
+import de.saschafeldmann.adesso.master.thesis.detection.model.CardinalRelationConcept;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.Messages;
 import de.saschafeldmann.adesso.master.thesis.portlet.util.VaadinUtil;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.Button;

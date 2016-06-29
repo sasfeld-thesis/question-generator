@@ -1,7 +1,7 @@
 package de.saschafeldmann.adesso.master.thesis.portlet.view.detection.edit;
 
 import com.vaadin.ui.Window;
-import de.saschafeldmann.adesso.master.thesis.detection.algorithm.model.api.Concept;
+import de.saschafeldmann.adesso.master.thesis.detection.model.api.Concept;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.Grid;
 
 import java.util.List;
@@ -19,7 +19,7 @@ import java.util.List;
  * Company:
  * adesso AG
  * <br /><br />
- * A view that displays a grid of detected {@link de.saschafeldmann.adesso.master.thesis.detection.algorithm.model.api.Concept}
+ * A view that displays a grid of detected {@link Concept}
  * and offers an action to edit those.
  */
 public interface DetectionEditConceptsView {

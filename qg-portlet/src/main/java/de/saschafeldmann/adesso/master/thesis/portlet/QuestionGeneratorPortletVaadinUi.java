@@ -6,8 +6,8 @@ import com.vaadin.server.VaadinPortlet;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.WrappedPortletSession;
 import com.vaadin.ui.UI;
-import de.saschafeldmann.adesso.master.thesis.detection.algorithm.model.CardinalRelationConcept;
-import de.saschafeldmann.adesso.master.thesis.detection.algorithm.model.FillTextConcept;
+import de.saschafeldmann.adesso.master.thesis.detection.model.CardinalRelationConcept;
+import de.saschafeldmann.adesso.master.thesis.detection.model.FillTextConcept;
 import de.saschafeldmann.adesso.master.thesis.portlet.model.QuestionGenerationSession;
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.course.contents.CourseContentsPresenter;
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.course.contents.CourseContentsPresenterImpl;
@@ -202,7 +202,7 @@ public class QuestionGeneratorPortletVaadinUi extends UI {
     }
 
     /**
-     * Gets the detection edit {@link de.saschafeldmann.adesso.master.thesis.detection.algorithm.model.CardinalRelationConcept} presenter.
+     * Gets the detection edit {@link CardinalRelationConcept} presenter.
      * @return presenter
      */
     public DetectionEditConceptPresenter<CardinalRelationConcept> getDetectionEditCardinalRelationConceptPresenter() {

@@ -1,9 +1,9 @@
 package de.saschafeldmann.adesso.master.thesis.portlet.presenter.detection.edit;
 
 import com.vaadin.shared.data.sort.SortDirection;
-import de.saschafeldmann.adesso.master.thesis.detection.algorithm.model.CardinalRelationConcept;
-import de.saschafeldmann.adesso.master.thesis.detection.algorithm.model.FillTextConcept;
-import de.saschafeldmann.adesso.master.thesis.detection.algorithm.model.api.Concept;
+import de.saschafeldmann.adesso.master.thesis.detection.model.CardinalRelationConcept;
+import de.saschafeldmann.adesso.master.thesis.detection.model.FillTextConcept;
+import de.saschafeldmann.adesso.master.thesis.detection.model.api.Concept;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
 import de.saschafeldmann.adesso.master.thesis.portlet.QuestionGeneratorPortletVaadinUi;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.Messages;

@@ -1,6 +1,6 @@
 package de.saschafeldmann.adesso.master.thesis.portlet.view.detection.edit;
 
-import de.saschafeldmann.adesso.master.thesis.detection.algorithm.model.FillTextConcept;
+import de.saschafeldmann.adesso.master.thesis.detection.model.FillTextConcept;
 
 /**
  * Project:        Masterthesis of Sascha Feldmann

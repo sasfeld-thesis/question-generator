@@ -1,7 +1,7 @@
-package de.saschafeldmann.adesso.master.thesis.detection.algorithm.model;
+package de.saschafeldmann.adesso.master.thesis.detection.model;
 
-import de.saschafeldmann.adesso.master.thesis.detection.algorithm.model.api.AbstractConcept;
-import de.saschafeldmann.adesso.master.thesis.detection.algorithm.model.api.Concept;
+import de.saschafeldmann.adesso.master.thesis.detection.model.api.AbstractConcept;
+import de.saschafeldmann.adesso.master.thesis.detection.model.api.Concept;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
 
 import static com.google.common.base.Preconditions.checkNotNull;

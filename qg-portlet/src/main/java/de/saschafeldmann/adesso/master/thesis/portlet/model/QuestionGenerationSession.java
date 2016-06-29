@@ -1,10 +1,8 @@
 package de.saschafeldmann.adesso.master.thesis.portlet.model;
 
-import com.google.common.base.Strings;
-import de.saschafeldmann.adesso.master.thesis.detection.algorithm.model.api.Concept;
+import de.saschafeldmann.adesso.master.thesis.detection.model.api.Concept;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.Course;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
-import de.saschafeldmann.adesso.master.thesis.portlet.QuestionGeneratorPortletVaadinUi;
 
 import java.util.ArrayList;
 import java.util.HashMap;

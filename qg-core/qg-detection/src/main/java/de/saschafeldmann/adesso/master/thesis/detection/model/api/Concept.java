@@ -1,4 +1,4 @@
-package de.saschafeldmann.adesso.master.thesis.detection.algorithm.model.api;
+package de.saschafeldmann.adesso.master.thesis.detection.model.api;
 
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
 

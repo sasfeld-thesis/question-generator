@@ -1,9 +1,9 @@
-package de.saschafeldmann.adesso.master.thesis.detection.algorithm.model;
+package de.saschafeldmann.adesso.master.thesis.detection.model;
 
 import static com.google.common.base.Preconditions.*;
 
-import de.saschafeldmann.adesso.master.thesis.detection.algorithm.model.api.AbstractConcept;
-import de.saschafeldmann.adesso.master.thesis.detection.algorithm.model.api.Concept;
+import de.saschafeldmann.adesso.master.thesis.detection.model.api.AbstractConcept;
+import de.saschafeldmann.adesso.master.thesis.detection.model.api.Concept;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
 
 /**
@@ -20,7 +20,7 @@ import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningCont
  * adesso AG
  * <br /><br />
  * Filltexts are simple concepts. <br />
- * Those are sentences that contain an object that is a named entity or part-of-speech-tag.<br />
+ * Those are sentences that contain an object that is a named entity and at least one more noun.<br />
  * For the question generation part, the learning student will be asked to fill the object.<br />
  * E.g. if the original sentence was "Berlin is the capital of Germany."
  * the fill text will be "Berlin is the capital of ___?"
