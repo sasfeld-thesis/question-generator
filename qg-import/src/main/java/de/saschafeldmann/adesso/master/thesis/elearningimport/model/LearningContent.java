@@ -1,6 +1,10 @@
 package de.saschafeldmann.adesso.master.thesis.elearningimport.model;
 
+import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Project:        Masterthesis of Sascha Feldmann
@@ -36,8 +40,8 @@ public class LearningContent {
 
     private final String title;
     private final String rawText;
-    private String partOfSpeechAnnotatedText = "";
-    private String namedEntityAnnotatedText = "";
+    private List<String> partOfSpeechAnnotatedText;
+    private List<String> namedEntityAnnotatedText;
     private Language determinedLanguage;
     private final Type type;
     private boolean languageCouldNotBeDetermined = false;
@@ -66,9 +70,9 @@ public class LearningContent {
 
     /**
      * Sets the annotated text (e.g. by part of speech characters).
-     * @param partOfSpeechAnnotatedText String
+     * @param partOfSpeechAnnotatedText String list of annotated sentences
      */
-    public void setPartOfSpeechAnnotatedText(String partOfSpeechAnnotatedText) {
+    public void setPartOfSpeechAnnotatedText(List<String> partOfSpeechAnnotatedText) {
         this.partOfSpeechAnnotatedText = partOfSpeechAnnotatedText;
     }
 
@@ -76,15 +80,15 @@ public class LearningContent {
      * Gets the annotated text (e.g. by part of speech characters).
      * @return String
      */
-    public String getPartOfSpeechAnnotatedText() {
+    public List<String> getPartOfSpeechAnnotatedText() {
         return partOfSpeechAnnotatedText;
     }
 
     /**
      * Sets the Named entity recognition annotated text.
-     * @param namedEntityAnnotatedText String
+     * @param namedEntityAnnotatedText list of sentences
      */
-    public void setNamedEntityAnnotatedText(String namedEntityAnnotatedText) {
+    public void setNamedEntityAnnotatedText(List<String> namedEntityAnnotatedText) {
         this.namedEntityAnnotatedText = namedEntityAnnotatedText;
     }
 
@@ -92,7 +96,7 @@ public class LearningContent {
      * Gets the named entity recognition annotated text.
      * @return String
      */
-    public String getNamedEntityAnnotatedText() {
+    public List<String> getNamedEntityAnnotatedText() {
         return namedEntityAnnotatedText;
     }
 
@@ -118,16 +122,16 @@ public class LearningContent {
      * Deletes and marks the annotated text as deleted.
      */
     public void deleteAnnotatedText() {
-        this.setPartOfSpeechAnnotatedText(ANNOTATED_TEXT_DELETED);
-        this.setNamedEntityAnnotatedText(ANNOTATED_TEXT_DELETED);
+        this.setPartOfSpeechAnnotatedText(new ArrayList<String>());
+        this.setNamedEntityAnnotatedText(new ArrayList<String>());
     }
 
     /**
      * Resets the annotated text.
      */
     public void resetAnnotatedText() {
-        this.setPartOfSpeechAnnotatedText("");
-        this.setNamedEntityAnnotatedText("");
+        this.setPartOfSpeechAnnotatedText(new ArrayList<String>());
+        this.setNamedEntityAnnotatedText(new ArrayList<String>());
     }
 
     /**
@@ -135,7 +139,7 @@ public class LearningContent {
      * @return the annotated text
      */
     public boolean hasAnnotatedText() {
-        return !getPartOfSpeechAnnotatedText().equals(ANNOTATED_TEXT_DELETED);
+        return getPartOfSpeechAnnotatedText().size() > 0;
     }
 
     /**
@@ -226,7 +230,7 @@ public class LearningContent {
          * Assigns the raw text to this learning unit content.
          *
          * Make sure to have replaced control characters.
-         * @param rawText String
+         * @param rawText list of sentences String
          * @return this
          * @throws NullPointerException if the argument is null
          */

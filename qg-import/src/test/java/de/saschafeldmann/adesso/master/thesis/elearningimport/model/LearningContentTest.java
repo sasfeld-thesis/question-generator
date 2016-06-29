@@ -2,6 +2,8 @@ package de.saschafeldmann.adesso.master.thesis.elearningimport.model;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.Assert.*;
 
 /**
@@ -111,11 +113,7 @@ public class LearningContentTest {
 
         // then the flag has annotated text should be false
         assertFalse(learningContent.hasAnnotatedText());
-
-        // and pos part of speech and NER fields should have been set to the internal deleted value
-        assertEquals("!!!!deleted!!!!", learningContent.getNamedEntityAnnotatedText());
-        assertEquals("!!!!deleted!!!!", learningContent.getPartOfSpeechAnnotatedText());
-    }
+ }
 
     @Test
     public void testSetPartOfSpeechAnnotatedTextLeadsToWasNotDeletedFlag() {
@@ -123,13 +121,18 @@ public class LearningContentTest {
         LearningContent learningContent = newLearningContent();
 
         // when annotated text is set
-        learningContent.setPartOfSpeechAnnotatedText("<NN>noun</NN>");
-        learningContent.setNamedEntityAnnotatedText("<DATE>2016</DATE>");
+        ArrayList<String> partOfSpeechSentences = new ArrayList<String>();
+        partOfSpeechSentences.add("<NN>noun</NN>");
+        learningContent.setPartOfSpeechAnnotatedText(partOfSpeechSentences);
+
+        ArrayList<String> namedEntitySentences = new ArrayList<String>();
+        namedEntitySentences.add("<DATE>2016</DATE>");
+        learningContent.setNamedEntityAnnotatedText(namedEntitySentences);
 
         // then the flag has annotated text should be true
         assertTrue(learningContent.hasAnnotatedText());
-        assertEquals("<NN>noun</NN>", learningContent.getPartOfSpeechAnnotatedText());
-        assertEquals("<DATE>2016</DATE>", learningContent.getNamedEntityAnnotatedText());
+        assertEquals(partOfSpeechSentences, learningContent.getPartOfSpeechAnnotatedText());
+        assertEquals(namedEntitySentences, learningContent.getNamedEntityAnnotatedText());
     }
 
     @Test
@@ -137,12 +140,17 @@ public class LearningContentTest {
         LearningContent learningContent = newLearningContent();
 
         // when annotated text is set and afterwards reset
-        learningContent.setPartOfSpeechAnnotatedText("<NN>noun</NN>");
-        learningContent.setNamedEntityAnnotatedText("<DATE>2016</DATE>");
+        ArrayList<String> partOfSpeechSentences = new ArrayList<String>();
+        partOfSpeechSentences.add("<NN>noun</NN>");
+        learningContent.setPartOfSpeechAnnotatedText(partOfSpeechSentences);
+
+        ArrayList<String> namedEntitySentences = new ArrayList<String>();
+        namedEntitySentences.add("<DATE>2016</DATE>");
+        learningContent.setNamedEntityAnnotatedText(namedEntitySentences);
         learningContent.resetAnnotatedText();
 
         // then the annotated texts should be the empty string
-        assertEquals("", learningContent.getNamedEntityAnnotatedText());
-        assertEquals("", learningContent.getPartOfSpeechAnnotatedText());
+        assertEquals(0, learningContent.getNamedEntityAnnotatedText().size());
+        assertEquals(0, learningContent.getPartOfSpeechAnnotatedText().size());
     }
 }
