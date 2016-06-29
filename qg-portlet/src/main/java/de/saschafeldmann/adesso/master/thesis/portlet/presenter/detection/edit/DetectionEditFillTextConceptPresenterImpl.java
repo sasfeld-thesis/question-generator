@@ -1,8 +1,10 @@
 package de.saschafeldmann.adesso.master.thesis.portlet.presenter.detection.edit;
 
 import de.saschafeldmann.adesso.master.thesis.detection.algorithm.model.FillTextConcept;
+import de.saschafeldmann.adesso.master.thesis.detection.algorithm.model.api.Concept;
+import de.saschafeldmann.adesso.master.thesis.portlet.QuestionGeneratorPortletVaadinUi;
+import de.saschafeldmann.adesso.master.thesis.portlet.model.QuestionGenerationSession;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.detection.edit.DetectionEditConceptViewListener;
-import de.saschafeldmann.adesso.master.thesis.portlet.view.detection.edit.DetectionEditConceptsViewListener;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.detection.edit.DetectionEditFillTextConceptView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -61,11 +63,36 @@ public class DetectionEditFillTextConceptPresenterImpl implements DetectionEditC
         conceptToBeEdited.setFillSentence(view.getFillTextSentenceInput());
         conceptToBeEdited.setCorrectAnswer(view.getCorrectAnswerInput());
 
-        view.close();
+        closeView(conceptToBeEdited);
     }
 
     @Override
     public void onDeleteButtonClicked(FillTextConcept concept) {
-        // TODO
+        LOGGER.info("onDeleteButtonClicked(): deleting concept {}", concept.getOriginalSentence());
+
+        getQuestionGeneratorSession().deleteDetectedConcept(concept.getLearningContent(), concept);
+
+        closeView(concept);
+    }
+
+    @Override
+    public void onWindowClosed(Concept concept) {
+        showDetectedConceptsView(concept);
+    }
+
+    private void closeView(FillTextConcept concept) {
+        view.close();
+
+        showDetectedConceptsView(concept);
+    }
+
+    private void showDetectedConceptsView(Concept concept) {
+        QuestionGeneratorPortletVaadinUi.getCurrentPortletVaadinUi().getDetectionEditConceptsPresenter().displayDetectedConcepts(
+                concept.getLearningContent(),
+                getQuestionGeneratorSession().getDetectedConceptsContentsMap().get(concept.getLearningContent()));
+    }
+
+    private QuestionGenerationSession getQuestionGeneratorSession() {
+        return QuestionGeneratorPortletVaadinUi.getCurrentPortletVaadinUi().getQuestionGenerationSession();
     }
 }

@@ -49,7 +49,6 @@ public class DetectionPresenterImpl extends AbstractStepPresenter implements Det
     private Messages messages;
     private List<DetectionActivationElement> detectionActivationElementList;
     private boolean detectionFinished = false;
-    private Map<LearningContent, List<Concept>> detectedConceptsContentsMap;
 
     @Autowired
     public DetectionPresenterImpl(
@@ -147,12 +146,11 @@ public class DetectionPresenterImpl extends AbstractStepPresenter implements Det
     }
 
     private void initProcessedLearningContentsMap() {
-        this.detectedConceptsContentsMap = new HashMap<>();
-
+        questionGenerationSession.resetDetectedConceptsContentsMap();
     }
 
     private void updateProcessedLearningContents() {
-        detectionView.showProcessedLearningContents(detectedConceptsContentsMap);
+        detectionView.showProcessedLearningContents(questionGenerationSession.getDetectedConceptsContentsMap());
     }
 
     private void triggerProcess(DetectionActivationElement detectionActivationElement) {
@@ -198,18 +196,18 @@ public class DetectionPresenterImpl extends AbstractStepPresenter implements Det
 
     // TODO replace detected by detection interface
     private void putLearningContentToConceptsMap(LearningContent learningContent, Concept detectedConcept) {
-        if (!detectedConceptsContentsMap.containsKey(learningContent)) {
-            detectedConceptsContentsMap.put(learningContent, new ArrayList<Concept>());
+        if (!questionGenerationSession.getDetectedConceptsContentsMap().containsKey(learningContent)) {
+            questionGenerationSession.getDetectedConceptsContentsMap().put(learningContent, new ArrayList<Concept>());
         }
 
-        detectedConceptsContentsMap.get(learningContent).add(detectedConcept);
+        questionGenerationSession.getDetectedConceptsContentsMap().get(learningContent).add(detectedConcept);
     }
 
     @Override
     public void onFinishedLearningContentSelected(final LearningContent learningContent) {
         LOGGER.info("onFinishedLearningContentSelected(): learning content {} was selected.", learningContent.getTitle());
 
-        if (!detectedConceptsContentsMap.containsKey(learningContent)) {
+        if (!questionGenerationSession.getDetectedConceptsContentsMap().containsKey(learningContent)) {
             LOGGER.error("onFinishedLearningContentSelected(): learning content {} is not contained in detected concepts map.", learningContent.getTitle());
             Notification.show(
                     messages.getDetectionViewAccordionDetectionChainEditErrorTitle(),
@@ -224,7 +222,7 @@ public class DetectionPresenterImpl extends AbstractStepPresenter implements Det
     }
 
     private List<Concept> getConceptsForLearningContent(LearningContent learningContent) {
-        return detectedConceptsContentsMap.get(learningContent);
+        return questionGenerationSession.getDetectedConceptsContentsMap().get(learningContent);
     }
 
     @Override

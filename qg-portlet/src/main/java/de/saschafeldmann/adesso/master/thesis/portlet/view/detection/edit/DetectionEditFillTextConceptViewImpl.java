@@ -2,6 +2,7 @@ package de.saschafeldmann.adesso.master.thesis.portlet.view.detection.edit;
 
 import com.vaadin.ui.Window;
 import de.saschafeldmann.adesso.master.thesis.detection.algorithm.model.FillTextConcept;
+import de.saschafeldmann.adesso.master.thesis.portlet.QuestionGeneratorPortletVaadinUi;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.Messages;
 import de.saschafeldmann.adesso.master.thesis.portlet.util.VaadinUtil;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.Button;
@@ -31,7 +32,7 @@ import javax.annotation.PostConstruct;
  */
 @Component
 @Scope("prototype")
-public class DetectionEditFillTextConceptViewImpl extends Window implements DetectionEditFillTextConceptView {
+public class DetectionEditFillTextConceptViewImpl extends Window implements DetectionEditFillTextConceptView, Window.CloseListener {
     private final FormLayout formLayout;
     private final TextField originalSentenceInput;
     private final TextField filltextSentenceInput;
@@ -95,6 +96,8 @@ public class DetectionEditFillTextConceptViewImpl extends Window implements Dete
                 viewListener.onDeleteButtonClicked(fillTextConcept);
             }
         });
+
+        addCloseListener(this);
     }
 
     private void setLabels() {
@@ -137,7 +140,8 @@ public class DetectionEditFillTextConceptViewImpl extends Window implements Dete
         correctAnswerInput.setValue(concept.getCorrectAnswer());
 
         this.fillTextConcept = concept;
-        // displays the window
+
+        // displays the view in the current window
         VaadinUtil.addWindow(this);
     }
 
@@ -149,5 +153,10 @@ public class DetectionEditFillTextConceptViewImpl extends Window implements Dete
     @Override
     public void close() {
         super.close();
+    }
+
+    @Override
+    public void windowClose(CloseEvent closeEvent) {
+        viewListener.onWindowClosed(fillTextConcept);
     }
 }

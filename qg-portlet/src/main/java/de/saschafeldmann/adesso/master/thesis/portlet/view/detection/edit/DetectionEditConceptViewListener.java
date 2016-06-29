@@ -1,5 +1,6 @@
 package de.saschafeldmann.adesso.master.thesis.portlet.view.detection.edit;
 
+import de.saschafeldmann.adesso.master.thesis.detection.algorithm.model.FillTextConcept;
 import de.saschafeldmann.adesso.master.thesis.detection.algorithm.model.api.Concept;
 
 /**
@@ -29,4 +30,10 @@ public interface DetectionEditConceptViewListener<ConceptType extends Concept>  
      * @param concept the given concept
      */
     void onDeleteButtonClicked(final ConceptType concept);
+
+    /**
+     * On window closed event.
+     * @param concept the concept that this edit window represents
+     */
+    void onWindowClosed(Concept concept);
 }

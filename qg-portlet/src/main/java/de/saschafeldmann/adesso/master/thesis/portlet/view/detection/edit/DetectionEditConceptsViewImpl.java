@@ -79,6 +79,7 @@ public class DetectionEditConceptsViewImpl extends Window implements DetectionEd
 
     private void initializeGrid() {
         conceptsGrid = new Grid();
+        mainLayout.removeComponent(conceptsGrid);
         mainLayout.addComponent(conceptsGrid);
     }
 

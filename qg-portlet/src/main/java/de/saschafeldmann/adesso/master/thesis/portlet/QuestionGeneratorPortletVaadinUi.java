@@ -218,4 +218,12 @@ public class QuestionGeneratorPortletVaadinUi extends UI {
         preprocessesPresenter.getView().resetInputs();
         detectionPresenter.getView().resetInputs();
     }
+
+    /**
+     * Gets the session instance.
+     * @return the {@link QuestionGenerationSession}
+     */
+    public QuestionGenerationSession getQuestionGenerationSession() {
+        return questionGenerationSession;
+    }
 }

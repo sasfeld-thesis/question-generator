@@ -1,8 +1,15 @@
 package de.saschafeldmann.adesso.master.thesis.portlet.model;
 
 import com.google.common.base.Strings;
+import de.saschafeldmann.adesso.master.thesis.detection.algorithm.model.api.Concept;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.Course;
+import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
 import de.saschafeldmann.adesso.master.thesis.portlet.QuestionGeneratorPortletVaadinUi;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Project:        Masterthesis of Sascha Feldmann
@@ -72,6 +79,7 @@ public class QuestionGenerationSession {
 
     private Course course;
     private Status status = Status.STARTED;
+    private Map<LearningContent, List<Concept>> detectedConceptsContentsMap;
 
     /**
      * Sets the course that the user works on in this session.
@@ -103,5 +111,45 @@ public class QuestionGenerationSession {
      */
     public Status getStatus() {
         return status;
+    }
+
+    /**
+     * Gets the map of detected {@link Concept}, organized as a list of concepts
+     * attached to a learning content.
+     * @return the map
+     */
+    public Map<LearningContent, List<Concept>> getDetectedConceptsContentsMap() {
+        return detectedConceptsContentsMap;
+    }
+
+    /**
+     * Resets the map of detected concepts.
+     */
+    public void resetDetectedConceptsContentsMap() {
+        detectedConceptsContentsMap = new HashMap<>();
+    }
+
+    /**
+     * Adds the given detected concept on the given learning content.
+     * @param learningContent {@link LearningContent}
+     * @param detectedConcept a {@link Concept}
+     */
+    public void addDetectedConcept(final LearningContent learningContent, final Concept detectedConcept) {
+        if (!getDetectedConceptsContentsMap().containsKey(learningContent)) {
+            getDetectedConceptsContentsMap().put(learningContent, new ArrayList<Concept>());
+        }
+
+        getDetectedConceptsContentsMap().get(learningContent).add(detectedConcept);
+    }
+
+    /**
+     * Deletes the given detected concept on the given learning content.
+     * @param learningContent {@link LearningContent}
+     * @param detectedConcept a {@link Concept}
+     */
+    public void deleteDetectedConcept(final LearningContent learningContent, final Concept detectedConcept) {
+        if (getDetectedConceptsContentsMap().containsKey(learningContent)) {
+            getDetectedConceptsContentsMap().get(learningContent).remove(detectedConcept);
+        }
     }
 }

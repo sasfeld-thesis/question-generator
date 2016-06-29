@@ -104,6 +104,13 @@ public class DetectionEditCardinalRelationConceptViewImpl extends Window impleme
                 viewListener.onDeleteButtonClicked(cardinalRelationConcept);
             }
         });
+
+        addCloseListener(new CloseListener() {
+            @Override
+            public void windowClose(CloseEvent closeEvent) {
+                viewListener.onWindowClosed(cardinalRelationConcept);
+            }
+        });
     }
 
     private void setInputTypes() {
@@ -153,7 +160,8 @@ public class DetectionEditCardinalRelationConceptViewImpl extends Window impleme
         compositionCardinalityInput.setValue(String.valueOf(concept.getCompositionCardinality()));
 
         this.cardinalRelationConcept = concept;
-        // displays the window
+
+        // displays the view in the current window
         VaadinUtil.addWindow(this);
     }
 
