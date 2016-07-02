@@ -78,7 +78,7 @@ public class LearningContent {
 
     /**
      * Gets the annotated text (e.g. by part of speech characters).
-     * @return String
+     * @return String list of annotated sentences
      */
     public List<String> getPartOfSpeechAnnotatedText() {
         return partOfSpeechAnnotatedText;
@@ -94,7 +94,7 @@ public class LearningContent {
 
     /**
      * Gets the named entity recognition annotated text.
-     * @return String
+     * @return String list of annotated sentences
      */
     public List<String> getNamedEntityAnnotatedText() {
         return namedEntityAnnotatedText;

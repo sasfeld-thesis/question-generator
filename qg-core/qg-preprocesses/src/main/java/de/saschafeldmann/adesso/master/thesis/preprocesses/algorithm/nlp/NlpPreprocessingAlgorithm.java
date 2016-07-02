@@ -187,36 +187,38 @@ public class NlpPreprocessingAlgorithm implements PreprocessingAlgorithm {
         stanfordCoreNLP.annotate(annotation);
 
         // store named entity and part of speech annotated texts in different strings
-        final StringBuilder posAnnotatedTextBuilder = new StringBuilder();
-        final StringBuilder nerAnnotatedTextBuilder = new StringBuilder();
+        final List<String> posAnnotatedTextSentences = new ArrayList<>();
+        final List<String> nerAnnotatedTextSentences = new ArrayList<>();
         final List<CoreMap> sentences = annotation.get(CoreAnnotations.SentencesAnnotation.class);
 
         for (CoreMap sentence: sentences) {
             // iterate over sentences
+            StringBuilder nerAnnotatedSentenceBuilder = new StringBuilder();
+            StringBuilder posAnnotatedSentenceBuilder = new StringBuilder();
+
             for (CoreLabel token: sentence.get(CoreAnnotations.TokensAnnotation.class)) {
                 // iterate over tokens / words in the current sentence
                 String tokenText = token.get(CoreAnnotations.TextAnnotation.class); // the raw word itself
-
                 if (activatePartOfSpeechTagging) {
                     String partOfSpeechTag = token.get(CoreAnnotations.PartOfSpeechAnnotation.class); // the part of speech tag itself
-                    createXmlTagForAnnotation(posAnnotatedTextBuilder, tokenText, partOfSpeechTag);
+                    createXmlTagForAnnotation(posAnnotatedSentenceBuilder, tokenText, partOfSpeechTag);
                 }
                 if (activateNamedEntityRecognition) {
                     String namedEntityTag = token.get(CoreAnnotations.NamedEntityTagAnnotation.class); // the named entity tag itself
-                    createXmlTagForAnnotation(nerAnnotatedTextBuilder, tokenText, namedEntityTag);
+                    createXmlTagForAnnotation(nerAnnotatedSentenceBuilder, tokenText, namedEntityTag);
                 }
             }
 
-            nerAnnotatedTextBuilder.append("\n");
-            posAnnotatedTextBuilder.append("\n");
+            posAnnotatedTextSentences.add(posAnnotatedSentenceBuilder.toString());
+            nerAnnotatedTextSentences.add(nerAnnotatedSentenceBuilder.toString());
         }
 
         if (activatePartOfSpeechTagging) {
-            learningContent.setPartOfSpeechAnnotatedText(posAnnotatedTextBuilder.toString());
+            learningContent.setPartOfSpeechAnnotatedText(posAnnotatedTextSentences);
         }
 
         if (activateNamedEntityRecognition) {
-            learningContent.setNamedEntityAnnotatedText(nerAnnotatedTextBuilder.toString());
+            learningContent.setNamedEntityAnnotatedText(nerAnnotatedTextSentences);
         }
     }
 

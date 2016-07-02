@@ -6,7 +6,10 @@ import de.saschafeldmann.adesso.master.thesis.elearningimport.model.Language;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
 import de.saschafeldmann.adesso.master.thesis.preprocesses.algorithm.PreprocessingAlgorithm;
 import de.saschafeldmann.adesso.master.thesis.preprocesses.algorithm.model.PreprocessingOptions;
+import de.saschafeldmann.adesso.master.thesis.util.linguistic.SentenceUtil;
 import org.junit.Test;
+
+import java.util.List;
 
 /**
  * Project:        Masterthesis of Sascha Feldmann
@@ -142,7 +145,9 @@ public class NlpPreprocessingAlgorithmTest {
         assertContainsTags(annotatedEnglishLearningContent.getNamedEntityAnnotatedText(), "DATE", namedDates);
     }
 
-    private void assertContainsTags(final String annotatedText, final String partOfSpeechTag, final String[] annotatedTokens) {
+    private void assertContainsTags(final List<String> annotatedTextSentences, final String partOfSpeechTag, final String[] annotatedTokens) {
+        String annotatedText = SentenceUtil.buildStringForListOfSentences(annotatedTextSentences);
+
         for (String annotatedToken: annotatedTokens) {
             assertTrue("The annotated text should contain the tag " + partOfSpeechTag + " annotated on the token " + annotatedToken,
                     annotatedText.contains("<" + partOfSpeechTag + ">"
