@@ -36,11 +36,10 @@ public class FillTextConceptDetection implements DetectionAlgorithm<FillTextConc
     }
 
     private List<String> findSentencesWithNamedEntitiesAndAnAdditionalNoun(LearningContent learningContent) {
-        final List<String> sentencesList = new ArrayList<>();
+        final List<String> foundSentencesList = new ArrayList<>();
 
-        final String namedEntityAnnotatedContent = learningContent.getNamedEntityAnnotatedText();
-        final String partOfSpeechAnnotatedContent = learningContent.getPartOfSpeechAnnotatedText();
 
-        return sentencesList;
+
+        return foundSentencesList;
     }
 }

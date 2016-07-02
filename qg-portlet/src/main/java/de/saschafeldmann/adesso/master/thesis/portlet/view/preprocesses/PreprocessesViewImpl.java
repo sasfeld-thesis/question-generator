@@ -23,6 +23,7 @@ import de.saschafeldmann.adesso.master.thesis.portlet.view.components.TextArea;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.VerticalLayout;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.window.*;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.window.Table;
+import de.saschafeldmann.adesso.master.thesis.util.linguistic.SentenceUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -249,8 +250,8 @@ public class PreprocessesViewImpl extends AbstractStepView implements Preprocess
 
     private void showProcessedTextEditWindow(final LearningContent selectedContent) {
         String title = selectedContent.getTitle();
-        String posAnnotatedText = selectedContent.getPartOfSpeechAnnotatedText();
-        String nerAnnotatedText = selectedContent.getNamedEntityAnnotatedText();
+        String posAnnotatedText = SentenceUtil.buildStringForListOfSentences(selectedContent.getPartOfSpeechAnnotatedText());
+        String nerAnnotatedText = SentenceUtil.buildStringForListOfSentences(selectedContent.getNamedEntityAnnotatedText());
 
         editWindow.setTextareaLabel(messages.getPreproccesesViewAccordionProcesschainEditWindowTextareaPosTitle());
         editWindow.setSecondTextareaLabel(messages.getPreproccesesViewAccordionProcesschainEditWindowTextareaNerTitle());

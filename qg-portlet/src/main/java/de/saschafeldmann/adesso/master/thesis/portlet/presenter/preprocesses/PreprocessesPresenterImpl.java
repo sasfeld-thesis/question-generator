@@ -21,6 +21,7 @@ import de.saschafeldmann.adesso.master.thesis.preprocesses.algorithm.language.Un
 import de.saschafeldmann.adesso.master.thesis.preprocesses.algorithm.model.PreprocessingOptions;
 import de.saschafeldmann.adesso.master.thesis.preprocesses.algorithm.nlp.NlpException;
 import de.saschafeldmann.adesso.master.thesis.preprocesses.algorithm.nlp.NlpPreprocessingAlgorithm;
+import de.saschafeldmann.adesso.master.thesis.util.linguistic.SentenceUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -284,8 +285,8 @@ public class PreprocessesPresenterImpl extends AbstractStepPresenter implements 
     public void onEditLearningContentClick(LearningContent learningContentToBeEdited, String partOfSpeechInput, String namedEntitiesInput) {
         LOGGER.info("onEditLearningContentClick(): will edit {}", learningContentToBeEdited.getTitle());
 
-        learningContentToBeEdited.setPartOfSpeechAnnotatedText(partOfSpeechInput);
-        learningContentToBeEdited.setNamedEntityAnnotatedText(namedEntitiesInput);
+        learningContentToBeEdited.setPartOfSpeechAnnotatedText(SentenceUtil.buildListOfSentencesForString(partOfSpeechInput));
+        learningContentToBeEdited.setNamedEntityAnnotatedText(SentenceUtil.buildListOfSentencesForString(namedEntitiesInput));
     }
 
     @Override
