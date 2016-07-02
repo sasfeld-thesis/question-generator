@@ -4,6 +4,8 @@ import de.saschafeldmann.adesso.master.thesis.elearningimport.model.Language;
 import de.saschafeldmann.adesso.master.thesis.util.properties.PropertiesReaderApi;
 import de.saschafeldmann.adesso.master.thesis.util.properties.linguistic.NaturalLanguageProcessingPropertiesReader;
 
+import java.util.List;
+
 /**
  * Project:        Masterthesis of Sascha Feldmann
  * Creation date:  29.06.2016
@@ -32,92 +34,92 @@ public enum NamedEntityTagAdapter {
      * @param language the language
      * @return String
      */
-    public String getTagForLanguage(final Language language) {
+    public List<String> getTagsForLanguage(final Language language) {
         switch (language) {
             case GERMAN:
-                return getTagForGerman();
+                return getTagsForGerman();
             case ENGLISH:
-                return getTagForEnglish();
+                return getTagsForEnglish();
             default:
                 throw new UnsupportedOperationException("Language " + language + " is not supported.");
         }
     }
 
-    private String getTagForEnglish() {
+    private List<String> getTagsForEnglish() {
         switch (this) {
             case LOCATION:
-                return getEnglishLocationTag();
+                return getEnglishLocationTags();
             case PERSON:
-                return getEnglishPersonTag();
+                return getEnglishPersonTags();
             case ORGANIZATION:
-                return getEnglishOrganizationTag();
+                return getEnglishOrganizationTags();
             case DATE:
-                return getEnglishDateTag();
+                return getEnglishDateTags();
             case NUMERIC:
-                return getEnglishNumericTag();
+                return getEnglishNumericTags();
             default:
                 throw new UnsupportedOperationException("Tag " + this + " is not supported.");
         }
     }
 
-    private String getEnglishNumericTag() {
-        return getProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.util.named.entity.adapter.numeric.english");
+    private List<String> getEnglishNumericTags() {
+        return getProperties().fetchMultipleValues("de.saschafeldmann.adesso.master.thesis.util.named.entity.adapter.numeric.english");
     }
 
-    private String getEnglishDateTag() {
-        return getProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.util.named.entity.adapter.date.english");
+    private List<String> getEnglishDateTags() {
+        return getProperties().fetchMultipleValues("de.saschafeldmann.adesso.master.thesis.util.named.entity.adapter.date.english");
     }
 
-    private String getEnglishOrganizationTag() {
-        return getProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.util.named.entity.adapter.organization.english");
+    private List<String> getEnglishOrganizationTags() {
+        return getProperties().fetchMultipleValues("de.saschafeldmann.adesso.master.thesis.util.named.entity.adapter.organization.english");
     }
 
-    private String getEnglishPersonTag() {
-        return getProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.util.named.entity.adapter.person.english");
+    private List<String> getEnglishPersonTags() {
+        return getProperties().fetchMultipleValues("de.saschafeldmann.adesso.master.thesis.util.named.entity.adapter.person.english");
     }
 
-    private String getEnglishLocationTag() {
-        return getProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.util.named.entity.adapter.location.english");
+    private List<String> getEnglishLocationTags() {
+        return getProperties().fetchMultipleValues("de.saschafeldmann.adesso.master.thesis.util.named.entity.adapter.location.english");
     }
 
     private PropertiesReaderApi getProperties() {
         return NaturalLanguageProcessingPropertiesReader.getInstance();
     }
 
-    private String getTagForGerman() {
+    private List<String> getTagsForGerman() {
         switch (this) {
             case LOCATION:
-                return getGermanLocationTag();
+                return getGermanLocationTags();
             case PERSON:
-                return getGermanPersonTag();
+                return getGermanPersonTags();
             case ORGANIZATION:
-                return getGermanOrganizationTag();
+                return getGermanOrganizationTags();
             case DATE:
-                return getGermanDateTag();
+                return getGermanDateTags();
             case NUMERIC:
-                return getGermanNumericTag();
+                return getGermanNumericTags();
             default:
                 throw new UnsupportedOperationException("Tag " + this + " is not supported.");
         }
     }
 
-    private String getGermanNumericTag() {
-        return getProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.util.named.entity.adapter.numeric.german");
+    private List<String> getGermanNumericTags() {
+        return getProperties().fetchMultipleValues("de.saschafeldmann.adesso.master.thesis.util.named.entity.adapter.numeric.german");
     }
 
-    private String getGermanDateTag() {
-        return getProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.util.named.entity.adapter.date.german");
+    private List<String> getGermanDateTags() {
+        return getProperties().fetchMultipleValues("de.saschafeldmann.adesso.master.thesis.util.named.entity.adapter.date.german");
     }
 
-    private String getGermanOrganizationTag() {
-        return getProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.util.named.entity.adapter.organization.german");
+    private List<String> getGermanOrganizationTags() {
+        return getProperties().fetchMultipleValues("de.saschafeldmann.adesso.master.thesis.util.named.entity.adapter.organization.german");
     }
 
-    private String getGermanPersonTag() {
-        return getProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.util.named.entity.adapter.person.german");
+    private List<String> getGermanPersonTags() {
+        return getProperties().fetchMultipleValues("de.saschafeldmann.adesso.master.thesis.util.named.entity.adapter.person.german");
     }
 
-    private String getGermanLocationTag() {
-        return getProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.util.named.entity.adapter.location.german");
+    private List<String> getGermanLocationTags() {
+        return getProperties().fetchMultipleValues("de.saschafeldmann.adesso.master.thesis.util.named.entity.adapter.location.german");
     }
 }

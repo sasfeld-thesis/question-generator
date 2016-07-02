@@ -83,7 +83,7 @@ public class NamedEntityTagAdapterTest {
     }
 
     private void testForLanguageAndTag(Language language, NamedEntityTagAdapter tag, String expected) {
-        assertEquals(expected, tag.getTagForLanguage(language));
+        assertEquals(expected, tag.getTagsForLanguage(language).get(0));
     }
 
 }
