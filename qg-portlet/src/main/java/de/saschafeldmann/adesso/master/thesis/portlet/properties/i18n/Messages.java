@@ -1198,4 +1198,164 @@ public class Messages {
         return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.detection.view.accordion.detection.chain.edit.window.table.edit.row.cardinalitysentences.window.delete.button.tooltip");
     }
 
+    /**
+     * Gets the text.
+     * @return String
+     */
+    public String getQuestionGenerationViewInfoText() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.question.generation.view.info.text");
+    }
+
+    /**
+     * Gets the text.
+     * @return String
+     */
+    public String getQuestionGenerationViewIntroductionText() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.question.generation.view.introduction.text");
+    }
+
+    /**
+     * Gets the text.
+     * @return String
+     */
+    public String getQuestionGenerationViewButtonStartLabel() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.question.generation.view.button.start.label");
+    }
+
+    /**
+     * Gets the text.
+     * @return String
+     */
+    public String getQuestionGenerationViewFinishedContentsLabels() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.question.generation.view.finished.contents.label");
+    }
+
+    /**
+     * Gets the text.
+     * @return String
+     */
+    public String getQuestionGenerationViewFinishedQuestionsLabel() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.question.generation.view.finished.questions.label");
+    }
+
+    /**
+     * Gets the text.
+     * @return String
+     */
+    public String getQuestionGenerationViewFinishedQuestionsFillsentencesPrefix() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.question.generation.view.finished.questions.fillsentences.prefix");
+    }
+
+    /**
+     * Gets the text.
+     * @return String
+     */
+    public String getQuestionGenerationViewFinishedQuestionsCardinalSentencesPrefix() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.question.generation.view.finished.questions.cardinalsentences.prefix");
+    }
+
+    /**
+     * Gets the text.
+     * @return String
+     */
+    public String getQuestionGenerationViewFinishedQuestionsEditWindowTitle() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.question.generation.view.finished.questions.edit.window.title");
+    }
+
+    /**
+     * Gets the text.
+     * @return String
+     */
+    public String getQuestionGenerationViewFinishedQuestionsEditWindowInputTestquestion() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.question.generation.view.finished.questions.edit.window.input.testquestion");
+    }
+
+    /**
+     * Gets the text.
+     * @return String
+     */
+    public String getQuestionGenerationViewFinishedQuestionsEditWindowInputCorrectAnswer() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.question.generation.view.finished.questions.edit.window.input.correctanswer");
+    }
+
+    /**
+     * Gets the text.
+     * @return String
+     */
+    public String getQuestionGenerationViewFinishedQuestionsEditWindowInputQuestionTypeLabel() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.question.generation.view.finished.questions.edit.window.input.question.type.label");
+    }
+
+    /**
+     * Gets the text.
+     * @return String
+     */
+    public String getQuestionGenerationViewFinishedQuestionsEditWindowInputQuestionTypeOptionSingle() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.question.generation.view.finished.questions.edit.window.input.question.type.option.single");
+    }
+
+    /**
+     * Gets the text.
+     * @return String
+     */
+    public String getQuestionGenerationViewFinishedQuestionsEditWindowInputQuestionTypeOptionMultiple() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.question.generation.view.finished.questions.edit.window.input.question.type.option.multiple");
+    }
+
+    /**
+     * Gets the text.
+     * @return String
+     */
+    public String getQuestionGenerationViewFinishedQuestionsEditWindowInputQuestionWrongAnswersLabel() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.question.generation.view.finished.questions.edit.window.input.question.wrong.answers.label");
+    }
+
+    /**
+     * Gets the text.
+     * @return String
+     */
+    public String getQuestionGenerationViewFinishedQuestionsEditWindowInputQuestionWrongAnswersInput() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.question.generation.view.finished.questions.edit.window.input.question.wrong.answers.input");
+    }
+
+    /**
+     * Gets the text.
+     * @return String
+     */
+    public String getQuestionGenerationViewFinishedQuestionsEditWindowButtonEdit() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.question.generation.view.finished.questions.edit.window.button.edit");
+    }
+
+    /**
+     * Gets the text.
+     * @return String
+     */
+    public String getQuestionGenerationViewFinishedQuestionsEditWindowButtonDelete() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.question.generation.view.finished.questions.edit.window.button.delete");
+    }
+
+    /**
+     * Gets the text.
+     * @return String
+     */
+    public String getQuestionGenerationViewButtonExport() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.question.generation.view.button.export");
+    }
+
+    /**
+     * Gets the text.
+     * @return String
+     */
+    public String getQuestionGenerationViewListselectExportCsv() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.question.generation.view.listselect.export.csv");
+    }
+
+    /**
+     * Gets the text.
+     * @return String
+     */
+    public String getQuestionGenerationViewListselectExportValamis() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.question.generation.view.listselect.export.valamis");
+    }
+
 }
