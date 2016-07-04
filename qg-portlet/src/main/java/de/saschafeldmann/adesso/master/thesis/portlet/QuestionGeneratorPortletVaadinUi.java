@@ -18,6 +18,7 @@ import de.saschafeldmann.adesso.master.thesis.portlet.presenter.detection.edit.D
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.detection.edit.DetectionEditConceptsPresenter;
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.detection.DetectionPresenter;
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.detection.edit.DetectionEditFillTextConceptPresenterImpl;
+import de.saschafeldmann.adesso.master.thesis.portlet.presenter.generation.QuestionGenerationPresenter;
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.preprocesses.PreprocessesPresenter;
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.preprocesses.PreprocessesPresenterImpl;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.VaadinProperties;
@@ -29,6 +30,8 @@ import de.saschafeldmann.adesso.master.thesis.portlet.view.course.information.Co
 import de.saschafeldmann.adesso.master.thesis.portlet.view.course.information.CourseInformationViewImpl;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.detection.DetectionView;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.detection.DetectionViewImpl;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.generation.QuestionGenerationView;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.generation.QuestionGenerationViewImpl;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.preprocesses.PreprocessesView;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.preprocesses.PreprocessesViewImpl;
 import org.springframework.context.ApplicationContext;
@@ -69,6 +72,7 @@ public class QuestionGeneratorPortletVaadinUi extends UI {
     private DetectionEditConceptsPresenter detectionEditConceptsPresenter;
     private DetectionEditFillTextConceptPresenterImpl detetectionEditFillTextConceptPresenter;
     private DetectionEditCardinalRelationConceptPresenterImpl detetectionEditCardinalRelationConceptPresenter;
+    private QuestionGenerationPresenter questionGenerationPresenter;
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
@@ -100,7 +104,9 @@ public class QuestionGeneratorPortletVaadinUi extends UI {
         initializeCourseContentsView(applicationContext);
         initializePreprocessesView(applicationContext);
         initializeDetectionView(applicationContext);
+        initializeTestQuestionGenerationView(applicationContext);
     }
+
 
     private void initializeCourseInformationView(ApplicationContext applicationContext) {
         this.courseInformationPresenter = applicationContext.getBean(CourseInformationPresenterImpl.class);
@@ -151,6 +157,15 @@ public class QuestionGeneratorPortletVaadinUi extends UI {
         this.detetectionEditFillTextConceptPresenter = applicationContext.getBean(DetectionEditFillTextConceptPresenterImpl.class);
 
         this.detectionEditConceptsPresenter = applicationContext.getBean(DetectionEditConceptsPresenter.class);
+    }
+
+    private void initializeTestQuestionGenerationView(ApplicationContext applicationContext) {
+        this.questionGenerationPresenter = applicationContext.getBean(QuestionGenerationPresenter.class);
+        this.questionGenerationPresenter.setQuestionGenerationSession(questionGenerationSession);
+        questionGenerationPresenter.setNavigator(viewNavigator);
+
+        QuestionGenerationView questionGenerationView = questionGenerationPresenter.initializeView();
+        viewNavigator.addView(QuestionGenerationViewImpl.VIEW_NAME, questionGenerationView);
     }
 
     private void injectOtherDependencies(ApplicationContext applicationContext) {
@@ -217,6 +232,7 @@ public class QuestionGeneratorPortletVaadinUi extends UI {
         courseContentsPresenter.getView().resetInputs();
         preprocessesPresenter.getView().resetInputs();
         detectionPresenter.getView().resetInputs();
+        questionGenerationPresenter.getView().resetInputs();
     }
 
     /**

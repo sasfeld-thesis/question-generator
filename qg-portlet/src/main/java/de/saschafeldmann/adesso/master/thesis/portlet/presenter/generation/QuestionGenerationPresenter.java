@@ -1,6 +1,7 @@
 package de.saschafeldmann.adesso.master.thesis.portlet.presenter.generation;
 
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.VaadinViewPresenter;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.generation.QuestionGenerationView;
 
 /**
  * Project:        Masterthesis of Sascha Feldmann
@@ -18,4 +19,10 @@ import de.saschafeldmann.adesso.master.thesis.portlet.presenter.VaadinViewPresen
  * Interface for the last step - the question generation presenter.
  */
 public interface QuestionGenerationPresenter extends VaadinViewPresenter {
+
+    /**
+     * Initializes the view.
+     * @return the view
+     */
+    QuestionGenerationView initializeView();
 }

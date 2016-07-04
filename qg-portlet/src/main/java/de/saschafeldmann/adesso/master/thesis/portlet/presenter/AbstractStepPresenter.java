@@ -7,6 +7,7 @@ import de.saschafeldmann.adesso.master.thesis.portlet.view.MenuListener;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.course.contents.CourseContentsViewImpl;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.course.information.CourseInformationViewImpl;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.detection.DetectionViewImpl;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.generation.QuestionGenerationViewImpl;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.preprocesses.PreprocessesViewImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -64,7 +65,7 @@ public abstract class AbstractStepPresenter implements MenuListener, VaadinViewP
      * @see MenuListener#onQuestionGenerationClicked() ()
      */
     public void onQuestionGenerationClicked() {
-
+        getNavigator().navigateTo(QuestionGenerationViewImpl.VIEW_NAME);
     }
 
     /**
