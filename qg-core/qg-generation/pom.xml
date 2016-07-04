@@ -12,5 +12,12 @@
     <!-- groupID and artifactID are inherited from parent -->
     <artifactId>qg-generation</artifactId>
 
-
+    <dependencies>
+        <!-- internal dependency -->
+        <dependency>
+            <groupId>de.saschafeldmann.adesso.master.thesis.software</groupId>
+            <artifactId>qg-detection</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
 </project>

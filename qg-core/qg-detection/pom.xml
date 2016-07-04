@@ -13,6 +13,12 @@
     <artifactId>qg-detection</artifactId>
 
     <dependencies>
+        <!-- internal dependency -->
+        <dependency>
+            <groupId>de.saschafeldmann.adesso.master.thesis.software</groupId>
+            <artifactId>qg-generation</artifactId>
+            <version>${project.version}</version>
+        </dependency>
         <!-- JUnit -->
         <dependency>
             <groupId>junit</groupId>

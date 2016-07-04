@@ -3,6 +3,8 @@ package de.saschafeldmann.adesso.master.thesis.detection.model;
 import de.saschafeldmann.adesso.master.thesis.detection.model.api.AbstractConcept;
 import de.saschafeldmann.adesso.master.thesis.detection.model.api.Concept;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
+import de.saschafeldmann.adesso.master.thesis.generation.Factory;
+import de.saschafeldmann.adesso.master.thesis.generation.specifications.TestQuestionSpecification;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -26,6 +28,7 @@ public class CardinalRelationConcept extends AbstractConcept implements Concept 
     private String composition;
     private int compositionCardinality;
     private int compositeCardinality;
+    private TestQuestionSpecification testQuestionSpecification = Factory.newCardinalRelationConceptTestQuestionSpec(this);
 
     private CardinalRelationConcept(CardinalRelationConceptBuilder conceptBuilder) {
         super(conceptBuilder.learningContent, conceptBuilder.originalSentence);
@@ -76,9 +79,10 @@ public class CardinalRelationConcept extends AbstractConcept implements Concept 
         return compositionCardinality;
     }
 
+
     @Override
-    public void getDocumentPlan() {
-        // TODO
+    public TestQuestionSpecification getTestQuestionTextSpecification() {
+        return testQuestionSpecification;
     }
 
     /**
