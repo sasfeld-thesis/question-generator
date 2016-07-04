@@ -2,6 +2,7 @@ package de.saschafeldmann.adesso.master.thesis.portlet.view.generation;
 
 import com.vaadin.data.Property;
 import com.vaadin.navigator.ViewChangeListener;
+import com.vaadin.shared.ui.label.ContentMode;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
 import de.saschafeldmann.adesso.master.thesis.generation.model.TestQuestion;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.Messages;
@@ -38,6 +39,7 @@ import java.util.List;
 @Scope("prototype")
 public class QuestionGenerationViewImpl extends AbstractStepView implements QuestionGenerationView {
     public static final String VIEW_NAME = "QuestionGenerationView";
+    public static final String CSS_STYLE_NAME_HORICONTAL_LAYOUT = "question-generation-horicontal-layout";
 
     private QuestionGenerationViewListener viewListener;
 
@@ -66,7 +68,6 @@ public class QuestionGenerationViewImpl extends AbstractStepView implements Ques
     @Autowired
     public QuestionGenerationViewImpl(Messages messages, VersionLabel versionLabel,
                                       final InfoBox infoBox,
-                                      final Label introductionLabel,
                                       final Button btnStartQuestionGeneration,
                                       final HorizontalLayout horizontalLayout,
                                       final VerticalLayout leftVerticalLayout,
@@ -83,7 +84,6 @@ public class QuestionGenerationViewImpl extends AbstractStepView implements Ques
         super(messages, versionLabel);
 
         this.infoBox = infoBox;
-        this.introductionLabel = introductionLabel;
         this.btnStartQuestionGeneration = btnStartQuestionGeneration;
         this.horizontalLayout = horizontalLayout;
         this.leftVerticalLayout = leftVerticalLayout;
@@ -96,11 +96,12 @@ public class QuestionGenerationViewImpl extends AbstractStepView implements Ques
         this.btnPrevious = btnPrevious;
         this.btnExport = btnExport;
         this.exportListSelect = exportListSelect;
+
+        this.introductionLabel = new Label(messages.getQuestionGenerationViewIntroductionText(), ContentMode.HTML);
     }
 
     @PostConstruct
     private void initialize() {
-        this.introductionLabel.setCaption(messages.getQuestionGenerationViewIntroductionText());
         this.btnStartQuestionGeneration.setCaption(messages.getQuestionGenerationViewButtonStartLabel());
         this.completedLearningContentsListLabel.setCaption(messages.getQuestionGenerationViewFinishedContentsLabels());
         this.completedQuestionsListLabel.setCaption(messages.getQuestionGenerationViewFinishedQuestionsLabel());
@@ -112,6 +113,7 @@ public class QuestionGenerationViewImpl extends AbstractStepView implements Ques
         initializeExportSelect();
         registerListeners();
         disableActionsButtons();
+        setStyles();
     }
 
     private void initializeHorizontalLayout() {
@@ -122,6 +124,10 @@ public class QuestionGenerationViewImpl extends AbstractStepView implements Ques
         rightVerticalLayout.addComponent(completedQuestionsListLabel);
         rightVerticalLayout.addComponent(completedQuestionsList);
         horizontalLayout.addComponent(rightVerticalLayout);
+    }
+
+    private void setStyles() {
+        horizontalLayout.setStyleName(CSS_STYLE_NAME_HORICONTAL_LAYOUT);
     }
 
     private void registerListeners() {
@@ -186,6 +192,8 @@ public class QuestionGenerationViewImpl extends AbstractStepView implements Ques
     private void initializeExportSelect() {
         exportListSelect.addItem(messages.getQuestionGenerationViewListselectExportCsv());
         exportListSelect.addItem(messages.getQuestionGenerationViewListselectExportValamis());
+
+        exportListSelect.setRows(1);
     }
 
     @Override

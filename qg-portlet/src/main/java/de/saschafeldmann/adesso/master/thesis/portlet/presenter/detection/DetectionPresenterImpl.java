@@ -16,6 +16,7 @@ import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.Messages;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.ViewWithMenu;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.detection.DetectionView;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.detection.DetectionViewListener;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.generation.QuestionGenerationViewImpl;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.preprocesses.PreprocessesViewImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -255,6 +256,7 @@ public class DetectionPresenterImpl extends AbstractStepPresenter implements Det
         LOGGER.info("onNextButtonClicked()");
 
         questionGenerationSession.setStatus(QuestionGenerationSession.Status.DETECTION_DONE);
+        getNavigator().navigateTo(QuestionGenerationViewImpl.VIEW_NAME);
     }
 
     private DetectionActivationElement[] getUsersActivatedDetectionElements() {
