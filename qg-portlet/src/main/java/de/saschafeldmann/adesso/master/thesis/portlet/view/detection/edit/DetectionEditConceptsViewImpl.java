@@ -39,6 +39,7 @@ import java.util.Map;
 @Scope("prototype")
 public class DetectionEditConceptsViewImpl extends Window implements DetectionEditConceptsView {
     private static final String CSS_STYLE_CONCEPTS_VIEW_NAME = "edit-concepts-window";
+    public static final String CONCEPT_ATTRIBUTES_DELIMITER = ";";
 
     private final Messages messages;
     private final VerticalLayout mainLayout;
@@ -67,6 +68,7 @@ public class DetectionEditConceptsViewImpl extends Window implements DetectionEd
 
     @Override
     public void displayDetectedConcepts(final List<Concept> detectedConcepts) {
+        mainLayout.removeAllComponents();
         rowConceptMap = new HashMap<>();
         initializeGrid();
 
@@ -79,7 +81,6 @@ public class DetectionEditConceptsViewImpl extends Window implements DetectionEd
 
     private void initializeGrid() {
         conceptsGrid = new Grid();
-        mainLayout.removeComponent(conceptsGrid);
         mainLayout.addComponent(conceptsGrid);
     }
 
@@ -155,7 +156,7 @@ public class DetectionEditConceptsViewImpl extends Window implements DetectionEd
         stringBuilder.append(key)
                     .append(": ")
                     .append(value)
-                    .append("<br />");
+                    .append(CONCEPT_ATTRIBUTES_DELIMITER);
     }
 
     private void setStyles() {

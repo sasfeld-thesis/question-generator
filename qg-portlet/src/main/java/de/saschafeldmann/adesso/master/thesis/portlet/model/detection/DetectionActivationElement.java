@@ -1,5 +1,6 @@
 package de.saschafeldmann.adesso.master.thesis.portlet.model.detection;
 
+import de.saschafeldmann.adesso.master.thesis.detection.algorithm.DetectionAlgorithm;
 import de.saschafeldmann.adesso.master.thesis.portlet.model.preprocesses.ProcessActivationElement;
 import de.saschafeldmann.adesso.master.thesis.portlet.model.preprocesses.ProcessActivationStateChangeListener;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.Messages;
@@ -95,7 +96,7 @@ public class DetectionActivationElement {
 
     private final String activationLabel;
     private final Boolean isActivatedPerDefault;
-    private final PreprocessingAlgorithm processAlgorithm;
+    private final DetectionAlgorithm processAlgorithm;
     private final String tooltip;
     private final String startedLogEntry;
     private final String finishedLogEntry;
@@ -136,7 +137,7 @@ public class DetectionActivationElement {
      * Gets the underlying algorithm to be run.
      * @return the underyling algorithm
      */
-    public PreprocessingAlgorithm getProcessAlgorithm() {
+    public DetectionAlgorithm getProcessAlgorithm() {
         return processAlgorithm;
     }
 
@@ -209,7 +210,7 @@ public class DetectionActivationElement {
         private String tooltip;
         private String startedLogEntry;
         private String finishedLogEntry;
-        private PreprocessingAlgorithm processAlgorithm;
+        private DetectionAlgorithm processAlgorithm;
         private DetectionActivationStateChangeListener stateChangeListener;
 
         /**
@@ -242,10 +243,10 @@ public class DetectionActivationElement {
         /**
          * Sets the algorithm implementation that should be run.
          * @see PreprocessingAlgorithm for more information
-         * @param processAlgorithm the underlying algorithm implementation within the qg-preprocesses module
+         * @param processAlgorithm the underlying algorithm implementation within the qg-detection module
          * @return this
          */
-        public DetectionActivationElementBuilder withAlgorithm(final PreprocessingAlgorithm processAlgorithm) {
+        public DetectionActivationElementBuilder withAlgorithm(final DetectionAlgorithm processAlgorithm) {
             checkNotNull(processAlgorithm, "processAlgorithm must not be null.");
 
             this.processAlgorithm = processAlgorithm;
@@ -315,6 +316,7 @@ public class DetectionActivationElement {
             checkNotNull(tooltip, "tooltip must not be null.");
             checkNotNull(startedLogEntry, "startedLogEntry must not be null.");
             checkNotNull(finishedLogEntry, "finishedLogEntry must not be null.");
+            checkNotNull(processAlgorithm, "processAlgorithm must not be null.");
 
             return new DetectionActivationElement(this);
         }

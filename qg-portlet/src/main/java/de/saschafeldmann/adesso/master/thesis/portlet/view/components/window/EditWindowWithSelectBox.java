@@ -152,6 +152,13 @@ public class EditWindowWithSelectBox extends EditWindow {
     }
 
     /**
+     * Gets the select value of the current list selection.
+     * @return the value
+     */
+    public Object getListSelectValue() {
+        return listSelect.getValue();
+    }
+    /**
      * Sets the info box text.
      * Set to null to disable the info box.
      * @param infoBoxText String or null to disable (default)

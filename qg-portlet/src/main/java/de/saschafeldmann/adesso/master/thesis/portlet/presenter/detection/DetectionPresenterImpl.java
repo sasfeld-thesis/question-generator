@@ -2,6 +2,8 @@ package de.saschafeldmann.adesso.master.thesis.portlet.presenter.detection;
 
 import com.google.common.collect.Collections2;
 import com.vaadin.ui.Notification;
+import de.saschafeldmann.adesso.master.thesis.detection.algorithm.DetectionOptions;
+import de.saschafeldmann.adesso.master.thesis.detection.algorithm.filltext.FillTextConceptDetection;
 import de.saschafeldmann.adesso.master.thesis.detection.model.CardinalRelationConcept;
 import de.saschafeldmann.adesso.master.thesis.detection.model.FillTextConcept;
 import de.saschafeldmann.adesso.master.thesis.detection.model.api.Concept;
@@ -47,9 +49,12 @@ public class DetectionPresenterImpl extends AbstractStepPresenter implements Det
     private final DetectionView detectionView;
     @Autowired
     private Messages messages;
+    @Autowired
+    private FillTextConceptDetection fillTextConceptDetectionAlgorithm;
+    @Autowired
+    private DetectionOptions detectionOptions;
     private List<DetectionActivationElement> detectionActivationElementList;
     private boolean detectionFinished = false;
-
     @Autowired
     public DetectionPresenterImpl(
             DetectionView detectionView
@@ -78,7 +83,7 @@ public class DetectionPresenterImpl extends AbstractStepPresenter implements Det
         this.detectionActivationElementList = new ArrayList<>();
 
         addFillSentenceDetectionActivationElement(this.detectionActivationElementList);
-        addCardinalitySentencesDetectionActivationElement(this.detectionActivationElementList);
+        //addCardinalitySentencesDetectionActivationElement(this.detectionActivationElementList);
 
         this.detectionView.setDetectionActivationElements(detectionActivationElementList);
     }
@@ -91,6 +96,7 @@ public class DetectionPresenterImpl extends AbstractStepPresenter implements Det
                 .withTooltip(messages.getDetectionViewAccordionActivationOptiongroupFillsentencesTooltip())
                 .withStartedLogEntry(messages.getDetectionViewAccordionDetectionChainLogChainFillsentencesStarted())
                 .withFinishedLogEntry(messages.getDetectionViewAccordionDetectionChainLogChainFillsentencesFinished())
+                .withAlgorithm(fillTextConceptDetectionAlgorithm)
                 .build();
 
         setDefaultProcessActivationElementState(detectionActivationElement);
@@ -165,12 +171,12 @@ public class DetectionPresenterImpl extends AbstractStepPresenter implements Det
         Collection<LearningContent> annotatedLearningContents = Collections2.filter(questionGenerationSession.getCourse().getLearningContents(), FILTER_DELETED_ANNOTATED_TEXTS_PREDICATE);
 
         for (LearningContent learningContent: annotatedLearningContents) {
-            // TODO run detection algorithm
             LOGGER.info("executeProcessForAllNlpTaggedLearningContents(): will run detection algorithm on the given learning content {}", learningContent.getTitle());
+            List<Concept> concepts = detectionActivationElement.getProcessAlgorithm().execute(learningContent, detectionOptions);
 
-            // TODO replace test data
-            putLearningContentToConceptsMap(learningContent, getTestFillTextConcept(learningContent));
-            putLearningContentToConceptsMap(learningContent, getTestCardinalitySentenceConcept(learningContent));
+            for (Concept detectedConcept: concepts) {
+                putLearningContentToConceptsMap(learningContent, detectedConcept);
+            }
         }
     }
 
@@ -194,7 +200,6 @@ public class DetectionPresenterImpl extends AbstractStepPresenter implements Det
                 .build();
     }
 
-    // TODO replace detected by detection interface
     private void putLearningContentToConceptsMap(LearningContent learningContent, Concept detectedConcept) {
         if (!questionGenerationSession.getDetectedConceptsContentsMap().containsKey(learningContent)) {
             questionGenerationSession.getDetectedConceptsContentsMap().put(learningContent, new ArrayList<Concept>());

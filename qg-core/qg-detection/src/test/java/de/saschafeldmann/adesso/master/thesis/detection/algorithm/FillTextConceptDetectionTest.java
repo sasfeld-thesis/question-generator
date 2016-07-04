@@ -37,11 +37,31 @@ public class FillTextConceptDetectionTest {
     private static final String[] GERMAN_GEOGRAPHY_NER_TEXT = {"<O>Die</O><I-LOC>Bundesrepublik</I-LOC><I-LOC>Deutschland</I-LOC><O>liegt</O><O>in</O><I-LOC>Europa</I-LOC><O>.</O>",
                                                                 "<O>Die</O><O>Hauptstadt</O><O>von</O><I-LOC>Deutschland</I-LOC><O>ist</O><I-LOC>Berlin</I-LOC><O>.</O>"};
 
+    private static final String ENGLISH_GEOGRAPHY_TEXT = "The Bundesrepublik Germany is part of Europe. The capital of Germany is Berlin.";
+    private static final String[] ENGLISH_GEOGRAPHY_POS_TEXT = {"<DT>The</DT><NNP>Bundesrepublik</NNP><NNP>Germany</NNP><VBZ>is</VBZ><NN>part</NN><IN>of</IN><NNP>Europe</NNP><.>.</.>",
+                                                                "<DT>The</DT><NN>capital</NN><IN>of</IN><NNP>Germany</NNP><VBZ>is</VBZ><NNP>Berlin</NNP><.>.</.>"};
+    private static final String[] ENGLISH_GEOGRAPHY_NER_TEXT = {"<O>The</O><LOCATION>Bundesrepublik</LOCATION><LOCATION>Germany</LOCATION><O>is</O><O>part</O><O>of</O><LOCATION>Europe</LOCATION><O>.</O>",
+                                                                "<O>The</O><O>capital</O><O>of</O><LOCATION>Germany</LOCATION><O>is</O><LOCATION>Berlin</LOCATION><O>.</O>"};
+
     @Test
     public void testFillTextConceptDetectionDetectsGermanGeographyConcepts() throws Exception {
         // given a German geography learning content and the algorithm
         LearningContent learningContent = newLearningContent(GERMAN_GEOGRAPHY_TEXT, new ArrayList<String>(Arrays.asList(GERMAN_GEOGRAPHY_POS_TEXT)),
                 new ArrayList<String>(Arrays.asList(GERMAN_GEOGRAPHY_NER_TEXT)), Language.GERMAN);
+        DetectionAlgorithm<FillTextConcept> algorithm = newFillTextConceptAlgorithm();
+
+        // when the algorithm is called
+        List<FillTextConcept> detectedFillTextConcepts = algorithm.execute(learningContent, new DetectionOptions());
+
+        // then make sure that the expected concepts were detected
+        assertTrue("At least one fill text concept should have been detected", detectedFillTextConcepts.size() > 0);
+    }
+
+    @Test
+    public void testFillTextConceptDetectionDetectsEnglishGeographyConcepts() throws Exception {
+        // given an English geography learning content and the algorithm
+        LearningContent learningContent = newLearningContent(ENGLISH_GEOGRAPHY_TEXT, new ArrayList<String>(Arrays.asList(ENGLISH_GEOGRAPHY_POS_TEXT)),
+                new ArrayList<String>(Arrays.asList(ENGLISH_GEOGRAPHY_NER_TEXT)), Language.ENGLISH);
         DetectionAlgorithm<FillTextConcept> algorithm = newFillTextConceptAlgorithm();
 
         // when the algorithm is called

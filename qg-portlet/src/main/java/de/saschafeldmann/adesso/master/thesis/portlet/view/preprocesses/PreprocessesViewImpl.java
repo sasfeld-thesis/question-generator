@@ -289,14 +289,16 @@ public class PreprocessesViewImpl extends AbstractStepView implements Preprocess
         editWindow.setEditWindowListener(new EditWindowWithSelectBoxListener() {
             @Override
             public void onSelectBoxItemChanged(Object itemChanged) {
-                if (null != itemChanged && itemChanged instanceof LanguageWrapper && !itemChanged.equals(LanguageWrapper.DEFAULT_SELECTION)) {
-                    // language is not the default one
-                    viewListener.onEditLearningContentLanguageClick(selectedContent, ((LanguageWrapper) itemChanged).getLanguage());
-                }
+                // see onEditButtonClicked() event handler
             }
 
             @Override
             public void onEditButtonClicked(String textareInput, String secondTextAreaInput) {
+                if (null != editWindow.getListSelectValue() && editWindow.getListSelectValue() instanceof LanguageWrapper && !editWindow.getListSelectValue().equals(LanguageWrapper.DEFAULT_SELECTION)) {
+                    // language is not the default one
+                    viewListener.onEditLearningContentLanguageClick(selectedContent, ((LanguageWrapper) editWindow.getListSelectValue()).getLanguage());
+                }
+
                 viewListener.onEditLearningContentClick(selectedContent, textareInput, secondTextAreaInput);
             }
 

@@ -2,6 +2,8 @@ package de.saschafeldmann.adesso.master.thesis.detection.util;
 
 import de.saschafeldmann.adesso.master.thesis.util.properties.PropertiesReader;
 import de.saschafeldmann.adesso.master.thesis.util.properties.PropertiesReaderApi;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 import java.io.InputStream;
 import java.util.List;
@@ -21,6 +23,8 @@ import java.util.List;
  * <br /><br />
  * Implementation of a properties reader for the detection module.
  */
+@Component
+@Scope("singleton")
 public class DetectionProperties extends PropertiesReader implements PropertiesReaderApi {
     private static final String PROPERTIES_FILE_NAME = "/detection.properties";
 
