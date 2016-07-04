@@ -7,6 +7,7 @@ import de.saschafeldmann.adesso.master.thesis.elearningimport.model.Language;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
 import de.saschafeldmann.adesso.master.thesis.preprocesses.algorithm.PreprocessingAlgorithm;
 import de.saschafeldmann.adesso.master.thesis.preprocesses.algorithm.model.PreprocessingOptions;
+import de.saschafeldmann.adesso.master.thesis.util.linguistic.NlpAnnotationUtil;
 import edu.stanford.nlp.ling.CoreAnnotations;
 import edu.stanford.nlp.ling.CoreLabel;
 import edu.stanford.nlp.pipeline.Annotation;
@@ -223,12 +224,6 @@ public class NlpPreprocessingAlgorithm implements PreprocessingAlgorithm {
     }
 
     private void createXmlTagForAnnotation(StringBuilder annotatedTextBuilder, String tokenText, String annotation) {
-        annotatedTextBuilder.append("<")
-                .append(annotation)
-                .append(">")
-                .append(tokenText)
-                .append("</")
-                .append(annotation)
-                .append(">");
+        annotatedTextBuilder.append(NlpAnnotationUtil.annotateToken(tokenText, annotation));
     }
 }

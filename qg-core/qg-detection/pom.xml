@@ -12,5 +12,13 @@
     <!-- groupID and artifactID are inherited from parent -->
     <artifactId>qg-detection</artifactId>
 
+    <dependencies>
+        <!-- JUnit -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 
 </project>
