@@ -1,7 +1,6 @@
 package de.saschafeldmann.adesso.master.thesis.detection.model.api;
 
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
-import de.saschafeldmann.adesso.master.thesis.generation.specifications.TestQuestionSpecification;
 
 /**
  * Project:        Masterthesis of Sascha Feldmann
@@ -24,11 +23,6 @@ import de.saschafeldmann.adesso.master.thesis.generation.specifications.TestQues
  * See: Reiter, E., Dale, R., & Feng, Z. (2000). Building natural language generation systems (Vol. 33). Cambridge: Cambridge university press.
  */
 public interface Concept {
-
-    /**
-     * Gets the text specification (step 2 in the natural language generation pipeline) from the qg-generation module to build natural language sentences for this concept (step 1 in the NLG pipeline).
-     */
-    TestQuestionSpecification getTestQuestionTextSpecification();
 
     /**
      * Gets the learning content for which this concept was detected.

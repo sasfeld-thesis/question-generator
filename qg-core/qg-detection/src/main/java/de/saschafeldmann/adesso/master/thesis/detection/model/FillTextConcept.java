@@ -1,12 +1,10 @@
 package de.saschafeldmann.adesso.master.thesis.detection.model;
 
-import static com.google.common.base.Preconditions.*;
-
 import de.saschafeldmann.adesso.master.thesis.detection.model.api.AbstractConcept;
 import de.saschafeldmann.adesso.master.thesis.detection.model.api.Concept;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
-import de.saschafeldmann.adesso.master.thesis.generation.Factory;
-import de.saschafeldmann.adesso.master.thesis.generation.specifications.TestQuestionSpecification;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Project:        Masterthesis of Sascha Feldmann
@@ -30,7 +28,6 @@ import de.saschafeldmann.adesso.master.thesis.generation.specifications.TestQues
 public class FillTextConcept extends AbstractConcept implements Concept {
     private String fillSentence;
     private String correctAnswer;
-    private TestQuestionSpecification testQuestionSpecification = Factory.newFillTextConceptTestQuestionSpec(this);
 
     private FillTextConcept(FillTextConceptBuilder fillTextConceptBuilder) {
         super(fillTextConceptBuilder.learningContent, fillTextConceptBuilder.originalSentence);
@@ -38,12 +35,6 @@ public class FillTextConcept extends AbstractConcept implements Concept {
         fillSentence = fillTextConceptBuilder.fillSentence;
         correctAnswer = fillTextConceptBuilder.correctAnswer;
     }
-
-    @Override
-    public TestQuestionSpecification getTestQuestionTextSpecification() {
-        return testQuestionSpecification;
-    }
-
 
     /**
      * Gets the sentence that needs to be filled in, e.g.
