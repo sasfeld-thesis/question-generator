@@ -16,6 +16,7 @@ import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.Messages;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.ViewWithMenu;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.detection.DetectionView;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.detection.DetectionViewListener;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.preprocesses.PreprocessesViewImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -156,6 +157,10 @@ public class DetectionPresenterImpl extends AbstractStepPresenter implements Det
     }
 
     private void updateProcessedLearningContents() {
+        if (questionGenerationSession.getDetectedConceptsContentsMap().size() == 0) {
+            questionGenerationSession.setStatus(QuestionGenerationSession.Status.PREPROCESSES_DONE);
+        }
+
         detectionView.showProcessedLearningContents(questionGenerationSession.getDetectedConceptsContentsMap());
     }
 
@@ -241,6 +246,8 @@ public class DetectionPresenterImpl extends AbstractStepPresenter implements Det
     @Override
     public void onBackButtonClicked() {
         LOGGER.info("onBackButtonClicked()");
+
+        getNavigator().navigateTo(PreprocessesViewImpl.VIEW_NAME);
     }
 
     @Override
