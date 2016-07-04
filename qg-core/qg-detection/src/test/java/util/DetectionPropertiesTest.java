@@ -47,6 +47,18 @@ public class DetectionPropertiesTest {
         assertTrue("A list with at least one string value should have been returned.", partOfSpeechTagsToBeFilled.size() > 0);
     }
 
+    @Test
+    public void testGetFillTextReplacementCharacterReturnsString() throws Exception {
+        // given detection properties
+        DetectionProperties detectionProperties = newDetectionProperties();
+
+        // when the method is called
+        String replacementCharacter = detectionProperties.getFillTextReplacementCharacter();
+
+        // then a string should have been returned
+        assertTrue("A replacement character with at least one char should have been returned.", replacementCharacter.length() > 0);
+    }
+
     private DetectionProperties newDetectionProperties() throws Exception {
         return new DetectionProperties();
     }

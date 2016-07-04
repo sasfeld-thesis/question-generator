@@ -55,4 +55,12 @@ public class DetectionProperties extends PropertiesReader implements PropertiesR
     public List<String> getFillTextFillPartOfSpeechTags() {
         return fetchMultipleValues("de.saschafeldmann.adesso.master.thesis.detection.filltext.fill.part.of.speech.tags");
     }
+
+    /**
+     * Gets the filltext replacement character, e.g. "___".
+     * @return the filltext replacement character
+     */
+    public String getFillTextReplacementCharacter() {
+        return fetchValue("de.saschafeldmann.adesso.master.thesis.detection.filltext.replacement.character");
+    }
 }
