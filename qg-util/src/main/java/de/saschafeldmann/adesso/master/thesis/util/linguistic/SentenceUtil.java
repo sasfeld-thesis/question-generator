@@ -20,6 +20,7 @@ import java.util.List;
  * Utility to split sentences.
  */
 public class SentenceUtil {
+    private static final String LINE_SEPARATOR = System.getProperty("line.separator");
 
     /**
      * Builds a string for the given list of sentences.
@@ -31,7 +32,7 @@ public class SentenceUtil {
 
         for(String sentence: sentences) {
             stringBuilder.append(sentence);
-            stringBuilder.append("\n");
+            stringBuilder.append(LINE_SEPARATOR);
         }
 
         return stringBuilder.toString();
@@ -45,7 +46,7 @@ public class SentenceUtil {
     public static List<String> buildListOfSentencesForString(final String completeString) {
         List<String> sentences = new ArrayList<>();
 
-        Collections.addAll(sentences, completeString.split("\n"));
+        Collections.addAll(sentences, completeString.split(LINE_SEPARATOR));
 
         return sentences;
     }

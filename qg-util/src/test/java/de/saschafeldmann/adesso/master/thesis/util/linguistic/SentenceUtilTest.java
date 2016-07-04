@@ -23,6 +23,7 @@ import java.util.List;
  * Test of {@link SentenceUtil}.
  */
 public class SentenceUtilTest {
+    private static final String LINE_SEPARATOR = System.getProperty("line.separator");
 
     @Test
     public void testBuildStringForListOfSentencesGeneratesStringWithNewLineForEachSentence() {
@@ -35,17 +36,17 @@ public class SentenceUtilTest {
         String resultingString = SentenceUtil.buildStringForListOfSentences(sentencesList);
 
         // then the expected String with sentences separated in lines should have been generated
-        assertEquals("This is the first sentence.\n" +
-                "This is the second sentence.\n" +
-                "This is the third sentence.\n", resultingString);
+        assertEquals("This is the first sentence." + LINE_SEPARATOR +
+                "This is the second sentence." + LINE_SEPARATOR +
+                "This is the third sentence." + LINE_SEPARATOR, resultingString);
     }
 
     @Test
     public void testBuildListOfSentencesForStringWithNewLineForEachSentence() {
         // given a string with new lines for each sentence
-        String sentence = "This is the first sentence.\n" +
-                "This is the second sentence.\n" +
-                "This is the third sentence.\n";
+        String sentence = "This is the first sentence." + LINE_SEPARATOR +
+                "This is the second sentence." + LINE_SEPARATOR +
+                "This is the third sentence." + LINE_SEPARATOR;
 
         // when utility method is called
         List<String> resultingList = SentenceUtil.buildListOfSentencesForString(sentence);
