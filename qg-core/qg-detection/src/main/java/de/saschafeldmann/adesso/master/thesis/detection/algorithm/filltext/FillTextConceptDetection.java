@@ -8,6 +8,7 @@ import de.saschafeldmann.adesso.master.thesis.detection.algorithm.DetectionOptio
 import de.saschafeldmann.adesso.master.thesis.detection.model.FillTextConcept;
 import de.saschafeldmann.adesso.master.thesis.detection.model.api.Concept;
 import de.saschafeldmann.adesso.master.thesis.detection.util.DetectionProperties;
+import de.saschafeldmann.adesso.master.thesis.detection.util.ValidateUtil;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
 import de.saschafeldmann.adesso.master.thesis.util.linguistic.NamedEntityTagAdapter;
 import de.saschafeldmann.adesso.master.thesis.util.linguistic.NlpAnnotationUtil;
@@ -62,12 +63,13 @@ public class FillTextConceptDetection implements DetectionAlgorithm<FillTextConc
 
     @Override
     public List<FillTextConcept> execute(final LearningContent learningContent, final DetectionOptions detectionOptions) {
-        List<Concept> sentencesWithNamedEntityAndAdditionalNoun = findSentencesWithNamedEntitiesAndAnAdditionalNoun(learningContent);
-        return null;
+        ValidateUtil.validate(learningContent, detectionOptions);
+
+        return findSentencesWithNamedEntitiesAndAnAdditionalNoun(learningContent);
     }
 
-    private List<Concept> findSentencesWithNamedEntitiesAndAnAdditionalNoun(final LearningContent learningContent) {
-        final List<Concept> foundConceptsList = new ArrayList<>();
+    private List<FillTextConcept> findSentencesWithNamedEntitiesAndAnAdditionalNoun(final LearningContent learningContent) {
+        final List<FillTextConcept> foundConceptsList = new ArrayList<>();
 
         // identify sentences with at least one named entity and one addtional noun / named entity
         int index = 0;
@@ -91,14 +93,14 @@ public class FillTextConceptDetection implements DetectionAlgorithm<FillTextConc
         return foundConceptsList;
     }
 
-    private void addConcept(final List<Concept> foundConceptsList, final LearningContent learningContent, final String namedEntitySentence, final String fillTextCandidate) {
+    private void addConcept(final List<FillTextConcept> foundConceptsList, final LearningContent learningContent, final String namedEntitySentence, final String fillTextCandidate) {
         final String originalSentence = NlpAnnotationUtil.removeAllTokenAnnotations(namedEntitySentence);
-        final Concept fillTextConcept = createFillTextConcept(learningContent, originalSentence, fillTextCandidate);
+        final FillTextConcept fillTextConcept = createFillTextConcept(learningContent, originalSentence, fillTextCandidate);
 
         foundConceptsList.add(fillTextConcept);
     }
 
-    private Concept createFillTextConcept(LearningContent learningContent, String originalSentence, String fillTextCandidate) {
+    private FillTextConcept createFillTextConcept(LearningContent learningContent, String originalSentence, String fillTextCandidate) {
         return new FillTextConcept.FillTextConceptBuilder()
                 .withLearningContent(learningContent)
                 .withCorrectAnswer(fillTextCandidate)

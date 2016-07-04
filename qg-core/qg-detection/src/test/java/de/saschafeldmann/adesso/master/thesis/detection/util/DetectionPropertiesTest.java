@@ -1,4 +1,4 @@
-package util;
+package de.saschafeldmann.adesso.master.thesis.detection.util;
 
 import de.saschafeldmann.adesso.master.thesis.detection.util.DetectionProperties;
 import org.junit.Test;
