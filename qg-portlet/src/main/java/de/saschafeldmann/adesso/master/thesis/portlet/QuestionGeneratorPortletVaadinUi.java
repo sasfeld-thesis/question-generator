@@ -19,6 +19,7 @@ import de.saschafeldmann.adesso.master.thesis.portlet.presenter.detection.edit.D
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.detection.DetectionPresenter;
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.detection.edit.DetectionEditFillInTheBlankConceptPresenterImpl;
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.generation.QuestionGenerationPresenter;
+import de.saschafeldmann.adesso.master.thesis.portlet.presenter.generation.edit.QuestionGenerationEditQuestionPresenter;
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.preprocesses.PreprocessesPresenter;
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.preprocesses.PreprocessesPresenterImpl;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.VaadinProperties;
@@ -73,6 +74,7 @@ public class QuestionGeneratorPortletVaadinUi extends UI {
     private DetectionEditFillInTheBlankConceptPresenterImpl detetectionEditFillTextConceptPresenter;
     private DetectionEditCardinalRelationConceptPresenterImpl detetectionEditCardinalRelationConceptPresenter;
     private QuestionGenerationPresenter questionGenerationPresenter;
+    private QuestionGenerationEditQuestionPresenter questionGenerationEditQuestionPresenter;
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
@@ -166,6 +168,14 @@ public class QuestionGeneratorPortletVaadinUi extends UI {
 
         QuestionGenerationView questionGenerationView = questionGenerationPresenter.initializeView();
         viewNavigator.addView(QuestionGenerationViewImpl.VIEW_NAME, questionGenerationView);
+
+        initializeGenerationSubViews(applicationContext);
+    }
+
+    private void initializeGenerationSubViews(ApplicationContext applicationContext) {
+        this.questionGenerationEditQuestionPresenter = applicationContext.getBean(QuestionGenerationEditQuestionPresenter.class);
+        this.questionGenerationEditQuestionPresenter.setQuestionGenerationSession(questionGenerationSession);
+        this.questionGenerationEditQuestionPresenter.setListener(questionGenerationPresenter);
     }
 
     private void injectOtherDependencies(ApplicationContext applicationContext) {
@@ -224,6 +234,13 @@ public class QuestionGeneratorPortletVaadinUi extends UI {
         return detetectionEditCardinalRelationConceptPresenter;
     }
 
+    /**
+     * Gets the question edit presenter.
+     * @return presenter
+     */
+    public QuestionGenerationEditQuestionPresenter getQuestionGenerationEditQuestionPresenter() {
+        return questionGenerationEditQuestionPresenter;
+    }
     /**
      * Resets all inputs done by the user so far.
      */

@@ -1,5 +1,8 @@
 package de.saschafeldmann.adesso.master.thesis.generation.model;
 
+import de.saschafeldmann.adesso.master.thesis.detection.model.api.Concept;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,17 +22,20 @@ import java.util.List;
  */
 public class TestQuestion {
     private final String sourceSentence;
+    private final Concept sourceConcept;
 
     private String question;
     private String correctAnswer;;
-    private List<String> alternativeWrongAnswers;
+    private List<String> alternativeWrongAnswers = new ArrayList<>();
+    private List<String> alternativeCorrectAnswers = new ArrayList<>();
 
     /**
      * Creates the question.
      * @param sourceSentence tbe source sentence to which this question was generated
      */
-    public TestQuestion(final String sourceSentence) {
+    public TestQuestion(final String sourceSentence, final Concept sourceConcept) {
         this.sourceSentence = sourceSentence;
+        this.sourceConcept = sourceConcept;
     }
 
     /**
@@ -65,7 +71,7 @@ public class TestQuestion {
     }
 
     /**
-     * Gets the list of alternative wrong answers.
+     * Gets the modifiable list of alternative wrong answers.
      * @return the list of alternative wrong answers for muliple-choice
      */
     public List<String> getAlternativeWrongAnswers() {
@@ -73,10 +79,26 @@ public class TestQuestion {
     }
 
     /**
-     * Sets the alternative wrong answers.
-     * @param alternativeWrongAnswers the list of alternative wrong answers for multiple-choice
+     * Gets the modifiable list of alternative correct answers.
+     * @return the list of alternative correct answers for muliple-choice
      */
-    public void setAlternativeWrongAnswers(List<String> alternativeWrongAnswers) {
-        this.alternativeWrongAnswers = alternativeWrongAnswers;
+    public List<String> getAlternativeCorrectAnswers() {
+        return alternativeWrongAnswers;
+    }
+
+    /**
+     * Whether this is a multiple or single answer question.
+     * @return true if this is a multiple choice question
+     */
+    public boolean isMultipleChoice() {
+        return getAlternativeCorrectAnswers().size() > 0 || getAlternativeWrongAnswers().size() > 0;
+    }
+
+    /**
+     * Gets the source concept that this question was generated for.
+     * @return the concept
+     */
+    public Concept getSourceConcept() {
+        return sourceConcept;
     }
 }

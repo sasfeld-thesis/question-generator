@@ -3,6 +3,7 @@ package de.saschafeldmann.adesso.master.thesis.portlet.model;
 import de.saschafeldmann.adesso.master.thesis.detection.model.api.Concept;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.Course;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
+import de.saschafeldmann.adesso.master.thesis.generation.model.TestQuestion;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -78,6 +79,7 @@ public class QuestionGenerationSession {
     private Course course;
     private Status status = Status.STARTED;
     private Map<LearningContent, List<Concept>> detectedConceptsContentsMap;
+    private Map<LearningContent, List<TestQuestion>> generatedQuestionsContentsMap;
 
     /**
      * Sets the course that the user works on in this session.
@@ -125,6 +127,22 @@ public class QuestionGenerationSession {
      */
     public void resetDetectedConceptsContentsMap() {
         detectedConceptsContentsMap = new HashMap<>();
+    }
+
+    /**
+     * Gets the map of detected {@link Concept}, organized as a list of concepts
+     * attached to a learning content.
+     * @return the map
+     */
+    public Map<LearningContent, List<TestQuestion>> getGeneratedQuestionsContentsMap() {
+        return generatedQuestionsContentsMap;
+    }
+
+    /**
+     * Resets the map of generated questions.
+     */
+    public void resetGeneratedQuestionsContentsMap() {
+        generatedQuestionsContentsMap = new HashMap<>();
     }
 
     /**

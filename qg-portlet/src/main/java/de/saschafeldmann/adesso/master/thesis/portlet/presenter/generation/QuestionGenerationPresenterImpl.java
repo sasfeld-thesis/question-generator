@@ -2,7 +2,10 @@ package de.saschafeldmann.adesso.master.thesis.portlet.presenter.generation;
 
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
 import de.saschafeldmann.adesso.master.thesis.generation.model.TestQuestion;
+import de.saschafeldmann.adesso.master.thesis.portlet.QuestionGeneratorPortletVaadinUi;
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.AbstractStepPresenter;
+import de.saschafeldmann.adesso.master.thesis.portlet.presenter.generation.edit.QuestionGenerationEditQuestionListener;
+import de.saschafeldmann.adesso.master.thesis.portlet.presenter.generation.edit.QuestionGenerationEditQuestionPresenter;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.Messages;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.ViewWithMenu;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.detection.DetectionViewImpl;
@@ -13,6 +16,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Project:        Masterthesis of Sascha Feldmann
@@ -31,7 +38,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @Scope("prototype")
-public class QuestionGenerationPresenterImpl extends AbstractStepPresenter implements QuestionGenerationPresenter, QuestionGenerationViewListener {
+public class QuestionGenerationPresenterImpl extends AbstractStepPresenter implements QuestionGenerationPresenter, QuestionGenerationViewListener, QuestionGenerationEditQuestionListener {
     private static final Logger LOGGER = LoggerFactory.getLogger(QuestionGenerationPresenterImpl.class);
     private final QuestionGenerationView questionGenerationView;
 
@@ -65,21 +72,24 @@ public class QuestionGenerationPresenterImpl extends AbstractStepPresenter imple
     public void onStartQuestionGenerationButtonClicked() {
         LOGGER.info("onStartQuestionGenerationButtonClicked()");
 
-        // TODO delegate
+        // TODO delegate to qg-generation portlet
+        refreshGeneratedQuestions();
     }
 
     @Override
     public void onCompletedLearningContentSelected(final LearningContent learningContent) {
-        LOGGER.info("onCompletedLearningContentSelected()");
+        LOGGER.info("onCompletedLearningContentSelected(): learning content {}", learningContent);
 
-        // TODO show generated questions for the given learning content
+        questionGenerationView.displayGeneratedQuestions(
+                questionGenerationSession.getGeneratedQuestionsContentsMap().get(learningContent)
+        );
     }
 
     @Override
     public void onGeneratedQuestionSelected(TestQuestion testQuestion) {
-        LOGGER.info("onGeneratedQuestionSelected()");
+        LOGGER.info("onGeneratedQuestionSelected(): test question {}", testQuestion);
 
-        // TODO delegate to edit presenter
+        QuestionGeneratorPortletVaadinUi.getCurrentPortletVaadinUi().getQuestionGenerationEditQuestionPresenter().displayViewForTestQuestion(testQuestion);
     }
 
     @Override
@@ -100,5 +110,26 @@ public class QuestionGenerationPresenterImpl extends AbstractStepPresenter imple
     public void onViewFocus() {
         questionGenerationView.setCurrentSessionStatus(questionGenerationSession.getStatus());
         questionGenerationView.reset();
+
+        refreshGeneratedQuestions();
+    }
+
+    @Override
+    public void onClosed() {
+        refreshGeneratedQuestions();
+    }
+
+    private void refreshGeneratedQuestions() {
+        questionGenerationView.displayCompletedLearningContents(
+                toList(questionGenerationSession.getGeneratedQuestionsContentsMap().keySet())
+        );
+    }
+
+    private List<LearningContent> toList(Set<LearningContent> learningContents) {
+        List<LearningContent> learningContentList = new ArrayList<>();
+
+        learningContentList.addAll(learningContents);
+
+        return learningContentList;
     }
 }

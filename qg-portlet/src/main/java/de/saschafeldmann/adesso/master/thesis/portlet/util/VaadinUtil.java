@@ -2,9 +2,13 @@ package de.saschafeldmann.adesso.master.thesis.portlet.util;
 
 import com.vaadin.ui.UI;
 import com.vaadin.ui.Window;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.ComboBox;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.window.EditWindowWithSelectBox;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Project:        Masterthesis of Sascha Feldmann
@@ -45,5 +49,20 @@ public class VaadinUtil {
     public static void addWindow(final Window window) {
         removeWindowIfAlreadyAttached(window);
         UI.getCurrent().addWindow(window);
+    }
+
+    /**
+     * Gets all the items of the given combo box.
+     * @param comboBox the combobox
+     * @return a list of all items
+     */
+    public static <T> List<T> getAllItems(ComboBox comboBox) {
+        List<T> items = new ArrayList<>();
+
+        for (Object itemId: comboBox.getItemIds()) {
+            items.add((T) itemId);
+        }
+
+        return items;
     }
 }
