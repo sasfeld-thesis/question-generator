@@ -5,7 +5,7 @@ import com.vaadin.ui.renderers.ButtonRenderer;
 import com.vaadin.ui.renderers.ClickableRenderer;
 import com.vaadin.ui.renderers.HtmlRenderer;
 import de.saschafeldmann.adesso.master.thesis.detection.model.CardinalRelationConcept;
-import de.saschafeldmann.adesso.master.thesis.detection.model.FillTextConcept;
+import de.saschafeldmann.adesso.master.thesis.detection.model.FillInTheBlankTextConcept;
 import de.saschafeldmann.adesso.master.thesis.detection.model.api.Concept;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.Messages;
 import de.saschafeldmann.adesso.master.thesis.portlet.util.VaadinUtil;
@@ -118,7 +118,7 @@ public class DetectionEditConceptsViewImpl extends Window implements DetectionEd
     }
 
     private String getConceptTitle(Concept detectedConcept) {
-        if (detectedConcept instanceof FillTextConcept) {
+        if (detectedConcept instanceof FillInTheBlankTextConcept) {
             return messages.getDetectionViewAccordionDetectionChainEditWindowTableColumnConceptTypeFillsentences();
         } else {
             return messages.getDetectionViewAccordionDetectionChainEditWindowTableColumnConceptTypeCardinalitysentences();
@@ -126,14 +126,14 @@ public class DetectionEditConceptsViewImpl extends Window implements DetectionEd
     }
 
     private String getConceptAttributes(Concept detectedConcept) {
-        if (detectedConcept instanceof FillTextConcept) {
-            return buildAttributesStringForFillSentence((FillTextConcept) detectedConcept);
+        if (detectedConcept instanceof FillInTheBlankTextConcept) {
+            return buildAttributesStringForFillSentence((FillInTheBlankTextConcept) detectedConcept);
         } else {
             return buildAttributesStringForCardinalitySentence((CardinalRelationConcept) detectedConcept);
         }
     }
 
-    private String buildAttributesStringForFillSentence(FillTextConcept detectedConcept) {
+    private String buildAttributesStringForFillSentence(FillInTheBlankTextConcept detectedConcept) {
         StringBuilder stringBuilder = new StringBuilder();
 
         appendAttributesKeyValue(stringBuilder, messages.getDetectionViewAccordionDetectionChainEditWindowTableColumnAttributesFillsentencesFillsentence(), detectedConcept.getFillSentence());

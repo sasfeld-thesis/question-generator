@@ -1,9 +1,9 @@
 package de.saschafeldmann.adesso.master.thesis.generation;
 
 import de.saschafeldmann.adesso.master.thesis.detection.model.CardinalRelationConcept;
-import de.saschafeldmann.adesso.master.thesis.detection.model.FillTextConcept;
+import de.saschafeldmann.adesso.master.thesis.detection.model.FillInTheBlankTextConcept;
 import de.saschafeldmann.adesso.master.thesis.generation.specifications.CardinalRelationConceptTestQuestionSpec;
-import de.saschafeldmann.adesso.master.thesis.generation.specifications.FillTextConceptTestQuestionSpec;
+import de.saschafeldmann.adesso.master.thesis.generation.specifications.FillInTheBlankConceptTestQuestionSpec;
 
 /**
  * Project:        Masterthesis of Sascha Feldmann
@@ -23,12 +23,12 @@ import de.saschafeldmann.adesso.master.thesis.generation.specifications.FillText
 public class Factory {
 
     /**
-     * Creates a new {@link FillTextConceptTestQuestionSpec}
-     * @param fillTextConcept the underlying concept
-     * @return the {@link FillTextConceptTestQuestionSpec}
+     * Creates a new {@link FillInTheBlankConceptTestQuestionSpec}
+     * @param fillInTheBlankTextConcept the underlying concept
+     * @return the {@link FillInTheBlankConceptTestQuestionSpec}
      */
-    public static FillTextConceptTestQuestionSpec newFillTextConceptTestQuestionSpec(final FillTextConcept fillTextConcept) {
-        return new FillTextConceptTestQuestionSpec(fillTextConcept);
+    public static FillInTheBlankConceptTestQuestionSpec newFillTextConceptTestQuestionSpec(final FillInTheBlankTextConcept fillInTheBlankTextConcept) {
+        return new FillInTheBlankConceptTestQuestionSpec(fillInTheBlankTextConcept);
     }
 
     /**

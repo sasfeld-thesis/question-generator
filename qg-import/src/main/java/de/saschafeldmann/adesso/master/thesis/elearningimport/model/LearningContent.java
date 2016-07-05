@@ -139,7 +139,7 @@ public class LearningContent {
      * @return the annotated text
      */
     public boolean hasAnnotatedText() {
-        return getPartOfSpeechAnnotatedText().size() > 0;
+        return null != getPartOfSpeechAnnotatedText() && getPartOfSpeechAnnotatedText().size() > 0;
     }
 
     /**

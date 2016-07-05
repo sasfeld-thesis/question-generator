@@ -1,4 +1,4 @@
-package de.saschafeldmann.adesso.master.thesis.detection.algorithm.filltext;
+package de.saschafeldmann.adesso.master.thesis.detection.algorithm.fillintheblank;
 
 /**
  * Project:        Masterthesis of Sascha Feldmann
@@ -15,12 +15,12 @@ package de.saschafeldmann.adesso.master.thesis.detection.algorithm.filltext;
  * <br /><br />
  * [short description]
  */
-public class FillTextConceptDetectionException extends RuntimeException {
+public class FillInTheBlankConceptDetectionException extends RuntimeException {
     /**
      * Creates a new filltext concept detection exception.
      * @param cause the cause
      */
-    public FillTextConceptDetectionException(Throwable cause) {
+    public FillInTheBlankConceptDetectionException(Throwable cause) {
         super(cause);
     }
 }

@@ -1,6 +1,6 @@
 package de.saschafeldmann.adesso.master.thesis.generation.specifications;
 
-import de.saschafeldmann.adesso.master.thesis.detection.algorithm.filltext.FillTextConceptDetection;
+import de.saschafeldmann.adesso.master.thesis.detection.model.FillInTheBlankTextConcept;
 import de.saschafeldmann.adesso.master.thesis.detection.model.api.Concept;
 
 /**
@@ -16,17 +16,17 @@ import de.saschafeldmann.adesso.master.thesis.detection.model.api.Concept;
  * Company:
  * adesso AG
  * <br /><br />
- * Implementation of a {@link TestQuestionSpecification} for {@link de.saschafeldmann.adesso.master.thesis.detection.model.FillTextConcept} detected on
+ * Implementation of a {@link TestQuestionSpecification} for {@link FillInTheBlankTextConcept} detected on
  * a {@link de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent}.
  */
-public class FillTextConceptTestQuestionSpec implements TestQuestionSpecification {
+public class FillInTheBlankConceptTestQuestionSpec implements TestQuestionSpecification {
     private final Concept concept;
 
     /**
      * Creates the specification based upon the given concept.
      * @param concept the concept detected within qg-detection module
      */
-    public FillTextConceptTestQuestionSpec(final Concept concept) {
+    public FillInTheBlankConceptTestQuestionSpec(final Concept concept) {
         this.concept = concept;
     }
 

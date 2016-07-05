@@ -1,11 +1,11 @@
 package de.saschafeldmann.adesso.master.thesis.portlet.presenter.detection.edit;
 
-import de.saschafeldmann.adesso.master.thesis.detection.model.FillTextConcept;
+import de.saschafeldmann.adesso.master.thesis.detection.model.FillInTheBlankTextConcept;
 import de.saschafeldmann.adesso.master.thesis.detection.model.api.Concept;
 import de.saschafeldmann.adesso.master.thesis.portlet.QuestionGeneratorPortletVaadinUi;
 import de.saschafeldmann.adesso.master.thesis.portlet.model.QuestionGenerationSession;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.detection.edit.DetectionEditConceptViewListener;
-import de.saschafeldmann.adesso.master.thesis.portlet.view.detection.edit.DetectionEditFillTextConceptView;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.detection.edit.DetectionEditFillInTheBlankConceptView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,16 +31,16 @@ import javax.annotation.PostConstruct;
  */
 @Component
 @Scope("prototype")
-public class DetectionEditFillTextConceptPresenterImpl implements DetectionEditConceptPresenter<FillTextConcept>, DetectionEditConceptViewListener<FillTextConcept> {
-    private static final Logger LOGGER = LoggerFactory.getLogger(DetectionEditFillTextConceptPresenterImpl.class);
-    private final DetectionEditFillTextConceptView view;
+public class DetectionEditFillInTheBlankConceptPresenterImpl implements DetectionEditConceptPresenter<FillInTheBlankTextConcept>, DetectionEditConceptViewListener<FillInTheBlankTextConcept> {
+    private static final Logger LOGGER = LoggerFactory.getLogger(DetectionEditFillInTheBlankConceptPresenterImpl.class);
+    private final DetectionEditFillInTheBlankConceptView view;
 
     /**
-     * Constructs a new presenter for the {@link FillTextConcept}
+     * Constructs a new presenter for the {@link FillInTheBlankTextConcept}
      * @param view the view
      */
     @Autowired
-    public DetectionEditFillTextConceptPresenterImpl(final DetectionEditFillTextConceptView view) {
+    public DetectionEditFillInTheBlankConceptPresenterImpl(final DetectionEditFillInTheBlankConceptView view) {
         this.view = view;
     }
 
@@ -50,14 +50,14 @@ public class DetectionEditFillTextConceptPresenterImpl implements DetectionEditC
     }
 
     @Override
-    public void displayEditViewForConcept(final FillTextConcept concept) {
+    public void displayEditViewForConcept(final FillInTheBlankTextConcept concept) {
         LOGGER.info("displayEditViewForConcept(): displaying for concept {}", concept.getOriginalSentence());
 
         view.displayForConcept(concept);
     }
 
     @Override
-    public void onEditButtonClicked(FillTextConcept conceptToBeEdited) {
+    public void onEditButtonClicked(FillInTheBlankTextConcept conceptToBeEdited) {
         LOGGER.info("onEditButtonClicked(): editing concept {}", conceptToBeEdited.getOriginalSentence());
 
         conceptToBeEdited.setFillSentence(view.getFillTextSentenceInput());
@@ -67,7 +67,7 @@ public class DetectionEditFillTextConceptPresenterImpl implements DetectionEditC
     }
 
     @Override
-    public void onDeleteButtonClicked(FillTextConcept concept) {
+    public void onDeleteButtonClicked(FillInTheBlankTextConcept concept) {
         LOGGER.info("onDeleteButtonClicked(): deleting concept {}", concept.getOriginalSentence());
 
         getQuestionGeneratorSession().deleteDetectedConcept(concept.getLearningContent(), concept);
@@ -80,7 +80,7 @@ public class DetectionEditFillTextConceptPresenterImpl implements DetectionEditC
         showDetectedConceptsView(concept);
     }
 
-    private void closeView(FillTextConcept concept) {
+    private void closeView(FillInTheBlankTextConcept concept) {
         view.close();
 
         showDetectedConceptsView(concept);

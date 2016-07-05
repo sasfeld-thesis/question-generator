@@ -3,9 +3,9 @@ package de.saschafeldmann.adesso.master.thesis.portlet.presenter.detection;
 import com.google.common.collect.Collections2;
 import com.vaadin.ui.Notification;
 import de.saschafeldmann.adesso.master.thesis.detection.algorithm.DetectionOptions;
-import de.saschafeldmann.adesso.master.thesis.detection.algorithm.filltext.FillTextConceptDetection;
+import de.saschafeldmann.adesso.master.thesis.detection.algorithm.fillintheblank.FillInTheBlankConceptDetection;
 import de.saschafeldmann.adesso.master.thesis.detection.model.CardinalRelationConcept;
-import de.saschafeldmann.adesso.master.thesis.detection.model.FillTextConcept;
+import de.saschafeldmann.adesso.master.thesis.detection.model.FillInTheBlankTextConcept;
 import de.saschafeldmann.adesso.master.thesis.detection.model.api.Concept;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
 import de.saschafeldmann.adesso.master.thesis.portlet.QuestionGeneratorPortletVaadinUi;
@@ -52,7 +52,7 @@ public class DetectionPresenterImpl extends AbstractStepPresenter implements Det
     @Autowired
     private Messages messages;
     @Autowired
-    private FillTextConceptDetection fillTextConceptDetectionAlgorithm;
+    private FillInTheBlankConceptDetection fillTextConceptDetectionAlgorithm;
     @Autowired
     private DetectionOptions detectionOptions;
     private List<DetectionActivationElement> detectionActivationElementList;
@@ -187,7 +187,7 @@ public class DetectionPresenterImpl extends AbstractStepPresenter implements Det
     }
 
     private Concept getTestFillTextConcept(final LearningContent learningContent) {
-        return new FillTextConcept.FillTextConceptBuilder()
+        return new FillInTheBlankTextConcept.FillTextConceptBuilder()
                 .withFillSentence("Die Haupstadt von Deutschland ist ___.")
                 .withCorrectAnswer("Berlin")
                 .withOriginalSentence("Die Hauptstadt von Deutschland ist Berlin.")

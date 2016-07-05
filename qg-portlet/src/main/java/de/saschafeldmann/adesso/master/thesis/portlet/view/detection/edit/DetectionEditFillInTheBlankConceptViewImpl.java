@@ -1,7 +1,7 @@
 package de.saschafeldmann.adesso.master.thesis.portlet.view.detection.edit;
 
 import com.vaadin.ui.Window;
-import de.saschafeldmann.adesso.master.thesis.detection.model.FillTextConcept;
+import de.saschafeldmann.adesso.master.thesis.detection.model.FillInTheBlankTextConcept;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.Messages;
 import de.saschafeldmann.adesso.master.thesis.portlet.util.VaadinUtil;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.Button;
@@ -31,7 +31,7 @@ import javax.annotation.PostConstruct;
  */
 @Component
 @Scope("prototype")
-public class DetectionEditFillTextConceptViewImpl extends Window implements DetectionEditFillTextConceptView, Window.CloseListener {
+public class DetectionEditFillInTheBlankConceptViewImpl extends Window implements DetectionEditFillInTheBlankConceptView, Window.CloseListener {
     private final FormLayout formLayout;
     private final TextField originalSentenceInput;
     private final TextField filltextSentenceInput;
@@ -40,8 +40,8 @@ public class DetectionEditFillTextConceptViewImpl extends Window implements Dete
     private final Button btnEdit;
     private final Button btnDelete;
     private final Messages messages;
-    private DetectionEditConceptViewListener<FillTextConcept> viewListener;
-    private FillTextConcept fillTextConcept;
+    private DetectionEditConceptViewListener<FillInTheBlankTextConcept> viewListener;
+    private FillInTheBlankTextConcept fillInTheBlankTextConcept;
 
     /**
      * Constructs a new detection edit view.
@@ -51,7 +51,7 @@ public class DetectionEditFillTextConceptViewImpl extends Window implements Dete
      * @param correctAnswerInput TextField
      */
     @Autowired
-    public DetectionEditFillTextConceptViewImpl(
+    public DetectionEditFillInTheBlankConceptViewImpl(
             final Messages messages,
             final FormLayout formLayout,
             final TextField originalSentenceInput,
@@ -85,14 +85,14 @@ public class DetectionEditFillTextConceptViewImpl extends Window implements Dete
         btnEdit.addClickListener(new com.vaadin.ui.Button.ClickListener() {
             @Override
             public void buttonClick(com.vaadin.ui.Button.ClickEvent clickEvent) {
-                viewListener.onEditButtonClicked(fillTextConcept);
+                viewListener.onEditButtonClicked(fillInTheBlankTextConcept);
             }
         });
 
         btnDelete.addClickListener(new com.vaadin.ui.Button.ClickListener() {
             @Override
             public void buttonClick(com.vaadin.ui.Button.ClickEvent clickEvent) {
-                viewListener.onDeleteButtonClicked(fillTextConcept);
+                viewListener.onDeleteButtonClicked(fillInTheBlankTextConcept);
             }
         });
 
@@ -133,19 +133,19 @@ public class DetectionEditFillTextConceptViewImpl extends Window implements Dete
     }
 
     @Override
-    public void displayForConcept(final FillTextConcept concept) {
+    public void displayForConcept(final FillInTheBlankTextConcept concept) {
         originalSentenceInput.setValue(concept.getOriginalSentence());
         filltextSentenceInput.setValue(concept.getFillSentence());
         correctAnswerInput.setValue(concept.getCorrectAnswer());
 
-        this.fillTextConcept = concept;
+        this.fillInTheBlankTextConcept = concept;
 
         // displays the view in the current window
         VaadinUtil.addWindow(this);
     }
 
     @Override
-    public void setViewListener(final DetectionEditConceptViewListener<FillTextConcept> viewListener) {
+    public void setViewListener(final DetectionEditConceptViewListener<FillInTheBlankTextConcept> viewListener) {
         this.viewListener = viewListener;
     }
 
@@ -156,6 +156,6 @@ public class DetectionEditFillTextConceptViewImpl extends Window implements Dete
 
     @Override
     public void windowClose(CloseEvent closeEvent) {
-        viewListener.onWindowClosed(fillTextConcept);
+        viewListener.onWindowClosed(fillInTheBlankTextConcept);
     }
 }

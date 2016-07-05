@@ -25,11 +25,11 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * E.g. if the original sentence was "Berlin is the capital of Germany."
  * the fill text will be "Berlin is the capital of ___?"
  */
-public class FillTextConcept extends AbstractConcept implements Concept {
+public class FillInTheBlankTextConcept extends AbstractConcept implements Concept {
     private String fillSentence;
     private String correctAnswer;
 
-    private FillTextConcept(FillTextConceptBuilder fillTextConceptBuilder) {
+    private FillInTheBlankTextConcept(FillTextConceptBuilder fillTextConceptBuilder) {
         super(fillTextConceptBuilder.learningContent, fillTextConceptBuilder.originalSentence);
 
         fillSentence = fillTextConceptBuilder.fillSentence;
@@ -71,7 +71,7 @@ public class FillTextConcept extends AbstractConcept implements Concept {
     }
 
     /**
-     * Builder for immutable {@link FillTextConcept}
+     * Builder for immutable {@link FillInTheBlankTextConcept}
      */
     public static class FillTextConceptBuilder {
         private String fillSentence;
@@ -137,13 +137,13 @@ public class FillTextConcept extends AbstractConcept implements Concept {
          * Builds the final/immutable fill text concept.
          * @return the final fill text concept.
          */
-        public FillTextConcept build() {
+        public FillInTheBlankTextConcept build() {
             checkNotNull(fillSentence, "fillSentence must not be null");
             checkNotNull(correctAnswer, "correctAnswer must not be null");
             checkNotNull(originalSentence, "originalSentence must not be null");
             checkNotNull(learningContent, "learningContent must not be null");
 
-            return new FillTextConcept(this);
+            return new FillInTheBlankTextConcept(this);
         }
     }
 }

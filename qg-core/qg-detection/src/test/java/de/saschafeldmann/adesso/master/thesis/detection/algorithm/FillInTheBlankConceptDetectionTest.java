@@ -2,9 +2,8 @@ package de.saschafeldmann.adesso.master.thesis.detection.algorithm;
 
 import static org.junit.Assert.*;
 
-import de.saschafeldmann.adesso.master.thesis.detection.algorithm.filltext.FillTextConceptDetection;
-import de.saschafeldmann.adesso.master.thesis.detection.model.FillTextConcept;
-import de.saschafeldmann.adesso.master.thesis.detection.model.api.Concept;
+import de.saschafeldmann.adesso.master.thesis.detection.algorithm.fillintheblank.FillInTheBlankConceptDetection;
+import de.saschafeldmann.adesso.master.thesis.detection.model.FillInTheBlankTextConcept;
 import de.saschafeldmann.adesso.master.thesis.detection.util.DetectionProperties;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.Language;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
@@ -27,9 +26,9 @@ import java.util.List;
  * Company:
  * adesso AG
  * <br /><br />
- * Test of the {@link de.saschafeldmann.adesso.master.thesis.detection.algorithm.filltext.FillTextConceptDetection} algorithm.
+ * Test of the {@link de.saschafeldmann.adesso.master.thesis.detection.algorithm.fillintheblank.FillInTheBlankConceptDetection} algorithm.
  */
-public class FillTextConceptDetectionTest {
+public class FillInTheBlankConceptDetectionTest {
 
     private static final String GERMAN_GEOGRAPHY_TEXT = "Die Bundesrepublik Deutschland liegt in Europa. Die Hauptstadt von Deutschland ist Berlin.";
     private static final String[] GERMAN_GEOGRAPHY_POS_TEXT = {"<ART>Die</ART><NN>Bundesrepublik</NN><NE>Deutschland</NE><VVFIN>liegt</VVFIN><APPR>in</APPR><NE>Europa</NE><$.>.</$.>",
@@ -48,13 +47,13 @@ public class FillTextConceptDetectionTest {
         // given a German geography learning content and the algorithm
         LearningContent learningContent = newLearningContent(GERMAN_GEOGRAPHY_TEXT, new ArrayList<String>(Arrays.asList(GERMAN_GEOGRAPHY_POS_TEXT)),
                 new ArrayList<String>(Arrays.asList(GERMAN_GEOGRAPHY_NER_TEXT)), Language.GERMAN);
-        DetectionAlgorithm<FillTextConcept> algorithm = newFillTextConceptAlgorithm();
+        DetectionAlgorithm<FillInTheBlankTextConcept> algorithm = newFillTextConceptAlgorithm();
 
         // when the algorithm is called
-        List<FillTextConcept> detectedFillTextConcepts = algorithm.execute(learningContent, new DetectionOptions());
+        List<FillInTheBlankTextConcept> detectedFillInTheBlankTextConcepts = algorithm.execute(learningContent, new DetectionOptions());
 
         // then make sure that the expected concepts were detected
-        assertTrue("At least one fill text concept should have been detected", detectedFillTextConcepts.size() > 0);
+        assertTrue("At least one fill text concept should have been detected", detectedFillInTheBlankTextConcepts.size() > 0);
     }
 
     @Test
@@ -62,13 +61,13 @@ public class FillTextConceptDetectionTest {
         // given an English geography learning content and the algorithm
         LearningContent learningContent = newLearningContent(ENGLISH_GEOGRAPHY_TEXT, new ArrayList<String>(Arrays.asList(ENGLISH_GEOGRAPHY_POS_TEXT)),
                 new ArrayList<String>(Arrays.asList(ENGLISH_GEOGRAPHY_NER_TEXT)), Language.ENGLISH);
-        DetectionAlgorithm<FillTextConcept> algorithm = newFillTextConceptAlgorithm();
+        DetectionAlgorithm<FillInTheBlankTextConcept> algorithm = newFillTextConceptAlgorithm();
 
         // when the algorithm is called
-        List<FillTextConcept> detectedFillTextConcepts = algorithm.execute(learningContent, new DetectionOptions());
+        List<FillInTheBlankTextConcept> detectedFillInTheBlankTextConcepts = algorithm.execute(learningContent, new DetectionOptions());
 
         // then make sure that the expected concepts were detected
-        assertTrue("At least one fill text concept should have been detected", detectedFillTextConcepts.size() > 0);
+        assertTrue("At least one fill text concept should have been detected", detectedFillInTheBlankTextConcepts.size() > 0);
     }
 
     private LearningContent newLearningContent(String germanGeographyText, List<String> germanGeographyPosText, List<String> germanGeographyNerText, Language givenLanguage) {
@@ -86,8 +85,8 @@ public class FillTextConceptDetectionTest {
     }
 
 
-    private DetectionAlgorithm<FillTextConcept> newFillTextConceptAlgorithm() throws Exception {
+    private DetectionAlgorithm<FillInTheBlankTextConcept> newFillTextConceptAlgorithm() throws Exception {
         DetectionProperties properties = new DetectionProperties();
-        return new FillTextConceptDetection(properties);
+        return new FillInTheBlankConceptDetection(properties);
     }
 }

@@ -1,7 +1,7 @@
 package de.saschafeldmann.adesso.master.thesis.portlet.presenter.detection.edit;
 
 import de.saschafeldmann.adesso.master.thesis.detection.model.CardinalRelationConcept;
-import de.saschafeldmann.adesso.master.thesis.detection.model.FillTextConcept;
+import de.saschafeldmann.adesso.master.thesis.detection.model.FillInTheBlankTextConcept;
 import de.saschafeldmann.adesso.master.thesis.detection.model.api.Concept;
 import de.saschafeldmann.adesso.master.thesis.portlet.QuestionGeneratorPortletVaadinUi;
 import de.saschafeldmann.adesso.master.thesis.portlet.model.QuestionGenerationSession;
@@ -37,7 +37,7 @@ public class DetectionEditCardinalRelationConceptPresenterImpl implements Detect
     private final DetectionEditCardinalRelationConceptView view;
 
     /**
-     * Constructs a new presenter for the {@link FillTextConcept}
+     * Constructs a new presenter for the {@link FillInTheBlankTextConcept}
      * @param view the view
      */
     @Autowired

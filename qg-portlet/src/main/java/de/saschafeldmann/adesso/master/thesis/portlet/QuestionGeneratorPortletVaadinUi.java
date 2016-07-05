@@ -7,7 +7,7 @@ import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.WrappedPortletSession;
 import com.vaadin.ui.UI;
 import de.saschafeldmann.adesso.master.thesis.detection.model.CardinalRelationConcept;
-import de.saschafeldmann.adesso.master.thesis.detection.model.FillTextConcept;
+import de.saschafeldmann.adesso.master.thesis.detection.model.FillInTheBlankTextConcept;
 import de.saschafeldmann.adesso.master.thesis.portlet.model.QuestionGenerationSession;
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.course.contents.CourseContentsPresenter;
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.course.contents.CourseContentsPresenterImpl;
@@ -17,7 +17,7 @@ import de.saschafeldmann.adesso.master.thesis.portlet.presenter.detection.edit.D
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.detection.edit.DetectionEditConceptPresenter;
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.detection.edit.DetectionEditConceptsPresenter;
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.detection.DetectionPresenter;
-import de.saschafeldmann.adesso.master.thesis.portlet.presenter.detection.edit.DetectionEditFillTextConceptPresenterImpl;
+import de.saschafeldmann.adesso.master.thesis.portlet.presenter.detection.edit.DetectionEditFillInTheBlankConceptPresenterImpl;
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.generation.QuestionGenerationPresenter;
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.preprocesses.PreprocessesPresenter;
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.preprocesses.PreprocessesPresenterImpl;
@@ -70,7 +70,7 @@ public class QuestionGeneratorPortletVaadinUi extends UI {
     private PreprocessesPresenter preprocessesPresenter;
     private DetectionPresenter detectionPresenter;
     private DetectionEditConceptsPresenter detectionEditConceptsPresenter;
-    private DetectionEditFillTextConceptPresenterImpl detetectionEditFillTextConceptPresenter;
+    private DetectionEditFillInTheBlankConceptPresenterImpl detetectionEditFillTextConceptPresenter;
     private DetectionEditCardinalRelationConceptPresenterImpl detetectionEditCardinalRelationConceptPresenter;
     private QuestionGenerationPresenter questionGenerationPresenter;
 
@@ -154,7 +154,7 @@ public class QuestionGeneratorPortletVaadinUi extends UI {
     private void initializeDetectionSubViews(ApplicationContext applicationContext) {
         // all presenters must be initialized before detectionEditConceptsPresenter !!!
         this.detetectionEditCardinalRelationConceptPresenter = applicationContext.getBean(DetectionEditCardinalRelationConceptPresenterImpl.class);
-        this.detetectionEditFillTextConceptPresenter = applicationContext.getBean(DetectionEditFillTextConceptPresenterImpl.class);
+        this.detetectionEditFillTextConceptPresenter = applicationContext.getBean(DetectionEditFillInTheBlankConceptPresenterImpl.class);
 
         this.detectionEditConceptsPresenter = applicationContext.getBean(DetectionEditConceptsPresenter.class);
     }
@@ -209,10 +209,10 @@ public class QuestionGeneratorPortletVaadinUi extends UI {
     }
 
     /**
-     * Gets the detection edit {@link FillTextConcept} presenter.
+     * Gets the detection edit {@link FillInTheBlankTextConcept} presenter.
      * @return presenter
      */
-    public DetectionEditConceptPresenter<FillTextConcept> getDetectionEditFillTextConceptPresenter() {
+    public DetectionEditConceptPresenter<FillInTheBlankTextConcept> getDetectionEditFillTextConceptPresenter() {
         return detetectionEditFillTextConceptPresenter;
     }
 

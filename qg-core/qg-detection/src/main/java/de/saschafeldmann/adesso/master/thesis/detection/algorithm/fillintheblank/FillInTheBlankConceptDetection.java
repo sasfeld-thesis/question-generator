@@ -1,12 +1,9 @@
-package de.saschafeldmann.adesso.master.thesis.detection.algorithm.filltext;
-
-import static com.google.common.base.Preconditions.*;
+package de.saschafeldmann.adesso.master.thesis.detection.algorithm.fillintheblank;
 
 import com.google.common.base.Strings;
 import de.saschafeldmann.adesso.master.thesis.detection.algorithm.DetectionAlgorithm;
 import de.saschafeldmann.adesso.master.thesis.detection.algorithm.DetectionOptions;
-import de.saschafeldmann.adesso.master.thesis.detection.model.FillTextConcept;
-import de.saschafeldmann.adesso.master.thesis.detection.model.api.Concept;
+import de.saschafeldmann.adesso.master.thesis.detection.model.FillInTheBlankTextConcept;
 import de.saschafeldmann.adesso.master.thesis.detection.util.DetectionProperties;
 import de.saschafeldmann.adesso.master.thesis.detection.util.ValidateUtil;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
@@ -44,8 +41,8 @@ import java.util.regex.Pattern;
  */
 @Component
 @Scope("prototype")
-public class FillTextConceptDetection implements DetectionAlgorithm<FillTextConcept> {
-    private static final Logger LOGGER = LoggerFactory.getLogger(FillTextConceptDetection.class);
+public class FillInTheBlankConceptDetection implements DetectionAlgorithm<FillInTheBlankTextConcept> {
+    private static final Logger LOGGER = LoggerFactory.getLogger(FillInTheBlankConceptDetection.class);
 
     private static final String REGEX_TO_MATCH_NAMED_ENTITIES = "<%1$s>.*?</%1$s>";
     private static final String REGEX_TO_MATCH_PART_OF_SPEECH_TAGS = "<%1$s>.*?</%1$s>";
@@ -57,19 +54,19 @@ public class FillTextConceptDetection implements DetectionAlgorithm<FillTextConc
      * @param detectionProperties the properties
      */
     @Autowired
-    public FillTextConceptDetection(final DetectionProperties detectionProperties) {
+    public FillInTheBlankConceptDetection(final DetectionProperties detectionProperties) {
         this.detectionProperties = detectionProperties;
     }
 
     @Override
-    public List<FillTextConcept> execute(final LearningContent learningContent, final DetectionOptions detectionOptions) {
+    public List<FillInTheBlankTextConcept> execute(final LearningContent learningContent, final DetectionOptions detectionOptions) {
         ValidateUtil.validate(learningContent, detectionOptions);
 
         return findSentencesWithNamedEntitiesAndAnAdditionalNoun(learningContent);
     }
 
-    private List<FillTextConcept> findSentencesWithNamedEntitiesAndAnAdditionalNoun(final LearningContent learningContent) {
-        final List<FillTextConcept> foundConceptsList = new ArrayList<>();
+    private List<FillInTheBlankTextConcept> findSentencesWithNamedEntitiesAndAnAdditionalNoun(final LearningContent learningContent) {
+        final List<FillInTheBlankTextConcept> foundConceptsList = new ArrayList<>();
 
         // identify sentences with at least one named entity and one addtional noun / named entity
         int index = 0;
@@ -93,15 +90,15 @@ public class FillTextConceptDetection implements DetectionAlgorithm<FillTextConc
         return foundConceptsList;
     }
 
-    private void addConcept(final List<FillTextConcept> foundConceptsList, final LearningContent learningContent, final String namedEntitySentence, final String fillTextCandidate) {
+    private void addConcept(final List<FillInTheBlankTextConcept> foundConceptsList, final LearningContent learningContent, final String namedEntitySentence, final String fillTextCandidate) {
         final String originalSentence = NlpAnnotationUtil.removeAllTokenAnnotations(namedEntitySentence);
-        final FillTextConcept fillTextConcept = createFillTextConcept(learningContent, originalSentence, fillTextCandidate);
+        final FillInTheBlankTextConcept fillInTheBlankTextConcept = createFillTextConcept(learningContent, originalSentence, fillTextCandidate);
 
-        foundConceptsList.add(fillTextConcept);
+        foundConceptsList.add(fillInTheBlankTextConcept);
     }
 
-    private FillTextConcept createFillTextConcept(LearningContent learningContent, String originalSentence, String fillTextCandidate) {
-        return new FillTextConcept.FillTextConceptBuilder()
+    private FillInTheBlankTextConcept createFillTextConcept(LearningContent learningContent, String originalSentence, String fillTextCandidate) {
+        return new FillInTheBlankTextConcept.FillTextConceptBuilder()
                 .withLearningContent(learningContent)
                 .withCorrectAnswer(fillTextCandidate)
                 .withFillSentence(buildFillSentence(originalSentence, fillTextCandidate))
@@ -158,7 +155,7 @@ public class FillTextConceptDetection implements DetectionAlgorithm<FillTextConc
             } catch (IllegalArgumentException e) {
                 LOGGER.error("matchesConfiguredNamedEntity(): properties configuration error: configured named entity does not match one of the enumeration values in NamedEntityTagAdapter. " +
                         "Exception: {}", e);
-                throw new FillTextConceptDetectionException(e);
+                throw new FillInTheBlankConceptDetectionException(e);
             }
         }
 

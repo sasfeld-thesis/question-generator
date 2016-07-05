@@ -1,6 +1,6 @@
 package de.saschafeldmann.adesso.master.thesis.portlet.view.detection.edit;
 
-import de.saschafeldmann.adesso.master.thesis.detection.model.FillTextConcept;
+import de.saschafeldmann.adesso.master.thesis.detection.model.FillInTheBlankTextConcept;
 
 /**
  * Project:        Masterthesis of Sascha Feldmann
@@ -15,9 +15,9 @@ import de.saschafeldmann.adesso.master.thesis.detection.model.FillTextConcept;
  * Company:
  * adesso AG
  * <br /><br />
- * Special view that allows editing {@link FillTextConcept}.
+ * Special view that allows editing {@link FillInTheBlankTextConcept}.
  */
-public interface DetectionEditFillTextConceptView extends DetectionEditConceptView<FillTextConcept> {
+public interface DetectionEditFillInTheBlankConceptView extends DetectionEditConceptView<FillInTheBlankTextConcept> {
     /**
      * Gets the fill text sentence input done by the user.
      * @return String

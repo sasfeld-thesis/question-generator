@@ -2,7 +2,7 @@ package de.saschafeldmann.adesso.master.thesis.portlet.presenter.detection.edit;
 
 import com.vaadin.shared.data.sort.SortDirection;
 import de.saschafeldmann.adesso.master.thesis.detection.model.CardinalRelationConcept;
-import de.saschafeldmann.adesso.master.thesis.detection.model.FillTextConcept;
+import de.saschafeldmann.adesso.master.thesis.detection.model.FillInTheBlankTextConcept;
 import de.saschafeldmann.adesso.master.thesis.detection.model.api.Concept;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
 import de.saschafeldmann.adesso.master.thesis.portlet.QuestionGeneratorPortletVaadinUi;
@@ -88,7 +88,7 @@ public class DetectionEditConceptsPresenterImpl implements DetectionEditConcepts
     private DetectionEditConceptPresenter getEditPresenter(final Concept conceptToBeEdited) {
         if (null == conceptEditViewMap) {
             conceptEditViewMap = new HashMap<>();
-            conceptEditViewMap.put(FillTextConcept.class, QuestionGeneratorPortletVaadinUi.getCurrentPortletVaadinUi().getDetectionEditFillTextConceptPresenter());
+            conceptEditViewMap.put(FillInTheBlankTextConcept.class, QuestionGeneratorPortletVaadinUi.getCurrentPortletVaadinUi().getDetectionEditFillTextConceptPresenter());
             conceptEditViewMap.put(CardinalRelationConcept.class, QuestionGeneratorPortletVaadinUi.getCurrentPortletVaadinUi().getDetectionEditCardinalRelationConceptPresenter());
         }
 
