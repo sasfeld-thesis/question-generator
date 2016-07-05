@@ -1,5 +1,8 @@
 package de.saschafeldmann.adesso.master.thesis.portlet.view.components;
 
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
 /**
  * Project:        Masterthesis of Sascha Feldmann
  * Creation date:  05.07.2016
@@ -15,5 +18,7 @@ package de.saschafeldmann.adesso.master.thesis.portlet.view.components;
  * <br /><br />
  * A Vaadin {@link com.vaadin.ui.ComboBox}
  */
+@Component
+@Scope("prototype")
 public class ComboBox extends com.vaadin.ui.ComboBox {
 }

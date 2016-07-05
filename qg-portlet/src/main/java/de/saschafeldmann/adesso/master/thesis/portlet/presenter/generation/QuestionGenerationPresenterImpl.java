@@ -1,8 +1,12 @@
 package de.saschafeldmann.adesso.master.thesis.portlet.presenter.generation;
 
+import de.saschafeldmann.adesso.master.thesis.detection.model.CardinalRelationConcept;
+import de.saschafeldmann.adesso.master.thesis.detection.model.FillInTheBlankTextConcept;
+import de.saschafeldmann.adesso.master.thesis.detection.model.api.Concept;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
 import de.saschafeldmann.adesso.master.thesis.generation.model.TestQuestion;
 import de.saschafeldmann.adesso.master.thesis.portlet.QuestionGeneratorPortletVaadinUi;
+import de.saschafeldmann.adesso.master.thesis.portlet.model.QuestionGenerationSession;
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.AbstractStepPresenter;
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.generation.edit.QuestionGenerationEditQuestionListener;
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.generation.edit.QuestionGenerationEditQuestionPresenter;
@@ -73,7 +77,46 @@ public class QuestionGenerationPresenterImpl extends AbstractStepPresenter imple
         LOGGER.info("onStartQuestionGenerationButtonClicked()");
 
         // TODO delegate to qg-generation portlet
+        addTestData();
+
         refreshGeneratedQuestions();
+    }
+
+    private void addTestData() {
+        questionGenerationSession.resetGeneratedQuestionsContentsMap();
+
+        for (LearningContent learningContent : questionGenerationSession.getDetectedConceptsContentsMap().keySet()) {
+            List<TestQuestion> testQuestionsList = new ArrayList<>();
+            questionGenerationSession.getGeneratedQuestionsContentsMap()
+                    .put(learningContent, testQuestionsList);
+
+            for (Concept concept: questionGenerationSession.getDetectedConceptsContentsMap().get(learningContent)) {
+                if (concept instanceof FillInTheBlankTextConcept) {
+                    TestQuestion testQuestion = new TestQuestion(concept.getOriginalSentence(), concept);
+                    testQuestion.setQuestion("Wie lautet der Satz richtig? " + ((FillInTheBlankTextConcept) concept).getFillSentence());
+                    testQuestion.setCorrectAnswer(((FillInTheBlankTextConcept) concept).getCorrectAnswer());
+                    testQuestion.setLabel(buildTestQuestionLabel(testQuestion));
+                    testQuestionsList.add(
+                            testQuestion
+                    );
+                }
+            }
+        }
+    }
+
+    private String buildTestQuestionLabel(TestQuestion testQuestion) {
+        String label = "";
+
+        // differentiate the label
+        if (testQuestion.getSourceConcept() instanceof FillInTheBlankTextConcept) {
+            label += messages.getQuestionGenerationViewFinishedQuestionsFillsentencesPrefix();
+        } else if (testQuestion.getSourceConcept() instanceof CardinalRelationConcept) {
+            label += messages.getQuestionGenerationViewFinishedQuestionsCardinalSentencesPrefix();
+        }
+
+        label += " - " + testQuestion.getQuestion();
+
+        return label;
     }
 
     @Override
@@ -120,9 +163,16 @@ public class QuestionGenerationPresenterImpl extends AbstractStepPresenter imple
     }
 
     private void refreshGeneratedQuestions() {
+        List<LearningContent> learningContents = toList(questionGenerationSession.getGeneratedQuestionsContentsMap().keySet());
         questionGenerationView.displayCompletedLearningContents(
-                toList(questionGenerationSession.getGeneratedQuestionsContentsMap().keySet())
+                learningContents
         );
+
+        if (learningContents.size() > 0) {
+            questionGenerationSession.setStatus(QuestionGenerationSession.Status.QUESTIONS_GENERATED);
+        } else {
+            questionGenerationSession.setStatus(QuestionGenerationSession.Status.DETECTION_DONE);
+        }
     }
 
     private List<LearningContent> toList(Set<LearningContent> learningContents) {

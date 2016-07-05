@@ -28,6 +28,7 @@ public class TestQuestion {
     private String correctAnswer;;
     private List<String> alternativeWrongAnswers = new ArrayList<>();
     private List<String> alternativeCorrectAnswers = new ArrayList<>();
+    private String label = "";
 
     /**
      * Creates the question.
@@ -71,6 +72,14 @@ public class TestQuestion {
     }
 
     /**
+     * Sets the label of this test question.
+     * @param label
+     */
+    public void setLabel(String label) {
+        this.label = label;
+    }
+
+    /**
      * Gets the modifiable list of alternative wrong answers.
      * @return the list of alternative wrong answers for muliple-choice
      */
@@ -100,5 +109,10 @@ public class TestQuestion {
      */
     public Concept getSourceConcept() {
         return sourceConcept;
+    }
+
+    @Override
+    public String toString() {
+        return label;
     }
 }

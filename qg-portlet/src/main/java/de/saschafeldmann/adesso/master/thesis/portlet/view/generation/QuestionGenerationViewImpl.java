@@ -225,7 +225,7 @@ public class QuestionGenerationViewImpl extends AbstractStepView implements Ques
     public void displayGeneratedQuestions(List<TestQuestion> testQuestions) {
         completedQuestionsList.removeAllItems();
 
-        completedLearningContentsList.addItems(testQuestions);
+        completedQuestionsList.addItems(testQuestions);
 
         triggerActionButtonsEnabledState();
     }
