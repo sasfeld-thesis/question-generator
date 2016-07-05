@@ -1,6 +1,7 @@
 package de.saschafeldmann.adesso.master.thesis.portlet.util;
 
 import com.google.common.base.Joiner;
+import com.google.common.base.Strings;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -41,6 +42,11 @@ public class CommaseparatedValueUtil {
      * @return list of multi values
      */
     public static List<String> toMultipleValuesList(final String listWithCommaseparatedValues) {
+        if (Strings.isNullOrEmpty(listWithCommaseparatedValues.trim())) {
+            // returns the empty list
+            return new ArrayList<>();
+        }
+
         // remove whitespace after ,
         return Arrays.asList(listWithCommaseparatedValues.replaceAll(", ", ",").split(SEPARATOR));
     }

@@ -92,7 +92,7 @@ public class TestQuestion {
      * @return the list of alternative correct answers for muliple-choice
      */
     public List<String> getAlternativeCorrectAnswers() {
-        return alternativeWrongAnswers;
+        return alternativeCorrectAnswers;
     }
 
     /**
