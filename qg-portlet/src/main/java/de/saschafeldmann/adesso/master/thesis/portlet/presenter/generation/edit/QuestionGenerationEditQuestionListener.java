@@ -1,5 +1,7 @@
 package de.saschafeldmann.adesso.master.thesis.portlet.presenter.generation.edit;
 
+import de.saschafeldmann.adesso.master.thesis.generation.model.TestQuestion;
+
 /**
  * Project:        Masterthesis of Sascha Feldmann
  * Creation date:  05.07.2016
@@ -19,6 +21,7 @@ public interface QuestionGenerationEditQuestionListener
 {
     /**
      * Triggered if the dialog was closed.
+     * @param testQuestion the test question for which the edit dialog was closed
      */
-    void onClosed();
+    void onEditQuestionDialogClosed(TestQuestion testQuestion);
 }

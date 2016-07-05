@@ -1,0 +1,23 @@
+/**
+ * Project:        Masterthesis of Sascha Feldmann
+ * Creation date:  05.07.2016
+ * Author:         Sascha Feldmann (sascha.feldmann@gmx.de)
+ * <br /><br />
+ * University:
+ * Hochschule für Technik und Wirtschaft, Berlin
+ * Fachbereich 4
+ * Studiengang Internationale Medieninformatik (Master)
+ * <br /><br />
+ * Company:
+ * adesso AG
+ * <br /><br />
+ * Styles for the question generation step.
+ */
+
+
+// Define the theme as mixin so that it can be included in other files
+@mixin generation {
+  .question-generation-edit-question-window {
+    max-width: $editDialogWindowWidth;
+  }
+}

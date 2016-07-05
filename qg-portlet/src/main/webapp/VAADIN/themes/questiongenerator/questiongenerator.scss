@@ -20,6 +20,7 @@
 @import "steps/contents";
 @import "steps/preprocesses";
 @import "steps/detection";
+@import "steps/generation";
 @import "components/accordion";
 @import "components/editwindow";
 @import "components/infobox";
@@ -32,6 +33,7 @@
   @include contents;
   @include preprocesses;
   @include detection;
+  @include generation;
   @include accordion;
   @include editwindow;
   @include infobox;

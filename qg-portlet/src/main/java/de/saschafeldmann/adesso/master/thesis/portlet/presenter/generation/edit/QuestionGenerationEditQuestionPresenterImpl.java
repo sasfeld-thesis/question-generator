@@ -106,7 +106,8 @@ public class QuestionGenerationEditQuestionPresenterImpl implements QuestionGene
     }
 
     @Override
-    public void onClosed() {
-        listener.onClosed();
+    public void onClosed(TestQuestion testQuestion) {
+        LOGGER.info("onEditQuestionDialogClosed(): notifying listener...");
+        listener.onEditQuestionDialogClosed(testQuestion);
     }
 }

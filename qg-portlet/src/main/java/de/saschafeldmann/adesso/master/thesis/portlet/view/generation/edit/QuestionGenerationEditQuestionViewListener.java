@@ -33,6 +33,7 @@ public interface QuestionGenerationEditQuestionViewListener {
 
     /**
      * Triggered if the view was closed.
+     * @param testQuestion the question
      */
-    void onClosed();
+    void onClosed(TestQuestion testQuestion);
 }

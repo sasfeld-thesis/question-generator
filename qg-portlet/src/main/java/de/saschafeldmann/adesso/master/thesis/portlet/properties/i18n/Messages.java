@@ -1314,6 +1314,14 @@ public class Messages {
      * Gets the text.
      * @return String
      */
+    public String getQuestionGenerationViewFinishedQuestionsEditWindowInputQuestionWrongAnswersTooltip() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.question.generation.view.finished.questions.edit.window.input.question.wrong.answers.tooltip");
+    }
+
+    /**
+     * Gets the text.
+     * @return String
+     */
     public String getQuestionGenerationViewFinishedQuestionsEditWindowInputQuestionWrongAnswersInput() {
         return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.question.generation.view.finished.questions.edit.window.input.question.wrong.answers.input");
     }
@@ -1358,4 +1366,19 @@ public class Messages {
         return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.question.generation.view.listselect.export.valamis");
     }
 
+    /**
+     * Gets the text.
+     * @return String
+     */
+    public String getQuestionGenerationViewFinishedQuestionsEditWindowInputQuestionCorrectAnswersLabel() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.question.generation.view.finished.questions.edit.window.input.question.correct.answers.label");
+    }
+
+    /**
+     * Gets the text.
+     * @return String
+     */
+    public String getQuestionGenerationViewFinishedQuestionsEditWindowInputQuestionCorrectAnswersTooltip() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.question.generation.view.finished.questions.edit.window.input.question.correct.answers.tooltip");
+    }
 }

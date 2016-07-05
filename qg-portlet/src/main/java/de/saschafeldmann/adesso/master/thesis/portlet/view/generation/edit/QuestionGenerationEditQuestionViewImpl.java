@@ -4,9 +4,10 @@ import com.vaadin.data.Property;
 import com.vaadin.ui.*;
 import de.saschafeldmann.adesso.master.thesis.generation.model.TestQuestion;
 import de.saschafeldmann.adesso.master.thesis.portlet.model.generation.QuestionType;
+import de.saschafeldmann.adesso.master.thesis.portlet.properties.QuestionGeneratorProperties;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.Messages;
+import de.saschafeldmann.adesso.master.thesis.portlet.util.CommaseparatedValueUtil;
 import de.saschafeldmann.adesso.master.thesis.portlet.util.VaadinUtil;
-import de.saschafeldmann.adesso.master.thesis.portlet.view.components.*;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.Button;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.ComboBox;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.FormLayout;
@@ -15,7 +16,6 @@ import de.saschafeldmann.adesso.master.thesis.portlet.view.components.ListSelect
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.TextField;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.*;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
@@ -39,6 +39,7 @@ import java.util.List;
 @Scope("prototype")
 public class QuestionGenerationEditQuestionViewImpl extends Window implements QuestionGenerationEditQuestionView, Window.CloseListener {
 
+    private static final String CSS_STYLE_NAME_WINDOW = "question-generation-edit-question-window";
     private QuestionGenerationEditQuestionViewListener viewListener;
 
     private final Messages messages;
@@ -46,11 +47,12 @@ public class QuestionGenerationEditQuestionViewImpl extends Window implements Qu
     private final TextField inputTestQuestion;
     private final TextField inputCorrectAnswer;
     private final ListSelect selectQuestionType;
-    private final ComboBox comboBoxWrongAnswers;
-    private final ComboBox comboBoxCorrectAnswers;
+    private final TextField textFieldWrongAnswers;
+    private final TextField textFieldCorrectAnswers;
     private final HorizontalLayout buttonGroupLayout;
     private final Button editButton;
     private final Button deleteButton;
+    private final QuestionGeneratorProperties questionGeneratorProperties;
     private TestQuestion testQuestion;
 
     /**
@@ -61,9 +63,10 @@ public class QuestionGenerationEditQuestionViewImpl extends Window implements Qu
      * @param inputCorrectAnswer the correct answer
      * @param selectQuestionType the question type
      * @param comboBoxWrongAnswers the combobox of wrong answers
-     * @param comboBoxCorrectAnswers the combobox of correct answer
+     * @param textFieldCorrectAnswers the combobox of correct answer
      * @param editButton the edit button
      * @param deleteButton the delete button
+     * @param questionGeneratorProperties the properties
      */
     @Autowired
     public QuestionGenerationEditQuestionViewImpl(
@@ -72,35 +75,61 @@ public class QuestionGenerationEditQuestionViewImpl extends Window implements Qu
             final TextField inputTestQuestion,
             final TextField inputCorrectAnswer,
             final ListSelect selectQuestionType,
-            final ComboBox comboBoxWrongAnswers,
-            final ComboBox comboBoxCorrectAnswers,
+            final TextField comboBoxWrongAnswers,
+            final TextField textFieldCorrectAnswers,
             final HorizontalLayout buttonGroupLayout,
             final Button editButton,
-            final Button deleteButton
+            final Button deleteButton,
+            final QuestionGeneratorProperties questionGeneratorProperties
     ) {
         this.messages = messages;
         this.formLayout = formLayout;
         this.inputTestQuestion = inputTestQuestion;
         this.inputCorrectAnswer = inputCorrectAnswer;
         this.selectQuestionType = selectQuestionType;
-        this.comboBoxWrongAnswers = comboBoxWrongAnswers;
-        this.comboBoxCorrectAnswers = comboBoxCorrectAnswers;
+        this.textFieldWrongAnswers = comboBoxWrongAnswers;
+        this.textFieldCorrectAnswers = textFieldCorrectAnswers;
         this.buttonGroupLayout = buttonGroupLayout;
         this.editButton = editButton;
         this.deleteButton = deleteButton;
+        this.questionGeneratorProperties = questionGeneratorProperties;
     }
 
     @PostConstruct
     private void initialize() {
+        setLabels();
         initializeQuestionTypeList();
         arrangeComponents();
         hideMultipleChoiceComponents();
         setActionListeners();
+        setStyles();
+        setPosition(questionGeneratorProperties.getQuestionEditWindowPositionX(), questionGeneratorProperties.getQuestionEditWindowPositionY());
 
         setContent(formLayout);
     }
 
+    private void setStyles() {
+        addStyleName(CSS_STYLE_NAME_WINDOW);
+    }
+
+    private void setLabels() {
+        setCaption(messages.getQuestionGenerationViewFinishedQuestionsEditWindowTitle());
+
+        inputTestQuestion.setCaption(messages.getQuestionGenerationViewFinishedQuestionsEditWindowInputTestquestion());
+        inputCorrectAnswer.setCaption(messages.getQuestionGenerationViewFinishedQuestionsEditWindowInputCorrectAnswer());
+        selectQuestionType.setCaption(messages.getQuestionGenerationViewFinishedQuestionsEditWindowInputQuestionTypeLabel());
+
+        textFieldWrongAnswers.setCaption(messages.getQuestionGenerationViewFinishedQuestionsEditWindowInputQuestionWrongAnswersLabel());
+        textFieldWrongAnswers.setDescription(messages.getQuestionGenerationViewFinishedQuestionsEditWindowInputQuestionWrongAnswersTooltip());
+        textFieldCorrectAnswers.setCaption(messages.getQuestionGenerationViewFinishedQuestionsEditWindowInputQuestionCorrectAnswersLabel());
+        textFieldCorrectAnswers.setDescription(messages.getQuestionGenerationViewFinishedQuestionsEditWindowInputQuestionCorrectAnswersTooltip());
+
+        editButton.setCaption(messages.getQuestionGenerationViewFinishedQuestionsEditWindowButtonEdit());
+        deleteButton.setCaption(messages.getQuestionGenerationViewFinishedQuestionsEditWindowButtonDelete());
+    }
+
     private void initializeQuestionTypeList() {
+        selectQuestionType.setRows(1);
         selectQuestionType.addItem(QuestionType.SHORT_ANSWER_QUESTION);
         selectQuestionType.addItem(QuestionType.MULTIPLE_CHOICE_QUESTION);
     }
@@ -109,8 +138,8 @@ public class QuestionGenerationEditQuestionViewImpl extends Window implements Qu
         formLayout.addComponent(inputTestQuestion);
         formLayout.addComponent(inputCorrectAnswer);
         formLayout.addComponent(selectQuestionType);
-        formLayout.addComponent(comboBoxWrongAnswers);
-        formLayout.addComponent(comboBoxCorrectAnswers);
+        formLayout.addComponent(textFieldWrongAnswers);
+        formLayout.addComponent(textFieldCorrectAnswers);
 
         buttonGroupLayout.addComponent(editButton);
         buttonGroupLayout.addComponent(deleteButton);
@@ -154,13 +183,13 @@ public class QuestionGenerationEditQuestionViewImpl extends Window implements Qu
 
 
     private void hideMultipleChoiceComponents() {
-        comboBoxWrongAnswers.setVisible(false);
-        comboBoxCorrectAnswers.setVisible(false);
+        textFieldWrongAnswers.setVisible(false);
+        textFieldCorrectAnswers.setVisible(false);
     }
 
     private void showMultipleChoiceComponents() {
-        comboBoxWrongAnswers.setVisible(true);
-        comboBoxCorrectAnswers.setVisible(true);
+        textFieldWrongAnswers.setVisible(true);
+        textFieldCorrectAnswers.setVisible(true);
     }
 
     @Override
@@ -182,8 +211,8 @@ public class QuestionGenerationEditQuestionViewImpl extends Window implements Qu
         if (testQuestion.isMultipleChoice()) {
             selectQuestionType.select(QuestionType.MULTIPLE_CHOICE_QUESTION);
             showMultipleChoiceComponents();
-            comboBoxWrongAnswers.addItems(testQuestion.getAlternativeWrongAnswers());
-            comboBoxCorrectAnswers.addItems(testQuestion.getAlternativeCorrectAnswers());
+            textFieldWrongAnswers.setValue(CommaseparatedValueUtil.toCommaSeparatedString(testQuestion.getAlternativeWrongAnswers()));
+            textFieldCorrectAnswers.setValue(CommaseparatedValueUtil.toCommaSeparatedString(testQuestion.getAlternativeCorrectAnswers()));
         } else {
             selectQuestionType.select(QuestionType.SHORT_ANSWER_QUESTION);
             hideMultipleChoiceComponents();
@@ -191,8 +220,8 @@ public class QuestionGenerationEditQuestionViewImpl extends Window implements Qu
     }
 
     private void reset() {
-        comboBoxCorrectAnswers.removeAllItems();
-        comboBoxWrongAnswers.removeAllItems();
+        textFieldCorrectAnswers.setValue("");
+        textFieldWrongAnswers.setValue("");
     }
 
     @Override
@@ -222,20 +251,20 @@ public class QuestionGenerationEditQuestionViewImpl extends Window implements Qu
 
     @Override
     public List<String> getMultipleChoiceWrongAnswersInput() {
-        return getAllItems(comboBoxWrongAnswers);
-    }
-
-    private List<String> getAllItems(ComboBox comboBoxWrongAnswers) {
-        return VaadinUtil.<String>getAllItems(comboBoxWrongAnswers);
+        return getAllItems(textFieldWrongAnswers);
     }
 
     @Override
     public List<String> getMultipleChoiceCorrectAnswersInput() {
-        return getAllItems(comboBoxCorrectAnswers);
+        return getAllItems(textFieldCorrectAnswers);
+    }
+
+    private List<String> getAllItems(TextField textField) {
+        return CommaseparatedValueUtil.toMultipleValuesList(textField.getValue());
     }
 
     @Override
     public void windowClose(CloseEvent closeEvent) {
-        viewListener.onClosed();
+        viewListener.onClosed(testQuestion);
     }
 }

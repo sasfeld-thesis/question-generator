@@ -9,7 +9,6 @@ import de.saschafeldmann.adesso.master.thesis.portlet.QuestionGeneratorPortletVa
 import de.saschafeldmann.adesso.master.thesis.portlet.model.QuestionGenerationSession;
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.AbstractStepPresenter;
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.generation.edit.QuestionGenerationEditQuestionListener;
-import de.saschafeldmann.adesso.master.thesis.portlet.presenter.generation.edit.QuestionGenerationEditQuestionPresenter;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.Messages;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.ViewWithMenu;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.detection.DetectionViewImpl;
@@ -79,7 +78,7 @@ public class QuestionGenerationPresenterImpl extends AbstractStepPresenter imple
         // TODO delegate to qg-generation portlet
         addTestData();
 
-        refreshGeneratedQuestions();
+        refreshGeneratedQuestionsLearningContents();
     }
 
     private void addTestData() {
@@ -154,15 +153,23 @@ public class QuestionGenerationPresenterImpl extends AbstractStepPresenter imple
         questionGenerationView.setCurrentSessionStatus(questionGenerationSession.getStatus());
         questionGenerationView.reset();
 
-        refreshGeneratedQuestions();
+        refreshGeneratedQuestionsLearningContents();
     }
 
     @Override
-    public void onClosed() {
-        refreshGeneratedQuestions();
+    public void onEditQuestionDialogClosed(TestQuestion testQuestion) {
+        LOGGER.info("onEditQuestionDialogClosed(): refreshing generated questions for question {}", testQuestion);
+
+        // rebuild test question label
+        testQuestion.setLabel(buildTestQuestionLabel(testQuestion));
+        refreshGeneratedQuestion(testQuestion);
     }
 
-    private void refreshGeneratedQuestions() {
+    private void refreshGeneratedQuestion(TestQuestion testQuestion) {
+        onCompletedLearningContentSelected(testQuestion.getSourceConcept().getLearningContent());
+    }
+
+    private void refreshGeneratedQuestionsLearningContents() {
         List<LearningContent> learningContents = toList(questionGenerationSession.getGeneratedQuestionsContentsMap().keySet());
         questionGenerationView.displayCompletedLearningContents(
                 learningContents
