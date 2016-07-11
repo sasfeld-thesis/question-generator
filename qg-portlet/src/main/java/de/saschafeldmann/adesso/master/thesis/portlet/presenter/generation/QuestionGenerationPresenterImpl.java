@@ -4,6 +4,7 @@ import de.saschafeldmann.adesso.master.thesis.detection.model.CardinalRelationCo
 import de.saschafeldmann.adesso.master.thesis.detection.model.FillInTheBlankTextConcept;
 import de.saschafeldmann.adesso.master.thesis.detection.model.api.Concept;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
+import de.saschafeldmann.adesso.master.thesis.generation.LinguisticRealiser;
 import de.saschafeldmann.adesso.master.thesis.generation.model.TestQuestion;
 import de.saschafeldmann.adesso.master.thesis.portlet.QuestionGeneratorPortletVaadinUi;
 import de.saschafeldmann.adesso.master.thesis.portlet.model.QuestionGenerationSession;
@@ -37,7 +38,7 @@ import java.util.Set;
  * Company:
  * adesso AG
  * <br /><br />
- * [short description]
+ * The implementation of a {@link QuestionGenerationPresenter}
  */
 @Component
 @Scope("prototype")
@@ -46,9 +47,13 @@ public class QuestionGenerationPresenterImpl extends AbstractStepPresenter imple
     private final QuestionGenerationView questionGenerationView;
 
     @Autowired
+    private LinguisticRealiser linguisticRealiser;
+    @Autowired
     private Messages messages;
+
     /**
      * Creates a new view.
+     *
      * @param view
      */
     @Autowired
@@ -75,13 +80,12 @@ public class QuestionGenerationPresenterImpl extends AbstractStepPresenter imple
     public void onStartQuestionGenerationButtonClicked() {
         LOGGER.info("onStartQuestionGenerationButtonClicked()");
 
-        // TODO delegate to qg-generation portlet
-        addTestData();
+        generateTestQuestions();
 
         refreshGeneratedQuestionsLearningContents();
     }
 
-    private void addTestData() {
+    private void generateTestQuestions() {
         questionGenerationSession.resetGeneratedQuestionsContentsMap();
 
         for (LearningContent learningContent : questionGenerationSession.getDetectedConceptsContentsMap().keySet()) {
@@ -89,16 +93,12 @@ public class QuestionGenerationPresenterImpl extends AbstractStepPresenter imple
             questionGenerationSession.getGeneratedQuestionsContentsMap()
                     .put(learningContent, testQuestionsList);
 
-            for (Concept concept: questionGenerationSession.getDetectedConceptsContentsMap().get(learningContent)) {
-                if (concept instanceof FillInTheBlankTextConcept) {
-                    TestQuestion testQuestion = new TestQuestion(concept.getOriginalSentence(), concept);
-                    testQuestion.setQuestion("Wie lautet der Satz richtig? " + ((FillInTheBlankTextConcept) concept).getFillSentence());
-                    testQuestion.setCorrectAnswer(((FillInTheBlankTextConcept) concept).getCorrectAnswer());
-                    testQuestion.setLabel(buildTestQuestionLabel(testQuestion));
-                    testQuestionsList.add(
-                            testQuestion
-                    );
-                }
+            for (Concept concept : questionGenerationSession.getDetectedConceptsContentsMap().get(learningContent)) {
+                TestQuestion testQuestion = linguisticRealiser.generateQuestion(concept);
+                testQuestion.setLabel(buildTestQuestionLabel(testQuestion));
+                testQuestionsList.add(
+                        testQuestion
+                );
             }
         }
     }

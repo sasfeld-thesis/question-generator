@@ -2,6 +2,7 @@ package de.saschafeldmann.adesso.master.thesis.generation.specifications;
 
 import static org.junit.Assert.*;
 import de.saschafeldmann.adesso.master.thesis.detection.model.FillInTheBlankTextConcept;
+import de.saschafeldmann.adesso.master.thesis.elearningimport.model.Language;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
 import de.saschafeldmann.adesso.master.thesis.generation.Factory;
 import org.junit.Test;
@@ -49,10 +50,12 @@ public class FillInTheBlankConceptTestQuestionSpecTest {
     }
 
     private LearningContent newLearningContent() {
-        return new LearningContent.LearningContentBuilder()
+        LearningContent learningContent = new LearningContent.LearningContentBuilder()
                 .withType(LearningContent.Type.DIRECT_RAWTEXT)
                 .withRawText("Some geography learning content. The capital of Germany is Berlin. Germany is a country in Europe")
                 .withTitle("Unittest learning content")
                 .build();
+        learningContent.setDeterminedLanguage(Language.ENGLISH);
+        return learningContent;
     }
 }

@@ -4,6 +4,8 @@ import de.saschafeldmann.adesso.master.thesis.detection.model.FillInTheBlankText
 import de.saschafeldmann.adesso.master.thesis.detection.model.api.Concept;
 import de.saschafeldmann.adesso.master.thesis.generation.model.TestQuestion;
 import de.saschafeldmann.adesso.master.thesis.generation.specifications.FillInTheBlankConceptTestQuestionSpec;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 /**
  * Project:        Masterthesis of Sascha Feldmann
@@ -20,6 +22,8 @@ import de.saschafeldmann.adesso.master.thesis.generation.specifications.FillInTh
  * <br /><br />
  * Implementation of a {@link LinguisticRealiser}
  */
+@Component
+@Scope("prototype")
 public class LinguisticRealiserImpl implements LinguisticRealiser {
 
     @Override
