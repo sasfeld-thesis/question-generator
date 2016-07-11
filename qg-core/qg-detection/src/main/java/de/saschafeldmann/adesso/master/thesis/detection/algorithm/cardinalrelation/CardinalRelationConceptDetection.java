@@ -1,5 +1,6 @@
 package de.saschafeldmann.adesso.master.thesis.detection.algorithm.cardinalrelation;
 
+import com.google.common.base.Joiner;
 import de.saschafeldmann.adesso.master.thesis.detection.algorithm.DetectionAlgorithm;
 import de.saschafeldmann.adesso.master.thesis.detection.algorithm.DetectionOptions;
 import de.saschafeldmann.adesso.master.thesis.detection.model.CardinalRelationConcept;
@@ -7,11 +8,15 @@ import de.saschafeldmann.adesso.master.thesis.detection.util.DetectionProperties
 import de.saschafeldmann.adesso.master.thesis.detection.util.ValidateUtil;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.Language;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
+import de.saschafeldmann.adesso.master.thesis.util.linguistic.NlpAnnotationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Project:        Masterthesis of Sascha Feldmann
@@ -31,6 +36,7 @@ import java.util.List;
 @Component
 @Scope("prototype")
 public class CardinalRelationConceptDetection implements DetectionAlgorithm<CardinalRelationConcept> {
+    private final Joiner REGEX_OR_JOINER = Joiner.on("|").skipNulls();
 
     private final DetectionProperties detectionProperties;
 
@@ -51,23 +57,82 @@ public class CardinalRelationConceptDetection implements DetectionAlgorithm<Card
     }
 
     private List<CardinalRelationConcept> findSentencesWithCardinalRelations(final LearningContent learningContent) {
-        for (final String posAnnotatedSentence : learningContent.getPartOfSpeechAnnotatedText()) {
-            if (sentenceMatchesConfiguredCardinalRelationPatterns(learningContent, posAnnotatedSentence)) {
+        final List<CardinalRelationConcept> concepts = new ArrayList<>();
 
+        for (final String posAnnotatedSentence : learningContent.getPartOfSpeechAnnotatedText()) {
+            CardinalRelationConcept cardinalRelationConcept = sentenceMatchesConfiguredCardinalRelationPatterns(learningContent, posAnnotatedSentence);
+
+            if (null != cardinalRelationConcept) {
+                concepts.add(cardinalRelationConcept);
             }
+        }
+
+        return concepts;
+    }
+
+    private CardinalRelationConcept sentenceMatchesConfiguredCardinalRelationPatterns(LearningContent learningContent, final String posAnnotatedSentence) {
+        final Language targetLanguage = learningContent.getDeterminedLanguage();
+
+        final List<String> cardinalRelationCompositePosTags = detectionProperties.getCardinalRelationCompositePosTags(targetLanguage);
+        final List<String> cardinalRelationAdjectivePosTags = detectionProperties.getCardinalRelationAdjectivePosTags(targetLanguage);
+        final List<String> cardinalRelationKeyWordsPosTags = detectionProperties.getCardinalRelationKeywordsPosTags(targetLanguage);
+        final List<String> cardinalRelationCardinalityPosTags = detectionProperties.getCardinalRelationCardinalityPosTags(targetLanguage);
+        final List<String> cardinalRelationCompositionPosTags = detectionProperties.getCardinalRelationCompositionPosTags(targetLanguage);
+
+        // find patterns of (cardinalRelationAdjectivePosTags) <cardinalRelationCompositePosTags> <cardinalRelationKeyWordsPosTags> <cardinalRelationCardinalityPosTags> (cardinalRelationAdjectivePosTags) <cardinalRelationCompositionPosTags>
+        final String cardinalSentencePatternString = buildCardinalSentencePattern(cardinalRelationCompositePosTags, cardinalRelationKeyWordsPosTags, cardinalRelationCardinalityPosTags, cardinalRelationCompositionPosTags, cardinalRelationAdjectivePosTags);
+        final Pattern cardinalSentencePattern = Pattern.compile(cardinalSentencePatternString);
+        final Matcher mCardinalSentenceMatcher = cardinalSentencePattern.matcher(posAnnotatedSentence);
+
+        if (mCardinalSentenceMatcher.matches()) {
+            final String compositeAdjective = mCardinalSentenceMatcher.group(1);
+            final String composite = mCardinalSentenceMatcher.group(2);
+            final String cardinality = mCardinalSentenceMatcher.group(4);
+            final String compositionAdjective = mCardinalSentenceMatcher.group(5);
+            final String composition = mCardinalSentenceMatcher.group(6);
+
+            return newCardinalRelationConcept(learningContent, compositeAdjective, composite, cardinality, compositionAdjective, composition, posAnnotatedSentence);
         }
 
         return null;
     }
 
-    private boolean sentenceMatchesConfiguredCardinalRelationPatterns(LearningContent learningContent, final String posAnnotatedSentence) {
-        final Language targetLanguage = learningContent.getDeterminedLanguage();
+    private CardinalRelationConcept newCardinalRelationConcept(LearningContent learningContent, String compositeAdjective, String composite, String cardinality, String compositionAdjective, String composition, String posAnnotatedSentence) {
+        String originalSentence = NlpAnnotationUtil.removeAllTokenAnnotations(posAnnotatedSentence);
 
-        final List<String> cardinalRelationCompositePosTags = detectionProperties.getCardinalRelationCompositePosTags(targetLanguage);
-        final List<String> cardinalRelationKeyWordsPosTags = detectionProperties.getCardinalRelationKeywordsPosTags(targetLanguage);
-        final List<String> cardinalRelationCompositionPosTags = detectionProperties.getCardinalRelationCompositionPosTags(targetLanguage);
+        return new CardinalRelationConcept.CardinalRelationConceptBuilder()
+                .withComposite(compositeAdjective + " " + composite)
+                .withCompositionCardinality(Integer.parseInt(cardinality))
+                .withComposition(compositionAdjective + " " + composition)
+                .withLearningContent(learningContent)
+                .withOriginalSentence(originalSentence)
+                .build();
+    }
+
+    private String buildCardinalSentencePattern(List<String> cardinalRelationCompositePosTags, List<String> cardinalRelationKeyWordsPosTags, List<String> cardinalRelationCardinalityPosTags, List<String> cardinalRelationCompositionPosTags, List<String> cardinalRelationAdjectivePosTags) {
+        StringBuilder patternBuilder = new StringBuilder();
+
+        patternBuilder
+                .append(buildOrRegex(cardinalRelationAdjectivePosTags, "*"))
+                .append(buildOrRegex(cardinalRelationCompositePosTags, "+"))
+                .append(buildOrRegex(cardinalRelationKeyWordsPosTags, "+"))
+                .append(buildOrRegex(cardinalRelationCardinalityPosTags, "+"))
+                .append(buildOrRegex(cardinalRelationAdjectivePosTags, "*"))
+                .append(buildOrRegex(cardinalRelationCompositionPosTags, "+"))
+        ;
 
 
-        return false;
+        return patternBuilder.toString();
+    }
+
+    private String buildOrRegex(List<String> cardinalRelationAdjectivePosTags, String modifier) {
+        String alternativeOpeningPosTags = REGEX_OR_JOINER.join(cardinalRelationAdjectivePosTags);
+        String alternativeClosingPosTags = REGEX_OR_JOINER.join(cardinalRelationAdjectivePosTags);
+
+        String regex = "[" + alternativeOpeningPosTags + "]" + modifier;
+        regex += "(.*?)";
+        regex += "[" + alternativeClosingPosTags + "]" + modifier;
+        
+        return regex;
     }
 }
