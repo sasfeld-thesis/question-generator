@@ -1,5 +1,6 @@
 package de.saschafeldmann.adesso.master.thesis.generation;
 
+import de.saschafeldmann.adesso.master.thesis.detection.model.CardinalRelationConcept;
 import de.saschafeldmann.adesso.master.thesis.detection.model.FillInTheBlankTextConcept;
 import de.saschafeldmann.adesso.master.thesis.detection.model.api.Concept;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.Language;
@@ -68,6 +69,42 @@ public class LinguisticRealiserImplTest {
         LearningContent learningContent = new LearningContent.LearningContentBuilder()
                 .withType(LearningContent.Type.DIRECT_RAWTEXT)
                 .withRawText("Some geography learning content. The capital of Germany is Berlin. Germany is a country in Europe")
+                .withTitle("Unittest learning content")
+                .build();
+        learningContent.setDeterminedLanguage(Language.ENGLISH);
+        return learningContent;
+    }
+
+    @Test
+    public void testGenerateQuestionForCardinalRelationConceptTestQuestionSpec() {
+        // given
+        Concept cardinalRelationConcept = newCardinalRelationConcept();
+        LinguisticRealiser linguisticRealiser = newLinguisticRealiser();
+
+        // when generate is called
+        TestQuestion generatedTestQuestion = linguisticRealiser.generateQuestion(cardinalRelationConcept);
+
+        // then expect correct fields
+        assertEquals(cardinalRelationConcept, generatedTestQuestion.getSourceConcept());
+        assertEquals("16", generatedTestQuestion.getCorrectAnswer());
+        assertTrue("The generated question should not be empty", generatedTestQuestion.getQuestion().trim().length() > 0);
+    }
+
+    private Concept newCardinalRelationConcept() {
+        return new CardinalRelationConcept.CardinalRelationConceptBuilder()
+                .withOriginalSentence("Germany has 16 federal states.")
+                .withComposite("Germany")
+                .withCompositeCardinality(1)
+                .withComposition("federal states")
+                .withCompositeCardinality(16)
+                .withLearningContent(newLearningContentWithCardinalRelation())
+                .build();
+    }
+
+    private LearningContent newLearningContentWithCardinalRelation() {
+        LearningContent learningContent = new LearningContent.LearningContentBuilder()
+                .withType(LearningContent.Type.DIRECT_RAWTEXT)
+                .withRawText("Germany has 16 federal states.")
                 .withTitle("Unittest learning content")
                 .build();
         learningContent.setDeterminedLanguage(Language.ENGLISH);

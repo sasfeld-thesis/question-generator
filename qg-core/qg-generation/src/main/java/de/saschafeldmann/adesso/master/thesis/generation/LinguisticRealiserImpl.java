@@ -1,8 +1,10 @@
 package de.saschafeldmann.adesso.master.thesis.generation;
 
+import de.saschafeldmann.adesso.master.thesis.detection.model.CardinalRelationConcept;
 import de.saschafeldmann.adesso.master.thesis.detection.model.FillInTheBlankTextConcept;
 import de.saschafeldmann.adesso.master.thesis.detection.model.api.Concept;
 import de.saschafeldmann.adesso.master.thesis.generation.model.TestQuestion;
+import de.saschafeldmann.adesso.master.thesis.generation.specifications.CardinalRelationConceptTestQuestionSpec;
 import de.saschafeldmann.adesso.master.thesis.generation.specifications.FillInTheBlankConceptTestQuestionSpec;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -32,6 +34,8 @@ public class LinguisticRealiserImpl implements LinguisticRealiser {
 
         if (concept instanceof FillInTheBlankTextConcept) {
             testQuestion = buildTestQuestionForFillTextConcept((FillInTheBlankTextConcept) concept);
+        } else if (concept instanceof CardinalRelationConcept) {
+            testQuestion = buildTestQuestionForCardinalRelationConcept((CardinalRelationConcept) concept);
         } else {
             throw new QuestionGenerationException("Concept of type " + concept.getClass() + " is not supported.");
         }
@@ -39,11 +43,20 @@ public class LinguisticRealiserImpl implements LinguisticRealiser {
         return testQuestion;
     }
 
-    private TestQuestion buildTestQuestionForFillTextConcept(FillInTheBlankTextConcept concept) {
+    private TestQuestion buildTestQuestionForFillTextConcept(final FillInTheBlankTextConcept concept) {
         TestQuestion testQuestion = newTestQuestion(concept);
         // delegates to the question generation specification for this concept which specifies the question
         testQuestion.setQuestion(new FillInTheBlankConceptTestQuestionSpec(concept).buildSpec());
         testQuestion.setCorrectAnswer(concept.getCorrectAnswer());
+        return testQuestion;
+    }
+
+
+    private TestQuestion buildTestQuestionForCardinalRelationConcept(final CardinalRelationConcept concept) {
+        TestQuestion testQuestion = newTestQuestion(concept);
+        // delegates to the question generation specification for this concept which specifies the question
+        testQuestion.setQuestion(new CardinalRelationConceptTestQuestionSpec(concept).buildSpec());
+        testQuestion.setCorrectAnswer(String.valueOf(concept.getCompositeCardinality()));
         return testQuestion;
     }
 

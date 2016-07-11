@@ -2,6 +2,11 @@ package de.saschafeldmann.adesso.master.thesis.generation.specifications;
 
 import de.saschafeldmann.adesso.master.thesis.detection.model.CardinalRelationConcept;
 import de.saschafeldmann.adesso.master.thesis.detection.model.api.Concept;
+import de.saschafeldmann.adesso.master.thesis.generation.Factory;
+import de.saschafeldmann.adesso.master.thesis.generation.util.GenerationProperties;
+
+import java.util.List;
+import java.util.Random;
 
 /**
  * Project:        Masterthesis of Sascha Feldmann
@@ -21,6 +26,7 @@ import de.saschafeldmann.adesso.master.thesis.detection.model.api.Concept;
  */
 public class CardinalRelationConceptTestQuestionSpec implements TestQuestionSpecification<CardinalRelationConcept> {
     private final CardinalRelationConcept concept;
+    private final GenerationProperties generationProperties = Factory.newGenerationProperties();
 
     /**
      * Creates the specification to create the test question based on the {@link de.saschafeldmann.adesso.master.thesis.detection.model.CardinalRelationConcept}.
@@ -37,6 +43,25 @@ public class CardinalRelationConceptTestQuestionSpec implements TestQuestionSpec
 
     @Override
     public String buildSpec() {
-        return "";
+        return chooseRandomCardinalRelationQuestionAndFillParameters();
+    }
+
+    private String chooseRandomCardinalRelationQuestionAndFillParameters() {
+        List<String> cardinalQuestionTemplates = generationProperties.fetchMultipleValues("de.saschafeldmann.adesso.master.thesis.generation.cardinalrelations.questions."
+            + concept.getLearningContent().getDeterminedLanguage().toString().toLowerCase());
+
+        Random random = new Random();
+        String randomQuestionTemplate = cardinalQuestionTemplates.get(random.nextInt(cardinalQuestionTemplates.size()));
+
+        return fillQuestionTemplate(randomQuestionTemplate);
+    }
+
+    /**
+     * Fills the question template by the composition and composite within the concept.
+     * @param randomQuestionTemplate the template
+     * @return the question
+     */
+    private String fillQuestionTemplate(final String randomQuestionTemplate) {
+        return String.format(randomQuestionTemplate, getUnderlyingConcept().getComposition(), getUnderlyingConcept().getComposite());
     }
 }
