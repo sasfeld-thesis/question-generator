@@ -105,7 +105,10 @@ public class CardinalRelationConceptDetection implements DetectionAlgorithm<Card
         String originalSentence = NlpAnnotationUtil.removeAllTokenAnnotations(posAnnotatedSentence);
 
         String compositeWithAdjective = compositeArticle + compositeAdjective + " " + composite;
+        compositeWithAdjective = NlpAnnotationUtil.removeAllTokenAnnotations(compositeWithAdjective);
+
         String compositionWithAdjective = compositionAdjective + " " + composition;
+        compositionWithAdjective = NlpAnnotationUtil.removeAllTokenAnnotations(compositionWithAdjective);
 
         return new CardinalRelationConcept.CardinalRelationConceptBuilder()
                 .withComposite(compositeWithAdjective.trim())
