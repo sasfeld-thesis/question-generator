@@ -1,7 +1,6 @@
 package de.saschafeldmann.adesso.master.thesis.generation.specifications;
 
 import de.saschafeldmann.adesso.master.thesis.detection.model.FillInTheBlankTextConcept;
-import de.saschafeldmann.adesso.master.thesis.detection.model.api.Concept;
 
 /**
  * Project:        Masterthesis of Sascha Feldmann
@@ -19,24 +18,28 @@ import de.saschafeldmann.adesso.master.thesis.detection.model.api.Concept;
  * Implementation of a {@link TestQuestionSpecification} for {@link FillInTheBlankTextConcept} detected on
  * a {@link de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent}.
  */
-public class FillInTheBlankConceptTestQuestionSpec implements TestQuestionSpecification {
-    private final Concept concept;
+public class FillInTheBlankConceptTestQuestionSpec implements TestQuestionSpecification<FillInTheBlankTextConcept> {
+    private final FillInTheBlankTextConcept concept;
 
     /**
      * Creates the specification based upon the given concept.
      * @param concept the concept detected within qg-detection module
      */
-    public FillInTheBlankConceptTestQuestionSpec(final Concept concept) {
+    public FillInTheBlankConceptTestQuestionSpec(final FillInTheBlankTextConcept concept) {
         this.concept = concept;
     }
 
     @Override
-    public Concept getUnderlyingConcept() {
+    public FillInTheBlankTextConcept getUnderlyingConcept() {
         return concept;
     }
 
     @Override
-    public void buildSpec() {
-        // TODO use SimpleNLG to build the spec for filltexts
+    public String buildSpec() {
+        return chooseRandomFillTextQuestionIntroductionFromProperties() + getUnderlyingConcept().getFillSentence();
+    }
+
+    private String chooseRandomFillTextQuestionIntroductionFromProperties() {
+        return "Wie lautet der Satz richtig? ";
     }
 }

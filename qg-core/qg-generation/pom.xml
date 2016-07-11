@@ -19,5 +19,11 @@
             <artifactId>qg-detection</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <!-- JUnit -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 </project>

@@ -21,15 +21,15 @@ import de.saschafeldmann.adesso.master.thesis.detection.model.api.Concept;
  * This means, each concept has its own implementation of {@link TestQuestionSpecification}.
  * See: Reiter, E., Dale, R., & Feng, Z. (2000). Building natural language generation systems (Vol. 33). Cambridge: Cambridge university press.
  */
-public interface TestQuestionSpecification {
+public interface TestQuestionSpecification<T extends Concept> {
     /**
      * Gets the underlying concepts for this test question specification.
      * @return the underlying concept which was detected for a given {@link de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent}.
      */
-    Concept getUnderlyingConcept();
+    T getUnderlyingConcept();
 
     /**
      * Builds the specification for the concept returned by getUnderlyingConcept().
      */
-    void buildSpec();
+    String buildSpec();
 }

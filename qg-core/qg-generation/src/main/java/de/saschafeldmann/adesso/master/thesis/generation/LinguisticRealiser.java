@@ -26,6 +26,7 @@ public interface LinguisticRealiser {
      * Generate the question upon the given concept.
      * @param concept the concept
      * @return the generated question
+     * @throws QuestionGenerationException on exceptions during question generation
      */
     public TestQuestion generateQuestion(final Concept concept);
 }
