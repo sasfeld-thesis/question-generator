@@ -56,7 +56,7 @@ public class LinguisticRealiserImpl implements LinguisticRealiser {
         TestQuestion testQuestion = newTestQuestion(concept);
         // delegates to the question generation specification for this concept which specifies the question
         testQuestion.setQuestion(new CardinalRelationConceptTestQuestionSpec(concept).buildSpec());
-        testQuestion.setCorrectAnswer(String.valueOf(concept.getCompositeCardinality()));
+        testQuestion.setCorrectAnswer(String.valueOf(concept.getCompositionCardinality()));
         return testQuestion;
     }
 

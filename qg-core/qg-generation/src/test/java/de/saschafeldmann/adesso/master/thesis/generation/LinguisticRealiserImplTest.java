@@ -96,7 +96,7 @@ public class LinguisticRealiserImplTest {
                 .withComposite("Germany")
                 .withCompositeCardinality(1)
                 .withComposition("federal states")
-                .withCompositeCardinality(16)
+                .withCompositionCardinality(16)
                 .withLearningContent(newLearningContentWithCardinalRelation())
                 .build();
     }
