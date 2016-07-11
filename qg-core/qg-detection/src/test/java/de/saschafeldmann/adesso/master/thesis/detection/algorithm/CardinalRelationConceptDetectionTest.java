@@ -33,6 +33,10 @@ public class CardinalRelationConceptDetectionTest {
     private static final String[] GERMAN_GEOGRAPHY_POS_TEXT = {"<NE>Deutschland</NE><VAFIN>hat</VAFIN><CARD>16</CARD><NN>Bundesländer</NN><$.>.</$.>"};
     private static final String[] GERMAN_GEOGRAPHY_NER_TEXT = {"<I-LOC>Deutschland</I-LOC><O>hat</O><NUMBER>16</NUMBER><O>Bundesländer</O><O>.</O>"};
 
+    private static final String GERMAN_GEOGRAPHY_TEXT_WITH_ARTICLE = "Die Bundesrepublik Deutschland hat 16 Bundesländer.";
+    private static final String[] GERMAN_GEOGRAPHY_POS_TEXT_WITH_ARTICLE = {"<ART>Die</ART><NN>Bundesrepublik</NN><NE>Deutschland</NE><VAFIN>hat</VAFIN><CARD>16</CARD><NN>Bundesländer</NN><$.>.</$.>"};
+    private static final String[] GERMAN_GEOGRAPHY_NER_TEXT_WITH_ARTICLE = {"<O>Die</O><I-LOC>Bundesrepublik</I-LOC><I-LOC>Deutschland</I-LOC><O>hat</O><NUMBER>16</NUMBER><O>Bundesländer</O><O>.</O>"};
+
     private static final String ENGLISH_GEOGRAPHY_TEXT = "Germany has 16 federal states.";
     private static final String[] ENGLISH_GEOGRAPHY_POS_TEXT = {"<NNP>Germany</NNP><VBZ>has</VBZ><CD>16</CD><JJ>federal</JJ><NNS>states</NNS><.>.</.>"};
     private static final String[] ENGLISH_GEOGRAPHY_NER_TEXT = {"<LOCATION>Germany</LOCATION><O>has</O><NUMBER>16</NUMBER><O>federal</O><O>states</O><O>.</O>"};
@@ -68,6 +72,25 @@ public class CardinalRelationConceptDetectionTest {
         assertTrue("the list of detected concepts should not be empty", detectedConcepts.size() > 0);
         // and the following concept should have been detected
         assertEquals("Deutschland", detectedConcepts.get(0).getComposite());
+        assertEquals(1, detectedConcepts.get(0).getCompositeCardinality());
+        assertEquals("Bundesländer", detectedConcepts.get(0).getComposition());
+        assertEquals(16, detectedConcepts.get(0).getCompositionCardinality());
+    }
+
+    @Test
+    public void testCardinalRelationConceptDetectsGermanGeographyWithArticleRelation() throws Exception {
+        // given a German geography learning content
+        final LearningContent learningContent = newLearningContent(GERMAN_GEOGRAPHY_TEXT_WITH_ARTICLE, new ArrayList<String>(Arrays.asList(GERMAN_GEOGRAPHY_POS_TEXT_WITH_ARTICLE)),
+                new ArrayList<String>(Arrays.asList(GERMAN_GEOGRAPHY_NER_TEXT_WITH_ARTICLE)),  Language.GERMAN);
+        final CardinalRelationConceptDetection detectionAlgorithm = newCardinalRelationDetectionAlgorithm();
+
+        // when detect concepts is called
+        final List<CardinalRelationConcept> detectedConcepts = detectionAlgorithm.execute(learningContent, new DetectionOptions());
+
+        // then the list of detected concepts should not be empty
+        assertTrue("the list of detected concepts should not be empty", detectedConcepts.size() > 0);
+        // and the following concept should have been detected
+        assertEquals("Die Bundesrepublik Deutschland", detectedConcepts.get(0).getComposite());
         assertEquals(1, detectedConcepts.get(0).getCompositeCardinality());
         assertEquals("Bundesländer", detectedConcepts.get(0).getComposition());
         assertEquals(16, detectedConcepts.get(0).getCompositionCardinality());

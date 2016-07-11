@@ -85,6 +85,18 @@ public class DetectionPropertiesTest {
     }
 
     @Test
+    public void testGetCardinalRelationArticlesPosTags() throws Exception {
+        // given
+        DetectionProperties detectionProperties = newDetectionProperties();
+
+        // when the method is called for the language
+        List<String> cardinalRelationKeywords = detectionProperties.getCardinalRelationArticlesPosTags(Language.GERMAN);
+
+        // then the list should not be empty
+        assertTrue("the list of cardinal relation keywords must have at least one element", cardinalRelationKeywords.size() > 0);
+    }
+
+    @Test
     public void testGetCompositePosTagsForLanguageGerman() throws Exception {
         // given
         DetectionProperties detectionProperties = newDetectionProperties();

@@ -69,6 +69,15 @@ public class DetectionProperties extends PropertiesReader implements PropertiesR
     }
 
     /**
+     * Gets the part of speech tags representing articles preceeding composites.
+     * @param language the language
+     * @return the list of part of speech tags
+     */
+    public List<String> getCardinalRelationArticlesPosTags(final Language language) {
+        return fetchMultipleValues("de.saschafeldmann.adesso.master.thesis.detection.cardinalrelation.arcticles.postag." + language.toString().toLowerCase());
+    }
+
+    /**
      * Gets the cardinal relation cardinality part - of - speech tags,
      * e.g. "<CARD>16</CARD>" represents a cardinality of 16.
      * @param language the given language
