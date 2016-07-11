@@ -1,11 +1,11 @@
 package de.saschafeldmann.adesso.master.thesis.detection.util;
 
+import de.saschafeldmann.adesso.master.thesis.elearningimport.model.Language;
 import de.saschafeldmann.adesso.master.thesis.util.properties.PropertiesReader;
 import de.saschafeldmann.adesso.master.thesis.util.properties.PropertiesReaderApi;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import java.io.InputStream;
 import java.util.List;
 
 /**
@@ -67,4 +67,55 @@ public class DetectionProperties extends PropertiesReader implements PropertiesR
     public String getFillTextReplacementCharacter() {
         return fetchValue("de.saschafeldmann.adesso.master.thesis.detection.filltext.replacement.character");
     }
+
+    /**
+     * Gets the cardinal relation cardinality part - of - speech tags,
+     * e.g. "<CARD>16</CARD>" represents a cardinality of 16.
+     * @param language the given language
+     * @return the list
+     */
+    public List<String> getCardinalRelationCardinalityPosTags(final Language language) {
+        return fetchMultipleValues("de.saschafeldmann.adesso.master.thesis.detection.cardinalrelation.cardinality.postag." + language.toString().toLowerCase());
+    }
+
+    /**
+     * Gets the cardinal relation keywords POS tags for the given language.<br />
+     * These are verbs most of times.
+     * @param language the given language
+     * @return the list
+     */
+    public List<String> getCardinalRelationKeywordsPosTags(final Language language) {
+        return fetchMultipleValues("de.saschafeldmann.adesso.master.thesis.detection.cardinalrelation.keywords.postag." + language.toString().toLowerCase());
+    }
+
+    /**
+     * Gets the configured part of speech tags that can be represented by a cardinal relation. <br />
+     * E.g. the sentence <NN>Germany</NN> has 16 <NN>states</NN> -> here, the composite part of speech tag is NN (for noun).
+     * @param language the language
+     * @return the list
+     */
+    public List<String> getCardinalRelationCompositePosTags(final Language language) {
+        return fetchMultipleValues("de.saschafeldmann.adesso.master.thesis.detection.cardinalrelation.composite.postag." + language.toString().toLowerCase());
+    }
+
+    /**
+     * Gets the configured part of speech tags that can be represented by a cardinal relation. <br />
+     * E.g. the sentence <NN>Germany</NN> has 16 <NN>states</NN> -> here, the composition part of speech tag is NN (for noun).
+     * @param language the language
+     * @return the list
+     */
+    public List<String> getCardinalRelationCompositionPosTags(final Language language) {
+        return fetchMultipleValues("de.saschafeldmann.adesso.master.thesis.detection.cardinalrelation.composition.postag." + language.toString().toLowerCase());
+    }
+
+    /**
+     * Gets the configured part of speech tags for optional adjectives on the composite or composition.
+     * E.g. the sentence <ADJ>Beautiful</ADJ> </ADJ><NN>Germany</NN> has 16 <NN>states</NN> -> Germany has the adjective beautiful
+     * @param language the language
+     * @return the list
+     */
+    public List<String> getCardinalRelationAdjectivePosTags(final Language language) {
+        return fetchMultipleValues("de.saschafeldmann.adesso.master.thesis.detection.cardinalrelation.adjective.postag." + language.toString().toLowerCase());
+    }
+
 }

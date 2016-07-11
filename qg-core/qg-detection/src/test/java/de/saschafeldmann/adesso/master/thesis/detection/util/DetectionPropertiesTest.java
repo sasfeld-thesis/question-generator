@@ -1,6 +1,7 @@
 package de.saschafeldmann.adesso.master.thesis.detection.util;
 
 import de.saschafeldmann.adesso.master.thesis.detection.util.DetectionProperties;
+import de.saschafeldmann.adesso.master.thesis.elearningimport.model.Language;
 import org.junit.Test;
 
 import java.util.List;
@@ -57,6 +58,126 @@ public class DetectionPropertiesTest {
 
         // then a string should have been returned
         assertTrue("A replacement character with at least one char should have been returned.", replacementCharacter.length() > 0);
+    }
+
+    @Test
+    public void testGetCardinalRelationKeywordsForLanguageGerman() throws Exception {
+        // given
+        DetectionProperties detectionProperties = newDetectionProperties();
+
+        // when the method is called for the language
+        List<String> cardinalRelationKeywords = detectionProperties.getCardinalRelationKeywordsPosTags(Language.GERMAN);
+
+        // then the list should not be empty
+        assertTrue("the list of cardinal relation keywords must have at least one element", cardinalRelationKeywords.size() > 0);
+    }
+
+    @Test
+    public void testGetCardinalRelationKeywordsForLanguageEnglish() throws Exception {
+        // given
+        DetectionProperties detectionProperties = newDetectionProperties();
+
+        // when the method is called for the language
+        List<String> cardinalRelationKeywords = detectionProperties.getCardinalRelationKeywordsPosTags(Language.ENGLISH);
+
+        // then the list should not be empty
+        assertTrue("the list of cardinal relation keywords must have at least one element", cardinalRelationKeywords.size() > 0);
+    }
+
+    @Test
+    public void testGetCompositePosTagsForLanguageGerman() throws Exception {
+        // given
+        DetectionProperties detectionProperties = newDetectionProperties();
+
+        // when the method is called for the language
+        List<String> cardinalRelationKeywords = detectionProperties.getCardinalRelationCompositePosTags(Language.GERMAN);
+
+        // then the list should not be empty
+        assertTrue("the list of cardinal relation keywords must have at least one element", cardinalRelationKeywords.size() > 0);
+    }
+
+    @Test
+    public void testGetCompositePosTagsForLanguageEnglish() throws Exception {
+        // given
+        DetectionProperties detectionProperties = newDetectionProperties();
+
+        // when the method is called for the language
+        List<String> cardinalRelationKeywords = detectionProperties.getCardinalRelationCompositePosTags(Language.ENGLISH);
+
+        // then the list should not be empty
+        assertTrue("the list of cardinal relation keywords must have at least one element", cardinalRelationKeywords.size() > 0);
+    }
+
+    @Test
+    public void testGetCompositionPosTagsForLanguageGerman() throws Exception {
+        // given
+        DetectionProperties detectionProperties = newDetectionProperties();
+
+        // when the method is called for the language
+        List<String> cardinalRelationKeywords = detectionProperties.getCardinalRelationCompositionPosTags(Language.GERMAN);
+
+        // then the list should not be empty
+        assertTrue("the list of cardinal relation keywords must have at least one element", cardinalRelationKeywords.size() > 0);
+    }
+
+    @Test
+    public void testGetCompositionPosTagsForLanguageEnglish() throws Exception {
+        // given
+        DetectionProperties detectionProperties = newDetectionProperties();
+
+        // when the method is called for the language
+        List<String> cardinalRelationKeywords = detectionProperties.getCardinalRelationCompositionPosTags(Language.ENGLISH);
+
+        // then the list should not be empty
+        assertTrue("the list of cardinal relation keywords must have at least one element", cardinalRelationKeywords.size() > 0);
+    }
+
+    @Test
+    public void testGetAdjectivePosTagsForLanguageGerman() throws Exception {
+        // given
+        DetectionProperties detectionProperties = newDetectionProperties();
+
+        // when the method is called for the language
+        List<String> cardinalRelationKeywords = detectionProperties.getCardinalRelationAdjectivePosTags(Language.GERMAN);
+
+        // then the list should not be empty
+        assertTrue("the list of cardinal relation keywords must have at least one element", cardinalRelationKeywords.size() > 0);
+    }
+
+    @Test
+    public void testGetAdjectivePosTagsForLanguageEnglish() throws Exception {
+        // given
+        DetectionProperties detectionProperties = newDetectionProperties();
+
+        // when the method is called for the language
+        List<String> cardinalRelationKeywords = detectionProperties.getCardinalRelationAdjectivePosTags(Language.ENGLISH);
+
+        // then the list should not be empty
+        assertTrue("the list of cardinal relation keywords must have at least one element", cardinalRelationKeywords.size() > 0);
+    }
+
+    @Test
+    public void testGetCardinalityPosTagsForLanguageGerman() throws Exception {
+        // given
+        DetectionProperties detectionProperties = newDetectionProperties();
+
+        // when the method is called for the language
+        List<String> cardinalRelationKeywords = detectionProperties.getCardinalRelationCardinalityPosTags(Language.GERMAN);
+
+        // then the list should not be empty
+        assertTrue("the list of cardinal relation keywords must have at least one element", cardinalRelationKeywords.size() > 0);
+    }
+
+    @Test
+    public void testGetCardinalityPosTagsForLanguageEnglish() throws Exception {
+        // given
+        DetectionProperties detectionProperties = newDetectionProperties();
+
+        // when the method is called for the language
+        List<String> cardinalRelationKeywords = detectionProperties.getCardinalRelationCardinalityPosTags(Language.ENGLISH);
+
+        // then the list should not be empty
+        assertTrue("the list of cardinal relation keywords must have at least one element", cardinalRelationKeywords.size() > 0);
     }
 
     private DetectionProperties newDetectionProperties() throws Exception {
