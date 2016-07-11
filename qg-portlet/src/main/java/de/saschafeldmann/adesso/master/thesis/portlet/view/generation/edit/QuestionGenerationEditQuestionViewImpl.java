@@ -40,6 +40,7 @@ import java.util.List;
 public class QuestionGenerationEditQuestionViewImpl extends Window implements QuestionGenerationEditQuestionView, Window.CloseListener {
 
     private static final String CSS_STYLE_NAME_WINDOW = "question-generation-edit-question-window";
+    public static final String CSS_STYLE_NAME_EDIT_BUTTON = "edit-button";
     private QuestionGenerationEditQuestionViewListener viewListener;
 
     private final Messages messages;
@@ -110,6 +111,7 @@ public class QuestionGenerationEditQuestionViewImpl extends Window implements Qu
 
     private void setStyles() {
         addStyleName(CSS_STYLE_NAME_WINDOW);
+        editButton.addStyleName(CSS_STYLE_NAME_EDIT_BUTTON);
     }
 
     private void setLabels() {

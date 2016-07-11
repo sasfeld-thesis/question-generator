@@ -40,6 +40,7 @@ import java.util.List;
 public class QuestionGenerationViewImpl extends AbstractStepView implements QuestionGenerationView {
     public static final String VIEW_NAME = "QuestionGenerationView";
     public static final String CSS_STYLE_NAME_HORICONTAL_LAYOUT = "question-generation-horicontal-layout";
+    public static final String CSS_STYLE_NAME_EXPORT_SELECT = "question-generation-export-select";
 
     private QuestionGenerationViewListener viewListener;
 
@@ -128,6 +129,7 @@ public class QuestionGenerationViewImpl extends AbstractStepView implements Ques
 
     private void setStyles() {
         horizontalLayout.setStyleName(CSS_STYLE_NAME_HORICONTAL_LAYOUT);
+        exportListSelect.addStyleName(CSS_STYLE_NAME_EXPORT_SELECT);
     }
 
     private void registerListeners() {

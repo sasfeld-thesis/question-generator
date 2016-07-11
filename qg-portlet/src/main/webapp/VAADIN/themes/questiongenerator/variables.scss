@@ -22,7 +22,11 @@ $boxBordersStyle: solid;
 $rightButtonMargin: 3em;
 $courseContentsAccordionRightCellMargin: 5em;
 $accordionMarginTop: 1em;
-
+$questionGenerationTextAreaMarginRight: 5em;
+$questionGenerationExportSelectMarginLeft: $rightButtonMargin;
+$questionGenerationExportSelectMarginTop: 1.5em;
+$questionGenerationEditWindowMarginleft: 1em;
+$questionGenerationEditWindowEditButtonMarginRight: 5em;
 
 // font sizes
 $infoBoxIconFontSize: 2em;
@@ -42,4 +46,6 @@ $preprocessesLogWidth: 42em;
 $preprocessesLogHeight: 30em;
 $preprocessesSelectListWidth: 20em;
 $preprocessesSelectListHeight: $preprocessesLogHeight;
+$questionGenerationTextAreaWidths: 30em;
+$questionGenerationEditWindowInputWidths: 50em;
 

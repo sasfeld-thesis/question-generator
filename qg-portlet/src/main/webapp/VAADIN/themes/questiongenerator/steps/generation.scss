@@ -19,5 +19,29 @@
 @mixin generation {
   .question-generation-edit-question-window {
     max-width: $editDialogWindowWidth;
+
+    .v-formlayout {
+      margin-left: $questionGenerationEditWindowMarginleft;
+    }
+
+    .edit-button {
+      margin-right: $questionGenerationEditWindowEditButtonMarginRight;
+    }
+  }
+
+  .question-generation-edit-question-window input, .question-generation-edit-question-window select {
+    width: $questionGenerationEditWindowInputWidths;
+  }
+
+  .question-generation-horicontal-layout  {
+    .v-select-select {
+      width: $questionGenerationTextAreaWidths;
+      margin-right: $questionGenerationTextAreaMarginRight;
+    }
+  }
+
+  .question-generation-export-select {
+    margin-left: $questionGenerationExportSelectMarginLeft;
+    margin-top: $questionGenerationExportSelectMarginTop;
   }
 }
