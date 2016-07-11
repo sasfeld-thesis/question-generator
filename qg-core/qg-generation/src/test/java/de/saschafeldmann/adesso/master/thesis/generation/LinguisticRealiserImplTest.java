@@ -25,8 +25,6 @@ import static org.junit.Assert.*;
  */
 public class LinguisticRealiserImplTest {
 
-    private static final String QUESTION_MARK = "?";
-
     @Test
     public void testGenerateQuestionThrowsExceptionForUnsupportedConcept() {
         // given an unsupported concept
@@ -54,7 +52,7 @@ public class LinguisticRealiserImplTest {
         // then expect correct fields
         assertEquals(fillInTheBlankTextConcept, generatedTestQuestion.getSourceConcept());
         assertEquals("Berlin", generatedTestQuestion.getCorrectAnswer());
-        assertTrue("The generated question should contain a question mark", generatedTestQuestion.getQuestion().contains(QUESTION_MARK));
+        assertTrue("The generated question should not be empty", generatedTestQuestion.getQuestion().trim().length() > 0);
     }
 
     private Concept newFillInTheBlankTextConcept() {

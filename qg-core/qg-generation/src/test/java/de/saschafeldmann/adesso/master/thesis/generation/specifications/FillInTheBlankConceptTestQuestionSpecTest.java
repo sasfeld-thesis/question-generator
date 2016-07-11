@@ -24,10 +24,8 @@ import org.junit.Test;
  */
 public class FillInTheBlankConceptTestQuestionSpecTest {
 
-    private static final String QUESTION_MARK = "?";
-
     @Test
-    public void testBuildSpecContainsAQuestionMark() {
+    public void testBuildSpecGeneratesQuestion() {
         // given a spec on a filltext concept
         FillInTheBlankConceptTestQuestionSpec spec = newFillInTheBlankSpec();
 
@@ -35,7 +33,7 @@ public class FillInTheBlankConceptTestQuestionSpecTest {
         String builtSpec = spec.buildSpec();
 
         // then the generated question should not be empty and contain a question mark (?)
-        assertTrue("the generated spec must contain a ? question mark", builtSpec.contains(QUESTION_MARK));
+        assertTrue("the generated spec must contain characters", builtSpec.trim().length() > 0);
     }
 
     private FillInTheBlankConceptTestQuestionSpec newFillInTheBlankSpec() {
