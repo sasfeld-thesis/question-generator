@@ -3,6 +3,7 @@ package de.saschafeldmann.adesso.master.thesis.portlet.presenter.detection;
 import com.google.common.collect.Collections2;
 import com.vaadin.ui.Notification;
 import de.saschafeldmann.adesso.master.thesis.detection.algorithm.DetectionOptions;
+import de.saschafeldmann.adesso.master.thesis.detection.algorithm.cardinalrelation.CardinalRelationConceptDetection;
 import de.saschafeldmann.adesso.master.thesis.detection.algorithm.fillintheblank.FillInTheBlankConceptDetection;
 import de.saschafeldmann.adesso.master.thesis.detection.model.CardinalRelationConcept;
 import de.saschafeldmann.adesso.master.thesis.detection.model.FillInTheBlankTextConcept;
@@ -54,9 +55,12 @@ public class DetectionPresenterImpl extends AbstractStepPresenter implements Det
     @Autowired
     private FillInTheBlankConceptDetection fillTextConceptDetectionAlgorithm;
     @Autowired
+    private CardinalRelationConceptDetection cardinalRelationConceptDetectionAlgorithm;
+    @Autowired
     private DetectionOptions detectionOptions;
     private List<DetectionActivationElement> detectionActivationElementList;
     private boolean detectionFinished = false;
+
     @Autowired
     public DetectionPresenterImpl(
             DetectionView detectionView
@@ -85,13 +89,12 @@ public class DetectionPresenterImpl extends AbstractStepPresenter implements Det
         this.detectionActivationElementList = new ArrayList<>();
 
         addFillSentenceDetectionActivationElement(this.detectionActivationElementList);
-        //addCardinalitySentencesDetectionActivationElement(this.detectionActivationElementList);
+        addCardinalitySentencesDetectionActivationElement(this.detectionActivationElementList);
 
         this.detectionView.setDetectionActivationElements(detectionActivationElementList);
     }
 
     private void addFillSentenceDetectionActivationElement(List<DetectionActivationElement> detectionActivationElementList) {
-        // TODO couple underlying algorithm from qg-detection module
         DetectionActivationElement detectionActivationElement = new DetectionActivationElement.DetectionActivationElementBuilder()
                 .withActivationLabel(messages.getDetectionViewAccordionActivationOptiongroupFillsentencesLabel())
                 .withIsActivatedPerDefault(false)
@@ -106,13 +109,13 @@ public class DetectionPresenterImpl extends AbstractStepPresenter implements Det
     }
 
     private void addCardinalitySentencesDetectionActivationElement(List<DetectionActivationElement> detectionActivationElementList) {
-        // TODO couple underlying algorithm from qg-detection module
         DetectionActivationElement detectionActivationElement = new DetectionActivationElement.DetectionActivationElementBuilder()
                 .withActivationLabel(messages.getDetectionViewAccordionActivationOptiongroupCardinalitySentencesLabel())
                 .withIsActivatedPerDefault(false)
                 .withTooltip(messages.getDetectionViewAccordionActivationOptiongroupCardinalitySentencesTooltip())
                 .withStartedLogEntry(messages.getDetectionViewAccordionDetectionChainLogChainCardinalitySentencesStarted())
                 .withFinishedLogEntry(messages.getDetectionViewAccordionDetectionChainLogChainCardinalitySentencesFinished())
+                .withAlgorithm(cardinalRelationConceptDetectionAlgorithm)
                 .build();
 
         setDefaultProcessActivationElementState(detectionActivationElement);
@@ -184,26 +187,6 @@ public class DetectionPresenterImpl extends AbstractStepPresenter implements Det
                 putLearningContentToConceptsMap(learningContent, detectedConcept);
             }
         }
-    }
-
-    private Concept getTestFillTextConcept(final LearningContent learningContent) {
-        return new FillInTheBlankTextConcept.FillTextConceptBuilder()
-                .withFillSentence("Die Haupstadt von Deutschland ist ___.")
-                .withCorrectAnswer("Berlin")
-                .withOriginalSentence("Die Hauptstadt von Deutschland ist Berlin.")
-                .withLearningContent(learningContent)
-                .build();
-    }
-
-    private Concept getTestCardinalitySentenceConcept(LearningContent learningContent) {
-        return new CardinalRelationConcept.CardinalRelationConceptBuilder()
-                .withComposite("Deutschland")
-                .withCompositeCardinality(1)
-                .withComposition("Bundesländer")
-                .withCompositionCardinality(16)
-                .withOriginalSentence("Deutschland hat 16 Bundesländer")
-                .withLearningContent(learningContent)
-                .build();
     }
 
     private void putLearningContentToConceptsMap(LearningContent learningContent, Concept detectedConcept) {

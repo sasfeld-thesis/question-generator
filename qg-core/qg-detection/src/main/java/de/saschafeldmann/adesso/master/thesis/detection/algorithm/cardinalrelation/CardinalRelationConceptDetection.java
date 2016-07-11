@@ -87,11 +87,12 @@ public class CardinalRelationConceptDetection implements DetectionAlgorithm<Card
 
         if (mCardinalSentenceMatcher.matches()) {
             // group numbers follow the sequence of part of speech tag regular expression groups in the method buildCardinalSentencePattern()
-            final String compositeAdjective = mCardinalSentenceMatcher.group(1);
-            final String composite = mCardinalSentenceMatcher.group(2);
-            final String cardinality = mCardinalSentenceMatcher.group(4);
-            final String compositionAdjective = mCardinalSentenceMatcher.group(5);
-            final String composition = mCardinalSentenceMatcher.group(6);
+            // to match the next group of interest (the value inside a POS tag), you need to add three
+            final String compositeAdjective = mCardinalSentenceMatcher.group(2);
+            final String composite = mCardinalSentenceMatcher.group(5);
+            final String cardinality = mCardinalSentenceMatcher.group(11);
+            final String compositionAdjective = mCardinalSentenceMatcher.group(14);
+            final String composition = mCardinalSentenceMatcher.group(17);
 
             return newCardinalRelationConcept(learningContent, compositeAdjective, composite, cardinality, compositionAdjective, composition, posAnnotatedSentence);
         }
@@ -148,9 +149,9 @@ public class CardinalRelationConceptDetection implements DetectionAlgorithm<Card
         String alternativeClosingPosTags = REGEX_OR_JOINER.join(cardinalRelationAdjectivePosTags);
         alternativeClosingPosTags = alternativeClosingPosTags.replaceAll("<", "</");
 
-        String regex = "[" + alternativeOpeningPosTags + "]" + modifier;
+        String regex = "(" + alternativeOpeningPosTags + ")" + modifier;
         regex += "(.*?)";
-        regex += "[" + alternativeClosingPosTags + "]" + modifier;
+        regex += "(" + alternativeClosingPosTags + ")" + modifier;
         regex += "[ ]*";
         
         return regex;
