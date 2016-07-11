@@ -73,6 +73,7 @@ public class CardinalRelationConceptDetection implements DetectionAlgorithm<Card
     private CardinalRelationConcept sentenceMatchesConfiguredCardinalRelationPatterns(LearningContent learningContent, final String posAnnotatedSentence) {
         final Language targetLanguage = learningContent.getDeterminedLanguage();
 
+        // TODO add articles, "Die Bundesrepublik"...
         final List<String> cardinalRelationCompositePosTags = detectionProperties.getCardinalRelationCompositePosTags(targetLanguage);
         final List<String> cardinalRelationAdjectivePosTags = detectionProperties.getCardinalRelationAdjectivePosTags(targetLanguage);
         final List<String> cardinalRelationKeyWordsPosTags = detectionProperties.getCardinalRelationKeywordsPosTags(targetLanguage);
@@ -85,6 +86,7 @@ public class CardinalRelationConceptDetection implements DetectionAlgorithm<Card
         final Matcher mCardinalSentenceMatcher = cardinalSentencePattern.matcher(posAnnotatedSentence);
 
         if (mCardinalSentenceMatcher.matches()) {
+            // group numbers follow the sequence of part of speech tag regular expression groups in the method buildCardinalSentencePattern()
             final String compositeAdjective = mCardinalSentenceMatcher.group(1);
             final String composite = mCardinalSentenceMatcher.group(2);
             final String cardinality = mCardinalSentenceMatcher.group(4);
@@ -100,15 +102,30 @@ public class CardinalRelationConceptDetection implements DetectionAlgorithm<Card
     private CardinalRelationConcept newCardinalRelationConcept(LearningContent learningContent, String compositeAdjective, String composite, String cardinality, String compositionAdjective, String composition, String posAnnotatedSentence) {
         String originalSentence = NlpAnnotationUtil.removeAllTokenAnnotations(posAnnotatedSentence);
 
+        String compositeWithAdjective = compositeAdjective + " " + composite;
+        String compositionWithAdjective = compositionAdjective + " " + composition;
+
         return new CardinalRelationConcept.CardinalRelationConceptBuilder()
-                .withComposite(compositeAdjective + " " + composite)
+                .withComposite(compositeWithAdjective.trim())
+                .withCompositeCardinality(1)
                 .withCompositionCardinality(Integer.parseInt(cardinality))
-                .withComposition(compositionAdjective + " " + composition)
+                .withComposition(compositionWithAdjective.trim())
                 .withLearningContent(learningContent)
                 .withOriginalSentence(originalSentence)
                 .build();
     }
 
+    /**
+     * Builds the regular expression pattern to match cardinal relation sentences based on configured possible sequences of part of speech tags.
+     *
+     * @param cardinalRelationCompositePosTags the POS tags surrounding the composite
+     * @param cardinalRelationKeyWordsPosTags the POS tags signaling the composition verb
+     * @param cardinalRelationCardinalityPosTags the POS tags representing tha cardinality of the composition
+     * @param cardinalRelationCompositionPosTags the POS tags surrounding the composition
+     * @param cardinalRelationAdjectivePosTags additional POS tags representing adjectives that describe composition and / or composite better
+     *
+     * @return String the regular expression pattern
+     */
     private String buildCardinalSentencePattern(List<String> cardinalRelationCompositePosTags, List<String> cardinalRelationKeyWordsPosTags, List<String> cardinalRelationCardinalityPosTags, List<String> cardinalRelationCompositionPosTags, List<String> cardinalRelationAdjectivePosTags) {
         StringBuilder patternBuilder = new StringBuilder();
 
@@ -119,6 +136,7 @@ public class CardinalRelationConceptDetection implements DetectionAlgorithm<Card
                 .append(buildOrRegex(cardinalRelationCardinalityPosTags, "+"))
                 .append(buildOrRegex(cardinalRelationAdjectivePosTags, "*"))
                 .append(buildOrRegex(cardinalRelationCompositionPosTags, "+"))
+                .append("(.*?)")
         ;
 
 
@@ -128,10 +146,12 @@ public class CardinalRelationConceptDetection implements DetectionAlgorithm<Card
     private String buildOrRegex(List<String> cardinalRelationAdjectivePosTags, String modifier) {
         String alternativeOpeningPosTags = REGEX_OR_JOINER.join(cardinalRelationAdjectivePosTags);
         String alternativeClosingPosTags = REGEX_OR_JOINER.join(cardinalRelationAdjectivePosTags);
+        alternativeClosingPosTags = alternativeClosingPosTags.replaceAll("<", "</");
 
         String regex = "[" + alternativeOpeningPosTags + "]" + modifier;
         regex += "(.*?)";
         regex += "[" + alternativeClosingPosTags + "]" + modifier;
+        regex += "[ ]*";
         
         return regex;
     }

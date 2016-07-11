@@ -30,9 +30,13 @@ import static org.junit.Assert.*;
  */
 public class CardinalRelationConceptDetectionTest {
 
-    private static final String GERMAN_GEOGRAPHY_TEXT = " Deutschland hat 16 Bundesländer.";
+    private static final String GERMAN_GEOGRAPHY_TEXT = "Deutschland hat 16 Bundesländer.";
     private static final String[] GERMAN_GEOGRAPHY_POS_TEXT = {"<NE>Deutschland</NE><VAFIN>hat</VAFIN><CARD>16</CARD><NN>Bundesländer</NN><$.>.</$.>"};
     private static final String[] GERMAN_GEOGRAPHY_NER_TEXT = {"<I-LOC>Deutschland</I-LOC><O>hat</O><NUMBER>16</NUMBER><O>Bundesländer</O><O>.</O>"};
+
+    private static final String ENGLISH_GEOGRAPHY_TEXT = "Germany has 16 federal states.";
+    private static final String[] ENGLISH_GEOGRAPHY_POS_TEXT = {"<NNP>Germany</NNP><VBZ>has</VBZ><CD>16</CD><JJ>federal</JJ><NNS>states</NNS><.>.</.>"};
+    private static final String[] ENGLISH_GEOGRAPHY_NER_TEXT = {"<LOCATION>Germany</LOCATION><O>has</O><NUMBER>16</NUMBER><O>federal</O><O>states</O><O>.</O>"};
 
 
     @Test
@@ -47,6 +51,30 @@ public class CardinalRelationConceptDetectionTest {
 
         // then the list of detected concepts should not be empty
         assertTrue("the list of detected concepts should not be empty", detectedConcepts.size() > 0);
+        // and the following concept should have been detected
+        assertEquals("Deutschland", detectedConcepts.get(0).getComposite());
+        assertEquals(1, detectedConcepts.get(0).getCompositeCardinality());
+        assertEquals("Bundesländer", detectedConcepts.get(0).getComposition());
+        assertEquals(16, detectedConcepts.get(0).getCompositionCardinality());
+    }
+
+    @Test
+    public void testCardinalRelationConceptDetectsEnglishGeographyRelation() throws Exception {
+        // given a German geography learning content
+        final LearningContent learningContent = newLearningContent(ENGLISH_GEOGRAPHY_TEXT, new ArrayList<String>(Arrays.asList(ENGLISH_GEOGRAPHY_POS_TEXT)),
+                new ArrayList<String>(Arrays.asList(ENGLISH_GEOGRAPHY_NER_TEXT)),  Language.ENGLISH);
+        final CardinalRelationConceptDetection detectionAlgorithm = newCardinalRelationDetectionAlgorithm();
+
+        // when detect concepts is called
+        final List<CardinalRelationConcept> detectedConcepts = detectionAlgorithm.execute(learningContent, new DetectionOptions());
+
+        // then the list of detected concepts should not be empty
+        assertTrue("the list of detected concepts should not be empty", detectedConcepts.size() > 0);
+        // and the following concept should have been detected
+        assertEquals("Germany", detectedConcepts.get(0).getComposite());
+        assertEquals(1, detectedConcepts.get(0).getCompositeCardinality());
+        assertEquals("federal states", detectedConcepts.get(0).getComposition());
+        assertEquals(16, detectedConcepts.get(0).getCompositionCardinality());
     }
 
     private CardinalRelationConceptDetection newCardinalRelationDetectionAlgorithm() throws Exception {
