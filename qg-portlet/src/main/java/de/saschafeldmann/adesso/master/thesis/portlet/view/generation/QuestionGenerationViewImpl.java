@@ -2,6 +2,8 @@ package de.saschafeldmann.adesso.master.thesis.portlet.view.generation;
 
 import com.vaadin.data.Property;
 import com.vaadin.navigator.ViewChangeListener;
+import com.vaadin.server.FileDownloader;
+import com.vaadin.server.FileResource;
 import com.vaadin.shared.ui.label.ContentMode;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
 import de.saschafeldmann.adesso.master.thesis.generation.model.TestQuestion;
@@ -18,6 +20,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.io.File;
 import java.util.List;
 
 /**
@@ -230,6 +233,12 @@ public class QuestionGenerationViewImpl extends AbstractStepView implements Ques
         completedQuestionsList.addItems(testQuestions);
 
         triggerActionButtonsEnabledState();
+    }
+
+    @Override
+    public void offerCsvFileForDownload(File csvFile) {
+        FileDownloader fileDownloader = new FileDownloader(new FileResource(csvFile));
+        fileDownloader.extend(btnExport);
     }
 
     @Override

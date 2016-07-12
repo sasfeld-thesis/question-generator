@@ -1,8 +1,11 @@
 package de.saschafeldmann.adesso.master.thesis.portlet.presenter.generation;
 
+import com.google.common.base.Joiner;
+import de.saschafeldmann.adesso.master.thesis.csv.CsvWriter;
 import de.saschafeldmann.adesso.master.thesis.detection.model.CardinalRelationConcept;
 import de.saschafeldmann.adesso.master.thesis.detection.model.FillInTheBlankTextConcept;
 import de.saschafeldmann.adesso.master.thesis.detection.model.api.Concept;
+import de.saschafeldmann.adesso.master.thesis.elearningimport.model.Course;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
 import de.saschafeldmann.adesso.master.thesis.generation.LinguisticRealiser;
 import de.saschafeldmann.adesso.master.thesis.generation.model.TestQuestion;
@@ -21,6 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -43,13 +47,17 @@ import java.util.Set;
 @Component
 @Scope("prototype")
 public class QuestionGenerationPresenterImpl extends AbstractStepPresenter implements QuestionGenerationPresenter, QuestionGenerationViewListener, QuestionGenerationEditQuestionListener {
+    private static final String CSV_EXPORT_FILENAME_TEMPLATES = "generated_test_questions_%s.csv";
     private static final Logger LOGGER = LoggerFactory.getLogger(QuestionGenerationPresenterImpl.class);
+    private static final Joiner CSV_EXPORT_MULTIPLE_VALUES_IN_ONE_COLUMN_JOINER = Joiner.on(",").skipNulls();
     private final QuestionGenerationView questionGenerationView;
 
     @Autowired
     private LinguisticRealiser linguisticRealiser;
     @Autowired
     private Messages messages;
+    @Autowired
+    private CsvWriter csvWriter;
 
     /**
      * Creates a new view.
@@ -145,7 +153,34 @@ public class QuestionGenerationPresenterImpl extends AbstractStepPresenter imple
     public void onExportButtonClicked() {
         LOGGER.info("onExportButtonClicked()");
 
-        // TODO start export
+        for (final LearningContent learningContent: questionGenerationSession.getGeneratedQuestionsContentsMap().keySet()) {
+            final String columnLearningContentTitle = learningContent.getTitle();
+
+            for (final TestQuestion testQuestion: questionGenerationSession.getGeneratedQuestionsContentsMap().get(learningContent)) {
+                final String columnTestQuestionQuestion = testQuestion.getQuestion();
+                final String columnTestQuestionOriginalSentence = testQuestion.getSourceConcept().getOriginalSentence();
+                final String columnTestQuestionCorrectAnswer = testQuestion.getCorrectAnswer();
+                final String columnTestQuestionAlternativeCorrectAnswers = CSV_EXPORT_MULTIPLE_VALUES_IN_ONE_COLUMN_JOINER.join(testQuestion.getAlternativeCorrectAnswers());
+                final String columnTestQuestionAlternativeWrongAnswers = CSV_EXPORT_MULTIPLE_VALUES_IN_ONE_COLUMN_JOINER.join(testQuestion.getAlternativeWrongAnswers());
+                final String columnIsMultipleChoice = String.valueOf(testQuestion.isMultipleChoice());
+
+                csvWriter.addRow(
+                        columnLearningContentTitle,
+                        columnTestQuestionQuestion,
+                        columnIsMultipleChoice,
+                        columnTestQuestionCorrectAnswer,
+                        columnTestQuestionAlternativeCorrectAnswers,
+                        columnTestQuestionAlternativeWrongAnswers,
+                        columnTestQuestionOriginalSentence);
+            }
+        }
+
+        try {
+            File exportFile = csvWriter.writeToFile(String.format(CSV_EXPORT_FILENAME_TEMPLATES, questionGenerationSession.getCourse().getTitle()));
+            questionGenerationView.offerCsvFileForDownload(exportFile);
+        } catch (Exception e) {
+            LOGGER.error("onExportButtonClicked(): could not generate CSV due to {}", e);
+        }
     }
 
     @Override

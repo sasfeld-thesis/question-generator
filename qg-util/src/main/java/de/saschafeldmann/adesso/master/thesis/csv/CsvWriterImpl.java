@@ -2,6 +2,8 @@ package de.saschafeldmann.adesso.master.thesis.csv;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -22,6 +24,8 @@ import java.util.List;
  * <br /><br />
  * Implementation of {@link CsvWriter}
  */
+@Component
+@Scope("prototype")
 public class CsvWriterImpl implements CsvWriter {
     private static final Logger LOGGER = LoggerFactory.getLogger(CsvWriterImpl.class);
     private String delimiter = resetDelimiter();
@@ -82,6 +86,7 @@ public class CsvWriterImpl implements CsvWriter {
             LOGGER.error("writeToFile(): could not write to CSV file cause of: {}", e);
         } finally {
           try {
+              resetRows();
               if (null != outputStreamWriter) {
                   outputStreamWriter.close();
               }

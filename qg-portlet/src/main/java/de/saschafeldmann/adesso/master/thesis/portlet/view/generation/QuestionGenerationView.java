@@ -4,6 +4,7 @@ import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningCont
 import de.saschafeldmann.adesso.master.thesis.generation.model.TestQuestion;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.ViewWithMenu;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -34,6 +35,12 @@ public interface QuestionGenerationView extends ViewWithMenu {
      * @param testQuestions list of the generated {@link TestQuestion}
      */
     public void displayGeneratedQuestions(final List<TestQuestion> testQuestions);
+
+    /**
+     * Offers the given file for download.
+     * @param csvFile the file
+     */
+    public void offerCsvFileForDownload(final File csvFile);
 
     /**
      * Resets the view.
