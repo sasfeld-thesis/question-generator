@@ -2,6 +2,7 @@ package de.saschafeldmann.adesso.master.thesis.portlet.presenter.generation;
 
 import com.google.common.base.Joiner;
 import de.saschafeldmann.adesso.master.thesis.csv.CsvWriter;
+import de.saschafeldmann.adesso.master.thesis.csv.CsvWriterImpl;
 import de.saschafeldmann.adesso.master.thesis.detection.model.CardinalRelationConcept;
 import de.saschafeldmann.adesso.master.thesis.detection.model.FillInTheBlankTextConcept;
 import de.saschafeldmann.adesso.master.thesis.detection.model.api.Concept;
@@ -56,8 +57,6 @@ public class QuestionGenerationPresenterImpl extends AbstractStepPresenter imple
     private LinguisticRealiser linguisticRealiser;
     @Autowired
     private Messages messages;
-    @Autowired
-    private CsvWriter csvWriter;
 
     /**
      * Creates a new view.
@@ -153,8 +152,9 @@ public class QuestionGenerationPresenterImpl extends AbstractStepPresenter imple
     public void onExportButtonClicked() {
         LOGGER.info("onExportButtonClicked()");
 
-        addHeaderColumnsToCsvWriter();
-        addGeneratedQuestionsToCsvWriter();
+        CsvWriter csvWriter = new CsvWriterImpl();
+        addHeaderColumnsToCsvWriter(csvWriter);
+        addGeneratedQuestionsToCsvWriter(csvWriter);
 
         try {
             File exportFile = csvWriter.writeToFile(String.format(CSV_EXPORT_FILENAME_TEMPLATES, questionGenerationSession.getCourse().getTitle()));
@@ -164,7 +164,7 @@ public class QuestionGenerationPresenterImpl extends AbstractStepPresenter imple
         }
     }
 
-    private void addHeaderColumnsToCsvWriter() {
+    private void addHeaderColumnsToCsvWriter(CsvWriter csvWriter) {
         csvWriter.addRow(
                 messages.getQuestionGenerationViewExportCsvHeaderColumnLearningContent(),
                 messages.getQuestionGenerationViewExportCsvHeaderColumnTestquestion(),
@@ -176,7 +176,7 @@ public class QuestionGenerationPresenterImpl extends AbstractStepPresenter imple
         );
     }
 
-    private void addGeneratedQuestionsToCsvWriter() {
+    private void addGeneratedQuestionsToCsvWriter(CsvWriter csvWriter) {
         for (final LearningContent learningContent: questionGenerationSession.getGeneratedQuestionsContentsMap().keySet()) {
             final String columnLearningContentTitle = learningContent.getTitle();
 
