@@ -17,8 +17,8 @@
 @mixin detection {
 
   .edit-concepts-window {
-    width: $editDialogWindowWidth !important;
-    height: $editDialogWindowHeight !important;
+    width: $conceptDetectionEditConceptsDialogWindowWidth !important;
+    height: $conceptDetectionEditConceptsDialogWindowHeight !important;
   }
 
   .edit-concept-window {

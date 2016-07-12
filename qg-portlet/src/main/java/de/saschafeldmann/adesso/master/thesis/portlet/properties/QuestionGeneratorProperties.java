@@ -94,12 +94,25 @@ public class QuestionGeneratorProperties extends PropertiesReader implements Pro
     }
 
     /**
-     * Returns the position y.
-     * @return the position y.
+     * Returns the width
+     * @return the width
      */
     public int getConceptDetectionEditWindowGridWidthEm() {
         try {
             return Integer.parseInt(fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.concept.detection.edit.window.grid.width.em"));
+        } catch (NumberFormatException e) {
+            LOGGER.error("getConceptDetectionEditWindowGridWidthEm(): wrong configuration in {}! Exception: {}", PROPERTIES_FILE_NAME, e);
+            return 0;
+        }
+    }
+
+    /**
+     * Returns the height
+     * @return the height
+     */
+    public int getConceptDetectionEditWindowGridHeightEm() {
+        try {
+            return Integer.parseInt(fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.concept.detection.edit.window.grid.height.em"));
         } catch (NumberFormatException e) {
             LOGGER.error("getConceptDetectionEditWindowGridWidthEm(): wrong configuration in {}! Exception: {}", PROPERTIES_FILE_NAME, e);
             return 0;

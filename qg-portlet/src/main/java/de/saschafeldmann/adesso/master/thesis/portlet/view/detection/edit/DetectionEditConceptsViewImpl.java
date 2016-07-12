@@ -87,7 +87,9 @@ public class DetectionEditConceptsViewImpl extends Window implements DetectionEd
     private void initializeGrid() {
         conceptsGrid = new Grid();
         mainLayout.addComponent(conceptsGrid);
+
         conceptsGrid.setWidth(properties.getConceptDetectionEditWindowGridWidthEm(), Unit.EM);
+        conceptsGrid.setHeight(properties.getConceptDetectionEditWindowGridHeightEm(), Unit.EM);
     }
 
     private void initializeGridColumns() {
