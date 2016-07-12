@@ -19,6 +19,10 @@
   .edit-concepts-window {
     width: $conceptDetectionEditConceptsDialogWindowWidth !important;
     height: $conceptDetectionEditConceptsDialogWindowHeight !important;
+
+    .v-grid {
+      margin-left: $conceptDetectionEditConceptsWindowMarginleft;
+    }
   }
 
   .edit-concept-window {

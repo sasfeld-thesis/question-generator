@@ -24,6 +24,7 @@ import de.saschafeldmann.adesso.master.thesis.portlet.presenter.preprocesses.Pre
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.preprocesses.PreprocessesPresenterImpl;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.VaadinProperties;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.Messages;
+import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.MessagesBundle;
 import de.saschafeldmann.adesso.master.thesis.portlet.util.Factory;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.course.contents.CourseContentsView;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.course.contents.CourseContentsViewImpl;
@@ -39,6 +40,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.web.portlet.context.PortletApplicationContextUtils;
 
 import javax.portlet.PortletContext;
+import java.util.Locale;
 
 /**
  * Project:        Masterthesis of Sascha Feldmann
@@ -66,6 +68,7 @@ public class QuestionGeneratorPortletVaadinUi extends UI {
     private Navigator viewNavigator;
     private QuestionGenerationSession questionGenerationSession;
     private Messages messages;
+    private MessagesBundle messagesBundle;
     private CourseContentsPresenter courseContentsPresenter;
     private CourseInformationPresenter courseInformationPresenter;
     private PreprocessesPresenter preprocessesPresenter;
@@ -75,6 +78,7 @@ public class QuestionGeneratorPortletVaadinUi extends UI {
     private DetectionEditCardinalRelationConceptPresenterImpl detetectionEditCardinalRelationConceptPresenter;
     private QuestionGenerationPresenter questionGenerationPresenter;
     private QuestionGenerationEditQuestionPresenter questionGenerationEditQuestionPresenter;
+    private Locale currentLocale;
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
@@ -82,13 +86,15 @@ public class QuestionGeneratorPortletVaadinUi extends UI {
         // make sure to inject dependencies before initializing views
         injectOtherDependencies(applicationContext);
 
-        initSession();
+        initSession(vaadinRequest, applicationContext);
         initializeViewNavigator();
         initializeViews(applicationContext);
     }
 
-    private void initSession() {
+    private void initSession(VaadinRequest vaadinRequest, ApplicationContext applicationContext) {
         this.questionGenerationSession = Factory.newQuestionGenerationSession();
+        this.messagesBundle = applicationContext.getBean(MessagesBundle.class);
+        this.currentLocale = vaadinRequest.getLocale();
     }
 
     private ApplicationContext initializeApplicationContext(VaadinRequest vaadinRequest) {
@@ -258,5 +264,21 @@ public class QuestionGeneratorPortletVaadinUi extends UI {
      */
     public QuestionGenerationSession getQuestionGenerationSession() {
         return questionGenerationSession;
+    }
+
+    /**
+     * Gets the current locale.
+     * @return the current locale
+     */
+    public Locale getCurrentLocale() {
+        return currentLocale;
+    }
+
+    /**
+     * Gets the localized message bundle.
+     * @return the localized message bundle
+     */
+    public MessagesBundle getMessagesBundle() {
+        return messagesBundle;
     }
 }
