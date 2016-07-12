@@ -20,4 +20,20 @@
     width: $editDialogWindowWidth !important;
     height: $editDialogWindowHeight !important;
   }
+
+  .edit-concept-window {
+    max-width: $editDialogWindowWidth;
+
+    .v-formlayout {
+      margin-left: $conceptDetectionEditConceptWindowMarginleft;
+    }
+
+    .edit-button {
+      margin-right: $conceptDetectionEditConceptWindowEditButtonMarginRight;
+    }
+
+    input {
+      width: $conceptDetectionEditConceptWindowInputWidths;
+    }
+  }
 }

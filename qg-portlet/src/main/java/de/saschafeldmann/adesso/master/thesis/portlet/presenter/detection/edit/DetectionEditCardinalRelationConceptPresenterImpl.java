@@ -32,7 +32,7 @@ import javax.annotation.PostConstruct;
  */
 @Component
 @Scope("prototype")
-public class DetectionEditCardinalRelationConceptPresenterImpl implements DetectionEditConceptPresenter<CardinalRelationConcept>, DetectionEditConceptViewListener<CardinalRelationConcept> {
+public class DetectionEditCardinalRelationConceptPresenterImpl extends AbstractDetectionEditConceptPresenter<CardinalRelationConcept> implements DetectionEditConceptPresenter<CardinalRelationConcept>, DetectionEditConceptViewListener<CardinalRelationConcept> {
     private static final Logger LOGGER = LoggerFactory.getLogger(DetectionEditCardinalRelationConceptPresenterImpl.class);
     private final DetectionEditCardinalRelationConceptView view;
 
@@ -42,19 +42,14 @@ public class DetectionEditCardinalRelationConceptPresenterImpl implements Detect
      */
     @Autowired
     public DetectionEditCardinalRelationConceptPresenterImpl(final DetectionEditCardinalRelationConceptView view) {
+        super(view);
+
         this.view = view;
     }
 
     @PostConstruct
     private void initialize() {
         view.setViewListener(this);
-    }
-
-    @Override
-    public void displayEditViewForConcept(final CardinalRelationConcept concept) {
-        LOGGER.info("displayEditViewForConcept(): displaying for concept {}", concept.getOriginalSentence());
-
-        view.displayForConcept(concept);
     }
 
     @Override
@@ -69,33 +64,4 @@ public class DetectionEditCardinalRelationConceptPresenterImpl implements Detect
         closeView(conceptToBeEdited);
     }
 
-    @Override
-    public void onDeleteButtonClicked(CardinalRelationConcept concept) {
-        LOGGER.info("onDeleteButtonClicked(): deleting concept {}", concept.getOriginalSentence());
-
-        getQuestionGeneratorSession().deleteDetectedConcept(concept.getLearningContent(), concept);
-
-        closeView(concept);
-    }
-
-    @Override
-    public void onWindowClosed(Concept fillTextConcept) {
-        showDetectedConceptsView(fillTextConcept);
-    }
-
-    private void closeView(Concept concept) {
-        view.close();
-
-        showDetectedConceptsView(concept);
-    }
-
-    private void showDetectedConceptsView(Concept concept) {
-        QuestionGeneratorPortletVaadinUi.getCurrentPortletVaadinUi().getDetectionEditConceptsPresenter().displayDetectedConcepts(
-                concept.getLearningContent(),
-                getQuestionGeneratorSession().getDetectedConceptsContentsMap().get(concept.getLearningContent()));
-    }
-
-    private QuestionGenerationSession getQuestionGeneratorSession() {
-        return QuestionGeneratorPortletVaadinUi.getCurrentPortletVaadinUi().getQuestionGenerationSession();
-    }
 }

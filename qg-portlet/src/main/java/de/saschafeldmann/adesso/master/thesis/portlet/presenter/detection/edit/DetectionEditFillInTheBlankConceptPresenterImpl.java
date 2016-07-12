@@ -4,6 +4,7 @@ import de.saschafeldmann.adesso.master.thesis.detection.model.FillInTheBlankText
 import de.saschafeldmann.adesso.master.thesis.detection.model.api.Concept;
 import de.saschafeldmann.adesso.master.thesis.portlet.QuestionGeneratorPortletVaadinUi;
 import de.saschafeldmann.adesso.master.thesis.portlet.model.QuestionGenerationSession;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.detection.edit.AbstractDetectionEditConceptView;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.detection.edit.DetectionEditConceptViewListener;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.detection.edit.DetectionEditFillInTheBlankConceptView;
 import org.slf4j.Logger;
@@ -31,7 +32,7 @@ import javax.annotation.PostConstruct;
  */
 @Component
 @Scope("prototype")
-public class DetectionEditFillInTheBlankConceptPresenterImpl implements DetectionEditConceptPresenter<FillInTheBlankTextConcept>, DetectionEditConceptViewListener<FillInTheBlankTextConcept> {
+public class DetectionEditFillInTheBlankConceptPresenterImpl extends AbstractDetectionEditConceptPresenter<FillInTheBlankTextConcept> implements DetectionEditConceptPresenter<FillInTheBlankTextConcept>, DetectionEditConceptViewListener<FillInTheBlankTextConcept> {
     private static final Logger LOGGER = LoggerFactory.getLogger(DetectionEditFillInTheBlankConceptPresenterImpl.class);
     private final DetectionEditFillInTheBlankConceptView view;
 
@@ -41,19 +42,14 @@ public class DetectionEditFillInTheBlankConceptPresenterImpl implements Detectio
      */
     @Autowired
     public DetectionEditFillInTheBlankConceptPresenterImpl(final DetectionEditFillInTheBlankConceptView view) {
+        super(view);
+
         this.view = view;
     }
 
     @PostConstruct
     private void initialize() {
         this.view.setViewListener(this);
-    }
-
-    @Override
-    public void displayEditViewForConcept(final FillInTheBlankTextConcept concept) {
-        LOGGER.info("displayEditViewForConcept(): displaying for concept {}", concept.getOriginalSentence());
-
-        view.displayForConcept(concept);
     }
 
     @Override
@@ -66,33 +62,4 @@ public class DetectionEditFillInTheBlankConceptPresenterImpl implements Detectio
         closeView(conceptToBeEdited);
     }
 
-    @Override
-    public void onDeleteButtonClicked(FillInTheBlankTextConcept concept) {
-        LOGGER.info("onDeleteButtonClicked(): deleting concept {}", concept.getOriginalSentence());
-
-        getQuestionGeneratorSession().deleteDetectedConcept(concept.getLearningContent(), concept);
-
-        closeView(concept);
-    }
-
-    @Override
-    public void onWindowClosed(Concept concept) {
-        showDetectedConceptsView(concept);
-    }
-
-    private void closeView(FillInTheBlankTextConcept concept) {
-        view.close();
-
-        showDetectedConceptsView(concept);
-    }
-
-    private void showDetectedConceptsView(Concept concept) {
-        QuestionGeneratorPortletVaadinUi.getCurrentPortletVaadinUi().getDetectionEditConceptsPresenter().displayDetectedConcepts(
-                concept.getLearningContent(),
-                getQuestionGeneratorSession().getDetectedConceptsContentsMap().get(concept.getLearningContent()));
-    }
-
-    private QuestionGenerationSession getQuestionGeneratorSession() {
-        return QuestionGeneratorPortletVaadinUi.getCurrentPortletVaadinUi().getQuestionGenerationSession();
-    }
 }

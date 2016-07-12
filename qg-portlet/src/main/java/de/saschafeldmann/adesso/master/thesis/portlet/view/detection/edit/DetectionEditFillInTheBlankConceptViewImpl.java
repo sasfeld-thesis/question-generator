@@ -2,6 +2,7 @@ package de.saschafeldmann.adesso.master.thesis.portlet.view.detection.edit;
 
 import com.vaadin.ui.Window;
 import de.saschafeldmann.adesso.master.thesis.detection.model.FillInTheBlankTextConcept;
+import de.saschafeldmann.adesso.master.thesis.portlet.properties.QuestionGeneratorProperties;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.Messages;
 import de.saschafeldmann.adesso.master.thesis.portlet.util.VaadinUtil;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.Button;
@@ -31,7 +32,7 @@ import javax.annotation.PostConstruct;
  */
 @Component
 @Scope("prototype")
-public class DetectionEditFillInTheBlankConceptViewImpl extends Window implements DetectionEditFillInTheBlankConceptView, Window.CloseListener {
+public class DetectionEditFillInTheBlankConceptViewImpl extends AbstractDetectionEditConceptView implements DetectionEditFillInTheBlankConceptView, Window.CloseListener {
     private final FormLayout formLayout;
     private final TextField originalSentenceInput;
     private final TextField filltextSentenceInput;
@@ -52,6 +53,7 @@ public class DetectionEditFillInTheBlankConceptViewImpl extends Window implement
      */
     @Autowired
     public DetectionEditFillInTheBlankConceptViewImpl(
+            final QuestionGeneratorProperties questionGeneratorProperties,
             final Messages messages,
             final FormLayout formLayout,
             final TextField originalSentenceInput,
@@ -61,6 +63,8 @@ public class DetectionEditFillInTheBlankConceptViewImpl extends Window implement
             final Button btnEdit,
             final Button btnDelete
     ) {
+        super(questionGeneratorProperties);
+
         this.formLayout = formLayout;
         this.originalSentenceInput = originalSentenceInput;
         this.filltextSentenceInput = filltextSentenceInput;
@@ -72,7 +76,9 @@ public class DetectionEditFillInTheBlankConceptViewImpl extends Window implement
     }
 
     @PostConstruct
-    private void initializeView() {
+    protected void initializeView() {
+        super.initializeView();
+        
         setLabels();
         addComponents();
         disableCertainInputs();

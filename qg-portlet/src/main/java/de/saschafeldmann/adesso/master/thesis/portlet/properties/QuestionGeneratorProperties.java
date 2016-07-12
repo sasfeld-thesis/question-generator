@@ -45,7 +45,7 @@ public class QuestionGeneratorProperties extends PropertiesReader implements Pro
      * Returns the position x.
      * @return the position x.
      */
-    public int getQuestionEditWindowPositionX () {
+    public int getQuestionEditWindowPositionX() {
         try {
             return Integer.parseInt(fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.question.edit.window.position.x"));
         } catch (NumberFormatException e) {
@@ -58,11 +58,50 @@ public class QuestionGeneratorProperties extends PropertiesReader implements Pro
      * Returns the position y.
      * @return the position y.
      */
-    public int getQuestionEditWindowPositionY () {
+    public int getQuestionEditWindowPositionY() {
         try {
             return Integer.parseInt(fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.question.edit.window.position.y"));
         } catch (NumberFormatException e) {
             LOGGER.error("getQuestionEditWindowPositionY(): wrong configuration in {}! Exception: {}", PROPERTIES_FILE_NAME, e);
+            return 0;
+        }
+    }
+
+    /**
+     * Returns the position x.
+     * @return the position x.
+     */
+    public int getConceptDetectionEditWindowPositionX() {
+        try {
+            return Integer.parseInt(fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.concept.detection.edit.window.position.x"));
+        } catch (NumberFormatException e) {
+            LOGGER.error("getConceptDetectionEditWindowPositionX(): wrong configuration in {}! Exception: {}", PROPERTIES_FILE_NAME, e);
+            return 0;
+        }
+    }
+
+    /**
+     * Returns the position y.
+     * @return the position y.
+     */
+    public int getConceptDetectionEditWindowPositionY() {
+        try {
+            return Integer.parseInt(fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.concept.detection.edit.window.position.y"));
+        } catch (NumberFormatException e) {
+            LOGGER.error("getConceptDetectionEditWindowPositionY(): wrong configuration in {}! Exception: {}", PROPERTIES_FILE_NAME, e);
+            return 0;
+        }
+    }
+
+    /**
+     * Returns the position y.
+     * @return the position y.
+     */
+    public int getConceptDetectionEditWindowGridWidthEm() {
+        try {
+            return Integer.parseInt(fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.concept.detection.edit.window.grid.width.em"));
+        } catch (NumberFormatException e) {
+            LOGGER.error("getConceptDetectionEditWindowGridWidthEm(): wrong configuration in {}! Exception: {}", PROPERTIES_FILE_NAME, e);
             return 0;
         }
     }

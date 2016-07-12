@@ -3,6 +3,7 @@ package de.saschafeldmann.adesso.master.thesis.portlet.view.detection.edit;
 import com.vaadin.data.util.ObjectProperty;
 import com.vaadin.ui.Window;
 import de.saschafeldmann.adesso.master.thesis.detection.model.CardinalRelationConcept;
+import de.saschafeldmann.adesso.master.thesis.portlet.properties.QuestionGeneratorProperties;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.Messages;
 import de.saschafeldmann.adesso.master.thesis.portlet.util.VaadinUtil;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.Button;
@@ -32,7 +33,7 @@ import javax.annotation.PostConstruct;
  */
 @Component
 @Scope("prototype")
-public class DetectionEditCardinalRelationConceptViewImpl extends Window implements DetectionEditCardinalRelationConceptView {
+public class DetectionEditCardinalRelationConceptViewImpl extends AbstractDetectionEditConceptView implements DetectionEditCardinalRelationConceptView {
     private static final java.lang.Integer INITIAL_NUMBER = 1;
     private final FormLayout formLayout;
     private final TextField originalSentenceInput;
@@ -56,6 +57,7 @@ public class DetectionEditCardinalRelationConceptViewImpl extends Window impleme
      */
     @Autowired
     public DetectionEditCardinalRelationConceptViewImpl(
+            final QuestionGeneratorProperties questionGeneratorProperties,
             final Messages messages,
             final FormLayout formLayout,
             final TextField originalSentenceInput,
@@ -67,6 +69,8 @@ public class DetectionEditCardinalRelationConceptViewImpl extends Window impleme
             final Button btnEdit,
             final Button btnDelete
     ) {
+        super(questionGeneratorProperties);
+
         this.formLayout = formLayout;
         this.originalSentenceInput = originalSentenceInput;
         this.compositeInput = compositeInput;
@@ -80,7 +84,9 @@ public class DetectionEditCardinalRelationConceptViewImpl extends Window impleme
     }
 
     @PostConstruct
-    private void initializeView() {
+    protected void initializeView() {
+        super.initializeView();
+
         setLabels();
         setInputTypes();
         addComponents();

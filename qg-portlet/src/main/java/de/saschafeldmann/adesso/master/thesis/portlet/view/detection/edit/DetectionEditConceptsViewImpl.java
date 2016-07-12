@@ -7,6 +7,7 @@ import com.vaadin.ui.renderers.HtmlRenderer;
 import de.saschafeldmann.adesso.master.thesis.detection.model.CardinalRelationConcept;
 import de.saschafeldmann.adesso.master.thesis.detection.model.FillInTheBlankTextConcept;
 import de.saschafeldmann.adesso.master.thesis.detection.model.api.Concept;
+import de.saschafeldmann.adesso.master.thesis.portlet.properties.QuestionGeneratorProperties;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.Messages;
 import de.saschafeldmann.adesso.master.thesis.portlet.util.VaadinUtil;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.Grid;
@@ -43,6 +44,7 @@ public class DetectionEditConceptsViewImpl extends Window implements DetectionEd
 
     private final Messages messages;
     private final VerticalLayout mainLayout;
+    private final QuestionGeneratorProperties properties;
     private Grid conceptsGrid;
     private DetectionEditConceptsViewListener viewListener;
     private Map<Object, Concept> rowConceptMap;
@@ -52,9 +54,10 @@ public class DetectionEditConceptsViewImpl extends Window implements DetectionEd
      * @param messages the messages
      */
     @Autowired
-    public DetectionEditConceptsViewImpl(final VerticalLayout mainLayout, final Messages messages) {
+    public DetectionEditConceptsViewImpl(final VerticalLayout mainLayout, final Messages messages, final QuestionGeneratorProperties properties) {
         this.messages = messages;
         this.mainLayout = mainLayout;
+        this.properties = properties;
     }
 
     @PostConstruct
@@ -75,6 +78,8 @@ public class DetectionEditConceptsViewImpl extends Window implements DetectionEd
         initializeGridColumns();
         addRowsToGrid(detectedConcepts);
 
+        this.setPosition(properties.getConceptDetectionEditWindowPositionX(), properties.getConceptDetectionEditWindowPositionY());
+
         // displays the window
         VaadinUtil.addWindow(getWindow());
     }
@@ -82,6 +87,7 @@ public class DetectionEditConceptsViewImpl extends Window implements DetectionEd
     private void initializeGrid() {
         conceptsGrid = new Grid();
         mainLayout.addComponent(conceptsGrid);
+        conceptsGrid.setWidth(properties.getConceptDetectionEditWindowGridWidthEm(), Unit.EM);
     }
 
     private void initializeGridColumns() {
