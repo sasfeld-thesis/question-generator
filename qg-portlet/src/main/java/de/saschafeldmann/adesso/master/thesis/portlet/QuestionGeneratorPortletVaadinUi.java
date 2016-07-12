@@ -92,9 +92,9 @@ public class QuestionGeneratorPortletVaadinUi extends UI {
     }
 
     private void initSession(VaadinRequest vaadinRequest, ApplicationContext applicationContext) {
+        this.currentLocale = vaadinRequest.getLocale(); // make sure to initialize before messagesBundle!
         this.questionGenerationSession = Factory.newQuestionGenerationSession();
-        this.messagesBundle = applicationContext.getBean(MessagesBundle.class);
-        this.currentLocale = vaadinRequest.getLocale();
+        this.messagesBundle = new MessagesBundle(currentLocale);
     }
 
     private ApplicationContext initializeApplicationContext(VaadinRequest vaadinRequest) {

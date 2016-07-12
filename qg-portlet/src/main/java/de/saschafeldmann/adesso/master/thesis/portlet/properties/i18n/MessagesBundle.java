@@ -1,12 +1,12 @@
 package de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n;
 
-import de.saschafeldmann.adesso.master.thesis.portlet.QuestionGeneratorPortletVaadinUi;
-import de.saschafeldmann.adesso.master.thesis.util.properties.PropertiesReader;
 import de.saschafeldmann.adesso.master.thesis.util.properties.PropertiesReaderApi;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 
@@ -25,24 +25,38 @@ import java.util.ResourceBundle;
  * <br /><br />
  * German message properties accessor.
  */
-@Component
-@Scope("prototype")
 public class MessagesBundle implements PropertiesReaderApi {
+    private static final Logger LOGGER = LoggerFactory.getLogger(MessagesBundle.class);
     private static final String MESSAGE_PROPERTIES_BASE_NAME = "/i18n/messages";
-    private final ResourceBundle messageProperties;
+    private ResourceBundle messageProperties;
 
     /**
      * Create a new config reader which reads from a '.property' - file. <br />
      * A critical log entry will be executed if the given file doesn't exist or
      * isn't accessible.
+     * @param locale the user's locale to make use of the correct messages file
      */
-    public MessagesBundle() throws Exception {
-        messageProperties = ResourceBundle.getBundle(MESSAGE_PROPERTIES_BASE_NAME, QuestionGeneratorPortletVaadinUi.getCurrentPortletVaadinUi().getCurrentLocale());
+    public MessagesBundle(final Locale locale) {
+        if (null != locale) {
+            messageProperties = ResourceBundle.getBundle(MESSAGE_PROPERTIES_BASE_NAME, locale);
+        } else {
+            messageProperties = ResourceBundle.getBundle(MESSAGE_PROPERTIES_BASE_NAME);
+        }
     }
 
     @Override
     public String fetchValue(String propertyKey) {
-        return messageProperties.getString(propertyKey);
+        return toUtf8(messageProperties.getString(propertyKey));
+    }
+
+    private String toUtf8(String value) {
+        try {
+            // convert from ISO-8859-1 (ResourcesBundle implementation) to UTF-8
+            return new String(value.getBytes("ISO-8859-1"), "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            LOGGER.error("toUtf8(): can't convert string '{}' to UTF-8 because of exception: \n{}", value, e);
+            return value;
+        }
     }
 
     @Override

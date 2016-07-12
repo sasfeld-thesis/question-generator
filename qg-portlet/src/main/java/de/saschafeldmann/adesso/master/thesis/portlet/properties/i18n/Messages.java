@@ -1,6 +1,7 @@
 package de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n;
 
 import de.saschafeldmann.adesso.master.thesis.portlet.QuestionGeneratorPortletVaadinUi;
+import de.saschafeldmann.adesso.master.thesis.util.properties.PropertiesReaderApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -23,9 +24,6 @@ import org.springframework.stereotype.Component;
 @Component
 @Scope("singleton")
 public class Messages {
-    @Autowired
-    private MessagesBundle messageDeProperties;
-
     private static final String MENU_ITEM_COURSE_INFORMATION_LABEL = "de.saschafeldmann.adesso.master.thesis.portlet.menu.item.course.information.label";
     private static final String MENU_ITEM_CONTENT_LABEL = "de.saschafeldmann.adesso.master.thesis.portlet.menu.item.contents.label";
     private static final String MENU_ITEM_PREPROCESSES_LABEL = "de.saschafeldmann.adesso.master.thesis.portlet.menu.item.preprocesses.label";
@@ -45,8 +43,8 @@ public class Messages {
      *
      * @return
      */
-    private MessagesBundle getMessageProperties() {
-        return messageDeProperties;
+    private PropertiesReaderApi getMessageProperties() {
+        return QuestionGeneratorPortletVaadinUi.getCurrentPortletVaadinUi().getMessagesBundle();
     }
 
     /**
