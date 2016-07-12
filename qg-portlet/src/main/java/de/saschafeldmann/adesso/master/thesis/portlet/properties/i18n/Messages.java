@@ -1376,4 +1376,73 @@ public class Messages {
     public String getQuestionGenerationViewFinishedQuestionsEditWindowInputQuestionCorrectAnswersTooltip() {
         return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.question.generation.view.finished.questions.edit.window.input.question.correct.answers.tooltip");
     }
+
+    /**
+     * Gets the text.
+     * @return String
+     */
+    public String getQuestionGenerationViewExportCsvHeaderColumnLearningContent() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.question.generation.view.exportcsv.header.column.learningcontent");
+    }
+
+    /**
+     * Gets the text.
+     * @return String
+     */
+    public String getQuestionGenerationViewExportCsvHeaderColumnTestquestion() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.question.generation.view.exportcsv.header.column.testquestion");
+    }
+    /**
+     * Gets the text.
+     * @return String
+     */
+    public String getQuestionGenerationViewExportCsvHeaderColumnMultipleChoice() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.question.generation.view.exportcsv.header.column.multiplechoice");
+    }
+
+    /**
+     * Gets the text.
+     * @return String
+     */
+    public String getQuestionGenerationViewExportCsvHeaderColumnCorrectAnswer() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.question.generation.view.exportcsv.header.column.correctanswer");
+    }
+
+    /**
+     * Gets the text.
+     * @return String
+     */
+    public String getQuestionGenerationViewExportCsvHeaderColumnAlternativeCorrectAnswers() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.question.generation.view.exportcsv.header.column.alternativecorrectanswers");
+    }
+
+    /**
+     * Gets the text.
+     * @return String
+     */
+    public String getQuestionGenerationViewExportCsvHeaderColumnAlternativeWrongAnswerst() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.question.generation.view.exportcsv.header.column.alternativewronganswers");
+    }
+    /**
+     * Gets the text.
+     * @return String
+     */
+    public String getQuestionGenerationViewExportCsvHeaderColumnOriginalSentence() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.question.generation.view.exportcsv.header.column.originalsentence");
+    }
+
+    /**
+     * Gets the text.
+     * @return String
+     */
+    public String getQuestionGenerationViewExportCsvHeaderRowMultipleChoiceYes() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.question.generation.view.exportcsv.header.row.multiplechoice.yes");
+    }
+    /**
+     * Gets the text.
+     * @return String
+     */
+    public String getQuestionGenerationViewExportCsvHeaderRowMultipleChoiceNo() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.question.generation.view.exportcsv.header.row.multiplechoice.no");
+    }
 }

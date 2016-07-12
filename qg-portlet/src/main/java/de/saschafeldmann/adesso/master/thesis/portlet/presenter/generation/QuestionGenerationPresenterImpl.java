@@ -153,6 +153,30 @@ public class QuestionGenerationPresenterImpl extends AbstractStepPresenter imple
     public void onExportButtonClicked() {
         LOGGER.info("onExportButtonClicked()");
 
+        addHeaderColumnsToCsvWriter();
+        addGeneratedQuestionsToCsvWriter();
+
+        try {
+            File exportFile = csvWriter.writeToFile(String.format(CSV_EXPORT_FILENAME_TEMPLATES, questionGenerationSession.getCourse().getTitle()));
+            questionGenerationView.offerCsvFileForDownload(exportFile);
+        } catch (Exception e) {
+            LOGGER.error("onExportButtonClicked(): could not generate CSV due to {}", e);
+        }
+    }
+
+    private void addHeaderColumnsToCsvWriter() {
+        csvWriter.addRow(
+                messages.getQuestionGenerationViewExportCsvHeaderColumnLearningContent(),
+                messages.getQuestionGenerationViewExportCsvHeaderColumnTestquestion(),
+                messages.getQuestionGenerationViewExportCsvHeaderColumnMultipleChoice(),
+                messages.getQuestionGenerationViewExportCsvHeaderColumnCorrectAnswer(),
+                messages.getQuestionGenerationViewExportCsvHeaderColumnAlternativeCorrectAnswers(),
+                messages.getQuestionGenerationViewExportCsvHeaderColumnAlternativeWrongAnswerst(),
+                messages.getQuestionGenerationViewExportCsvHeaderColumnOriginalSentence()
+        );
+    }
+
+    private void addGeneratedQuestionsToCsvWriter() {
         for (final LearningContent learningContent: questionGenerationSession.getGeneratedQuestionsContentsMap().keySet()) {
             final String columnLearningContentTitle = learningContent.getTitle();
 
@@ -162,7 +186,7 @@ public class QuestionGenerationPresenterImpl extends AbstractStepPresenter imple
                 final String columnTestQuestionCorrectAnswer = testQuestion.getCorrectAnswer();
                 final String columnTestQuestionAlternativeCorrectAnswers = CSV_EXPORT_MULTIPLE_VALUES_IN_ONE_COLUMN_JOINER.join(testQuestion.getAlternativeCorrectAnswers());
                 final String columnTestQuestionAlternativeWrongAnswers = CSV_EXPORT_MULTIPLE_VALUES_IN_ONE_COLUMN_JOINER.join(testQuestion.getAlternativeWrongAnswers());
-                final String columnIsMultipleChoice = String.valueOf(testQuestion.isMultipleChoice());
+                final String columnIsMultipleChoice = (testQuestion.isMultipleChoice() ? messages.getQuestionGenerationViewExportCsvHeaderRowMultipleChoiceYes() : messages.getQuestionGenerationViewExportCsvHeaderRowMultipleChoiceNo());
 
                 csvWriter.addRow(
                         columnLearningContentTitle,
@@ -173,13 +197,6 @@ public class QuestionGenerationPresenterImpl extends AbstractStepPresenter imple
                         columnTestQuestionAlternativeWrongAnswers,
                         columnTestQuestionOriginalSentence);
             }
-        }
-
-        try {
-            File exportFile = csvWriter.writeToFile(String.format(CSV_EXPORT_FILENAME_TEMPLATES, questionGenerationSession.getCourse().getTitle()));
-            questionGenerationView.offerCsvFileForDownload(exportFile);
-        } catch (Exception e) {
-            LOGGER.error("onExportButtonClicked(): could not generate CSV due to {}", e);
         }
     }
 
