@@ -1,5 +1,6 @@
 package de.saschafeldmann.adesso.master.thesis.portlet.model;
 
+import de.saschafeldmann.adesso.master.thesis.detection.algorithm.DetectionOptions;
 import de.saschafeldmann.adesso.master.thesis.detection.model.api.Concept;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.Course;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
@@ -80,6 +81,7 @@ public class QuestionGenerationSession {
     private Status status = Status.STARTED;
     private Map<LearningContent, List<Concept>> detectedConceptsContentsMap;
     private Map<LearningContent, List<TestQuestion>> generatedQuestionsContentsMap;
+    private DetectionOptions conceptDetectionOptions = new DetectionOptions();
 
     /**
      * Sets the course that the user works on in this session.
@@ -143,6 +145,14 @@ public class QuestionGenerationSession {
      */
     public void resetGeneratedQuestionsContentsMap() {
         generatedQuestionsContentsMap = new HashMap<>();
+    }
+
+    /**
+     * Gets the options object for the qg-detection module.
+     * @return the options object.
+     */
+    public DetectionOptions getConceptDetectionOptions() {
+        return conceptDetectionOptions;
     }
 
     /**

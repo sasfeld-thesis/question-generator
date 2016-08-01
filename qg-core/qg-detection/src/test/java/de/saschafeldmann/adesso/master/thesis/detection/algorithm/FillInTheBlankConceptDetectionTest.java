@@ -54,7 +54,7 @@ public class FillInTheBlankConceptDetectionTest {
 
         // then make sure that the expected concepts were detected
         assertTrue("At least one fill text concept should have been detected", detectedFillInTheBlankTextConcepts.size() > 0);
-    }
+}
 
     @Test
     public void testFillTextConceptDetectionDetectsEnglishGeographyConcepts() throws Exception {

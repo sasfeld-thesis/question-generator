@@ -21,4 +21,43 @@ import org.springframework.stereotype.Component;
 @Component
 @Scope("prototype")
 public class DetectionOptions {
+    /**
+     * Option value for unlimited.
+     */
+    public static final int UNLIMITED = Integer.MAX_VALUE;
+
+    private int numberOfFilltextQuestions;
+    private int numberOfCardinalityQuestions;
+
+    /**
+     * Sets the number of filltext questions to be generated.
+     * @param numberOfFilltextQuestions the number
+     */
+    public void setNumberOfFilltextQuestions(int numberOfFilltextQuestions) {
+        this.numberOfFilltextQuestions = numberOfFilltextQuestions;
+    }
+
+    /**
+     *
+     * @return the number of filltext questions
+     */
+    public int getNumberOfFilltextQuestions() {
+        return numberOfFilltextQuestions;
+    }
+
+    /**
+     * Sets the number of cardinality questions to be generated.
+     * @param numberOfCardinalityQuestions the number
+     */
+    public void setNumberOfCardinalityQuestions(int numberOfCardinalityQuestions) {
+        this.numberOfCardinalityQuestions = numberOfCardinalityQuestions;
+    }
+
+    /**
+     * Returns the number of cardinality questions to be generated.
+     * @return the number
+     */
+    public int getNumberOfCardinalityQuestions() {
+        return numberOfCardinalityQuestions;
+    }
 }

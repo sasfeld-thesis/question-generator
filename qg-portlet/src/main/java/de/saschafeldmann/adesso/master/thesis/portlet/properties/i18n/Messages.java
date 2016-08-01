@@ -254,6 +254,78 @@ public class Messages {
      *
      * @return String
      */
+    public String getCourseInformationViewButtonOptionsLabel() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.course.information.view.footer.button.options.label");
+    }
+
+    /**
+     * Gets the text.
+     *
+     * @return String
+     */
+    public String getOptionsViewCaption() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.options.view.caption");
+    }
+
+    /**
+     * Gets the text.
+     *
+     * @return String
+     */
+    public String getOptionsViewNumberFillTextQuestionsLabel() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.options.view.number.filltext.questions.label");
+    }
+
+    /**
+     * Gets the text.
+     *
+     * @return String
+     */
+    public String getOptionsViewNumberFillTextQuestionsTooltip() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.options.view.number.filltext.questions.tooltip");
+    }
+
+    /**
+     * Gets the text.
+     *
+     * @return String
+     */
+    public String getOptionsViewNumberCardinalityQuestionsLabel() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.options.view.number.cardinality.questions.label");
+    }
+
+    /**
+     * Gets the text.
+     *
+     * @return String
+     */
+    public String getOptionsViewNumberCardinalityQuestionsTooltip() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.options.view.number.cardinality.questions.tooltip");
+    }
+
+    /**
+     * Gets the text.
+     *
+     * @return String
+     */
+    public String getOptionsViewEditLabel() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.options.view.button.edit.label");
+    }
+
+    /**
+     * Gets the text.
+     *
+     * @return String
+     */
+    public String getOptionsViewResetLabel() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.options.view.button.reset.label");
+    }
+
+    /**
+     * Gets the text.
+     *
+     * @return String
+     */
     public String getCourseContentsViewIntroductionText() {
         return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.course.contents.view.introduction.text");
     }

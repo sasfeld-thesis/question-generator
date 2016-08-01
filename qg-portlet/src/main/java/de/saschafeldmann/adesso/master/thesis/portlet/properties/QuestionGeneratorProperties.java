@@ -45,6 +45,32 @@ public class QuestionGeneratorProperties extends PropertiesReader implements Pro
      * Returns the position x.
      * @return the position x.
      */
+    public int getOptionsEditWindowPositionX() {
+        try {
+            return Integer.parseInt(fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.options.edit.window.position.x"));
+        } catch (NumberFormatException e) {
+            LOGGER.error("getOptionsEditWindowPositionX(): wrong configuration in {}! Exception: {}", PROPERTIES_FILE_NAME, e);
+            return 0;
+        }
+    }
+
+    /**
+     * Returns the position y.
+     * @return the position y.
+     */
+    public int getOptionsEditWindowPositionY() {
+        try {
+            return Integer.parseInt(fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.options.edit.window.position.y"));
+        } catch (NumberFormatException e) {
+            LOGGER.error("getOptionsEditWindowPositionY(): wrong configuration in {}! Exception: {}", PROPERTIES_FILE_NAME, e);
+            return 0;
+        }
+    }
+
+    /**
+     * Returns the position x.
+     * @return the position x.
+     */
     public int getQuestionEditWindowPositionX() {
         try {
             return Integer.parseInt(fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.question.edit.window.position.x"));
