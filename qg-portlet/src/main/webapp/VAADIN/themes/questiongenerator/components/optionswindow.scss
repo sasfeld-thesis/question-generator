@@ -1,0 +1,38 @@
+/**
+ * Project:        Masterthesis of Sascha Feldmann
+ * Creation date:  20.06.2016
+ * Author:         Sascha Feldmann (sascha.feldmann@gmx.de)
+ * <br /><br />
+ * University:
+ * Hochschule für Technik und Wirtschaft, Berlin
+ * Fachbereich 4
+ * Studiengang Internationale Medieninformatik (Master)
+ * <br /><br />
+ * Company:
+ * adesso AG
+ * <br /><br />
+ * Styles for the Vaadin Edit Window UI component / dialog.
+ */
+
+// Define the theme as mixin so that it can be included in other files
+@mixin optionswindow {
+  /*
+   * Edit dialog window.
+   */
+  .options-window {
+    width: $optionsWindowDialogWidth !important;
+    height: $optionsWindowDialogWindowHeight !important;
+
+    .v-formlayout {
+      margin-left: $boxMargins !important;
+
+      .v-textfield {
+        width: $optionsWindowEditDialogInputWidth !important;
+      }
+    }
+
+    .edit-button {
+      margin-right: $optionsWindowEditWindowEditButtonMarginRight
+    }
+  }
+}

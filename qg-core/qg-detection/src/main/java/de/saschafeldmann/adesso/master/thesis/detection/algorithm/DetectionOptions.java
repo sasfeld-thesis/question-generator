@@ -26,8 +26,8 @@ public class DetectionOptions {
      */
     public static final int UNLIMITED = Integer.MAX_VALUE;
 
-    private int numberOfFilltextQuestions;
-    private int numberOfCardinalityQuestions;
+    private int numberOfFilltextQuestions = UNLIMITED;
+    private int numberOfCardinalityQuestions = UNLIMITED;
 
     /**
      * Sets the number of filltext questions to be generated.

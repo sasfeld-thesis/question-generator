@@ -33,7 +33,7 @@ import javax.annotation.PostConstruct;
 @Component
 @Scope("prototype")
 public class OptionsViewImpl extends Window implements OptionsView {
-    private static final String CSS_STYLE_NAME_WINDOW = "question-generation-edit-question-window";
+    private static final String CSS_STYLE_NAME_WINDOW = "options-window";
     public static final String CSS_STYLE_NAME_EDIT_BUTTON = "edit-button";
 
     private OptionsViewListener viewListener;
@@ -96,6 +96,7 @@ public class OptionsViewImpl extends Window implements OptionsView {
 
         buttonGroupLayout.addComponent(editButton);
         buttonGroupLayout.addComponent(resetButton);
+        formLayout.addComponent(buttonGroupLayout);
     }
 
     private void setStyles() {

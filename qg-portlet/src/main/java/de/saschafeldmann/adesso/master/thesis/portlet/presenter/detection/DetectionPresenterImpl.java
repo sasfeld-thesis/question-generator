@@ -8,6 +8,7 @@ import de.saschafeldmann.adesso.master.thesis.detection.algorithm.fillintheblank
 import de.saschafeldmann.adesso.master.thesis.detection.model.CardinalRelationConcept;
 import de.saschafeldmann.adesso.master.thesis.detection.model.FillInTheBlankTextConcept;
 import de.saschafeldmann.adesso.master.thesis.detection.model.api.Concept;
+import de.saschafeldmann.adesso.master.thesis.detection.util.ListUtil;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
 import de.saschafeldmann.adesso.master.thesis.portlet.QuestionGeneratorPortletVaadinUi;
 import de.saschafeldmann.adesso.master.thesis.portlet.model.QuestionGenerationSession;
@@ -56,8 +57,6 @@ public class DetectionPresenterImpl extends AbstractStepPresenter implements Det
     private FillInTheBlankConceptDetection fillTextConceptDetectionAlgorithm;
     @Autowired
     private CardinalRelationConceptDetection cardinalRelationConceptDetectionAlgorithm;
-    @Autowired
-    private DetectionOptions detectionOptions;
     private List<DetectionActivationElement> detectionActivationElementList;
     private boolean detectionFinished = false;
 
@@ -181,11 +180,22 @@ public class DetectionPresenterImpl extends AbstractStepPresenter implements Det
 
         for (LearningContent learningContent: annotatedLearningContents) {
             LOGGER.info("executeProcessForAllNlpTaggedLearningContents(): will run detection algorithm on the given learning content {}", learningContent.getTitle());
-            List<Concept> concepts = detectionActivationElement.getProcessAlgorithm().execute(learningContent, detectionOptions);
+            List<Concept> concepts = detectionActivationElement.getProcessAlgorithm().execute(learningContent, questionGenerationSession.getConceptDetectionOptions());
+            List<Concept> reducedConcepts = ListUtil.reduceListToMaximumOfElements(concepts, getUserSettingForMaximumNumberOfElements(detectionActivationElement));
 
-            for (Concept detectedConcept: concepts) {
+            for (Concept detectedConcept: reducedConcepts) {
                 putLearningContentToConceptsMap(learningContent, detectedConcept);
             }
+        }
+    }
+
+    private int getUserSettingForMaximumNumberOfElements(DetectionActivationElement detectionActivationElement) {
+        if (detectionActivationElement.getProcessAlgorithm() instanceof FillInTheBlankConceptDetection) {
+            return questionGenerationSession.getConceptDetectionOptions().getNumberOfFilltextQuestions();
+        } else if (detectionActivationElement.getProcessAlgorithm() instanceof CardinalRelationConcept) {
+            return questionGenerationSession.getConceptDetectionOptions().getNumberOfCardinalityQuestions();
+        } else {
+            return DetectionOptions.UNLIMITED;
         }
     }
 

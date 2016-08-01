@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
+
 /**
  * Project:        Masterthesis of Sascha Feldmann
  * Creation date:  01.08.2016
@@ -32,12 +34,26 @@ import org.springframework.stereotype.Component;
 public class OptionsPresenterImpl implements OptionsPresenter, OptionsViewListener {
     private static final Logger LOGGER = LoggerFactory.getLogger(OptionsPresenterImpl.class);
 
-    @Autowired
-    private OptionsView optionsView;
-    @Autowired
-    private Messages messages;
+    private final OptionsView optionsView;
+    private final Messages messages;
 
     private QuestionGenerationSession session;
+
+    /**
+     * Creates a new presenter impl.
+     * @param optionsView the view
+     * @param messages the messages
+     */
+    @Autowired
+    public OptionsPresenterImpl(final OptionsView optionsView, final Messages messages) {
+        this.optionsView = optionsView;
+        this.messages = messages;
+    }
+
+    @PostConstruct
+    private void initialize() {
+        optionsView.setViewListener(this);
+    }
 
     @Override
     public void display() {

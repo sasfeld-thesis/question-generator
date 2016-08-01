@@ -23,6 +23,7 @@
 @import "steps/generation";
 @import "components/accordion";
 @import "components/editwindow";
+@import "components/optionswindow";
 @import "components/infobox";
 
 
@@ -36,6 +37,7 @@
   @include generation;
   @include accordion;
   @include editwindow;
+  @include optionswindow;
   @include infobox;
 
   /*

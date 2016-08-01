@@ -30,6 +30,7 @@ $questionGenerationEditWindowEditButtonMarginRight: 5em;
 $conceptDetectionEditConceptsWindowMarginleft: 1em;
 $conceptDetectionEditConceptWindowMarginleft: 1em;
 $conceptDetectionEditConceptWindowEditButtonMarginRight: 5em;
+$optionsWindowEditWindowEditButtonMarginRight: 5em;
 
 // font sizes
 $infoBoxIconFontSize: 2em;
@@ -41,8 +42,11 @@ $activeMenuItemColor: rgba(186, 0, 186, 0.1);
 $courseContentsAccordionInputWidth: 35em;
 $editDialogWindowWidth: 60em;
 $editDialogWindowHeight: 50em;
+$optionsWindowDialogWidth: 35em;
+$optionsWindowDialogWindowHeight: 15em;
 $editDialogTextareaWidth: 55em;
 $editDialogTextareaHeight: 45em;
+$optionsWindowEditDialogInputWidth: $optionsWindowDialogWidth - 5em;
 
 $courseContentsProgressBarWidth: 37em;
 $preprocessesLogWidth: 42em;
