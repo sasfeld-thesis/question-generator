@@ -37,9 +37,9 @@ public class ListUtil {
             // the maximum number of elements is less than the given one, so only return each nth element
             List<T> newList = new ArrayList<>();
 
-            int addEachNthPosition = concepts.size() / maximumNumberOfElements;
+            int addEachNthPosition = (int) Math.floor(concepts.size() / maximumNumberOfElements);
 
-            for (int i=0; i < concepts.size(); i += addEachNthPosition) {
+            for (int i=0; i + addEachNthPosition <= concepts.size(); i += addEachNthPosition) {
                 newList.add(concepts.get(i));
             }
 
