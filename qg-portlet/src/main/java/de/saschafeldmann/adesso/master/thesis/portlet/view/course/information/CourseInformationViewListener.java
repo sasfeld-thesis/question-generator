@@ -32,4 +32,9 @@ public interface CourseInformationViewListener {
      * Called if the view gets the user's focus.
      */
     void onViewFocus();
+
+    /**
+     * Triggered when the user hit the options button.
+     */
+    void onOptionsButtonClicked();
 }

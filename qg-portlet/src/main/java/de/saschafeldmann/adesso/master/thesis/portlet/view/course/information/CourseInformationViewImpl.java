@@ -3,10 +3,17 @@ package de.saschafeldmann.adesso.master.thesis.portlet.view.course.information;
 import static com.google.common.base.Strings.*;
 import com.vaadin.data.Property;
 import com.vaadin.navigator.ViewChangeListener;
+import com.vaadin.ui.*;
 import de.saschafeldmann.adesso.master.thesis.portlet.model.LanguageWrapper;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.Messages;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.AbstractStepView;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.*;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.Button;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.FormLayout;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.HorizontalLayout;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.Label;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.ListSelect;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.TextField;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -55,6 +62,7 @@ public class CourseInformationViewImpl extends AbstractStepView implements Cours
     private final HorizontalLayout buttonGroupLayout;
     private final Button btnNext;
     private final Button btnNewSession;
+    private final Button btnOptions;
     private CourseInformationViewListener viewListener;
     private String courseTitle;
 
@@ -64,7 +72,9 @@ public class CourseInformationViewImpl extends AbstractStepView implements Cours
                                      final ListSelect inputCourseLanguageSelect,
                                      final HorizontalLayout buttonGroupLayout,
                                      final Button btnNext,
-                                     final Button btnNewSession ) {
+                                     final Button btnNewSession,
+                                     final Button btnOptions
+                                     ) {
         super(messages, versionLabel);
 
         this.infoBox = infoBox;
@@ -76,6 +86,7 @@ public class CourseInformationViewImpl extends AbstractStepView implements Cours
         this.buttonGroupLayout = buttonGroupLayout;
         this.btnNext = btnNext;
         this.btnNewSession = btnNewSession;
+        this.btnOptions = btnOptions;
     }
 
     @PostConstruct
@@ -89,11 +100,11 @@ public class CourseInformationViewImpl extends AbstractStepView implements Cours
         this.buttonGroupLayout.addStyleName(CSS_BUTTON_GROUP_STYLENAME);
         this.btnNext.setCaption(messages.getCourseInformationViewBtnNextLabel());
         this.btnNewSession.setCaption(messages.getCourseInformationViewBtnNewSessionLabel());
+        this.btnOptions.setCaption(messages.getCourseInformationViewButtonOptionsLabel());
 
         registerListeners();
         disableActionsButtons();
     }
-
 
     private void enableActionButtons() {
         btnNext.setEnabled(true);
@@ -135,6 +146,13 @@ public class CourseInformationViewImpl extends AbstractStepView implements Cours
                 viewListener.onNewSessionButtonClicked();
             }
         });
+
+        btnOptions.addClickListener(new com.vaadin.ui.Button.ClickListener() {
+            @Override
+            public void buttonClick(com.vaadin.ui.Button.ClickEvent clickEvent) {
+                viewListener.onOptionsButtonClicked();
+            }
+        });
     }
 
     @Override
@@ -157,6 +175,8 @@ public class CourseInformationViewImpl extends AbstractStepView implements Cours
         addComponent(formLayout);
 
         addButtonsAtBottom(buttonGroupLayout, btnNext, btnNewSession);
+        buttonGroupLayout.addComponent(btnOptions);
+
         addComponent(buttonGroupLayout);
 
         addFooter();

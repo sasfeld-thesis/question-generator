@@ -20,6 +20,7 @@ import de.saschafeldmann.adesso.master.thesis.portlet.presenter.detection.Detect
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.detection.edit.DetectionEditFillInTheBlankConceptPresenterImpl;
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.generation.QuestionGenerationPresenter;
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.generation.edit.QuestionGenerationEditQuestionPresenter;
+import de.saschafeldmann.adesso.master.thesis.portlet.presenter.options.OptionsPresenter;
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.preprocesses.PreprocessesPresenter;
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.preprocesses.PreprocessesPresenterImpl;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.VaadinProperties;
@@ -71,6 +72,7 @@ public class QuestionGeneratorPortletVaadinUi extends UI {
     private MessagesBundle messagesBundle;
     private CourseContentsPresenter courseContentsPresenter;
     private CourseInformationPresenter courseInformationPresenter;
+    private OptionsPresenter optionsPresenter;
     private PreprocessesPresenter preprocessesPresenter;
     private DetectionPresenter detectionPresenter;
     private DetectionEditConceptsPresenter detectionEditConceptsPresenter;
@@ -108,11 +110,17 @@ public class QuestionGeneratorPortletVaadinUi extends UI {
     }
 
     private void initializeViews(ApplicationContext applicationContext) {
+        initializeOptionsView(applicationContext);
         initializeCourseInformationView(applicationContext);
         initializeCourseContentsView(applicationContext);
         initializePreprocessesView(applicationContext);
         initializeDetectionView(applicationContext);
         initializeTestQuestionGenerationView(applicationContext);
+    }
+
+    private void initializeOptionsView(ApplicationContext applicationContext) {
+        this.optionsPresenter = applicationContext.getBean(OptionsPresenter.class);
+        optionsPresenter.setQuestionGenerationSession(questionGenerationSession);
     }
 
 
@@ -206,6 +214,14 @@ public class QuestionGeneratorPortletVaadinUi extends UI {
      */
     public static QuestionGeneratorPortletVaadinUi getCurrentPortletVaadinUi() {
         return (QuestionGeneratorPortletVaadinUi) getCurrent();
+    }
+
+    /**
+     * Gets the options presenter.
+     * @return the options presenter.
+     */
+    public OptionsPresenter getOptionsPresenter() {
+        return optionsPresenter;
     }
 
     /**

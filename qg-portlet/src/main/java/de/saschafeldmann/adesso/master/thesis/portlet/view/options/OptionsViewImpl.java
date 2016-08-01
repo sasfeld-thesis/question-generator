@@ -1,10 +1,13 @@
 package de.saschafeldmann.adesso.master.thesis.portlet.view.options;
 
 import com.vaadin.ui.Window;
+import de.saschafeldmann.adesso.master.thesis.detection.algorithm.DetectionOptions;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.QuestionGeneratorProperties;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.Messages;
+import de.saschafeldmann.adesso.master.thesis.portlet.util.VaadinUtil;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.Button;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.FormLayout;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.HorizontalLayout;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.TextField;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -39,6 +42,7 @@ public class OptionsViewImpl extends Window implements OptionsView {
     private final FormLayout formLayout;
     private final TextField inputNumberFillTextQuestions;
     private final TextField inputNumberCardinalityQuestions;
+    private final HorizontalLayout buttonGroupLayout;
     private final Button editButton;
     private final Button resetButton;
     private final QuestionGeneratorProperties questionGeneratorProperties;
@@ -58,6 +62,7 @@ public class OptionsViewImpl extends Window implements OptionsView {
             final FormLayout formLayout,
             final TextField inputNumberFillTextQuestions,
             final TextField inputNumberCardinalityQuestions,
+            final HorizontalLayout buttonGroupLayout,
             final Button editButton,
             final Button resetButton,
             final QuestionGeneratorProperties questionGeneratorProperties
@@ -66,6 +71,7 @@ public class OptionsViewImpl extends Window implements OptionsView {
         this.formLayout = formLayout;
         this.inputNumberFillTextQuestions = inputNumberFillTextQuestions;
         this.inputNumberCardinalityQuestions = inputNumberCardinalityQuestions;
+        this.buttonGroupLayout = buttonGroupLayout;
         this.editButton = editButton;
         this.resetButton = resetButton;
         this.questionGeneratorProperties = questionGeneratorProperties;
@@ -73,6 +79,10 @@ public class OptionsViewImpl extends Window implements OptionsView {
 
     @PostConstruct
     private void initialize() {
+        setStyles();
+
+        arrangeComponents();
+
         setLabels();
         setActionListeners();
 
@@ -80,8 +90,33 @@ public class OptionsViewImpl extends Window implements OptionsView {
         setContent(formLayout);
     }
 
-    private void setActionListeners() {
+    private void arrangeComponents() {
+        formLayout.addComponent(inputNumberFillTextQuestions);
+        formLayout.addComponent(inputNumberCardinalityQuestions);
 
+        buttonGroupLayout.addComponent(editButton);
+        buttonGroupLayout.addComponent(resetButton);
+    }
+
+    private void setStyles() {
+        addStyleName(CSS_STYLE_NAME_WINDOW);
+        editButton.addStyleName(CSS_STYLE_NAME_EDIT_BUTTON);
+    }
+
+    private void setActionListeners() {
+        editButton.addClickListener(new com.vaadin.ui.Button.ClickListener() {
+            @Override
+            public void buttonClick(com.vaadin.ui.Button.ClickEvent clickEvent) {
+                viewListener.onEditButtonClicked();
+            }
+        });
+
+        resetButton.addClickListener(new com.vaadin.ui.Button.ClickListener() {
+            @Override
+            public void buttonClick(com.vaadin.ui.Button.ClickEvent clickEvent) {
+                viewListener.onResetButtonClicked();
+            }
+        });
     }
 
     private void setLabels() {
@@ -98,41 +133,43 @@ public class OptionsViewImpl extends Window implements OptionsView {
 
     @Override
     public void show() {
-
+        // displays the window
+        VaadinUtil.addWindow(this);
     }
 
     @Override
     public void close() {
-
+        super.close();
     }
 
     @Override
     public void setViewListener(OptionsViewListener optionsViewListener) {
-
+        this.viewListener = optionsViewListener;
     }
 
     @Override
     public int getFillTextQuestionsNumberInputValue() {
-        return 0;
+        return Integer.parseInt(inputNumberFillTextQuestions.getValue());
     }
 
     @Override
     public void setFillTextQuestionsNumberInputValue(int numberOfFilltextQuestions) {
-
+        inputNumberFillTextQuestions.setValue(String.valueOf(numberOfFilltextQuestions));
     }
 
     @Override
     public int getCardinalityQuestionsNumberInputValue() {
-        return 0;
+        return Integer.parseInt(inputNumberCardinalityQuestions.getValue());
     }
 
     @Override
     public void setCardinalityQuestionsNumberInputValue(int numberOfCardinalityQuestions) {
-
+        inputNumberCardinalityQuestions.setValue(String.valueOf(numberOfCardinalityQuestions));
     }
 
     @Override
     public void reset() {
-
+        inputNumberFillTextQuestions.setValue(String.valueOf(DetectionOptions.UNLIMITED));
+        inputNumberCardinalityQuestions.setValue(String.valueOf(DetectionOptions.UNLIMITED));
     }
 }

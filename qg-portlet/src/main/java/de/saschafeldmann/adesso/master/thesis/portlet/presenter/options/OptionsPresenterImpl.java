@@ -1,7 +1,9 @@
 package de.saschafeldmann.adesso.master.thesis.portlet.presenter.options;
 
+import com.vaadin.ui.Notification;
 import de.saschafeldmann.adesso.master.thesis.detection.algorithm.DetectionOptions;
 import de.saschafeldmann.adesso.master.thesis.portlet.model.QuestionGenerationSession;
+import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.Messages;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.options.OptionsView;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.options.OptionsViewListener;
 import org.slf4j.Logger;
@@ -32,6 +34,9 @@ public class OptionsPresenterImpl implements OptionsPresenter, OptionsViewListen
 
     @Autowired
     private OptionsView optionsView;
+    @Autowired
+    private Messages messages;
+
     private QuestionGenerationSession session;
 
     @Override
@@ -60,8 +65,25 @@ public class OptionsPresenterImpl implements OptionsPresenter, OptionsViewListen
     private void updateSession() {
         LOGGER.debug("updateSession(): setting options session values...");
 
-        session.getConceptDetectionOptions().setNumberOfFilltextQuestions(optionsView.getFillTextQuestionsNumberInputValue());
-        session.getConceptDetectionOptions().setNumberOfCardinalityQuestions(optionsView.getCardinalityQuestionsNumberInputValue());
+        try {
+            session.getConceptDetectionOptions().setNumberOfFilltextQuestions(optionsView.getFillTextQuestionsNumberInputValue());
+        } catch (Exception e) {
+            Notification.show(
+                    messages.getOptionsViewErrorNotificationTitle(),
+                    messages.getOptionsViewErrorNotificationCaption(messages.getOptionsViewNumberFillTextQuestionsLabel()),
+                    Notification.Type.ERROR_MESSAGE
+            );
+        }
+
+        try {
+            session.getConceptDetectionOptions().setNumberOfCardinalityQuestions(optionsView.getCardinalityQuestionsNumberInputValue());
+        } catch (Exception e) {
+            Notification.show(
+                    messages.getOptionsViewErrorNotificationTitle(),
+                    messages.getOptionsViewErrorNotificationCaption(messages.getOptionsViewNumberCardinalityQuestionsLabel()),
+                    Notification.Type.ERROR_MESSAGE
+            );
+        }
     }
 
     @Override
@@ -78,8 +100,8 @@ public class OptionsPresenterImpl implements OptionsPresenter, OptionsViewListen
     }
 
     private void resetViewValues() {
+        optionsView.reset();
         optionsView.setFillTextQuestionsNumberInputValue(session.getConceptDetectionOptions().getNumberOfFilltextQuestions());
         optionsView.setCardinalityQuestionsNumberInputValue(session.getConceptDetectionOptions().getNumberOfCardinalityQuestions());
-        optionsView.reset();
     }
 }

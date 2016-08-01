@@ -161,6 +161,13 @@ public class CourseInformationPresenterImpl extends AbstractStepPresenter implem
     }
 
     @Override
+    public void onOptionsButtonClicked() {
+        LOGGER.info("onOptionsButtonClicked()");
+
+        QuestionGeneratorPortletVaadinUi.getCurrentPortletVaadinUi().getOptionsPresenter().display();
+    }
+
+    @Override
     public ViewWithMenu getView() {
         return courseInformationView;
     }

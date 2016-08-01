@@ -272,6 +272,25 @@ public class Messages {
      *
      * @return String
      */
+    public String getOptionsViewErrorNotificationTitle() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.options.view.error.notification.title");
+    }
+
+    /**
+     * Gets the text.
+     *
+     * @return String
+     * @param s
+     */
+    public String getOptionsViewErrorNotificationCaption(String s) {
+        return String.format(getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.options.view.error.notification.message"), s);
+    }
+
+    /**
+     * Gets the text.
+     *
+     * @return String
+     */
     public String getOptionsViewNumberFillTextQuestionsLabel() {
         return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.options.view.number.filltext.questions.label");
     }
