@@ -192,7 +192,7 @@ public class DetectionPresenterImpl extends AbstractStepPresenter implements Det
     private int getUserSettingForMaximumNumberOfElements(DetectionActivationElement detectionActivationElement) {
         if (detectionActivationElement.getProcessAlgorithm() instanceof FillInTheBlankConceptDetection) {
             return questionGenerationSession.getConceptDetectionOptions().getNumberOfFilltextQuestions();
-        } else if (detectionActivationElement.getProcessAlgorithm() instanceof CardinalRelationConcept) {
+        } else if (detectionActivationElement.getProcessAlgorithm() instanceof CardinalRelationConceptDetection) {
             return questionGenerationSession.getConceptDetectionOptions().getNumberOfCardinalityQuestions();
         } else {
             return DetectionOptions.UNLIMITED;

@@ -39,8 +39,10 @@ public class ListUtil {
 
             int addEachNthPosition = (int) Math.floor(concepts.size() / maximumNumberOfElements);
 
-            for (int i=0; i + addEachNthPosition <= concepts.size(); i += addEachNthPosition) {
+            int numberAdded = 0;
+            for (int i=0; i + addEachNthPosition <= concepts.size() && numberAdded < maximumNumberOfElements; i += addEachNthPosition) {
                 newList.add(concepts.get(i));
+                numberAdded++;
             }
 
             return newList;
