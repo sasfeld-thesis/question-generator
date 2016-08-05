@@ -1,7 +1,6 @@
 package de.saschafeldmann.adesso.master.thesis.portlet.presenter.preprocesses;
 
 import com.google.common.base.Joiner;
-import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.Language;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
@@ -16,9 +15,9 @@ import de.saschafeldmann.adesso.master.thesis.portlet.view.course.contents.Cours
 import de.saschafeldmann.adesso.master.thesis.portlet.view.detection.DetectionViewImpl;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.preprocesses.PreprocessesView;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.preprocesses.PreprocessesViewListener;
-import de.saschafeldmann.adesso.master.thesis.preprocesses.algorithm.language.LanguageDetection;
+import de.saschafeldmann.adesso.master.thesis.preprocesses.algorithm.language.LanguageDetectionAlgorithm;
 import de.saschafeldmann.adesso.master.thesis.preprocesses.algorithm.language.UndeterminableLanguageException;
-import de.saschafeldmann.adesso.master.thesis.preprocesses.algorithm.model.PreprocessingOptions;
+import de.saschafeldmann.adesso.master.thesis.preprocesses.model.PreprocessingOptions;
 import de.saschafeldmann.adesso.master.thesis.preprocesses.algorithm.nlp.NlpException;
 import de.saschafeldmann.adesso.master.thesis.preprocesses.algorithm.nlp.NlpPreprocessingAlgorithm;
 import de.saschafeldmann.adesso.master.thesis.util.linguistic.SentenceUtil;
@@ -28,11 +27,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import java.text.SimpleDateFormat;
 import java.util.*;
 
-import static de.saschafeldmann.adesso.master.thesis.elearningimport.model.Language.ENGLISH;
-import static de.saschafeldmann.adesso.master.thesis.elearningimport.model.Language.GERMAN;
 import static de.saschafeldmann.adesso.master.thesis.portlet.util.FilterUtil.FILTER_DELETED_ANNOTATED_TEXTS_PREDICATE;
 import static de.saschafeldmann.adesso.master.thesis.portlet.util.FilterUtil.FILTER_NOT_DELETED_ANNOTATED_TEXTS_PREDICATE;
 
@@ -61,7 +57,7 @@ public class PreprocessesPresenterImpl extends AbstractStepPresenter implements 
     private ArrayList<ProcessActivationElement> processActivationElements;
 
     @Autowired
-    private LanguageDetection languageDetectionAlgorithm;
+    private LanguageDetectionAlgorithm languageDetectionAlgorithmAlgorithm;
     @Autowired
     private NlpPreprocessingAlgorithm nlpPreprocessingAlgorithm;
     @Autowired
@@ -112,7 +108,7 @@ public class PreprocessesPresenterImpl extends AbstractStepPresenter implements 
         ProcessActivationElement processActivationElement = new ProcessActivationElement.ProcessActivationElementBuilder()
                 .withActivationLabel(messages.getPreproccesesViewAccordionActivationOptiongroupLanguageDetectionLabel())
                 .withIsActivatedPerDefault(false)
-                .withAlgorithm(languageDetectionAlgorithm)
+                .withAlgorithm(languageDetectionAlgorithmAlgorithm)
                 .withTooltip(messages.getPreproccesesViewAccordionActivationOptiongroupLanguageDetectionTooltip())
                 .withStartedLogEntry(messages.getPreproccesesViewAccordionProcesschainLogLanguageDetectionStarted())
                 .withFinishedLogEntry(messages.getPreproccesesViewAccordionProcesschainLogLanguageDetectionFinished())
@@ -229,7 +225,7 @@ public class PreprocessesPresenterImpl extends AbstractStepPresenter implements 
 
         executeProcessForAllLearningContents(processActivationElement);
 
-        if (processActivationElement.getProcessAlgorithm().equals(this.languageDetectionAlgorithm)) {
+        if (processActivationElement.getProcessAlgorithm().equals(this.languageDetectionAlgorithmAlgorithm)) {
             addLogEntryToView(String.format(processActivationElement.getFinishedLogEntry(), getDeterminedLanguages()));
         } else {
             addLogEntryToView(processActivationElement.getFinishedLogEntry());
