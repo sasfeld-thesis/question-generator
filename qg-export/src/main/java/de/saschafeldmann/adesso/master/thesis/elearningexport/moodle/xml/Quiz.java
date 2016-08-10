@@ -3,6 +3,7 @@ package de.saschafeldmann.adesso.master.thesis.elearningexport.moodle.xml;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,5 +26,13 @@ import java.util.List;
 @XmlRootElement(name = "quiz")
 public class Quiz {
 
-    private List<Question> questions;
+    private List<Question> question = new ArrayList<>();
+
+    /**
+     * Gets the question list
+     * @return the question list
+     */
+    public List<Question> getQuestionList() {
+        return question;
+    }
 }

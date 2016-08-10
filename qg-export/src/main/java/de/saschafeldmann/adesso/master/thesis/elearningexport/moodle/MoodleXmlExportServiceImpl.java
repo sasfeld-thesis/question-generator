@@ -49,6 +49,22 @@ public class MoodleXmlExportServiceImpl implements ExportService {
         this.fileName = fileName;
     }
 
+    /**
+     * Sets the correct answer text.
+     * @param correctAnswerText String
+     */
+    public void setCorrectAnswerText(String correctAnswerText) {
+        this.correctAnswerText = correctAnswerText;
+    }
+
+    /**
+     * Sets the wrong answer text.
+     * @param wrongAnswerText String.
+     */
+    public void setWrongAnswerText(String wrongAnswerText) {
+        this.wrongAnswerText = wrongAnswerText;
+    }
+
     @Override
     public File exportGeneratedQuestionsToFile(Map<LearningContent, List<TestQuestion>> generatedQuestionsMap) {
         File file = new File(fileName);
@@ -95,6 +111,8 @@ public class MoodleXmlExportServiceImpl implements ExportService {
             for (String alternativeWrongAnswer: question.getAlternativeWrongAnswers()) {
                 addWrongAnswer(xmlQuestion, alternativeWrongAnswer);
             }
+
+            quiz.getQuestionList().add(xmlQuestion);
         }
     }
 

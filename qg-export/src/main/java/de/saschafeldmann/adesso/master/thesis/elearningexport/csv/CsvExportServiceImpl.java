@@ -28,7 +28,7 @@ import java.util.Map;
  * Company:
  * adesso AG
  * <br /><br />
- * Generates CSV files with the rows: learning content title, test question, multiple choice mode, correct answer, alternative correct answers, wrong answers, original sentence
+ * Generates CSV files with the rows: learning content title, test question, multiple choice mode, correct answer, alternative correct answer, wrong answer, original sentence
  */
 @Component
 @Scope("prototype")
@@ -102,7 +102,7 @@ public class CsvExportServiceImpl implements ExportService {
     }
 
     /**
-     * Sets the alternative correct answers label.
+     * Sets the alternative correct answer label.
      *
      * @param correctAnswersLabel String
      */
@@ -111,7 +111,7 @@ public class CsvExportServiceImpl implements ExportService {
     }
 
     /**
-     * Sets the wrong answers label.
+     * Sets the wrong answer label.
      *
      * @param wrongAnswersLabel String
      */

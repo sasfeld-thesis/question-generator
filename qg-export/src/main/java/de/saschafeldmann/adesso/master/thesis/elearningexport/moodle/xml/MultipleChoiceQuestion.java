@@ -28,7 +28,7 @@ public class MultipleChoiceQuestion extends Question {
     private String singleQuestion;
 
     /**
-     * Whether to shuffle the answers in random order
+     * Whether to shuffle the answer in random order
      * 1 (for true)
      * 0 (false)
      */

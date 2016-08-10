@@ -58,13 +58,13 @@ public interface QuestionGenerationEditQuestionView {
     QuestionType getQuestionTypeInput();
 
     /**
-     * Gets the user inputs for the multiple field wrong answers.
+     * Gets the user inputs for the multiple field wrong answer.
      * @return List of String
      */
     List<String> getMultipleChoiceWrongAnswersInput();
 
     /**
-     * Gets the user inputs for the multiple field correct answers.
+     * Gets the user inputs for the multiple field correct answer.
      * @return List of String
      */
     List<String> getMultipleChoiceCorrectAnswersInput();

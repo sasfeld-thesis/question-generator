@@ -63,7 +63,7 @@ public class QuestionGenerationEditQuestionViewImpl extends Window implements Qu
      * @param inputTestQuestion the test question
      * @param inputCorrectAnswer the correct answer
      * @param selectQuestionType the question type
-     * @param comboBoxWrongAnswers the combobox of wrong answers
+     * @param comboBoxWrongAnswers the combobox of wrong answer
      * @param textFieldCorrectAnswers the combobox of correct answer
      * @param editButton the edit button
      * @param deleteButton the delete button

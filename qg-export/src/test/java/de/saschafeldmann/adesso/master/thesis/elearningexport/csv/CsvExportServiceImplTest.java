@@ -45,7 +45,7 @@ public class CsvExportServiceImplTest {
         File csvFile = csvExportService.exportGeneratedQuestionsToFile(generatedQuestionsMap);
 
         // then assert
-        String header = "learning content title;generated question;is multiple choice;correct answer;alternative correct answers;alternative wrong answers;original sentence";
+        String header = "learning content title;generated question;is multiple choice;correct answer;alternative correct answer;alternative wrong answer;original sentence";
         checkFileContains(csvFile, header);
 
         String firstDataRow = "learningcontent1;What's the correct word? The capital of Germany is ___.;short answer question;Berlin;;;The capital of Germany is Berlin.";
@@ -70,8 +70,8 @@ public class CsvExportServiceImplTest {
         csvExportService.setGeneratedQuestionTitleLabel("generated question");
         csvExportService.setMultipleChoiceModeLabel("is multiple choice");
         csvExportService.setCorrectAnswerLabel("correct answer");
-        csvExportService.setCorrectAnswersLabel("alternative correct answers");
-        csvExportService.setWrongAnswersLabel("alternative wrong answers");
+        csvExportService.setCorrectAnswersLabel("alternative correct answer");
+        csvExportService.setWrongAnswersLabel("alternative wrong answer");
         csvExportService.setOriginalSentenceLabel("original sentence");
 
         csvExportService.setFileName("testfilename");

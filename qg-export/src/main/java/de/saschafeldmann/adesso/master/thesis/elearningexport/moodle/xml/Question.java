@@ -25,7 +25,7 @@ public abstract class Question {
     /**
      * A question name XML element.
      */
-    public class QuestionName {
+    public static class QuestionName {
         @XmlElement
         private String text;
 
@@ -41,7 +41,7 @@ public abstract class Question {
     /**
      * A question feedback XML element.
      */
-    public class QuestionText {
+    public static class QuestionText {
         public static final String FORMAT_PLAIN = "plain_text";
 
         @XmlAttribute
@@ -68,7 +68,7 @@ public abstract class Question {
     }
 
     public static class Answer {
-        public class Feedback {
+        public static class Feedback {
             @XmlElement
             private String text;
 
@@ -101,7 +101,7 @@ public abstract class Question {
 
         /**
          * Sets the answer's text.
-         * @param text the answers text / label.
+         * @param text the answer text / label.
          */
         public void setText(String text) {
             this.text = text;
@@ -122,10 +122,10 @@ public abstract class Question {
     @XmlElement(name = "name")
     public QuestionName name = new QuestionName();
 
-    @XmlElement(name = "questiontype")
+    @XmlElement(name = "questiontext")
     public QuestionText questionText = new QuestionText();
 
-    public List<Answer> answerList = new ArrayList<>();
+    public List<Answer> answer = new ArrayList<>();
 
     /**
      * Creates a question with given type.
@@ -160,10 +160,10 @@ public abstract class Question {
     }
 
     /**
-     * Gets the list of answers.
-     * @return List of answers
+     * Gets the list of answer.
+     * @return List of answer
      */
     public List<Answer> getAnswerList() {
-        return answerList;
+        return answer;
     }
 }
