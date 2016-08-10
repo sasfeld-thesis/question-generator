@@ -44,7 +44,7 @@ public class DetectionViewImpl extends AbstractStepView implements DetectionView
     public static final String VIEW_NAME = "DetectionView";
     // TODO duplicate styles for detection view
     private static final String CSS_STYLE_NAME_HORICONTAL_OPTION_GROUP = "horicontal-option-group";
-    private static final String CSS_STYLE_NAME_PROCESSCHAIN_TABLE = "processchain-table";
+    private static final String CSS_STYLE_NAME_PROCESSCHAIN_TABLE = "detectionchain-table";
     private static final Object PROCESS_CHAIN_TABLE_CONTAINER_PROPERTY_LEFT = "accordion-process-left-column";
     private static final Object PROCESS_CHAIN_TABLE_CONTAINER_PROPERTY_RIGHT = "accordion-process-right-column";
     private static final String CSS_STYLE_NAME_LOG_TEXTAREA = "log-text-area";
