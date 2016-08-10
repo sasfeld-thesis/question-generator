@@ -1,7 +1,10 @@
 package de.saschafeldmann.adesso.master.thesis.portlet.util;
 
+import com.vaadin.server.Extension;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.Window;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.Button;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.ComboBox;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.window.EditWindowWithSelectBox;
 import org.slf4j.Logger;
@@ -64,5 +67,15 @@ public class VaadinUtil {
         }
 
         return items;
+    }
+
+    /**
+     * Removes all extensions on the given component.
+     * @param component the given component
+     */
+    public static void removeAllExtensions(Component component) {
+        for (Extension extension : component.getExtensions()) {
+            component.removeExtension(extension);
+        }
     }
 }

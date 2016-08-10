@@ -8,6 +8,7 @@ import com.vaadin.shared.ui.label.ContentMode;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
 import de.saschafeldmann.adesso.master.thesis.generation.model.TestQuestion;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.Messages;
+import de.saschafeldmann.adesso.master.thesis.portlet.util.VaadinUtil;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.AbstractStepView;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.*;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.Button;
@@ -237,6 +238,8 @@ public class QuestionGenerationViewImpl extends AbstractStepView implements Ques
 
     @Override
     public void offerFileForDownload(File file) {
+        VaadinUtil.removeAllExtensions(btnExport);
+
         FileDownloader fileDownloader = new FileDownloader(new FileResource(file));
         fileDownloader.extend(btnExport);
     }
@@ -276,6 +279,10 @@ public class QuestionGenerationViewImpl extends AbstractStepView implements Ques
 
     @Override
     public String getExportMethodSelection() {
+        if (null == exportListSelect.getValue()) {
+            return "";
+        }
+
         return (String) exportListSelect.getValue();
     }
 
