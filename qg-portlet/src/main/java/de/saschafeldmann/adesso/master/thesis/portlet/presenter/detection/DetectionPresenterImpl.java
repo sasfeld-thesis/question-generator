@@ -1,12 +1,15 @@
 package de.saschafeldmann.adesso.master.thesis.portlet.presenter.detection;
 
+import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
+import com.google.common.collect.Lists;
 import com.vaadin.ui.Notification;
 import de.saschafeldmann.adesso.master.thesis.detection.algorithm.DetectionOptions;
 import de.saschafeldmann.adesso.master.thesis.detection.algorithm.cardinalrelation.CardinalRelationConceptDetection;
 import de.saschafeldmann.adesso.master.thesis.detection.algorithm.fillintheblank.FillInTheBlankConceptDetection;
+import de.saschafeldmann.adesso.master.thesis.detection.model.FillInTheBlankTextConcept;
 import de.saschafeldmann.adesso.master.thesis.detection.model.api.Concept;
-import de.saschafeldmann.adesso.master.thesis.list.ListUtil;
+import de.saschafeldmann.adesso.master.thesis.util.ListUtil;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
 import de.saschafeldmann.adesso.master.thesis.portlet.QuestionGeneratorPortletVaadinUi;
 import de.saschafeldmann.adesso.master.thesis.portlet.model.QuestionGenerationSession;
@@ -18,6 +21,7 @@ import de.saschafeldmann.adesso.master.thesis.portlet.view.detection.DetectionVi
 import de.saschafeldmann.adesso.master.thesis.portlet.view.detection.DetectionViewListener;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.generation.QuestionGenerationViewImpl;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.preprocesses.PreprocessesViewImpl;
+import de.saschafeldmann.adesso.master.thesis.util.linguistic.SentenceUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,6 +61,19 @@ public class DetectionPresenterImpl extends AbstractStepPresenter implements Det
     private CardinalRelationConceptDetection cardinalRelationConceptDetectionAlgorithm;
     private List<DetectionActivationElement> detectionActivationElementList;
     private boolean detectionFinished = false;
+
+    private final Predicate<Concept> FILTER_FILL_TEXTS_WITH_MORE_THAN_ALLOWED = new Predicate<Concept>() {
+        @Override
+        public boolean apply(Concept concept) {
+            if (concept instanceof FillInTheBlankTextConcept) {
+                FillInTheBlankTextConcept fillInTheBlankTextConcept = (FillInTheBlankTextConcept) concept;
+                return SentenceUtil.calculatesNumberOfTokens(fillInTheBlankTextConcept.getFillSentence())
+                        <= questionGenerationSession.getConceptDetectionOptions().getMaxNumberOfTokensForFillInTheBlankSentences();
+            }
+
+            return true;
+        }
+    };
 
     @Autowired
     public DetectionPresenterImpl(
@@ -181,10 +198,18 @@ public class DetectionPresenterImpl extends AbstractStepPresenter implements Det
             List<Concept> concepts = detectionActivationElement.getProcessAlgorithm().execute(learningContent, questionGenerationSession.getConceptDetectionOptions());
             List<Concept> reducedConcepts = ListUtil.reduceListToMaximumOfElements(concepts, getUserSettingForMaximumNumberOfElements(detectionActivationElement));
 
+            if (detectionActivationElement.getProcessAlgorithm() instanceof FillInTheBlankConceptDetection) {
+                reducedConcepts = filterSentencesWithMoreTokens(reducedConcepts, questionGenerationSession.getConceptDetectionOptions().getMaxNumberOfTokensForFillInTheBlankSentences());
+            }
+
             for (Concept detectedConcept: reducedConcepts) {
                 putLearningContentToConceptsMap(learningContent, detectedConcept);
             }
         }
+    }
+
+    private List<Concept> filterSentencesWithMoreTokens(List<Concept> reducedConcepts, int maxNumberOfTokensForFillInTheBlankSentences) {
+        return Lists.newArrayList(Collections2.filter(reducedConcepts, FILTER_FILL_TEXTS_WITH_MORE_THAN_ALLOWED));
     }
 
     private int getUserSettingForMaximumNumberOfElements(DetectionActivationElement detectionActivationElement) {

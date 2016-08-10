@@ -2,7 +2,9 @@ package de.saschafeldmann.adesso.master.thesis.portlet.presenter.options;
 
 import com.vaadin.ui.Notification;
 import de.saschafeldmann.adesso.master.thesis.detection.algorithm.DetectionOptions;
+import de.saschafeldmann.adesso.master.thesis.portlet.QuestionGeneratorPortletVaadinUi;
 import de.saschafeldmann.adesso.master.thesis.portlet.model.QuestionGenerationSession;
+import de.saschafeldmann.adesso.master.thesis.portlet.properties.QuestionGeneratorProperties;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.Messages;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.options.OptionsView;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.options.OptionsViewListener;
@@ -36,6 +38,7 @@ public class OptionsPresenterImpl implements OptionsPresenter, OptionsViewListen
 
     private final OptionsView optionsView;
     private final Messages messages;
+    private final QuestionGeneratorProperties questionGeneratorProperties;
 
     private QuestionGenerationSession session;
 
@@ -45,14 +48,16 @@ public class OptionsPresenterImpl implements OptionsPresenter, OptionsViewListen
      * @param messages the messages
      */
     @Autowired
-    public OptionsPresenterImpl(final OptionsView optionsView, final Messages messages) {
+    public OptionsPresenterImpl(final OptionsView optionsView, final Messages messages, final QuestionGeneratorProperties questionGeneratorProperties) {
         this.optionsView = optionsView;
         this.messages = messages;
+        this.questionGeneratorProperties = questionGeneratorProperties;
     }
 
     @PostConstruct
     private void initialize() {
         optionsView.setViewListener(this);
+        resetSession();
     }
 
     @Override
@@ -79,6 +84,7 @@ public class OptionsPresenterImpl implements OptionsPresenter, OptionsViewListen
     }
 
     private void updateSession() {
+        QuestionGenerationSession session = QuestionGeneratorPortletVaadinUi.getCurrentPortletVaadinUi().getQuestionGenerationSession();
         LOGGER.debug("updateSession(): setting options session values...");
 
         try {
@@ -100,6 +106,16 @@ public class OptionsPresenterImpl implements OptionsPresenter, OptionsViewListen
                     Notification.Type.ERROR_MESSAGE
             );
         }
+
+        try {
+            session.getConceptDetectionOptions().setMaxNumberOfTokensForFillInTheBlankSentences(optionsView.getMaxNumberOfTokensInFilltextQuestionsInputValue());
+        } catch (Exception e) {
+            Notification.show(
+                    messages.getOptionsViewErrorNotificationTitle(),
+                    messages.getOptionsViewErrorNotificationCaption(messages.getOptionsViewMaxNumberTokensFillTextQuestionsLabel()),
+                    Notification.Type.ERROR_MESSAGE
+            );
+        }
     }
 
     @Override
@@ -111,13 +127,19 @@ public class OptionsPresenterImpl implements OptionsPresenter, OptionsViewListen
     }
 
     private void resetSession() {
+        QuestionGenerationSession session = QuestionGeneratorPortletVaadinUi.getCurrentPortletVaadinUi().getQuestionGenerationSession();
+
         session.getConceptDetectionOptions().setNumberOfCardinalityQuestions(DetectionOptions.UNLIMITED);
         session.getConceptDetectionOptions().setNumberOfFilltextQuestions(DetectionOptions.UNLIMITED);
+        session.getConceptDetectionOptions().setMaxNumberOfTokensForFillInTheBlankSentences(questionGeneratorProperties.getConceptDetectionFilltextMaxTokensDefault());
     }
 
     private void resetViewValues() {
+        QuestionGenerationSession session = QuestionGeneratorPortletVaadinUi.getCurrentPortletVaadinUi().getQuestionGenerationSession();
+
         optionsView.reset();
         optionsView.setFillTextQuestionsNumberInputValue(session.getConceptDetectionOptions().getNumberOfFilltextQuestions());
         optionsView.setCardinalityQuestionsNumberInputValue(session.getConceptDetectionOptions().getNumberOfCardinalityQuestions());
+        optionsView.setMaxNumberOfTokensInFilltextQuestionsInputValue(session.getConceptDetectionOptions().getMaxNumberOfTokensForFillInTheBlankSentences());
     }
 }

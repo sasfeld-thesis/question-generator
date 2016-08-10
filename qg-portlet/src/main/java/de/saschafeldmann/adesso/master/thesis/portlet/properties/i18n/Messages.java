@@ -327,6 +327,24 @@ public class Messages {
      *
      * @return String
      */
+    public String getOptionsViewMaxNumberTokensFillTextQuestionsLabel() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.options.view.max.number.tokens.filltext.questions.label");
+    }
+
+    /**
+     * Gets the text.
+     *
+     * @return String
+     */
+    public String getOptionsViewMaxNumberTokensFillTextQuestionsTooltip() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.options.view.max.number.tokens.filltext.questions.tooltip");
+    }
+
+    /**
+     * Gets the text.
+     *
+     * @return String
+     */
     public String getOptionsViewEditLabel() {
         return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.options.view.button.edit.label");
     }

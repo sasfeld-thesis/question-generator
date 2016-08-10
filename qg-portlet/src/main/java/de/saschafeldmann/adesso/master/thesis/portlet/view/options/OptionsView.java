@@ -57,6 +57,18 @@ public interface OptionsView {
     void setCardinalityQuestionsNumberInputValue(int numberOfCardinalityQuestions);
 
     /**
+     * Gets the user input of the input field max number of tokens in fill text questions.
+     * @return the max number of tokens in fill text questions.
+     */
+    int getMaxNumberOfTokensInFilltextQuestionsInputValue();
+
+    /**
+     * Sets the value.
+     * @param maxNumberOfTokensInFilltextQuestionsInputValue the max number of tokens in fill text questions.
+     */
+    void setMaxNumberOfTokensInFilltextQuestionsInputValue(int maxNumberOfTokensInFilltextQuestionsInputValue);
+
+    /**
      * Resets the view.
      */
     void reset();

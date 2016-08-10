@@ -42,6 +42,7 @@ public class OptionsViewImpl extends Window implements OptionsView {
     private final FormLayout formLayout;
     private final TextField inputNumberFillTextQuestions;
     private final TextField inputNumberCardinalityQuestions;
+    private final TextField inputMaxNumberTokensFillTextQuestions;
     private final HorizontalLayout buttonGroupLayout;
     private final Button editButton;
     private final Button resetButton;
@@ -53,6 +54,7 @@ public class OptionsViewImpl extends Window implements OptionsView {
      * @param formLayout the form layout
      * @param inputNumberFillTextQuestions the input
      * @param inputNumberCardinalityQuestions the input
+     * @param inputMaxNumberTokensFillTextQuestions the input
      * @param editButton the edit button
      * @param resetButton the reset button
      */
@@ -62,6 +64,7 @@ public class OptionsViewImpl extends Window implements OptionsView {
             final FormLayout formLayout,
             final TextField inputNumberFillTextQuestions,
             final TextField inputNumberCardinalityQuestions,
+            final TextField inputMaxNumberTokensFillTextQuestions,
             final HorizontalLayout buttonGroupLayout,
             final Button editButton,
             final Button resetButton,
@@ -71,6 +74,7 @@ public class OptionsViewImpl extends Window implements OptionsView {
         this.formLayout = formLayout;
         this.inputNumberFillTextQuestions = inputNumberFillTextQuestions;
         this.inputNumberCardinalityQuestions = inputNumberCardinalityQuestions;
+        this.inputMaxNumberTokensFillTextQuestions = inputMaxNumberTokensFillTextQuestions;
         this.buttonGroupLayout = buttonGroupLayout;
         this.editButton = editButton;
         this.resetButton = resetButton;
@@ -93,6 +97,7 @@ public class OptionsViewImpl extends Window implements OptionsView {
     private void arrangeComponents() {
         formLayout.addComponent(inputNumberFillTextQuestions);
         formLayout.addComponent(inputNumberCardinalityQuestions);
+        formLayout.addComponent(inputMaxNumberTokensFillTextQuestions);
 
         buttonGroupLayout.addComponent(editButton);
         buttonGroupLayout.addComponent(resetButton);
@@ -127,6 +132,8 @@ public class OptionsViewImpl extends Window implements OptionsView {
         inputNumberFillTextQuestions.setDescription(messages.getOptionsViewNumberFillTextQuestionsTooltip());
         inputNumberCardinalityQuestions.setCaption(messages.getOptionsViewNumberCardinalityQuestionsLabel());
         inputNumberCardinalityQuestions.setDescription(messages.getOptionsViewNumberCardinalityQuestionsTooltip());
+        inputMaxNumberTokensFillTextQuestions.setCaption(messages.getOptionsViewMaxNumberTokensFillTextQuestionsLabel());
+        inputMaxNumberTokensFillTextQuestions.setDescription(messages.getOptionsViewMaxNumberTokensFillTextQuestionsTooltip());
 
         editButton.setCaption(messages.getOptionsViewEditLabel());
         resetButton.setCaption(messages.getOptionsViewResetLabel());
@@ -166,6 +173,16 @@ public class OptionsViewImpl extends Window implements OptionsView {
     @Override
     public void setCardinalityQuestionsNumberInputValue(int numberOfCardinalityQuestions) {
         inputNumberCardinalityQuestions.setValue(String.valueOf(numberOfCardinalityQuestions));
+    }
+
+    @Override
+    public int getMaxNumberOfTokensInFilltextQuestionsInputValue() {
+        return Integer.parseInt(inputMaxNumberTokensFillTextQuestions.getValue());
+    }
+
+    @Override
+    public void setMaxNumberOfTokensInFilltextQuestionsInputValue(int maxNumberOfTokensInFilltextQuestionsInputValue) {
+        inputMaxNumberTokensFillTextQuestions.setValue(String.valueOf(maxNumberOfTokensInFilltextQuestionsInputValue));
     }
 
     @Override

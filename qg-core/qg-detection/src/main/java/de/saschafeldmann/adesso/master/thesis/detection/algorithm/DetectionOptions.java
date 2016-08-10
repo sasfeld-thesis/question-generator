@@ -1,5 +1,6 @@
 package de.saschafeldmann.adesso.master.thesis.detection.algorithm;
 
+import de.saschafeldmann.adesso.master.thesis.detection.util.DetectionProperties;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -28,6 +29,7 @@ public class DetectionOptions {
 
     private int numberOfFilltextQuestions = UNLIMITED;
     private int numberOfCardinalityQuestions = UNLIMITED;
+    private int maxNumberOfTokensForFillInTheBlankSentences = UNLIMITED;
 
     /**
      * Sets the number of filltext questions to be generated.
@@ -59,5 +61,21 @@ public class DetectionOptions {
      */
     public int getNumberOfCardinalityQuestions() {
         return numberOfCardinalityQuestions;
+    }
+
+    /**
+     * Sets the max number of tokens in fill-in-the-blank sentences.
+     * @param maxNumberOfTokensForFillInTheBlankSentences int
+     */
+    public void setMaxNumberOfTokensForFillInTheBlankSentences(int maxNumberOfTokensForFillInTheBlankSentences) {
+        this.maxNumberOfTokensForFillInTheBlankSentences = maxNumberOfTokensForFillInTheBlankSentences;
+    }
+
+    /**
+     * The max number of tokens in detected fill-in-the-blank sentences.
+     * @return int
+     */
+    public int getMaxNumberOfTokensForFillInTheBlankSentences() {
+        return maxNumberOfTokensForFillInTheBlankSentences;
     }
 }

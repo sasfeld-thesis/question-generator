@@ -145,5 +145,18 @@ public class QuestionGeneratorProperties extends PropertiesReader implements Pro
         }
     }
 
+    /**
+     * Returns the max tokens default value
+     * @return the default value
+     */
+    public int getConceptDetectionFilltextMaxTokensDefault() {
+        try {
+            return Integer.parseInt(fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.concept.detection.filltext.max.tokens.default"));
+        } catch (NumberFormatException e) {
+            LOGGER.error("getConceptDetectionEditWindowGridWidthEm(): wrong configuration in {}! Exception: {}", PROPERTIES_FILE_NAME, e);
+            return 0;
+        }
+    }
+
 
 }
