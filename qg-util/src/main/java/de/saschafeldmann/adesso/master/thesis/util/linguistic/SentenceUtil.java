@@ -22,7 +22,7 @@ import java.util.List;
  * Utility to split sentences.
  */
 public class SentenceUtil {
-    private static final String REGEX_TO_SPLIT_WORDS = "[\\s\\d,.-;:_!?]+";
+    private static final String REGEX_TO_SPLIT_WORDS = "[\\s,.\\-;:_!?]+";
 
     private static final String LINE_SEPARATOR = System.getProperty("line.separator");
 
@@ -61,7 +61,8 @@ public class SentenceUtil {
      * @return int the number of tokens
      */
     public static int calculatesNumberOfTokens(final String sentence) {
-        return getWordsInRawText(sentence).length;
+        String[] wordsInRawText = getWordsInRawText(sentence);
+        return wordsInRawText.length;
     }
 
     /**

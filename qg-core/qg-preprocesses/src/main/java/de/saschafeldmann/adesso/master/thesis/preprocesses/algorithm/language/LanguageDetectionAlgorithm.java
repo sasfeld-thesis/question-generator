@@ -4,8 +4,6 @@ import de.saschafeldmann.adesso.master.thesis.elearningimport.model.Language;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
 import de.saschafeldmann.adesso.master.thesis.preprocesses.algorithm.PreprocessingAlgorithm;
 import de.saschafeldmann.adesso.master.thesis.preprocesses.model.PreprocessingOptions;
-import de.saschafeldmann.adesso.master.thesis.preprocesses.algorithm.model.PreprocessingOptions;
-import de.saschafeldmann.adesso.master.thesis.util.linguistic.SentenceUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -40,7 +38,7 @@ public class LanguageDetectionAlgorithm implements PreprocessingAlgorithm {
     private final LanguageDetectionProperties languageDetectionProperties;
 
     @Autowired
-    public LanguageDetection(final LanguageDetectionProperties languageDetectionProperties) {
+    public LanguageDetectionAlgorithm(final LanguageDetectionProperties languageDetectionProperties) {
         this.languageDetectionProperties = languageDetectionProperties;
     }
 

@@ -57,4 +57,16 @@ public class SentenceUtilTest {
         Collections.addAll(sentencesList, sentences);
         assertEquals(sentencesList, resultingList);
     }
+
+    @Test
+    public void testCalculateNumberOfTokens() {
+        // given a sentence
+        String sentence = "This is a sentence with 7 words.";
+
+        // when utility method is called
+        int numberOfTokens = SentenceUtil.calculatesNumberOfTokens(sentence);
+
+        // then the size should be equal
+        assertEquals(7, numberOfTokens);
+    }
 }
