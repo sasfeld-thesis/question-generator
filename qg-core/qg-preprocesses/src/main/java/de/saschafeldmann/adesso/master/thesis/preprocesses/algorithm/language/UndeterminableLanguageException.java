@@ -13,7 +13,7 @@ package de.saschafeldmann.adesso.master.thesis.preprocesses.algorithm.language;
  * Company:
  * adesso AG
  * <br /><br />
- * Thrown by the {@link LanguageDetection} algorithm if the language could not be determined.<br />
+ * Thrown by the {@link LanguageDetectionAlgorithm} algorithm if the language could not be determined.<br />
  * This might have different causes: it might be that the input language is not supported (not contained in the enumeration
  * {@link de.saschafeldmann.adesso.master.thesis.elearningimport.model.Language}) or is not statistically adequate (consisting
  * of the language's most common words).

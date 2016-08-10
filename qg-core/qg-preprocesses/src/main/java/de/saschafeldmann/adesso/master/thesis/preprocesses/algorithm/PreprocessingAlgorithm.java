@@ -1,7 +1,7 @@
 package de.saschafeldmann.adesso.master.thesis.preprocesses.algorithm;
 
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
-import de.saschafeldmann.adesso.master.thesis.preprocesses.algorithm.model.PreprocessingOptions;
+import de.saschafeldmann.adesso.master.thesis.preprocesses.model.PreprocessingOptions;
 
 /**
  * Project:        Masterthesis of Sascha Feldmann

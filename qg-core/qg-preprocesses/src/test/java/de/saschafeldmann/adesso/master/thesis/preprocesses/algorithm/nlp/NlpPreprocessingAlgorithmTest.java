@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.Language;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
 import de.saschafeldmann.adesso.master.thesis.preprocesses.algorithm.PreprocessingAlgorithm;
-import de.saschafeldmann.adesso.master.thesis.preprocesses.algorithm.model.PreprocessingOptions;
+import de.saschafeldmann.adesso.master.thesis.preprocesses.model.PreprocessingOptions;
 import de.saschafeldmann.adesso.master.thesis.util.linguistic.SentenceUtil;
 import org.junit.Test;
 

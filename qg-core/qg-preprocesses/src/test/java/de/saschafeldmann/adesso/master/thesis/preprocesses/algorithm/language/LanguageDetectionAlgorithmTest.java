@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.Language;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
-import de.saschafeldmann.adesso.master.thesis.preprocesses.algorithm.model.PreprocessingOptions;
+import de.saschafeldmann.adesso.master.thesis.preprocesses.model.PreprocessingOptions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,9 +22,9 @@ import org.junit.Test;
  * Company:
  * adesso AG
  * <br /><br />
- * Unit test of the {@link LanguageDetection} algorithm.
+ * Unit test of the {@link LanguageDetectionAlgorithm} algorithm.
  */
-public class LanguageDetectionTest {
+public class LanguageDetectionAlgorithmTest {
     private static final String TEST_CONTENT_ENGLISH = "Test document\n" +
             "\n" +
             "I'm writing this text here to test the import functionality of my question generator software. The question generator itself is the central part of my master thesis at Hochschule für Technik und Wirtschaft, Berlin in 2016.\n" +
@@ -42,23 +42,23 @@ public class LanguageDetectionTest {
     private static final String SHORT_TEST_CONTENT_ENGLISH = "This is a test.";
     private static final String SHORT_TEST_CONTENT_GERMAN = "Das ist ein Test.";
 
-    private LanguageDetection languageDetectionAlgorithm;
+    private LanguageDetectionAlgorithm languageDetectionAlgorithmAlgorithm;
     private PreprocessingOptions preprocessingOptions = new PreprocessingOptions();
 
     @Before
     public void setUp() throws Exception {
-        this.languageDetectionAlgorithm = new LanguageDetection(new LanguageDetectionPropertiesImpl());
+        this.languageDetectionAlgorithmAlgorithm = new LanguageDetectionAlgorithm(new LanguageDetectionPropertiesImpl());
     }
 
     @After
     public void tearDown() {
-        this.languageDetectionAlgorithm = null;
+        this.languageDetectionAlgorithmAlgorithm = null;
     }
 
     @Test
     public void testExecuteThrowsUndeterminableExceptionForChineseText() {
         try {
-            this.languageDetectionAlgorithm.execute(getChineseLearningContent(), preprocessingOptions);
+            this.languageDetectionAlgorithmAlgorithm.execute(getChineseLearningContent(), preprocessingOptions);
             fail("LanguageDetection should throw an UndeterminaleLanguageException for chinese characters.");
         } catch (UndeterminableLanguageException e) {
             // expected
@@ -72,28 +72,28 @@ public class LanguageDetectionTest {
 
     @Test
     public void testExecuteDetectsGermanLanguage() {
-        LearningContent learningContent = this.languageDetectionAlgorithm.execute(newLearningContent(TEST_CONTENT_GERMAN), preprocessingOptions);
+        LearningContent learningContent = this.languageDetectionAlgorithmAlgorithm.execute(newLearningContent(TEST_CONTENT_GERMAN), preprocessingOptions);
 
         assertEquals("The LanguageDetection should have set the determined language to German", Language.GERMAN, learningContent.getDeterminedLanguage());
     }
 
     @Test
     public void testExecuteDetectsEnglishLanguage() {
-        LearningContent learningContent = this.languageDetectionAlgorithm.execute(newLearningContent(TEST_CONTENT_ENGLISH), preprocessingOptions);
+        LearningContent learningContent = this.languageDetectionAlgorithmAlgorithm.execute(newLearningContent(TEST_CONTENT_ENGLISH), preprocessingOptions);
 
         assertEquals("The LanguageDetection should have set the determined language to English", Language.ENGLISH, learningContent.getDeterminedLanguage());
     }
 
     @Test
     public void testExecuteDetectsGermanLanguageForAVeryShortSentence() {
-        LearningContent learningContent = this.languageDetectionAlgorithm.execute(newLearningContent(SHORT_TEST_CONTENT_GERMAN), preprocessingOptions);
+        LearningContent learningContent = this.languageDetectionAlgorithmAlgorithm.execute(newLearningContent(SHORT_TEST_CONTENT_GERMAN), preprocessingOptions);
 
         assertEquals("The LanguageDetection should have set the determined language to German", Language.GERMAN, learningContent.getDeterminedLanguage());
     }
 
     @Test
     public void testExecuteDetectsEnglishLanguageForAVeryShortSentence() {
-        LearningContent learningContent = this.languageDetectionAlgorithm.execute(newLearningContent(SHORT_TEST_CONTENT_ENGLISH), preprocessingOptions);
+        LearningContent learningContent = this.languageDetectionAlgorithmAlgorithm.execute(newLearningContent(SHORT_TEST_CONTENT_ENGLISH), preprocessingOptions);
 
         assertEquals("The LanguageDetection should have set the determined language to English", Language.ENGLISH, learningContent.getDeterminedLanguage());
     }

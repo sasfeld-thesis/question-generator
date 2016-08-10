@@ -1,4 +1,4 @@
-package de.saschafeldmann.adesso.master.thesis.preprocesses.algorithm.model;
+package de.saschafeldmann.adesso.master.thesis.preprocesses.model;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
