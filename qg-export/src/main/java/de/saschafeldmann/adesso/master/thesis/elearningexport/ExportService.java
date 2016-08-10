@@ -1,4 +1,4 @@
-package de.saschafeldmann.adesso.master.thesis.elearningexport.csv;
+package de.saschafeldmann.adesso.master.thesis.elearningexport;
 
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
 import de.saschafeldmann.adesso.master.thesis.generation.model.TestQuestion;
