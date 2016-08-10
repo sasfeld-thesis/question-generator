@@ -13,6 +13,7 @@
         <module>qg-util</module>
         <module>qg-core</module>
         <module>qg-import</module>
+        <module>qg-export</module>
         <module>qg-portlet</module>
     </modules>
 

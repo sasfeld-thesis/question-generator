@@ -1,6 +1,7 @@
 package de.saschafeldmann.adesso.master.thesis.portlet.presenter.generation;
 
 import com.google.common.base.Joiner;
+import de.saschafeldmann.adesso.master.thesis.elearningexport.csv.CsvExportServiceImpl;
 import de.saschafeldmann.adesso.master.thesis.util.csv.CsvWriter;
 import de.saschafeldmann.adesso.master.thesis.util.csv.CsvWriterImpl;
 import de.saschafeldmann.adesso.master.thesis.detection.model.CardinalRelationConcept;
@@ -24,6 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,13 +51,15 @@ import java.util.Set;
 public class QuestionGenerationPresenterImpl extends AbstractStepPresenter implements QuestionGenerationPresenter, QuestionGenerationViewListener, QuestionGenerationEditQuestionListener {
     private static final String CSV_EXPORT_FILENAME_TEMPLATES = "generated_test_questions_%s.csv";
     private static final Logger LOGGER = LoggerFactory.getLogger(QuestionGenerationPresenterImpl.class);
-    private static final Joiner CSV_EXPORT_MULTIPLE_VALUES_IN_ONE_COLUMN_JOINER = Joiner.on(",").skipNulls();
+
     private final QuestionGenerationView questionGenerationView;
 
     @Autowired
     private LinguisticRealiser linguisticRealiser;
     @Autowired
     private Messages messages;
+    @Autowired
+    private CsvExportServiceImpl csvExportService;
 
     /**
      * Creates a new view.
@@ -65,6 +69,23 @@ public class QuestionGenerationPresenterImpl extends AbstractStepPresenter imple
     @Autowired
     public QuestionGenerationPresenterImpl(final QuestionGenerationView view) {
         this.questionGenerationView = view;
+    }
+
+    @PostConstruct
+    private void initialize() {
+        initializeCsvExportService();
+    }
+
+    private void initializeCsvExportService() {
+        csvExportService.setLearningContentTitleLabel(messages.getQuestionGenerationViewExportCsvHeaderColumnLearningContent());
+        csvExportService.setGeneratedQuestionTitleLabel(messages.getQuestionGenerationViewExportCsvHeaderColumnTestquestion());
+        csvExportService.setMultipleChoiceModeLabel(messages.getQuestionGenerationViewExportCsvHeaderColumnMultipleChoice());
+        csvExportService.setCorrectAnswerLabel(messages.getQuestionGenerationViewExportCsvHeaderColumnCorrectAnswer());
+        csvExportService.setCorrectAnswersLabel(messages.getQuestionGenerationViewExportCsvHeaderColumnAlternativeCorrectAnswers());
+        csvExportService.setWrongAnswersLabel(messages.getQuestionGenerationViewExportCsvHeaderColumnAlternativeWrongAnswerst());
+        csvExportService.setOriginalSentenceLabel(messages.getQuestionGenerationViewExportCsvHeaderColumnOriginalSentence());
+        csvExportService.setIsMultipleChoiceLabel(messages.getQuestionGenerationViewExportCsvHeaderRowMultipleChoiceYes());
+        csvExportService.setIsNoMultipleChoiceLabel(messages.getQuestionGenerationViewExportCsvHeaderRowMultipleChoiceNo());
     }
 
     @Override
@@ -151,51 +172,13 @@ public class QuestionGenerationPresenterImpl extends AbstractStepPresenter imple
     public void onExportButtonClicked() {
         LOGGER.info("onExportButtonClicked()");
 
-        CsvWriter csvWriter = new CsvWriterImpl();
-        addHeaderColumnsToCsvWriter(csvWriter);
-        addGeneratedQuestionsToCsvWriter(csvWriter);
-
         try {
-            File exportFile = csvWriter.writeToFile(String.format(CSV_EXPORT_FILENAME_TEMPLATES, questionGenerationSession.getCourse().getTitle()));
+            csvExportService.setFileName(String.format(CSV_EXPORT_FILENAME_TEMPLATES, questionGenerationSession.getCourse().getTitle()));
+
+            File exportFile = csvExportService.exportGeneratedQuestionsToFile(questionGenerationSession.getGeneratedQuestionsContentsMap());
             questionGenerationView.offerCsvFileForDownload(exportFile);
         } catch (Exception e) {
             LOGGER.error("onExportButtonClicked(): could not generate CSV due to {}", e);
-        }
-    }
-
-    private void addHeaderColumnsToCsvWriter(CsvWriter csvWriter) {
-        csvWriter.addRow(
-                messages.getQuestionGenerationViewExportCsvHeaderColumnLearningContent(),
-                messages.getQuestionGenerationViewExportCsvHeaderColumnTestquestion(),
-                messages.getQuestionGenerationViewExportCsvHeaderColumnMultipleChoice(),
-                messages.getQuestionGenerationViewExportCsvHeaderColumnCorrectAnswer(),
-                messages.getQuestionGenerationViewExportCsvHeaderColumnAlternativeCorrectAnswers(),
-                messages.getQuestionGenerationViewExportCsvHeaderColumnAlternativeWrongAnswerst(),
-                messages.getQuestionGenerationViewExportCsvHeaderColumnOriginalSentence()
-        );
-    }
-
-    private void addGeneratedQuestionsToCsvWriter(CsvWriter csvWriter) {
-        for (final LearningContent learningContent: questionGenerationSession.getGeneratedQuestionsContentsMap().keySet()) {
-            final String columnLearningContentTitle = learningContent.getTitle();
-
-            for (final TestQuestion testQuestion: questionGenerationSession.getGeneratedQuestionsContentsMap().get(learningContent)) {
-                final String columnTestQuestionQuestion = testQuestion.getQuestion();
-                final String columnTestQuestionOriginalSentence = testQuestion.getSourceConcept().getOriginalSentence();
-                final String columnTestQuestionCorrectAnswer = testQuestion.getCorrectAnswer();
-                final String columnTestQuestionAlternativeCorrectAnswers = CSV_EXPORT_MULTIPLE_VALUES_IN_ONE_COLUMN_JOINER.join(testQuestion.getAlternativeCorrectAnswers());
-                final String columnTestQuestionAlternativeWrongAnswers = CSV_EXPORT_MULTIPLE_VALUES_IN_ONE_COLUMN_JOINER.join(testQuestion.getAlternativeWrongAnswers());
-                final String columnIsMultipleChoice = (testQuestion.isMultipleChoice() ? messages.getQuestionGenerationViewExportCsvHeaderRowMultipleChoiceYes() : messages.getQuestionGenerationViewExportCsvHeaderRowMultipleChoiceNo());
-
-                csvWriter.addRow(
-                        columnLearningContentTitle,
-                        columnTestQuestionQuestion,
-                        columnIsMultipleChoice,
-                        columnTestQuestionCorrectAnswer,
-                        columnTestQuestionAlternativeCorrectAnswers,
-                        columnTestQuestionAlternativeWrongAnswers,
-                        columnTestQuestionOriginalSentence);
-            }
         }
     }
 
