@@ -62,22 +62,29 @@ public class FillInTheBlankConceptDetection implements DetectionAlgorithm<FillIn
     public List<FillInTheBlankTextConcept> execute(final LearningContent learningContent, final DetectionOptions detectionOptions) {
         ValidateUtil.validate(learningContent, detectionOptions);
 
-        return findSentencesWithNamedEntitiesAndAnAdditionalNoun(learningContent);
+        return findFillTextCandidates(learningContent);
     }
 
-    private List<FillInTheBlankTextConcept> findSentencesWithNamedEntitiesAndAnAdditionalNoun(final LearningContent learningContent) {
+    private List<FillInTheBlankTextConcept> findFillTextCandidates(final LearningContent learningContent) {
         final List<FillInTheBlankTextConcept> foundConceptsList = new ArrayList<>();
 
-        // identify sentences with at least one named entity and one addtional noun / named entity
+        // identify sentences with at least one named entity or part-of-speech-tag that are candidates (see detection.properties)
         int index = 0;
         for (final String partOfSpeechSentence: learningContent.getPartOfSpeechAnnotatedText()) {
             final String namedEntitySentence = learningContent.getNamedEntityAnnotatedText().get(index);
             final List<String> matchedPartOfSpeechTags = matchesConfiguredPartOfSpeech(learningContent, partOfSpeechSentence);
             final List<String> matchedNamedEntities = matchesConfiguredNamedEntity(learningContent, namedEntitySentence);
 
-            if (matchedNamedEntities.size() > 0 && matchedPartOfSpeechTags.size() > 1) {
-                // add concept if and only if there are at least two of the supported configured part-of-speech tags in the sentence and at least one of the configured named entities
-                String fillTextCandidate = findRandomCandiateThatIsConfiguredPartOfSpeechTagAndNamedEntity(matchedPartOfSpeechTags, matchedNamedEntities);
+            if (matchedNamedEntities.size() > 0) {
+                // priority 1: at least one named entity candidate was found in the sentence, so either take it (if count of NER candidates is 1) or pick a random one
+                String fillTextCandidate = findRandomCandidate(matchedNamedEntities);
+
+                if (!Strings.isNullOrEmpty(fillTextCandidate)) {
+                    addConcept(foundConceptsList, learningContent, namedEntitySentence, fillTextCandidate);
+                }
+            } else if (matchedPartOfSpeechTags.size() > 0) {
+                // priority 2: at least one part-of-speech candidate was found in the sentence, so either take it (if count of POS candidates is 1) or pick a random one
+                String fillTextCandidate = findRandomCandidate(matchedPartOfSpeechTags);
 
                 if (!Strings.isNullOrEmpty(fillTextCandidate)) {
                     addConcept(foundConceptsList, learningContent, namedEntitySentence, fillTextCandidate);
@@ -110,20 +117,13 @@ public class FillInTheBlankConceptDetection implements DetectionAlgorithm<FillIn
         return originalSentence.replaceAll(fillTextCandidate, detectionProperties.getFillTextReplacementCharacter());
     }
 
-    private String findRandomCandiateThatIsConfiguredPartOfSpeechTagAndNamedEntity(final List<String> matchedPartOfSpeechTags, final List<String> matchedNamedEntities) {
+    private String findRandomCandidate(final List<String> matchedTags) {
         final Set<String> candidates = new HashSet<>();
 
-        for (String matchedPartOfSpeechTag: matchedPartOfSpeechTags) {
-            String partOfSpeechToken = NlpAnnotationUtil.removeAllTokenAnnotations(matchedPartOfSpeechTag);
+        for (String matchedTag: matchedTags) {
+            String token = NlpAnnotationUtil.removeAllTokenAnnotations(matchedTag);
 
-            for (String matchedNamedEntityTag: matchedNamedEntities) {
-                // finds the named entity which is the potential fill text candidate
-                String namedEntityToken = NlpAnnotationUtil.removeAllTokenAnnotations(matchedNamedEntityTag);
-
-                if (partOfSpeechToken.equals(namedEntityToken)) {
-                    candidates.add(namedEntityToken);
-                }
-            }
+            candidates.add(token);
         }
 
         Random random = new Random();

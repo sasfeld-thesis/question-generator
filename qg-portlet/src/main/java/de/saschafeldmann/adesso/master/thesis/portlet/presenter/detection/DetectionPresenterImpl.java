@@ -196,11 +196,14 @@ public class DetectionPresenterImpl extends AbstractStepPresenter implements Det
         for (LearningContent learningContent: annotatedLearningContents) {
             LOGGER.info("executeProcessForAllNlpTaggedLearningContents(): will run detection algorithm on the given learning content {}", learningContent.getTitle());
             List<Concept> concepts = detectionActivationElement.getProcessAlgorithm().execute(learningContent, questionGenerationSession.getConceptDetectionOptions());
-            List<Concept> reducedConcepts = ListUtil.reduceListToMaximumOfElements(concepts, getUserSettingForMaximumNumberOfElements(detectionActivationElement));
 
+            List<Concept> reducedConcepts = concepts;
             if (detectionActivationElement.getProcessAlgorithm() instanceof FillInTheBlankConceptDetection) {
-                reducedConcepts = filterSentencesWithMoreTokens(reducedConcepts, questionGenerationSession.getConceptDetectionOptions().getMaxNumberOfTokensForFillInTheBlankSentences());
+                // filter 1: filter sentences with more than desired number of tokens
+                reducedConcepts = filterSentencesWithMoreTokens(concepts, questionGenerationSession.getConceptDetectionOptions().getMaxNumberOfTokensForFillInTheBlankSentences());
             }
+            // filter 2: reduce list of concepts to fit maximum desired size
+            reducedConcepts = ListUtil.reduceListToMaximumOfElements(reducedConcepts, getUserSettingForMaximumNumberOfElements(detectionActivationElement));
 
             for (Concept detectedConcept: reducedConcepts) {
                 putLearningContentToConceptsMap(learningContent, detectedConcept);
