@@ -1,12 +1,11 @@
 package de.saschafeldmann.adesso.master.thesis.portlet.presenter.generation;
 
 import com.google.common.base.Joiner;
-import de.saschafeldmann.adesso.master.thesis.csv.CsvWriter;
-import de.saschafeldmann.adesso.master.thesis.csv.CsvWriterImpl;
+import de.saschafeldmann.adesso.master.thesis.util.csv.CsvWriter;
+import de.saschafeldmann.adesso.master.thesis.util.csv.CsvWriterImpl;
 import de.saschafeldmann.adesso.master.thesis.detection.model.CardinalRelationConcept;
 import de.saschafeldmann.adesso.master.thesis.detection.model.FillInTheBlankTextConcept;
 import de.saschafeldmann.adesso.master.thesis.detection.model.api.Concept;
-import de.saschafeldmann.adesso.master.thesis.elearningimport.model.Course;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
 import de.saschafeldmann.adesso.master.thesis.generation.LinguisticRealiser;
 import de.saschafeldmann.adesso.master.thesis.generation.model.TestQuestion;

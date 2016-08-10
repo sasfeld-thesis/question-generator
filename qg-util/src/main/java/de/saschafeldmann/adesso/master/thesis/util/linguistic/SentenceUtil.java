@@ -1,5 +1,7 @@
 package de.saschafeldmann.adesso.master.thesis.util.linguistic;
 
+import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -20,6 +22,8 @@ import java.util.List;
  * Utility to split sentences.
  */
 public class SentenceUtil {
+    private static final String REGEX_TO_SPLIT_WORDS = "[\\s\\d,.-;:_!?]+";
+
     private static final String LINE_SEPARATOR = System.getProperty("line.separator");
 
     /**
@@ -49,5 +53,23 @@ public class SentenceUtil {
         Collections.addAll(sentences, completeString.split(LINE_SEPARATOR));
 
         return sentences;
+    }
+
+    /**
+     * Calculates the number of tokens in the given sentence.
+     * @param sentence the sentence
+     * @return int the number of tokens
+     */
+    public static int calculatesNumberOfTokens(final String sentence) {
+        return getWordsInRawText(sentence).length;
+    }
+
+    /**
+     * Splits the given String and returns all words / tokens.
+     * @param sentence the sentence to be split
+     * @return the array of tokens (strings)
+     */
+    public static String[] getWordsInRawText(final String sentence) {
+        return sentence.split(REGEX_TO_SPLIT_WORDS);
     }
 }

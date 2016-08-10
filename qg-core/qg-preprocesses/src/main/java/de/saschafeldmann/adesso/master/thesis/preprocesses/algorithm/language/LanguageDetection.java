@@ -4,6 +4,7 @@ import de.saschafeldmann.adesso.master.thesis.elearningimport.model.Language;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
 import de.saschafeldmann.adesso.master.thesis.preprocesses.algorithm.PreprocessingAlgorithm;
 import de.saschafeldmann.adesso.master.thesis.preprocesses.algorithm.model.PreprocessingOptions;
+import de.saschafeldmann.adesso.master.thesis.util.linguistic.SentenceUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -33,8 +34,6 @@ import java.util.List;
 @Component
 @Scope("singleton")
 public class LanguageDetection implements PreprocessingAlgorithm {
-    private static final String REGEX_TO_SPLIT_WORDS = "[\\s\\d,.-;:_!?]+";
-
     private final LanguageDetectionProperties languageDetectionProperties;
 
     @Autowired
@@ -89,6 +88,6 @@ public class LanguageDetection implements PreprocessingAlgorithm {
     }
 
     private String[] getWordsInRawText(LearningContent learningContent) {
-        return learningContent.getRawText().split(REGEX_TO_SPLIT_WORDS);
+        return SentenceUtil.getWordsInRawText(learningContent.getRawText());
     }
 }

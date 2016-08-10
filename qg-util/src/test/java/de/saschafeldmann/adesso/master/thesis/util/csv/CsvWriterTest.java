@@ -1,8 +1,7 @@
 package de.saschafeldmann.adesso.master.thesis.util.csv;
 
 import static org.junit.Assert.*;
-import de.saschafeldmann.adesso.master.thesis.csv.CsvWriter;
-import de.saschafeldmann.adesso.master.thesis.csv.CsvWriterImpl;
+
 import org.junit.Test;
 
 import java.io.File;
@@ -23,7 +22,7 @@ import java.nio.file.Paths;
  * Company:
  * adesso AG
  * <br /><br />
- * Test of {@link de.saschafeldmann.adesso.master.thesis.csv.CsvWriter}
+ * Test of {@link de.saschafeldmann.adesso.master.thesis.util.csv.CsvWriter}
  */
 public class CsvWriterTest {
 

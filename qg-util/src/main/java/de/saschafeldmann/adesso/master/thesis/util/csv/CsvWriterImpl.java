@@ -1,4 +1,4 @@
-package de.saschafeldmann.adesso.master.thesis.csv;
+package de.saschafeldmann.adesso.master.thesis.util.csv;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -3,8 +3,9 @@ package de.saschafeldmann.adesso.master.thesis.detection.util;
 import static org.junit.Assert.*;
 
 import de.saschafeldmann.adesso.master.thesis.detection.model.FillInTheBlankTextConcept;
-import de.saschafeldmann.adesso.master.thesis.detection.model.api.Concept;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
+
+import de.saschafeldmann.adesso.master.thesis.util.ListUtil;
 import org.junit.Test;
 
 import java.util.ArrayList;
