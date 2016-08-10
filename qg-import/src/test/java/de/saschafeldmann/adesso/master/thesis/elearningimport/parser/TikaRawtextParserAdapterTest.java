@@ -117,7 +117,7 @@ public class TikaRawtextParserAdapterTest {
     @Test
     public void testInvalidFileLeadsToParserException() throws URISyntaxException {
         try {
-            // given a PDF file
+            // given a not-existing PDF file
             File file = new File(TEST_FILE_NOT_EXISTING);
 
             // when extractRawtext() is called with the given file
