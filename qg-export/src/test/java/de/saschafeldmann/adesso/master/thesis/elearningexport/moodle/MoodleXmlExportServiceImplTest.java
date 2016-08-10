@@ -159,6 +159,10 @@ public class MoodleXmlExportServiceImplTest {
                         "        </answer>");
     }
 
+    private void assertMultipleChoiceFields(File moodleXmlFile) {
+
+    }
+
     private void assertXmlHeader(File moodleXmlFile) throws IOException {
         checkFileContains(moodleXmlFile, "<?xml version=\"1.0\" encoding=\"UTF-8\"");
     }
@@ -166,6 +170,7 @@ public class MoodleXmlExportServiceImplTest {
     private void checkFileContains(File f, String s) throws IOException {
         byte[] bytes = Files.readAllBytes(Paths.get(f.toURI()));
         String fileContent = new String(bytes, "UTF-8");
+        System.out.println(fileContent);
 
         assertTrue("The CSV file does not contain " + s, fileContent.contains(s));
     }

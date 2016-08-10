@@ -10,6 +10,8 @@ import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningCont
 import de.saschafeldmann.adesso.master.thesis.generation.model.TestQuestion;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -33,6 +35,8 @@ import java.util.Map;
  * <br /><br />
  * Exports to the Moodle XML format documented here: https://docs.moodle.org/24/en/Moodle_XML_format
  */
+@Component
+@Scope("prototype")
 public class MoodleXmlExportServiceImpl implements ExportService {
     private static final Logger LOGGER = LoggerFactory.getLogger(MoodleXmlExportServiceImpl.class);
 

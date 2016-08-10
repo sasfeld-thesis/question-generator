@@ -38,9 +38,9 @@ public interface QuestionGenerationView extends ViewWithMenu {
 
     /**
      * Offers the given file for download.
-     * @param csvFile the file
+     * @param file the file
      */
-    public void offerCsvFileForDownload(final File csvFile);
+    public void offerFileForDownload(final File file);
 
     /**
      * Resets the view.
@@ -52,4 +52,10 @@ public interface QuestionGenerationView extends ViewWithMenu {
      * @param viewListener the listener
      */
     public void setViewListener(QuestionGenerationViewListener viewListener);
+
+    /**
+     * Gets the user's selection of the export method.
+     * @return String the message value representing the user's selection
+     */
+    public String getExportMethodSelection();
 }

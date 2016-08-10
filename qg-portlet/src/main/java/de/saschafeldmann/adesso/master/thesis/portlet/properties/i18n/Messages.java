@@ -1466,8 +1466,8 @@ public class Messages {
      * Gets the text.
      * @return String
      */
-    public String getQuestionGenerationViewListselectExportValamis() {
-        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.question.generation.view.listselect.export.valamis");
+    public String getQuestionGenerationViewListselectExportMoodleXml() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.question.generation.view.listselect.export.moodlexml");
     }
 
     /**
@@ -1547,6 +1547,7 @@ public class Messages {
     public String getQuestionGenerationViewExportCsvHeaderRowMultipleChoiceYes() {
         return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.question.generation.view.exportcsv.header.row.multiplechoice.yes");
     }
+
     /**
      * Gets the text.
      * @return String
@@ -1554,4 +1555,22 @@ public class Messages {
     public String getQuestionGenerationViewExportCsvHeaderRowMultipleChoiceNo() {
         return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.question.generation.view.exportcsv.header.row.multiplechoice.no");
     }
+
+    /**
+     * Gets the text.
+     * @return String
+     */
+    public String getQuestionGenerationViewExportMoodleXmlCorrectAnswerText() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.question.generation.view.exportmoodlexml.correctanswer.text");
+    }
+
+    /**
+     * Gets the text.
+     * @return String
+     */
+    public String getQuestionGenerationViewExportMoodleXmlWrongAnswerText() {
+        return getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.question.generation.view.exportmoodlexml.wronganswer.text");
+    }
+
+
 }

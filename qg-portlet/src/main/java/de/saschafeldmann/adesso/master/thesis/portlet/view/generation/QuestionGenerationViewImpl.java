@@ -196,7 +196,7 @@ public class QuestionGenerationViewImpl extends AbstractStepView implements Ques
 
     private void initializeExportSelect() {
         exportListSelect.addItem(messages.getQuestionGenerationViewListselectExportCsv());
-        exportListSelect.addItem(messages.getQuestionGenerationViewListselectExportValamis());
+        exportListSelect.addItem(messages.getQuestionGenerationViewListselectExportMoodleXml());
 
         exportListSelect.setRows(1);
     }
@@ -236,8 +236,8 @@ public class QuestionGenerationViewImpl extends AbstractStepView implements Ques
     }
 
     @Override
-    public void offerCsvFileForDownload(File csvFile) {
-        FileDownloader fileDownloader = new FileDownloader(new FileResource(csvFile));
+    public void offerFileForDownload(File file) {
+        FileDownloader fileDownloader = new FileDownloader(new FileResource(file));
         fileDownloader.extend(btnExport);
     }
 
@@ -272,6 +272,11 @@ public class QuestionGenerationViewImpl extends AbstractStepView implements Ques
     @Override
     public void setViewListener(QuestionGenerationViewListener viewListener) {
         this.viewListener = viewListener;
+    }
+
+    @Override
+    public String getExportMethodSelection() {
+        return (String) exportListSelect.getValue();
     }
 
     @Override
