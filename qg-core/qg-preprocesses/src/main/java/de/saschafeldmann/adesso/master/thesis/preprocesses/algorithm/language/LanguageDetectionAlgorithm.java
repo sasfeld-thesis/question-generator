@@ -52,6 +52,9 @@ public class LanguageDetectionAlgorithm implements PreprocessingAlgorithm {
      */
     @Override
     public LearningContent execute(final LearningContent learningContent, final PreprocessingOptions preprocessingOptions) throws UndeterminableLanguageException {
+        // runtime: start time
+        final long startTime = System.currentTimeMillis();
+
         if (isGerman(learningContent)) {
             learningContent.setDeterminedLanguage(Language.GERMAN);
         } else if (isEnglish(learningContent)) {
@@ -59,6 +62,12 @@ public class LanguageDetectionAlgorithm implements PreprocessingAlgorithm {
         } else {
             throw new UndeterminableLanguageException("The language for the learning content " + learningContent.getTitle() + " could not be determined.");
         }
+
+        // runtime: end time and set statistical information
+        final long endTime = System.currentTimeMillis();
+        final long runtime = endTime - startTime;
+        learningContent.getCourse().getStatistics().setLanguageDetectionRuntime(
+                learningContent.getCourse().getStatistics().getLanguageDetectionRuntime() + runtime);
 
         return learningContent;
     }

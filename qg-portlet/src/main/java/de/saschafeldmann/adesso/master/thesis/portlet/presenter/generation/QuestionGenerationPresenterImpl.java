@@ -12,6 +12,7 @@ import de.saschafeldmann.adesso.master.thesis.portlet.QuestionGeneratorPortletVa
 import de.saschafeldmann.adesso.master.thesis.portlet.model.QuestionGenerationSession;
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.AbstractStepPresenter;
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.generation.edit.QuestionGenerationEditQuestionListener;
+import de.saschafeldmann.adesso.master.thesis.portlet.properties.QuestionGeneratorProperties;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.Messages;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.ViewWithMenu;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.detection.DetectionViewImpl;
@@ -61,6 +62,8 @@ public class QuestionGenerationPresenterImpl extends AbstractStepPresenter imple
     private CsvExportServiceImpl csvExportService;
     @Autowired
     private MoodleXmlExportServiceImpl moodleXmlExportService;
+    @Autowired
+    private QuestionGeneratorProperties questionGeneratorProperties;
 
     /**
      * Creates a new view.
@@ -115,9 +118,23 @@ public class QuestionGenerationPresenterImpl extends AbstractStepPresenter imple
     public void onStartQuestionGenerationButtonClicked() {
         LOGGER.info("onStartQuestionGenerationButtonClicked()");
 
+        resetStatisticsInformation();
         generateTestQuestions();
 
         refreshGeneratedQuestionsLearningContents();
+    }
+
+    private void resetStatisticsInformation() {
+        questionGenerationSession.getCourse().getStatistics().resetQuestionGenerationtatistics();
+    }
+
+    private void addStatisticsLogEntryIfConfigured() {
+        if (questionGeneratorProperties.showStatisticInformation()) {
+            questionGenerationView.showStatistics(
+                    questionGenerationSession.getCourse().getStatistics().getNumberOfDetectedConcepts(),
+                    questionGenerationSession.getCourse().getStatistics().getQuestionGenerationRuntime()
+            );
+        }
     }
 
     private void generateTestQuestions() {

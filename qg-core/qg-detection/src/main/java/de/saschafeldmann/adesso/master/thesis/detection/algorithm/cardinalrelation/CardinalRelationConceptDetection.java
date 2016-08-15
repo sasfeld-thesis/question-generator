@@ -59,6 +59,8 @@ public class CardinalRelationConceptDetection implements DetectionAlgorithm<Card
     private List<CardinalRelationConcept> findSentencesWithCardinalRelations(final LearningContent learningContent) {
         final List<CardinalRelationConcept> concepts = new ArrayList<>();
 
+        // runtime: start time
+        final long startTime = System.currentTimeMillis();
         for (final String posAnnotatedSentence : learningContent.getPartOfSpeechAnnotatedText()) {
             CardinalRelationConcept cardinalRelationConcept = sentenceMatchesConfiguredCardinalRelationPatterns(learningContent, posAnnotatedSentence);
 
@@ -66,6 +68,15 @@ public class CardinalRelationConceptDetection implements DetectionAlgorithm<Card
                 concepts.add(cardinalRelationConcept);
             }
         }
+
+        // runtime: end time and set statistical information
+        final long endTime = System.currentTimeMillis();
+        final long runtime = endTime - startTime;
+        learningContent.getCourse().getStatistics().setCardinalitySentenceDetectionRuntime(
+                learningContent.getCourse().getStatistics().getCardinalitySentenceDetectionRuntime() + runtime);
+        learningContent.getCourse().getStatistics().setNumberOfDetectedConcepts(
+                learningContent.getCourse().getStatistics().getNumberOfDetectedConcepts() + concepts.size()
+        );
 
         return concepts;
     }

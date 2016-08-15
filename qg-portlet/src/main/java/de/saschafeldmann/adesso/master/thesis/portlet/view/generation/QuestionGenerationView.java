@@ -58,4 +58,11 @@ public interface QuestionGenerationView extends ViewWithMenu {
      * @return String the message value representing the user's selection
      */
     public String getExportMethodSelection();
+
+    /**
+     * Displays some statistical information.
+     * @param numberOfGeneratedQuestions the number of generated questions
+     * @param questionGenerationRuntime the overall runtime of the question generation
+     */
+    void showStatistics(long numberOfGeneratedQuestions, long questionGenerationRuntime);
 }

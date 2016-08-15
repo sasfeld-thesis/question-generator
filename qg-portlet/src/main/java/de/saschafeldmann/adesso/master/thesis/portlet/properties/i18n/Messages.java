@@ -89,6 +89,70 @@ public class Messages {
     }
 
     /**
+     * Gets the string.
+     * @return String
+     */
+    public String getStatisticsNumberWords(String... args) {
+        return String.format(getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.statistics.number.words"),  args);
+    }
+
+    /**
+     * Gets the string.
+     * @return String
+     */
+    public String getRuntimeLanguageDetection(String... args) {
+        return String.format(getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.statistics.runtime.languagedetection"),  args);
+    }
+
+    /**
+     * Gets the string.
+     * @return String
+     */
+    public String getRuntimeNlp(String... args) {
+        return String.format(getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.statistics.runtime.nlp"),  args);
+    }
+
+    /**
+     * Gets the string.
+     * @return String
+     */
+    public String getRuntimeFilltextConceptDetection(String... args) {
+        return String.format(getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.statistics.runtime.fillintheblank.detection"),  args);
+    }
+
+    /**
+     * Gets the string.
+     * @return String
+     */
+    public String getRuntimeCardinalitySentenceDetection(String... args) {
+        return String.format(getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.statistics.runtime.cardinality.detection"),  args);
+    }
+
+    /**
+     * Gets the string.
+     * @return String
+     */
+    public String getNumberOfDetectedConcepts(String... args) {
+        return String.format(getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.statistics.number.concepts"),  args);
+    }
+
+    /**
+     * Gets the string.
+     * @return String
+     */
+    public String getNumberOfGeneratedQuestions(String... args) {
+        return String.format(getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.statistics.number.questions"),  args);
+    }
+
+    /**
+     * Gets the string.
+     * @return String
+     */
+    public String getRuntimeQuestionGeneration(String... args) {
+        return String.format(getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.statistics.runtime.question.generation"),  args);
+    }
+
+    /**
      * Gets the menu item label.
      *
      * @return String

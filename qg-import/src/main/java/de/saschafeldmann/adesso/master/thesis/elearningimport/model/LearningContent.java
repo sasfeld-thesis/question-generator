@@ -45,11 +45,13 @@ public class LearningContent {
     private Language determinedLanguage;
     private final Type type;
     private boolean languageCouldNotBeDetermined = false;
+    private final Course course;
 
     private LearningContent(LearningContentBuilder learningContentBuilder) {
         this.title = learningContentBuilder.title;
         this.rawText = learningContentBuilder.rawText;
         this.type = learningContentBuilder.type;
+        this.course = learningContentBuilder.course;
     }
 
     /**
@@ -159,6 +161,14 @@ public class LearningContent {
     }
 
     /**
+     * Gets the course that this learning content belongs to.
+     * @return the course
+     */
+    public Course getCourse() {
+        return course;
+    }
+
+    /**
      * Sets the fallback language as given in the course.
      * @param course the course which's primary language will be used instead
      */
@@ -197,13 +207,15 @@ public class LearningContent {
     /**
      * Creates a copy.
      * @param learningContent the learning content to copy from.
+     * @param course the course
      * @return copy of LearningContent
      */
-    public static LearningContent copyOf(LearningContent learningContent) {
+    public static LearningContent copyOf(LearningContent learningContent, Course course) {
         return new LearningContentBuilder()
                 .withTitle(learningContent.getTitle())
                 .withRawText(learningContent.getRawText())
                 .withType(learningContent.getType())
+                .withCourse(course)
                 .build();
     }
 
@@ -211,6 +223,7 @@ public class LearningContent {
         private String title;
         private String rawText;
         private Type type;
+        private Course course;
 
         /**
          * Assigns a title (label) to this learning unit content.
@@ -258,6 +271,22 @@ public class LearningContent {
             }
 
             this.type = type;
+
+            return this;
+        }
+
+        /**
+         * Sets the course that the learning content to be built belongs to.
+         * @param course the course that this learning content belongs to
+         * @return this
+         * @throws NullPointerException if the argument is null
+         */
+        public LearningContentBuilder withCourse(final Course course) {
+            if (null == course) {
+                throw new NullPointerException("The value for the parameter course must not be null!");
+            }
+
+            this.course = course;
 
             return this;
         }

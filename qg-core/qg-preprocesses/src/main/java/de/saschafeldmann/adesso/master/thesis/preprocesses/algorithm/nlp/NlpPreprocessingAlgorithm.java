@@ -176,13 +176,17 @@ public class NlpPreprocessingAlgorithm implements PreprocessingAlgorithm {
      * Annotates the given raw text by returning an annotated copy.
      * @param stanfordCoreNLP see above
      * @param learningContent (raw) learning content
-     * @return annotated text
      */
     private void annotateRawText(StanfordCoreNLP stanfordCoreNLP, LearningContent learningContent, PreprocessingOptions preprocessingOptions) {
         final boolean activatePartOfSpeechTagging = preprocessingOptions.getActivatePartOfSpeechTagging();
         final boolean activateNamedEntityRecognition = preprocessingOptions.getActivateNamedEntityRecognition();
 
         final String rawText = learningContent.getRawText();
+
+        // runtime: start time
+        final long startTime = System.currentTimeMillis();
+        long numberOfWords = 0;
+
         final Annotation annotation = new Annotation(rawText);
 
         stanfordCoreNLP.annotate(annotation);
@@ -197,23 +201,22 @@ public class NlpPreprocessingAlgorithm implements PreprocessingAlgorithm {
             StringBuilder nerAnnotatedSentenceBuilder = new StringBuilder();
             StringBuilder posAnnotatedSentenceBuilder = new StringBuilder();
 
-            for (CoreLabel token: sentence.get(CoreAnnotations.TokensAnnotation.class)) {
-                // iterate over tokens / words in the current sentence
-                String tokenText = token.get(CoreAnnotations.TextAnnotation.class); // the raw word itself
-                if (activatePartOfSpeechTagging) {
-                    String partOfSpeechTag = token.get(CoreAnnotations.PartOfSpeechAnnotation.class); // the part of speech tag itself
-                    createXmlTagForAnnotation(posAnnotatedSentenceBuilder, tokenText, partOfSpeechTag);
-                }
-                if (activateNamedEntityRecognition) {
-                    String namedEntityTag = token.get(CoreAnnotations.NamedEntityTagAnnotation.class); // the named entity tag itself
-                    createXmlTagForAnnotation(nerAnnotatedSentenceBuilder, tokenText, namedEntityTag);
-                }
-            }
-
-            posAnnotatedTextSentences.add(posAnnotatedSentenceBuilder.toString());
-            nerAnnotatedTextSentences.add(nerAnnotatedSentenceBuilder.toString());
+            numberOfWords = iterateOverWords(activatePartOfSpeechTagging, activateNamedEntityRecognition, numberOfWords, posAnnotatedTextSentences, nerAnnotatedTextSentences, sentence, nerAnnotatedSentenceBuilder, posAnnotatedSentenceBuilder);
         }
 
+        setModelFields(learningContent, activatePartOfSpeechTagging, activateNamedEntityRecognition, posAnnotatedTextSentences, nerAnnotatedTextSentences);
+
+        // runtime: end time and set statistical information
+        final long endTime = System.currentTimeMillis();
+        final long runtime = endTime - startTime;
+
+        learningContent.getCourse().getStatistics().setNaturalLanguageProcessingRuntime(
+                learningContent.getCourse().getStatistics().getNaturalLanguageProcessingRuntime() + runtime);
+        learningContent.getCourse().getStatistics().setNumberOfWords(
+                learningContent.getCourse().getStatistics().getNumberOfWords() + numberOfWords);
+    }
+
+    private void setModelFields(LearningContent learningContent, boolean activatePartOfSpeechTagging, boolean activateNamedEntityRecognition, List<String> posAnnotatedTextSentences, List<String> nerAnnotatedTextSentences) {
         if (activatePartOfSpeechTagging) {
             learningContent.setPartOfSpeechAnnotatedText(posAnnotatedTextSentences);
         }
@@ -221,6 +224,26 @@ public class NlpPreprocessingAlgorithm implements PreprocessingAlgorithm {
         if (activateNamedEntityRecognition) {
             learningContent.setNamedEntityAnnotatedText(nerAnnotatedTextSentences);
         }
+    }
+
+    private long iterateOverWords(boolean activatePartOfSpeechTagging, boolean activateNamedEntityRecognition, long numberOfWords, List<String> posAnnotatedTextSentences, List<String> nerAnnotatedTextSentences, CoreMap sentence, StringBuilder nerAnnotatedSentenceBuilder, StringBuilder posAnnotatedSentenceBuilder) {
+        for (CoreLabel token: sentence.get(CoreAnnotations.TokensAnnotation.class)) {
+            // iterate over tokens / words in the current sentence
+            numberOfWords++;
+            String tokenText = token.get(CoreAnnotations.TextAnnotation.class); // the raw word itself
+            if (activatePartOfSpeechTagging) {
+                String partOfSpeechTag = token.get(CoreAnnotations.PartOfSpeechAnnotation.class); // the part of speech tag itself
+                createXmlTagForAnnotation(posAnnotatedSentenceBuilder, tokenText, partOfSpeechTag);
+            }
+            if (activateNamedEntityRecognition) {
+                String namedEntityTag = token.get(CoreAnnotations.NamedEntityTagAnnotation.class); // the named entity tag itself
+                createXmlTagForAnnotation(nerAnnotatedSentenceBuilder, tokenText, namedEntityTag);
+            }
+        }
+
+        posAnnotatedTextSentences.add(posAnnotatedSentenceBuilder.toString());
+        nerAnnotatedTextSentences.add(nerAnnotatedSentenceBuilder.toString());
+        return numberOfWords;
     }
 
     private void createXmlTagForAnnotation(StringBuilder annotatedTextBuilder, String tokenText, String annotation) {

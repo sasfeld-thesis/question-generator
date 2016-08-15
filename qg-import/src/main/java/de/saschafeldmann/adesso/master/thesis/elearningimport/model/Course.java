@@ -29,6 +29,7 @@ public class Course {
     private String viewUrl;
     private Language primaryLanguage;
     private final List<LearningContent> learningContents;
+    private Statistics statistics = new Statistics();
 
     private Course(CourseBuilder courseBuilder) {
         this.title = courseBuilder.title;
@@ -102,7 +103,7 @@ public class Course {
      * @param learningContent {@link LearningContent} the content to be added
      */
     public void addOrReplaceLearningContent(final LearningContent learningContent) {
-        LearningContent learningContentCopy = LearningContent.copyOf(learningContent);
+        LearningContent learningContentCopy = LearningContent.copyOf(learningContent, this);
 
         if (learningContents.contains(learningContentCopy)) {
             removeLearningContent(learningContentCopy);
@@ -119,6 +120,14 @@ public class Course {
         if (learningContents.contains(learningContent)) {
             learningContents.remove(learningContent);
         }
+    }
+
+    /**
+     * Gets the statistics model for this learning content.
+     * @return the statistics model
+     */
+    public Statistics getStatistics() {
+        return statistics;
     }
 
     @Override

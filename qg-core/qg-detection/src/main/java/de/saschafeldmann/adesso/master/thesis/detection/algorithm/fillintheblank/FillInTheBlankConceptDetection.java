@@ -68,6 +68,8 @@ public class FillInTheBlankConceptDetection implements DetectionAlgorithm<FillIn
     private List<FillInTheBlankTextConcept> findFillTextCandidates(final LearningContent learningContent) {
         final List<FillInTheBlankTextConcept> foundConceptsList = new ArrayList<>();
 
+        // runtime: start time
+        final long startTime = System.currentTimeMillis();
         // identify sentences with at least one named entity or part-of-speech-tag that are candidates (see detection.properties)
         int index = 0;
         for (final String partOfSpeechSentence: learningContent.getPartOfSpeechAnnotatedText()) {
@@ -93,6 +95,14 @@ public class FillInTheBlankConceptDetection implements DetectionAlgorithm<FillIn
 
             index++;
         }
+        // runtime: end time and set statistical information
+        final long endTime = System.currentTimeMillis();
+        final long runtime = endTime - startTime;
+        learningContent.getCourse().getStatistics().setFillInTheBlankTextConceptDetectionRuntime(
+                learningContent.getCourse().getStatistics().getFillInTheBlankTextConceptDetectionRuntime() + runtime);
+        learningContent.getCourse().getStatistics().setNumberOfDetectedConcepts(
+                learningContent.getCourse().getStatistics().getNumberOfDetectedConcepts() + foundConceptsList.size()
+        );
 
         return foundConceptsList;
     }

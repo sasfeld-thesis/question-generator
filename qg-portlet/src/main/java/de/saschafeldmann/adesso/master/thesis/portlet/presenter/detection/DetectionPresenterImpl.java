@@ -9,6 +9,7 @@ import de.saschafeldmann.adesso.master.thesis.detection.algorithm.cardinalrelati
 import de.saschafeldmann.adesso.master.thesis.detection.algorithm.fillintheblank.FillInTheBlankConceptDetection;
 import de.saschafeldmann.adesso.master.thesis.detection.model.FillInTheBlankTextConcept;
 import de.saschafeldmann.adesso.master.thesis.detection.model.api.Concept;
+import de.saschafeldmann.adesso.master.thesis.portlet.properties.QuestionGeneratorProperties;
 import de.saschafeldmann.adesso.master.thesis.util.ListUtil;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
 import de.saschafeldmann.adesso.master.thesis.portlet.QuestionGeneratorPortletVaadinUi;
@@ -59,6 +60,8 @@ public class DetectionPresenterImpl extends AbstractStepPresenter implements Det
     private FillInTheBlankConceptDetection fillTextConceptDetectionAlgorithm;
     @Autowired
     private CardinalRelationConceptDetection cardinalRelationConceptDetectionAlgorithm;
+    @Autowired
+    private QuestionGeneratorProperties questionGeneratorProperties;
     private List<DetectionActivationElement> detectionActivationElementList;
     private boolean detectionFinished = false;
 
@@ -158,6 +161,8 @@ public class DetectionPresenterImpl extends AbstractStepPresenter implements Det
     @Override
     public void onDetectionChainStartButtonClicked() {
         LOGGER.info("onDetectionChainStartButtonClicked()");
+
+        resetStatisticsInformation();
         initProcessedLearningContentsMap();
 
         addLogEntryToView(messages.getDetectionViewAccordionDetectionChainLogChainStartedStarted());
@@ -166,8 +171,30 @@ public class DetectionPresenterImpl extends AbstractStepPresenter implements Det
             triggerProcess(detectionActivationElement);
         }
 
+        addStatisticsLogEntryIfConfigured();
         addLogEntryToView(messages.getDetectionViewAccordionDetectionChainFinishedLabel());
         updateProcessedLearningContents();
+    }
+
+    private void resetStatisticsInformation() {
+        questionGenerationSession.getCourse().getStatistics().resetConceptDetectionStatistics();
+    }
+
+    private void addStatisticsLogEntryIfConfigured() {
+        if (questionGeneratorProperties.showStatisticInformation()) {
+            addLogEntryToView(
+                    messages.getNumberOfDetectedConcepts(
+                            String.valueOf(questionGenerationSession.getCourse().getStatistics().getNumberOfDetectedConcepts()))
+            );
+            addLogEntryToView(
+                    messages.getRuntimeFilltextConceptDetection(
+                            String.valueOf(questionGenerationSession.getCourse().getStatistics().getFillInTheBlankTextConceptDetectionRuntime()))
+            );
+            addLogEntryToView(
+                    messages.getRuntimeCardinalitySentenceDetection(
+                            String.valueOf(questionGenerationSession.getCourse().getStatistics().getCardinalitySentenceDetectionRuntime()))
+            );
+        }
     }
 
     private void initProcessedLearningContentsMap() {

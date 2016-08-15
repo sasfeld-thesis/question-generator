@@ -32,6 +32,9 @@ public class LinguisticRealiserImpl implements LinguisticRealiser {
     public TestQuestion generateQuestion(Concept concept) {
         TestQuestion testQuestion = null;
 
+        // runtime: start time
+        final long startTime = System.currentTimeMillis();
+
         if (concept instanceof FillInTheBlankTextConcept) {
             testQuestion = buildTestQuestionForFillTextConcept((FillInTheBlankTextConcept) concept);
         } else if (concept instanceof CardinalRelationConcept) {
@@ -39,6 +42,15 @@ public class LinguisticRealiserImpl implements LinguisticRealiser {
         } else {
             throw new QuestionGenerationException("Concept of type " + concept.getClass() + " is not supported.");
         }
+
+        // runtime: end time and set statistical information
+        final long endTime = System.currentTimeMillis();
+        final long runtime = endTime - startTime;
+        concept.getLearningContent().getCourse().getStatistics().setQuestionGenerationRuntime(
+                concept.getLearningContent().getCourse().getStatistics().getQuestionGenerationRuntime()
+                + runtime
+        );
+
 
         return testQuestion;
     }

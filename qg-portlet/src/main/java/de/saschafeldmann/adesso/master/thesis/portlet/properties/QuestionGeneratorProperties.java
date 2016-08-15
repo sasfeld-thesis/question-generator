@@ -158,5 +158,12 @@ public class QuestionGeneratorProperties extends PropertiesReader implements Pro
         }
     }
 
+    /**
+     * Whether to display statistical information.
+     * @return the boolean flag
+     */
+    public boolean showStatisticInformation() {
+        return Boolean.parseBoolean(fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.showStatistics"));
+    }
 
 }

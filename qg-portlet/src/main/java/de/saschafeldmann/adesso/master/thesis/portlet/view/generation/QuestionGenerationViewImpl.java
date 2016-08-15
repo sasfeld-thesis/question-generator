@@ -109,7 +109,7 @@ public class QuestionGenerationViewImpl extends AbstractStepView implements Ques
     private void initialize() {
         this.btnStartQuestionGeneration.setCaption(messages.getQuestionGenerationViewButtonStartLabel());
         this.completedLearningContentsListLabel.setCaption(messages.getQuestionGenerationViewFinishedContentsLabels());
-        this.completedQuestionsListLabel.setCaption(messages.getQuestionGenerationViewFinishedQuestionsLabel());
+        initCompletedQuestionsListLabel();
 
         this.btnPrevious.setCaption(messages.getButtonBackTitle());
         this.btnExport.setCaption(messages.getQuestionGenerationViewButtonExport());
@@ -119,6 +119,10 @@ public class QuestionGenerationViewImpl extends AbstractStepView implements Ques
         registerListeners();
         disableActionsButtons();
         setStyles();
+    }
+
+    private void initCompletedQuestionsListLabel() {
+        this.completedQuestionsListLabel.setCaption(messages.getQuestionGenerationViewFinishedQuestionsLabel());
     }
 
     private void initializeHorizontalLayout() {
@@ -284,6 +288,20 @@ public class QuestionGenerationViewImpl extends AbstractStepView implements Ques
         }
 
         return (String) exportListSelect.getValue();
+    }
+
+    @Override
+    public void showStatistics(long numberOfGeneratedQuestions, long questionGenerationRuntime) {
+        initCompletedQuestionsListLabel();
+
+        completedLearningContentsListLabel.setValue(
+                completedLearningContentsListLabel.getValue()
+                + " ("
+                + messages.getNumberOfGeneratedQuestions(String.valueOf(numberOfGeneratedQuestions))
+                + ", "
+                + messages.getRuntimeQuestionGeneration(String.valueOf(questionGenerationRuntime))
+                + ")"
+        );
     }
 
     @Override

@@ -9,6 +9,7 @@ import de.saschafeldmann.adesso.master.thesis.portlet.model.QuestionGenerationSe
 import de.saschafeldmann.adesso.master.thesis.portlet.model.preprocesses.ProcessActivationElement;
 import de.saschafeldmann.adesso.master.thesis.portlet.model.preprocesses.ProcessActivationStateChangeListener;
 import de.saschafeldmann.adesso.master.thesis.portlet.presenter.AbstractStepPresenter;
+import de.saschafeldmann.adesso.master.thesis.portlet.properties.QuestionGeneratorProperties;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.Messages;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.ViewWithMenu;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.course.contents.CourseContentsViewImpl;
@@ -62,6 +63,8 @@ public class PreprocessesPresenterImpl extends AbstractStepPresenter implements 
     private NlpPreprocessingAlgorithm nlpPreprocessingAlgorithm;
     @Autowired
     private PreprocessingOptions preprocessingOptions;
+    @Autowired
+    private QuestionGeneratorProperties questionGeneratorProperties;
 
     private static final Joiner DETECTED_LANGUAGES_JOINER = Joiner.on(", ").skipNulls();
 
@@ -182,15 +185,38 @@ public class PreprocessesPresenterImpl extends AbstractStepPresenter implements 
     public void onProcessChainStartButtonClick() {
         LOGGER.info("onProcessChainStartButtonClick");
 
+        resetStatisticsInformation();
         addLogEntryToView(messages.getPreproccesesViewAccordionProcesschainLogChainStarted());
 
         for (ProcessActivationElement processActivationElement: getUsersActivatedProcesses()) {
             triggerProcess(processActivationElement);
         }
 
+        addStatisticsLogEntryIfConfigured();
         addLogEntryToView(messages.getPreproccesesViewAccordionProcesschainLogChainFinished());
 
         updateProcessedLearningContents();
+    }
+
+    private void resetStatisticsInformation() {
+        questionGenerationSession.getCourse().getStatistics().resetNlpnStatistics();
+    }
+
+    private void addStatisticsLogEntryIfConfigured() {
+        if (questionGeneratorProperties.showStatisticInformation()) {
+            addLogEntryToView(
+                    messages.getStatisticsNumberWords(
+                            String.valueOf(questionGenerationSession.getCourse().getStatistics().getNumberOfWords()))
+            );
+            addLogEntryToView(
+                    messages.getRuntimeLanguageDetection(
+                            String.valueOf(questionGenerationSession.getCourse().getStatistics().getLanguageDetectionRuntime()))
+            );
+            addLogEntryToView(
+                    messages.getRuntimeNlp(
+                            String.valueOf(questionGenerationSession.getCourse().getStatistics().getNaturalLanguageProcessingRuntime()))
+            );
+        }
     }
 
     private void addLogEntryToView(final String logMessage) {
