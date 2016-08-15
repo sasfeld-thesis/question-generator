@@ -120,6 +120,7 @@ public class QuestionGenerationPresenterImpl extends AbstractStepPresenter imple
 
         resetStatisticsInformation();
         generateTestQuestions();
+        addStatisticsLogEntryIfConfigured();
 
         refreshGeneratedQuestionsLearningContents();
     }

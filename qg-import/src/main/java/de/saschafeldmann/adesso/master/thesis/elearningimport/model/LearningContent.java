@@ -141,7 +141,8 @@ public class LearningContent {
      * @return the annotated text
      */
     public boolean hasAnnotatedText() {
-        return null != getPartOfSpeechAnnotatedText() && getPartOfSpeechAnnotatedText().size() > 0;
+        return null != getPartOfSpeechAnnotatedText() && getPartOfSpeechAnnotatedText().size() > 0
+                && null != getNamedEntityAnnotatedText() && getNamedEntityAnnotatedText().size() > 0;
     }
 
     /**

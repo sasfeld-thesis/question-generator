@@ -236,9 +236,17 @@ public class PreprocessesPresenterImpl extends AbstractStepPresenter implements 
     private ProcessActivationElement[] getUsersActivatedProcesses() {
         List<ProcessActivationElement> activatedProcessActivationElements = new ArrayList<ProcessActivationElement>();
 
+        boolean wasNlpAlreadyActivated = false;
         for (ProcessActivationElement processActivationElement: this.processActivationElements) {
             if (processActivationElement.getProcessActivationElementState().getActivationOptionGroupItem()
-                    .equals(ProcessActivationElement.ActivationOptionGroupItem.YES)) {
+                    .equals(ProcessActivationElement.ActivationOptionGroupItem.YES)
+                    && (! (processActivationElement.getProcessAlgorithm() instanceof NlpPreprocessingAlgorithm)
+                        || !wasNlpAlreadyActivated)) {
+                if (processActivationElement.getProcessAlgorithm() instanceof NlpPreprocessingAlgorithm
+                        && !wasNlpAlreadyActivated) {
+                    wasNlpAlreadyActivated = true;
+                }
+
                 activatedProcessActivationElements.add(processActivationElement);
             }
         }

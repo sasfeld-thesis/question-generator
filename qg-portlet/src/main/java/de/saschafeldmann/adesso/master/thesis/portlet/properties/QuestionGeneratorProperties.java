@@ -163,7 +163,7 @@ public class QuestionGeneratorProperties extends PropertiesReader implements Pro
      * @return the boolean flag
      */
     public boolean showStatisticInformation() {
-        return Boolean.parseBoolean(fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.showStatistics"));
+        return Boolean.parseBoolean(fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.show.statistics"));
     }
 
 }
