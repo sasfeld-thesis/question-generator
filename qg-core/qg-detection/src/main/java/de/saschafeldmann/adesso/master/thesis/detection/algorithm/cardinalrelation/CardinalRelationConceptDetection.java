@@ -9,6 +9,8 @@ import de.saschafeldmann.adesso.master.thesis.detection.util.ValidateUtil;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.Language;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
 import de.saschafeldmann.adesso.master.thesis.util.linguistic.NlpAnnotationUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -36,6 +38,8 @@ import java.util.regex.Pattern;
 @Component
 @Scope("prototype")
 public class CardinalRelationConceptDetection implements DetectionAlgorithm<CardinalRelationConcept> {
+    private static final Logger LOGGER = LoggerFactory.getLogger(CardinalRelationConceptDetection.class);
+
     private final Joiner REGEX_OR_JOINER = Joiner.on("|").skipNulls();
 
     private final DetectionProperties detectionProperties;
@@ -62,10 +66,14 @@ public class CardinalRelationConceptDetection implements DetectionAlgorithm<Card
         // runtime: start time
         final long startTime = System.currentTimeMillis();
         for (final String posAnnotatedSentence : learningContent.getPartOfSpeechAnnotatedText()) {
-            CardinalRelationConcept cardinalRelationConcept = sentenceMatchesConfiguredCardinalRelationPatterns(learningContent, posAnnotatedSentence);
+            try {
+                CardinalRelationConcept cardinalRelationConcept = sentenceMatchesConfiguredCardinalRelationPatterns(learningContent, posAnnotatedSentence);
 
-            if (null != cardinalRelationConcept) {
-                concepts.add(cardinalRelationConcept);
+                if (null != cardinalRelationConcept) {
+                    concepts.add(cardinalRelationConcept);
+                }
+            } catch (NumberFormatException e) {
+                LOGGER.error("findSentencesWithCardinalRelations(): could not add concept due to number format exception {}", e);
             }
         }
 
