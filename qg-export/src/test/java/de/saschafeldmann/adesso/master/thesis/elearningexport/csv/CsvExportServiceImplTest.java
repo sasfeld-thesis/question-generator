@@ -2,6 +2,8 @@ package de.saschafeldmann.adesso.master.thesis.elearningexport.csv;
 
 import de.saschafeldmann.adesso.master.thesis.detection.model.CardinalRelationConcept;
 import de.saschafeldmann.adesso.master.thesis.detection.model.FillInTheBlankTextConcept;
+import de.saschafeldmann.adesso.master.thesis.elearningimport.model.Course;
+import de.saschafeldmann.adesso.master.thesis.elearningimport.model.Language;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
 import de.saschafeldmann.adesso.master.thesis.generation.model.TestQuestion;
 import org.junit.Test;
@@ -96,6 +98,7 @@ public class CsvExportServiceImplTest {
                 .withTitle(learningContentTitle)
                 .withType(LearningContent.Type.DIRECT_RAWTEXT)
                 .withRawText("Some raw text")
+                .withCourse(newCourse())
                 .build();
 
         List<TestQuestion> testQuestions = new ArrayList<>();
@@ -129,5 +132,13 @@ public class CsvExportServiceImplTest {
         testQuestions.add(cardinalRelationTestQuestion);
 
         map.put(learningContent, testQuestions);
+    }
+
+    private Course newCourse() {
+        return new Course.CourseBuilder()
+                .withLanguage(Language.GERMAN)
+                .withTitle("Unit test course")
+                .withViewUrl("http://unittest.de")
+                .build();
     }
 }

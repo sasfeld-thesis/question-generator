@@ -3,6 +3,8 @@ package de.saschafeldmann.adesso.master.thesis.detection.util;
 import static org.junit.Assert.*;
 
 import de.saschafeldmann.adesso.master.thesis.detection.model.FillInTheBlankTextConcept;
+import de.saschafeldmann.adesso.master.thesis.elearningimport.model.Course;
+import de.saschafeldmann.adesso.master.thesis.elearningimport.model.Language;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
 
 import de.saschafeldmann.adesso.master.thesis.util.ListUtil;
@@ -83,6 +85,15 @@ public class ListUtilTest {
                 .withTitle("test")
                 .withType(LearningContent.Type.DIRECT_RAWTEXT)
                 .withRawText("test")
+                .withCourse(newCourse())
+                .build();
+    }
+
+    private Course newCourse() {
+        return new Course.CourseBuilder()
+                .withLanguage(Language.GERMAN)
+                .withTitle("Unit test course")
+                .withViewUrl("http://unittest.de")
                 .build();
     }
 }

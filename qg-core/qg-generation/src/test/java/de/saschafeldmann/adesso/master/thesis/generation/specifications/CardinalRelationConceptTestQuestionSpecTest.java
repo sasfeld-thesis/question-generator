@@ -2,6 +2,7 @@ package de.saschafeldmann.adesso.master.thesis.generation.specifications;
 
 import de.saschafeldmann.adesso.master.thesis.detection.model.CardinalRelationConcept;
 import de.saschafeldmann.adesso.master.thesis.detection.model.FillInTheBlankTextConcept;
+import de.saschafeldmann.adesso.master.thesis.elearningimport.model.Course;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.Language;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
 import de.saschafeldmann.adesso.master.thesis.generation.Factory;
@@ -56,8 +57,17 @@ public class CardinalRelationConceptTestQuestionSpecTest {
                 .withType(LearningContent.Type.DIRECT_RAWTEXT)
                 .withRawText("Germany has 16 federal states.")
                 .withTitle("Unittest learning content")
+                .withCourse(newCourse())
                 .build();
         learningContent.setDeterminedLanguage(Language.ENGLISH);
         return learningContent;
+    }
+
+    private Course newCourse() {
+        return new Course.CourseBuilder()
+                .withLanguage(Language.GERMAN)
+                .withTitle("Unit test course")
+                .withViewUrl("http://unittest.de")
+                .build();
     }
 }

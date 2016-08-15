@@ -3,6 +3,7 @@ package de.saschafeldmann.adesso.master.thesis.generation;
 import de.saschafeldmann.adesso.master.thesis.detection.model.CardinalRelationConcept;
 import de.saschafeldmann.adesso.master.thesis.detection.model.FillInTheBlankTextConcept;
 import de.saschafeldmann.adesso.master.thesis.detection.model.api.Concept;
+import de.saschafeldmann.adesso.master.thesis.elearningimport.model.Course;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.Language;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
 import de.saschafeldmann.adesso.master.thesis.generation.model.TestQuestion;
@@ -70,9 +71,18 @@ public class LinguisticRealiserImplTest {
                 .withType(LearningContent.Type.DIRECT_RAWTEXT)
                 .withRawText("Some geography learning content. The capital of Germany is Berlin. Germany is a country in Europe")
                 .withTitle("Unittest learning content")
+                .withCourse(newCourse())
                 .build();
         learningContent.setDeterminedLanguage(Language.ENGLISH);
         return learningContent;
+    }
+
+    private Course newCourse() {
+        return new Course.CourseBuilder()
+                .withLanguage(Language.GERMAN)
+                .withTitle("Unit test course")
+                .withViewUrl("http://unittest.de")
+                .build();
     }
 
     @Test
@@ -106,6 +116,7 @@ public class LinguisticRealiserImplTest {
                 .withType(LearningContent.Type.DIRECT_RAWTEXT)
                 .withRawText("Germany has 16 federal states.")
                 .withTitle("Unittest learning content")
+                .withCourse(newCourse())
                 .build();
         learningContent.setDeterminedLanguage(Language.ENGLISH);
         return learningContent;

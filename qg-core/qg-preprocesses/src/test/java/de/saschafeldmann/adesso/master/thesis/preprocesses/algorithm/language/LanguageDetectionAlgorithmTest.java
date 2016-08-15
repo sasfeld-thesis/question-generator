@@ -2,6 +2,7 @@ package de.saschafeldmann.adesso.master.thesis.preprocesses.algorithm.language;
 
 import static org.junit.Assert.*;
 
+import de.saschafeldmann.adesso.master.thesis.elearningimport.model.Course;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.Language;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
 import de.saschafeldmann.adesso.master.thesis.preprocesses.model.PreprocessingOptions;
@@ -103,6 +104,15 @@ public class LanguageDetectionAlgorithmTest {
                 .withType(LearningContent.Type.DIRECT_RAWTEXT)
                 .withTitle("Unittest")
                 .withRawText(content)
+                .withCourse(newCourse())
+                .build();
+    }
+
+    private Course newCourse() {
+        return new Course.CourseBuilder()
+                .withLanguage(Language.GERMAN)
+                .withTitle("Unit test course")
+                .withViewUrl("http://unittest.de")
                 .build();
     }
 }

@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import de.saschafeldmann.adesso.master.thesis.detection.algorithm.fillintheblank.FillInTheBlankConceptDetection;
 import de.saschafeldmann.adesso.master.thesis.detection.model.FillInTheBlankTextConcept;
 import de.saschafeldmann.adesso.master.thesis.detection.util.DetectionProperties;
+import de.saschafeldmann.adesso.master.thesis.elearningimport.model.Course;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.Language;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
 import org.junit.Test;
@@ -75,6 +76,7 @@ public class FillInTheBlankConceptDetectionTest {
                 .withRawText(germanGeographyText)
                 .withTitle("FillTextConceptDetectionTest test content")
                 .withType(LearningContent.Type.DIRECT_RAWTEXT)
+                .withCourse(newCourse())
                 .build();
 
         learningContent.setPartOfSpeechAnnotatedText(germanGeographyPosText);
@@ -84,9 +86,16 @@ public class FillInTheBlankConceptDetectionTest {
         return learningContent;
     }
 
-
     private DetectionAlgorithm<FillInTheBlankTextConcept> newFillTextConceptAlgorithm() throws Exception {
         DetectionProperties properties = new DetectionProperties();
         return new FillInTheBlankConceptDetection(properties);
+    }
+
+    private Course newCourse() {
+        return new Course.CourseBuilder()
+                .withLanguage(Language.GERMAN)
+                .withTitle("Unit test course")
+                .withViewUrl("http://unittest.de")
+                .build();
     }
 }

@@ -2,6 +2,7 @@ package de.saschafeldmann.adesso.master.thesis.preprocesses.algorithm.nlp;
 
 import static org.junit.Assert.*;
 
+import de.saschafeldmann.adesso.master.thesis.elearningimport.model.Course;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.Language;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
 import de.saschafeldmann.adesso.master.thesis.preprocesses.algorithm.PreprocessingAlgorithm;
@@ -160,6 +161,7 @@ public class NlpPreprocessingAlgorithmTest {
         LearningContent learningContent = new LearningContent.LearningContentBuilder()
                 .withType(LearningContent.Type.DIRECT_RAWTEXT)
                 .withTitle("German test")
+                .withCourse(newCourse())
                 .withRawText(TEST_CONTENT_GERMAN)
                 .build();
         learningContent.setDeterminedLanguage(Language.GERMAN);
@@ -171,11 +173,20 @@ public class NlpPreprocessingAlgorithmTest {
         LearningContent learningContent = new LearningContent.LearningContentBuilder()
                 .withType(LearningContent.Type.DIRECT_RAWTEXT)
                 .withTitle("English test")
+                .withCourse(newCourse())
                 .withRawText(TEST_CONTENT_ENGLISH)
                 .build();
         learningContent.setDeterminedLanguage(Language.ENGLISH);
 
         return learningContent;
+    }
+
+    private Course newCourse() {
+        return new Course.CourseBuilder()
+                .withLanguage(Language.GERMAN)
+                .withTitle("Unit test course")
+                .withViewUrl("http://unittest.de")
+                .build();
     }
 
     private PreprocessingOptions getInstanceForPartOfSpeechTagging() {

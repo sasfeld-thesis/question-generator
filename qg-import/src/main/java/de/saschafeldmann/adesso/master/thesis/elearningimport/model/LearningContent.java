@@ -1,6 +1,6 @@
 package de.saschafeldmann.adesso.master.thesis.elearningimport.model;
 
-import com.google.common.base.Preconditions;
+import static com.google.common.base.Preconditions.*;
 import com.google.common.base.Strings;
 
 import java.util.ArrayList;
@@ -231,7 +231,7 @@ public class LearningContent {
          * @return this
          */
         public LearningContentBuilder withTitle(final String title) {
-            if (Strings.isNullOrEmpty(title) || 0 == title.trim().length()) {
+            if (Strings.isNullOrEmpty(title)) {
                 throw new NullPointerException("The value for the parameter title must not be null!");
             }
 
@@ -248,9 +248,7 @@ public class LearningContent {
          * @throws NullPointerException if the argument is null
          */
         public LearningContentBuilder withRawText(final String rawText) {
-            if (Strings.isNullOrEmpty(rawText) || 0 == rawText.trim().length()) {
-                throw new NullPointerException("The value for the parameter rawText must not be null!");
-            }
+            checkNotNull(rawText, "The rawText must not be null");
 
             this.rawText = rawText;
 
@@ -266,9 +264,7 @@ public class LearningContent {
          * @throws NullPointerException if the argument is null
          */
         public LearningContentBuilder withType(final Type type) {
-            if (null == type) {
-                throw new NullPointerException("The value for the parameter type must not be null!");
-            }
+            checkNotNull(type, "The type must not be null");
 
             this.type = type;
 
@@ -282,9 +278,7 @@ public class LearningContent {
          * @throws NullPointerException if the argument is null
          */
         public LearningContentBuilder withCourse(final Course course) {
-            if (null == course) {
-                throw new NullPointerException("The value for the parameter course must not be null!");
-            }
+            checkNotNull(course, "The course must not be null");
 
             this.course = course;
 
@@ -296,6 +290,11 @@ public class LearningContent {
          * @return CourseMaterial
          */
         public LearningContent build() {
+            checkNotNull(title, "The title must not be null");
+            checkNotNull(rawText, "The rawText must not be null");
+            checkNotNull(type, "The type must not be null");
+            checkNotNull(course, "The course must not be null");
+
             return new LearningContent(this);
         }
 

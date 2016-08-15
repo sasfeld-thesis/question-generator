@@ -32,14 +32,24 @@ public class CourseTest {
                 .withType(LearningContent.Type.FILE)
                 .withTitle("Learning content title 1")
                 .withRawText("Learning content 1")
+                .withCourse(newCourse())
                 .build());
         list.add(new LearningContent.LearningContentBuilder()
                 .withType(LearningContent.Type.FILE)
                 .withTitle("Learning content title 2")
                 .withRawText("Learning content 2")
+                .withCourse(newCourse())
                 .build());
 
         return list;
+    }
+
+    private static Course newCourse() {
+        return new Course.CourseBuilder()
+                .withLanguage(Language.GERMAN)
+                .withTitle("Unit test course")
+                .withViewUrl("http://unittest.de")
+                .build();
     }
 
     @Test
@@ -156,6 +166,7 @@ public class CourseTest {
                 .withRawText(learningContentList.get(0).getRawText() + " changed")
                 .withTitle(learningContentList.get(0).getTitle())
                 .withType(learningContentList.get(0).getType())
+                .withCourse(course)
                 .build();
 
         // when added to the course

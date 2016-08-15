@@ -146,6 +146,7 @@ public class ImporterServiceImplTest {
                 .withTitle(RAWTEXT_LEARNING_CONTENT_TITLE)
                 .withRawText(RAWTEXT_LEARNING_CONTENT_TEXT)
                 .withType(LearningContent.Type.DIRECT_RAWTEXT)
+                .withCourse(newCourse())
                 .build();
     }
 }

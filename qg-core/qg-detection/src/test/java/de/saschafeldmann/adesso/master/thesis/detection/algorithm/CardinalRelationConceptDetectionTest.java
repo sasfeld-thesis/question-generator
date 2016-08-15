@@ -3,6 +3,7 @@ package de.saschafeldmann.adesso.master.thesis.detection.algorithm;
 import de.saschafeldmann.adesso.master.thesis.detection.algorithm.cardinalrelation.CardinalRelationConceptDetection;
 import de.saschafeldmann.adesso.master.thesis.detection.model.CardinalRelationConcept;
 import de.saschafeldmann.adesso.master.thesis.detection.util.DetectionProperties;
+import de.saschafeldmann.adesso.master.thesis.elearningimport.model.Course;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.Language;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
 import org.junit.Test;
@@ -152,6 +153,7 @@ public class CardinalRelationConceptDetectionTest {
                 .withRawText(originalText)
                 .withTitle("CardinalRelationConceptDetectionTest test content")
                 .withType(LearningContent.Type.DIRECT_RAWTEXT)
+                .withCourse(newCourse())
                 .build();
 
         learningContent.setPartOfSpeechAnnotatedText(posSentences);
@@ -159,5 +161,13 @@ public class CardinalRelationConceptDetectionTest {
         learningContent.setDeterminedLanguage(givenLanguage);
 
         return learningContent;
+    }
+
+    private Course newCourse() {
+        return new Course.CourseBuilder()
+                .withLanguage(Language.GERMAN)
+                .withTitle("Unit test course")
+                .withViewUrl("http://unittest.de")
+                .build();
     }
 }

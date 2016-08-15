@@ -75,6 +75,7 @@ public class ImporterServiceImpl implements ImporterService {
                 .withTitle(contentTitle)
                 .withRawText(contentRawText)
                 .withType(type)
+                .withCourse(course)
                 .build();
 
         course.addOrReplaceLearningContent(learningContent);

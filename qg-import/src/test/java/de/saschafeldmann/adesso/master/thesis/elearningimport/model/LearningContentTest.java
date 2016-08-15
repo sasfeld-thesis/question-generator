@@ -38,6 +38,7 @@ public class LearningContentTest {
         return new LearningContent.LearningContentBuilder()
                     .withTitle("Test title")
                     .withRawText("Test raw text")
+                    .withCourse(newCourse())
                     .withType(LearningContent.Type.FILE).build();
     }
 
