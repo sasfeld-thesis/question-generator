@@ -17,6 +17,7 @@ package de.saschafeldmann.adesso.master.thesis.elearningimport.model;
  */
 public class Statistics {
     private long numberOfWords;
+    private long numberOfSentences;
     private long languageDetectionRuntime;
     private long naturalLanguageProcessingRuntime;
     private long fillInTheBlankTextConceptDetectionRuntime;
@@ -38,6 +39,22 @@ public class Statistics {
      */
     public void setNumberOfWords(long numberOfWords) {
         this.numberOfWords = numberOfWords;
+    }
+
+    /**
+     * Gets the number of sentences from the e-learning input.
+     * @return the number of sentences
+     */
+    public long getNumberOfSentences() {
+        return numberOfSentences;
+    }
+
+    /**
+     * Sets the number of sentences from the e-learning input.
+     * @param numberOfSentences the number of sentences
+     */
+    public void setNumberOfSentences(long numberOfSentences) {
+        this.numberOfSentences = numberOfSentences;
     }
 
     /**
@@ -141,6 +158,7 @@ public class Statistics {
      */
     public void resetNlpnStatistics() {
         this.numberOfWords = 0;
+        this.numberOfSentences = 0;
         this.naturalLanguageProcessingRuntime = 0;
     }
 

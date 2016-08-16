@@ -100,6 +100,14 @@ public class Messages {
      * Gets the string.
      * @return String
      */
+    public String getStatisticsNumberSentences(String... args) {
+        return String.format(getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.statistics.number.sentences"),  args);
+    }
+
+    /**
+     * Gets the string.
+     * @return String
+     */
     public String getRuntimeLanguageDetection(String... args) {
         return String.format(getMessageProperties().fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.statistics.runtime.languagedetection"),  args);
     }

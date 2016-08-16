@@ -186,6 +186,7 @@ public class NlpPreprocessingAlgorithm implements PreprocessingAlgorithm {
         // runtime: start time
         final long startTime = System.currentTimeMillis();
         long numberOfWords = 0;
+        long numberOfSentences = 0;
 
         final Annotation annotation = new Annotation(rawText);
 
@@ -198,6 +199,8 @@ public class NlpPreprocessingAlgorithm implements PreprocessingAlgorithm {
 
         for (CoreMap sentence: sentences) {
             // iterate over sentences
+            numberOfSentences++;
+
             StringBuilder nerAnnotatedSentenceBuilder = new StringBuilder();
             StringBuilder posAnnotatedSentenceBuilder = new StringBuilder();
 
@@ -210,6 +213,9 @@ public class NlpPreprocessingAlgorithm implements PreprocessingAlgorithm {
         final long endTime = System.currentTimeMillis();
         final long runtime = endTime - startTime;
 
+        learningContent.getCourse().getStatistics().setNumberOfSentences(
+                learningContent.getCourse().getStatistics().getNumberOfSentences() + numberOfSentences
+        );
         learningContent.getCourse().getStatistics().setNaturalLanguageProcessingRuntime(
                 learningContent.getCourse().getStatistics().getNaturalLanguageProcessingRuntime() + runtime);
         learningContent.getCourse().getStatistics().setNumberOfWords(

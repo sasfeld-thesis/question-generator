@@ -209,6 +209,10 @@ public class PreprocessesPresenterImpl extends AbstractStepPresenter implements 
                             String.valueOf(questionGenerationSession.getCourse().getStatistics().getNumberOfWords()))
             );
             addLogEntryToView(
+                    messages.getStatisticsNumberSentences(
+                            String.valueOf(questionGenerationSession.getCourse().getStatistics().getNumberOfSentences()))
+            );
+            addLogEntryToView(
                     messages.getRuntimeLanguageDetection(
                             String.valueOf(questionGenerationSession.getCourse().getStatistics().getLanguageDetectionRuntime()))
             );
