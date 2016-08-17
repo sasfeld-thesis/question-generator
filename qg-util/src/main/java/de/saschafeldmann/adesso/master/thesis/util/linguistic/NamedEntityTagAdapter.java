@@ -27,7 +27,8 @@ public enum NamedEntityTagAdapter {
     PERSON,
     ORGANIZATION,
     DATE,
-    NUMERIC;
+    NUMERIC,
+    MISCELLANEOUS;
 
     /**
      * Gets the specific named entity tag for the given language, e.g. "I-LOC" for a German location.
@@ -57,6 +58,8 @@ public enum NamedEntityTagAdapter {
                 return getEnglishDateTags();
             case NUMERIC:
                 return getEnglishNumericTags();
+            case MISCELLANEOUS:
+                return getEnglishMiscTags();
             default:
                 throw new UnsupportedOperationException("Tag " + this + " is not supported.");
         }
@@ -82,6 +85,10 @@ public enum NamedEntityTagAdapter {
         return getProperties().fetchMultipleValues("de.saschafeldmann.adesso.master.thesis.util.named.entity.adapter.location.english");
     }
 
+    private List<String> getEnglishMiscTags() {
+        return getProperties().fetchMultipleValues("de.saschafeldmann.adesso.master.thesis.util.named.entity.adapter.misc.english");
+    }
+
     private PropertiesReaderApi getProperties() {
         return NaturalLanguageProcessingPropertiesReader.getInstance();
     }
@@ -98,6 +105,8 @@ public enum NamedEntityTagAdapter {
                 return getGermanDateTags();
             case NUMERIC:
                 return getGermanNumericTags();
+            case MISCELLANEOUS:
+                return getGermanMiscTags();
             default:
                 throw new UnsupportedOperationException("Tag " + this + " is not supported.");
         }
@@ -121,5 +130,9 @@ public enum NamedEntityTagAdapter {
 
     private List<String> getGermanLocationTags() {
         return getProperties().fetchMultipleValues("de.saschafeldmann.adesso.master.thesis.util.named.entity.adapter.location.german");
+    }
+
+    private List<String> getGermanMiscTags() {
+        return getProperties().fetchMultipleValues("de.saschafeldmann.adesso.master.thesis.util.named.entity.adapter.misc.german");
     }
 }
