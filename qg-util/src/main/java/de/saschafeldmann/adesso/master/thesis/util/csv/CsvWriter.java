@@ -36,8 +36,9 @@ public interface CsvWriter {
 
     /**
      * Finally writes the CSV contents to a file.
+     * @param directory the file's target directory
      * @param filename the filename
      * @return the CSV file
      */
-    File writeToFile(String filename);
+    File writeToFile(String directory, String filename);
 }

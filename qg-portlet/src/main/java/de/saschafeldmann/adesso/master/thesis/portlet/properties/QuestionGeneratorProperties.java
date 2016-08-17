@@ -1,6 +1,7 @@
 
 package de.saschafeldmann.adesso.master.thesis.portlet.properties;
 
+import de.saschafeldmann.adesso.master.thesis.portlet.util.PropertyKeys;
 import de.saschafeldmann.adesso.master.thesis.util.properties.PropertiesReader;
 import de.saschafeldmann.adesso.master.thesis.util.properties.PropertiesReaderApi;
 import org.slf4j.Logger;
@@ -43,6 +44,7 @@ public class QuestionGeneratorProperties extends PropertiesReader implements Pro
 
     /**
      * Returns the position x.
+     *
      * @return the position x.
      */
     public int getOptionsEditWindowPositionX() {
@@ -56,6 +58,7 @@ public class QuestionGeneratorProperties extends PropertiesReader implements Pro
 
     /**
      * Returns the position y.
+     *
      * @return the position y.
      */
     public int getOptionsEditWindowPositionY() {
@@ -69,6 +72,7 @@ public class QuestionGeneratorProperties extends PropertiesReader implements Pro
 
     /**
      * Returns the position x.
+     *
      * @return the position x.
      */
     public int getQuestionEditWindowPositionX() {
@@ -82,6 +86,7 @@ public class QuestionGeneratorProperties extends PropertiesReader implements Pro
 
     /**
      * Returns the position y.
+     *
      * @return the position y.
      */
     public int getQuestionEditWindowPositionY() {
@@ -95,6 +100,7 @@ public class QuestionGeneratorProperties extends PropertiesReader implements Pro
 
     /**
      * Returns the position x.
+     *
      * @return the position x.
      */
     public int getConceptDetectionEditWindowPositionX() {
@@ -108,6 +114,7 @@ public class QuestionGeneratorProperties extends PropertiesReader implements Pro
 
     /**
      * Returns the position y.
+     *
      * @return the position y.
      */
     public int getConceptDetectionEditWindowPositionY() {
@@ -121,6 +128,7 @@ public class QuestionGeneratorProperties extends PropertiesReader implements Pro
 
     /**
      * Returns the width
+     *
      * @return the width
      */
     public int getConceptDetectionEditWindowGridWidthEm() {
@@ -134,6 +142,7 @@ public class QuestionGeneratorProperties extends PropertiesReader implements Pro
 
     /**
      * Returns the height
+     *
      * @return the height
      */
     public int getConceptDetectionEditWindowGridHeightEm() {
@@ -147,6 +156,7 @@ public class QuestionGeneratorProperties extends PropertiesReader implements Pro
 
     /**
      * Returns the max tokens default value
+     *
      * @return the default value
      */
     public int getConceptDetectionFilltextMaxTokensDefault() {
@@ -160,10 +170,19 @@ public class QuestionGeneratorProperties extends PropertiesReader implements Pro
 
     /**
      * Whether to display statistical information.
+     *
      * @return the boolean flag
      */
     public boolean showStatisticInformation() {
         return Boolean.parseBoolean(fetchValue("de.saschafeldmann.adesso.master.thesis.portlet.show.statistics"));
+    }
+
+    /**
+     * Gets the file temp folder.
+     * @return String
+     */
+    public String getFileTempFolder() {
+        return this.fetchValue(PropertyKeys.FILEUPLOAD_TEMP_FOLDER);
     }
 
 }

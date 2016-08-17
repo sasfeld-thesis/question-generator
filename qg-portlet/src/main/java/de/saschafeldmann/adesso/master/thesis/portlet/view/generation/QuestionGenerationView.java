@@ -37,12 +37,6 @@ public interface QuestionGenerationView extends ViewWithMenu {
     public void displayGeneratedQuestions(final List<TestQuestion> testQuestions);
 
     /**
-     * Offers the given file for download.
-     * @param file the file
-     */
-    public void offerFileForDownload(final File file);
-
-    /**
      * Resets the view.
      */
     public void reset();
@@ -65,4 +59,16 @@ public interface QuestionGenerationView extends ViewWithMenu {
      * @param questionGenerationRuntime the overall runtime of the question generation
      */
     void showStatistics(long numberOfGeneratedQuestions, long questionGenerationRuntime);
+
+    /**
+     * Sets the CSV export file.
+     * @param csvExportFile the CSV file to be downloaded
+     */
+    void setCsvExportFile(final File csvExportFile);
+
+    /**
+     * Sets the XML export file.
+     * @param moodleXmlExportFile the moodle XML file to be downloaded.
+     */
+    void setMoodleXmlExportFile(final File moodleXmlExportFile);
 }

@@ -4,9 +4,7 @@ import com.vaadin.server.Extension;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.Window;
-import de.saschafeldmann.adesso.master.thesis.portlet.view.components.Button;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.ComboBox;
-import de.saschafeldmann.adesso.master.thesis.portlet.view.components.window.EditWindowWithSelectBox;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,10 +31,11 @@ public class VaadinUtil {
 
     /**
      * Removes a window if it was already attached to the current (request-scoped) view.
+     *
      * @param windowToBeRemoved the window
      */
     private static void removeWindowIfAlreadyAttached(final Window windowToBeRemoved) {
-        for (Window window: UI.getCurrent().getWindows()) {
+        for (Window window : UI.getCurrent().getWindows()) {
             if (window.equals(windowToBeRemoved)) {
                 LOGGER.info("removeWindowIfAlreadyAttached(): removing window {} since it was already attached to the current UI.", windowToBeRemoved);
                 UI.getCurrent().removeWindow(windowToBeRemoved);
@@ -47,6 +46,7 @@ public class VaadinUtil {
     /**
      * Adds a window to the current UI (request-scoped).
      * Ensures to cleanly remove the given window if it was already attached and readds it.
+     *
      * @param window the window to be added.
      */
     public static void addWindow(final Window window) {
@@ -56,13 +56,14 @@ public class VaadinUtil {
 
     /**
      * Gets all the items of the given combo box.
+     *
      * @param comboBox the combobox
      * @return a list of all items
      */
     public static <T> List<T> getAllItems(ComboBox comboBox) {
         List<T> items = new ArrayList<>();
 
-        for (Object itemId: comboBox.getItemIds()) {
+        for (Object itemId : comboBox.getItemIds()) {
             items.add((T) itemId);
         }
 
@@ -71,6 +72,7 @@ public class VaadinUtil {
 
     /**
      * Removes all extensions on the given component.
+     *
      * @param component the given component
      */
     public static void removeAllExtensions(Component component) {

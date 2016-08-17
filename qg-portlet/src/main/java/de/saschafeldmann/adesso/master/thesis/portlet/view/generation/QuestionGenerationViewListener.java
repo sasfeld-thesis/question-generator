@@ -43,11 +43,6 @@ public interface QuestionGenerationViewListener {
     void onBackButtonClicked();
 
     /**
-     * Triggered if the user clicked the export button.
-     */
-    void onExportButtonClicked();
-
-    /**
      * Triggered if the view was focused by the user.
      */
     void onViewFocus();

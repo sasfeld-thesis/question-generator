@@ -97,7 +97,6 @@ public class CourseInformationViewImpl extends AbstractStepView implements Cours
 
     @PostConstruct
     private void initialize() {
-        this.introductionLabel.setCaption(messages.getCourseInformationViewIntroductionText());
         this.inputCourseTitle.setCaption(messages.getCourseInformationViewCourseTitleLabel());
         this.inputCourseUrl.setCaption(messages.getCourseInformationViewCourseUrlLabel());
 

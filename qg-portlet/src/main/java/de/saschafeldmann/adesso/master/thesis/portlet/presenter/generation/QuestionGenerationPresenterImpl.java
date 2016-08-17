@@ -82,6 +82,8 @@ public class QuestionGenerationPresenterImpl extends AbstractStepPresenter imple
     }
 
     private void initializeCsvExportService() {
+        csvExportService.setFileDirectory(questionGeneratorProperties.getFileTempFolder());
+
         csvExportService.setLearningContentTitleLabel(messages.getQuestionGenerationViewExportCsvHeaderColumnLearningContent());
         csvExportService.setGeneratedQuestionTitleLabel(messages.getQuestionGenerationViewExportCsvHeaderColumnTestquestion());
         csvExportService.setMultipleChoiceModeLabel(messages.getQuestionGenerationViewExportCsvHeaderColumnMultipleChoice());
@@ -95,6 +97,8 @@ public class QuestionGenerationPresenterImpl extends AbstractStepPresenter imple
 
 
     private void initializeMoodleXmlExportService() {
+        moodleXmlExportService.setFileDirectory(questionGeneratorProperties.getFileTempFolder());
+
         moodleXmlExportService.setCorrectAnswerText(messages.getQuestionGenerationViewExportMoodleXmlCorrectAnswerText());
         moodleXmlExportService.setWrongAnswerText(messages.getQuestionGenerationViewExportMoodleXmlWrongAnswerText());
     }
@@ -122,7 +126,18 @@ public class QuestionGenerationPresenterImpl extends AbstractStepPresenter imple
         generateTestQuestions();
         addStatisticsLogEntryIfConfigured();
 
+        deletePreviousExportFiles();
+        generateExportFiles();
         refreshGeneratedQuestionsLearningContents();
+    }
+
+    private void deletePreviousExportFiles() {
+
+    }
+
+    private void generateExportFiles() {
+        triggerCsvExportGeneration();
+        triggerMoodleXmlExportGeneration();
     }
 
     private void resetStatisticsInformation() {
@@ -194,36 +209,30 @@ public class QuestionGenerationPresenterImpl extends AbstractStepPresenter imple
         getNavigator().navigateTo(DetectionViewImpl.VIEW_NAME);
     }
 
-    @Override
-    public void onExportButtonClicked() {
-        LOGGER.info("onExportButtonClicked()");
-
-        if (questionGenerationView.getExportMethodSelection().equals(messages.getQuestionGenerationViewListselectExportCsv())) {
-            triggerCsvExport();
-        } else {
-            triggerMoodleXmlExport();
-        }
-    }
-
-    private void triggerCsvExport() {
+    private void triggerCsvExportGeneration() {
         try {
-            LOGGER.debug("triggerCsvExport(): starting CSV export...");
-            csvExportService.setFileName(String.format(CSV_EXPORT_FILENAME_TEMPLATES, questionGenerationSession.getCourse().getTitle()));
+            LOGGER.debug("triggerCsvExportGeneration(): starting CSV export...");
+            csvExportService.setFileName(generateExportFileName(CSV_EXPORT_FILENAME_TEMPLATES));
             File exportFile = csvExportService.exportGeneratedQuestionsToFile(questionGenerationSession.getGeneratedQuestionsContentsMap());
-            questionGenerationView.offerFileForDownload(exportFile);
+            questionGenerationView.setCsvExportFile(exportFile);
         } catch (Exception e) {
-            LOGGER.error("triggerCsvExport(): could not generate CSV due to {}", e);
+            LOGGER.error("triggerCsvExportGeneration(): could not generate CSV due to {}", e);
         }
     }
 
-    private void triggerMoodleXmlExport() {
+    private String generateExportFileName(String csvExportFilenameTemplates) {
+        String currentTimestamp = String.valueOf(System.currentTimeMillis());
+        return String.format(csvExportFilenameTemplates, questionGenerationSession.getCourse().getTitle() + currentTimestamp);
+    }
+
+    private void triggerMoodleXmlExportGeneration() {
         try {
-            LOGGER.debug("triggerMoodleXmlExport(): starting Moodle XML export...");
-            moodleXmlExportService.setFileName(String.format(MOODLE_XML_EXPORT_FILENAME_TEMPLATES, questionGenerationSession.getCourse().getTitle()));
+            LOGGER.debug("triggerMoodleXmlExportGeneration(): starting Moodle XML export...");
+            moodleXmlExportService.setFileName(generateExportFileName(MOODLE_XML_EXPORT_FILENAME_TEMPLATES));
             File exportFile = moodleXmlExportService.exportGeneratedQuestionsToFile(questionGenerationSession.getGeneratedQuestionsContentsMap());
-            questionGenerationView.offerFileForDownload(exportFile);
+            questionGenerationView.setMoodleXmlExportFile(exportFile);
         } catch (Exception e) {
-            LOGGER.error("triggerMoodleXmlExport(): could not generate Moodle XML file due to {}", e);
+            LOGGER.error("triggerMoodleXmlExportGeneration(): could not generate Moodle XML file due to {}", e);
         }
     }
 
@@ -242,6 +251,9 @@ public class QuestionGenerationPresenterImpl extends AbstractStepPresenter imple
         // rebuild test question label
         testQuestion.setLabel(buildTestQuestionLabel(testQuestion));
         refreshGeneratedQuestion(testQuestion);
+
+        // refresh export files
+        generateExportFiles();
     }
 
     private void refreshGeneratedQuestion(TestQuestion testQuestion) {

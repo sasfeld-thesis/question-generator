@@ -67,8 +67,8 @@ public class CsvWriterImpl implements CsvWriter {
     }
 
     @Override
-    public File writeToFile(final String filename) {
-        File file = new File(filename);
+    public File writeToFile(final String directory, final String filename) {
+        File file = new File(directory, filename);
 
         FileOutputStream fileOutputStream = null;
         OutputStreamWriter outputStreamWriter = null;

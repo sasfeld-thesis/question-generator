@@ -43,6 +43,15 @@ public class MoodleXmlExportServiceImpl implements ExportService {
     private String fileName;
     private String correctAnswerText;
     private String wrongAnswerText;
+    private String fileDirectory;
+
+    /**
+     * Sets the file directory.
+     * @param fileDirectory directory.
+     */
+    public void setFileDirectory(String fileDirectory) {
+        this.fileDirectory = fileDirectory;
+    }
 
     /**
      * Sets the filename.
@@ -71,7 +80,7 @@ public class MoodleXmlExportServiceImpl implements ExportService {
 
     @Override
     public File exportGeneratedQuestionsToFile(Map<LearningContent, List<TestQuestion>> generatedQuestionsMap) {
-        File file = new File(fileName);
+        File file = new File(fileDirectory, fileName);
 
         try {
             JAXBContext jaxbContext = JAXBContext.newInstance(Quiz.class);

@@ -37,7 +37,7 @@ public class CsvWriterTest {
         csvWriter.addRow(column);
 
         // then ensure that the file is correct
-        File f = csvWriter.writeToFile("unittest.csv");
+        File f = csvWriter.writeToFile(".", "unittest.csv");
         checkFileContains(f, "Column1;Column2;Column3");
     }
 
@@ -53,7 +53,7 @@ public class CsvWriterTest {
         csvWriter.addRow(column);
 
         // then ensure that the file is correct
-        File f = csvWriter.writeToFile("unittest.csv");
+        File f = csvWriter.writeToFile(".", "unittest.csv");
         checkFileContains(f, "Column1;Column2 contains a forbidden characterhaha;Column3");
     }
 

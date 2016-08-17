@@ -43,6 +43,7 @@ public class CsvExportServiceImpl implements ExportService {
     private String correctAnswersLabel;
     private String wrongAnswersLabel;
     private String originalSentenceLabel;
+    private String fileDirectory;
     private String fileName;
     private String isMultipleChoiceLabel;
     private String isNoMultipleChoiceLabel;
@@ -63,6 +64,15 @@ public class CsvExportServiceImpl implements ExportService {
      */
     public void setIsNoMultipleChoiceLabel(String isNoMultipleChoiceLabel) {
         this.isNoMultipleChoiceLabel = isNoMultipleChoiceLabel;
+    }
+
+    /**
+     * Sets the file's directory.
+     *
+     * @param fileDirectory String
+     */
+    public void setFileDirectory(String fileDirectory) {
+        this.fileDirectory = fileDirectory;
     }
 
     /**
@@ -145,7 +155,7 @@ public class CsvExportServiceImpl implements ExportService {
         addHeaderColumnsToCsvWriter(csvWriter);
         addGeneratedQuestionsToCsvWriter(csvWriter, generatedQuestionsMap);
 
-        return csvWriter.writeToFile(fileName);
+        return csvWriter.writeToFile(fileDirectory, fileName);
     }
 
     private void addHeaderColumnsToCsvWriter(CsvWriter csvWriter) {

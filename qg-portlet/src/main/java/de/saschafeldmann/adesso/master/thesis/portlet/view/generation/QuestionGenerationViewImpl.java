@@ -2,8 +2,7 @@ package de.saschafeldmann.adesso.master.thesis.portlet.view.generation;
 
 import com.vaadin.data.Property;
 import com.vaadin.navigator.ViewChangeListener;
-import com.vaadin.server.FileDownloader;
-import com.vaadin.server.FileResource;
+import com.vaadin.server.*;
 import com.vaadin.shared.ui.label.ContentMode;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
 import de.saschafeldmann.adesso.master.thesis.generation.model.TestQuestion;
@@ -16,12 +15,17 @@ import de.saschafeldmann.adesso.master.thesis.portlet.view.components.Horizontal
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.Label;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.ListSelect;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.VerticalLayout;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.ConcurrentModificationException;
 import java.util.List;
 
 /**
@@ -42,6 +46,8 @@ import java.util.List;
 @Component
 @Scope("prototype")
 public class QuestionGenerationViewImpl extends AbstractStepView implements QuestionGenerationView {
+    private static final Logger LOGGER = LoggerFactory.getLogger(QuestionGenerationViewImpl.class);
+
     public static final String VIEW_NAME = "QuestionGenerationView";
     public static final String CSS_STYLE_NAME_HORICONTAL_LAYOUT = "question-generation-horicontal-layout";
     public static final String CSS_STYLE_NAME_EXPORT_SELECT = "question-generation-export-select";
@@ -63,6 +69,9 @@ public class QuestionGenerationViewImpl extends AbstractStepView implements Ques
     private final Button btnPrevious;
     private final Button btnExport;
     private final ListSelect exportListSelect;
+    private String defaultExportValue = messages.getQuestionGenerationViewListselectExportCsv();
+    private File moodleXmlExportFile;
+    private File csvExportFile;
 
     /**
      * Creates the new view.
@@ -148,13 +157,6 @@ public class QuestionGenerationViewImpl extends AbstractStepView implements Ques
             }
         });
 
-        btnExport.addClickListener(new com.vaadin.ui.Button.ClickListener() {
-            @Override
-            public void buttonClick(com.vaadin.ui.Button.ClickEvent clickEvent) {
-                viewListener.onExportButtonClicked();
-            }
-        });
-
         btnStartQuestionGeneration.addClickListener(new com.vaadin.ui.Button.ClickListener() {
             @Override
             public void buttonClick(com.vaadin.ui.Button.ClickEvent clickEvent) {
@@ -197,6 +199,42 @@ public class QuestionGenerationViewImpl extends AbstractStepView implements Ques
                 completedQuestionsList.select(completedQuestionsList.getNullSelectionItemId());
             }
         });
+
+        exportListSelect.addValueChangeListener(new Property.ValueChangeListener() {
+            @Override
+            public void valueChange(Property.ValueChangeEvent valueChangeEvent) {
+                resetExportFileDownloaderExtension();
+            }
+        });
+    }
+
+    private void resetExportFileDownloaderExtension() {
+        removeExtensionsOfExportFileButton();
+
+        FileDownloader exportDownloader = new FileDownloader(getExportDownloadStream());
+        exportDownloader.extend(btnExport);
+    }
+
+    private void removeExtensionsOfExportFileButton() {
+        try {
+            for (Extension extension : btnExport.getExtensions()) {
+                btnExport.removeExtension(extension);
+            }
+        } catch (ConcurrentModificationException e) {
+            LOGGER.error("removeExtensionsOfExportFileButton(): concurrent modification exception");
+        }
+    }
+
+    private FileResource getExportDownloadStream() {
+        return new FileResource(getExportFile());
+    }
+
+    private File getExportFile() {
+        if (getExportMethodSelection().equals(messages.getQuestionGenerationViewListselectExportMoodleXml())) {
+            return moodleXmlExportFile;
+        } else {
+            return csvExportFile;
+        }
     }
 
     private void initializeExportSelect() {
@@ -204,6 +242,11 @@ public class QuestionGenerationViewImpl extends AbstractStepView implements Ques
         exportListSelect.addItem(messages.getQuestionGenerationViewListselectExportMoodleXml());
 
         exportListSelect.setRows(1);
+        setDefaultExportValue();
+    }
+
+    private void setDefaultExportValue() {
+        exportListSelect.select(defaultExportValue);
     }
 
     @Override
@@ -238,14 +281,6 @@ public class QuestionGenerationViewImpl extends AbstractStepView implements Ques
         completedQuestionsList.addItems(testQuestions);
 
         triggerActionButtonsEnabledState();
-    }
-
-    @Override
-    public void offerFileForDownload(File file) {
-        VaadinUtil.removeAllExtensions(btnExport);
-
-        FileDownloader fileDownloader = new FileDownloader(new FileResource(file));
-        fileDownloader.extend(btnExport);
     }
 
     @Override
@@ -284,7 +319,7 @@ public class QuestionGenerationViewImpl extends AbstractStepView implements Ques
     @Override
     public String getExportMethodSelection() {
         if (null == exportListSelect.getValue()) {
-            return "";
+            return defaultExportValue;
         }
 
         return (String) exportListSelect.getValue();
@@ -302,6 +337,18 @@ public class QuestionGenerationViewImpl extends AbstractStepView implements Ques
                 + messages.getRuntimeQuestionGeneration(String.valueOf(questionGenerationRuntime))
                 + ")"
         );
+    }
+
+    @Override
+    public void setCsvExportFile(final File csvExportFile) {
+        this.csvExportFile = csvExportFile;
+        resetExportFileDownloaderExtension();
+    }
+
+    @Override
+    public void setMoodleXmlExportFile(final File moodleXmlExportFile) {
+        this.moodleXmlExportFile = moodleXmlExportFile;
+        resetExportFileDownloaderExtension();
     }
 
     @Override

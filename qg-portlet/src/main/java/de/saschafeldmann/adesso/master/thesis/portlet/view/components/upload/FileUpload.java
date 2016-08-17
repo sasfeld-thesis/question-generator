@@ -139,7 +139,7 @@ public class FileUpload extends com.vaadin.ui.Upload implements Upload.Receiver,
     }
 
     private String getTempFileFolderFromProperty() {
-        return questionGeneratorProperties.fetchValue(PropertyKeys.FILEUPLOAD_TEMP_FOLDER);
+        return questionGeneratorProperties.getFileTempFolder();
     }
 
     /**
