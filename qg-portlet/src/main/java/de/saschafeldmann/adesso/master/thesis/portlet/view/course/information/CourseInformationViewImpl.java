@@ -3,6 +3,7 @@ package de.saschafeldmann.adesso.master.thesis.portlet.view.course.information;
 import static com.google.common.base.Strings.*;
 import com.vaadin.data.Property;
 import com.vaadin.navigator.ViewChangeListener;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import de.saschafeldmann.adesso.master.thesis.portlet.model.LanguageWrapper;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.Messages;
@@ -67,7 +68,11 @@ public class CourseInformationViewImpl extends AbstractStepView implements Cours
     private String courseTitle;
 
     @Autowired
-    public CourseInformationViewImpl(final Messages messages, final InfoBox infoBox, final Label introductionLabel, final FormLayout formLayout, final VersionLabel versionLabel, final TextField inputCourseTitle,
+    public CourseInformationViewImpl(final Messages messages,
+                                     final InfoBox infoBox,
+                                     final FormLayout formLayout,
+                                     final VersionLabel versionLabel,
+                                     final TextField inputCourseTitle,
                                      final TextField inputCourseUrl,
                                      final ListSelect inputCourseLanguageSelect,
                                      final HorizontalLayout buttonGroupLayout,
@@ -78,7 +83,6 @@ public class CourseInformationViewImpl extends AbstractStepView implements Cours
         super(messages, versionLabel);
 
         this.infoBox = infoBox;
-        this.introductionLabel = introductionLabel;
         this.formLayout = formLayout;
         this.inputCourseTitle = inputCourseTitle;
         this.inputCourseUrl = inputCourseUrl;
@@ -87,6 +91,8 @@ public class CourseInformationViewImpl extends AbstractStepView implements Cours
         this.btnNext = btnNext;
         this.btnNewSession = btnNewSession;
         this.btnOptions = btnOptions;
+
+        this.introductionLabel = new Label(messages.getCourseInformationViewIntroductionText(), ContentMode.HTML);
     }
 
     @PostConstruct
