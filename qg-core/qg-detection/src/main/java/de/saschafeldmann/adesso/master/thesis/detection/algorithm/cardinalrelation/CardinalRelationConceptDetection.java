@@ -46,6 +46,7 @@ public class CardinalRelationConceptDetection implements DetectionAlgorithm<Card
 
     /**
      * Creates a new cardinal relation concept.
+     *
      * @param detectionProperties the modules properties
      */
     @Autowired
@@ -96,6 +97,7 @@ public class CardinalRelationConceptDetection implements DetectionAlgorithm<Card
         final List<String> cardinalRelationCompositePosTags = detectionProperties.getCardinalRelationCompositePosTags(targetLanguage);
         final List<String> cardinalRelationAdjectivePosTags = detectionProperties.getCardinalRelationAdjectivePosTags(targetLanguage);
         final List<String> cardinalRelationKeyWordsPosTags = detectionProperties.getCardinalRelationKeywordsPosTags(targetLanguage);
+        final List<String> cardinalRelationKeyWordVerbs = detectionProperties.getCardinalRelationKeywordsVerbs(targetLanguage);
         final List<String> cardinalRelationCardinalityPosTags = detectionProperties.getCardinalRelationCardinalityPosTags(targetLanguage);
         final List<String> cardinalRelationCompositionPosTags = detectionProperties.getCardinalRelationCompositionPosTags(targetLanguage);
 
@@ -110,11 +112,16 @@ public class CardinalRelationConceptDetection implements DetectionAlgorithm<Card
             final String compositeArticle = mCardinalSentenceMatcher.group(2);
             final String compositeAdjective = mCardinalSentenceMatcher.group(5); // 5
             final String composite = mCardinalSentenceMatcher.group(8); // 11
-            final String cardinality = mCardinalSentenceMatcher.group(14); // 14
-            final String compositionAdjective = mCardinalSentenceMatcher.group(17); // 17
-            final String composition = mCardinalSentenceMatcher.group(20); //20
+            final String compositionVerb = mCardinalSentenceMatcher.group(11);
 
-            return newCardinalRelationConcept(learningContent, compositeArticle, compositeAdjective, composite, cardinality, compositionAdjective, composition, posAnnotatedSentence);
+            if (cardinalRelationKeyWordVerbs.contains(compositionVerb)) {
+                // only create a cardinal relation concept if the verb within the matched sequence really represents a cardinal relation
+                final String cardinality = mCardinalSentenceMatcher.group(14); // 14
+                final String compositionAdjective = mCardinalSentenceMatcher.group(17); // 17
+                final String composition = mCardinalSentenceMatcher.group(20); //20
+
+                return newCardinalRelationConcept(learningContent, compositeArticle, compositeAdjective, composite, cardinality, compositionAdjective, composition, posAnnotatedSentence);
+            }
         }
 
         return null;
@@ -141,23 +148,22 @@ public class CardinalRelationConceptDetection implements DetectionAlgorithm<Card
 
     /**
      * Builds the regular expression pattern to match cardinal relation sentences based on configured possible sequences of part of speech tags.
-     *
+     * <p>
      * The regular expression matches sequences of:
-     #
-     # 1. article (optional)
-     # 2. an adjective (optional)
-     # 3. a subject / the composite (mandatory)
-     # 4. a key word indicating the composition, a verb like "have" (mandatory)
-     # 5. an cardinality number (mandatory)
-     # 6. an object / the composition (mandatory)
+     * #
+     * # 1. article (optional)
+     * # 2. an adjective (optional)
+     * # 3. a subject / the composite (mandatory)
+     * # 4. a key word indicating the composition, a verb like "have" (mandatory)
+     * # 5. an cardinality number (mandatory)
+     * # 6. an object / the composition (mandatory)
      *
      * @param cardinalRelationCompositeArticlePosTags the POS tags surrounding the first article
-     * @param cardinalRelationCompositePosTags the POS tags surrounding the composite
-     * @param cardinalRelationKeyWordsPosTags the POS tags signaling the composition verb
-     * @param cardinalRelationCardinalityPosTags the POS tags representing tha cardinality of the composition
-     * @param cardinalRelationCompositionPosTags the POS tags surrounding the composition
-     * @param cardinalRelationAdjectivePosTags additional POS tags representing adjectives that describe composition and / or composite better
-     *
+     * @param cardinalRelationCompositePosTags        the POS tags surrounding the composite
+     * @param cardinalRelationKeyWordsPosTags         the POS tags signaling the composition verb
+     * @param cardinalRelationCardinalityPosTags      the POS tags representing tha cardinality of the composition
+     * @param cardinalRelationCompositionPosTags      the POS tags surrounding the composition
+     * @param cardinalRelationAdjectivePosTags        additional POS tags representing adjectives that describe composition and / or composite better
      * @return String the regular expression pattern
      */
     private String buildCardinalSentencePattern(List<String> cardinalRelationCompositeArticlePosTags, List<String> cardinalRelationCompositePosTags, List<String> cardinalRelationKeyWordsPosTags, List<String> cardinalRelationCardinalityPosTags, List<String> cardinalRelationCompositionPosTags, List<String> cardinalRelationAdjectivePosTags) {
@@ -187,7 +193,7 @@ public class CardinalRelationConceptDetection implements DetectionAlgorithm<Card
         regex += "(.*?)";
         regex += "(" + alternativeClosingPosTags + ")" + modifier;
         regex += "[ ]*";
-        
+
         return regex;
     }
 }

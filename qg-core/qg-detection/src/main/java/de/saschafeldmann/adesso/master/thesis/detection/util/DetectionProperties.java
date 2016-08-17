@@ -98,6 +98,15 @@ public class DetectionProperties extends PropertiesReader implements PropertiesR
     }
 
     /**
+     * Gets the cardinal relation keywords for the verb.<br />
+     * @param language the given language
+     * @return the list
+     */
+    public List<String> getCardinalRelationKeywordsVerbs(final Language language) {
+        return fetchMultipleValues("de.saschafeldmann.adesso.master.thesis.detection.cardinalrelation.keywords.verb." + language.toString().toLowerCase());
+    }
+
+    /**
      * Gets the configured part of speech tags that can be represented by a cardinal relation. <br />
      * E.g. the sentence <NN>Germany</NN> has 16 <NN>states</NN> -> here, the composite part of speech tag is NN (for noun).
      * @param language the language

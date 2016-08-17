@@ -58,6 +58,10 @@ public class CardinalRelationConceptDetectionTest {
     private static final String[] ENGLISH_NON_CARDINAL_GEOGRAPHY_POS_TEXT = {"<DT>The</DT><NNP>Bundesrepublik</NNP><NNP>Germany</NNP><VBZ>is</VBZ><NN>part</NN><IN>of</IN><NNP>Europe</NNP><.>.</.>",
                                                                               "<DT>The</DT><NN>capital</NN><IN>of</IN><NNP>Germany</NNP><VBZ>is</VBZ><NNP>Berlin</NNP><.>.</.>"};
 
+    private static final String GERMAN_NON_CARDINAL_GEOGRAPHY_TEXT_BUT_WITH_CARD_TAG = "In Frankreich kam 1789 durch die Französische Revolution das Bürgertum zur Macht.";
+    private static final String[] GERMAN_NON_CARDINAL_GEOGRAPHY_POS_TEXT_BUT_WITH_CARD_TAG = {"<APPR>In</APPR><NE>Frankreich</NE><VVFIN>kam</VVFIN><CARD>1789</CARD><APPR>durch</APPR><ART>die</ART><ADJA>Französische</ADJA><NN>Revolution</NN><ART>das</ART><NN>Bürgertum</NN><APPRART>zur</APPRART><NN>Macht</NN><$.>.</$.>"};
+    private static final String[] GERMAN_NON_CARDINAL_GEOGRAPHY_NER_TEXT_BUT_WITH_CARD_TAG = {"<O>In</O><I-LOC>Frankreich</I-LOC><O>kam</O><DATE>1789</DATE><O>durch</O><O>die</O><I-MISC>Französische</I-MISC><O>Revolution</O><O>das</O><O>Bürgertum</O><O>zur</O><O>Macht</O><O>.</O>"};
+
 
     @Test
     public void testCardinalRelationConceptDetectsGermanGeographyRelation() throws Exception {
@@ -135,6 +139,20 @@ public class CardinalRelationConceptDetectionTest {
         // given a German non-cardinal Geography learning content
         final LearningContent learningContent = newLearningContent(ENGLISH_NON_CARDINAL_GEOGRAPHY_TEXT, new ArrayList<String>(Arrays.asList(ENGLISH_NON_CARDINAL_GEOGRAPHY_POS_TEXT)),
                 new ArrayList<String>(Arrays.asList(ENGLISH_NON_CARDINAL_GEOGRAPHY_NER_TEXT)),  Language.ENGLISH);
+        final CardinalRelationConceptDetection detectionAlgorithm = newCardinalRelationDetectionAlgorithm();
+
+        // when detect concepts is called
+        final List<CardinalRelationConcept> detectedConcepts = detectionAlgorithm.execute(learningContent, new DetectionOptions());
+
+        // then the list of detected concepts should be empty
+        assertEquals(0, detectedConcepts.size());
+    }
+
+    @Test
+    public void testCardinalRelationConceptDoesNotDetectCardinalRelationForSentencesWithOtherNumbers() throws Exception {
+        // given a German non-cardinal-relation concept
+        final LearningContent learningContent = newLearningContent(GERMAN_NON_CARDINAL_GEOGRAPHY_TEXT_BUT_WITH_CARD_TAG, new ArrayList<String>(Arrays.asList(GERMAN_NON_CARDINAL_GEOGRAPHY_POS_TEXT_BUT_WITH_CARD_TAG)),
+                new ArrayList<String>(Arrays.asList(GERMAN_NON_CARDINAL_GEOGRAPHY_NER_TEXT_BUT_WITH_CARD_TAG)),  Language.ENGLISH);
         final CardinalRelationConceptDetection detectionAlgorithm = newCardinalRelationDetectionAlgorithm();
 
         // when detect concepts is called
