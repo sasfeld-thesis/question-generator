@@ -82,6 +82,7 @@ public class PreprocessesViewImpl extends AbstractStepView implements Preprocess
     private final EditWindowWithSelectBox editWindow;
 
     private PreprocessesViewListener viewListener;
+    private Label finishedLabel;
 
     @Autowired
     public PreprocessesViewImpl(
@@ -124,11 +125,11 @@ public class PreprocessesViewImpl extends AbstractStepView implements Preprocess
     private void initialize() {
         initializeAccordion();
 
-        initializeBottomButtonGroup();
         registerListeners();
         disableActionsButtons();
 
         setStyles();
+        setLabels();
     }
 
     private void setStyles() {
@@ -151,9 +152,12 @@ public class PreprocessesViewImpl extends AbstractStepView implements Preprocess
         btnNext.setEnabled(false);
     }
 
-    private void initializeBottomButtonGroup() {
+    private void setLabels() {
         this.btnPrevious.setCaption(messages.getButtonBackTitle());
         this.btnNext.setCaption(messages.getButtonNextTitle());
+
+        btnStartProcessChain.setCaption(messages.getPreproccesesViewAccordionProcesschainButtonStartLabel());
+        this.finishedLabel.setCaption(messages.getPreproccesesViewAccordionProcesschainFinishedLabel());
     }
 
     private void initializeActivationPart() {
@@ -176,9 +180,7 @@ public class PreprocessesViewImpl extends AbstractStepView implements Preprocess
         accordionProcessChainLayoutTable.addContainerProperty(PROCESS_CHAIN_TABLE_CONTAINER_PROPERTY_LEFT, Component.class, null);
         accordionProcessChainLayoutTable.addContainerProperty(PROCESS_CHAIN_TABLE_CONTAINER_PROPERTY_RIGHT, Component.class, null);
 
-        btnStartProcessChain.setCaption(messages.getPreproccesesViewAccordionProcesschainButtonStartLabel());
-
-        Label finishedLabel = new Label(messages.getPreproccesesViewAccordionProcesschainFinishedLabel());
+        this.finishedLabel = new Label(messages.getPreproccesesViewAccordionProcesschainFinishedLabel());
 
         // add first row (left cell: start process button; right cell: label)
         accordionProcessChainLayoutTable.addItem(
@@ -398,6 +400,7 @@ public class PreprocessesViewImpl extends AbstractStepView implements Preprocess
         // add menu and set the preprocessing item to be active
         super.reset(messages.getMenuItemPreprocessesLabel());
 
+        setLabels();
         setInfoBox();
         addComponent(infoBox);
         addComponent(introductionLabel);
@@ -436,8 +439,10 @@ public class PreprocessesViewImpl extends AbstractStepView implements Preprocess
     }
 
     @Override
-    public void resetInputs() {
+    public void refreshView() {
         this.accordionProcessChainLogTextarea.setValue("");
         this.accordionProcessChainFinishedSelect.removeAllItems();
+
+        setLabels();
     }
 }

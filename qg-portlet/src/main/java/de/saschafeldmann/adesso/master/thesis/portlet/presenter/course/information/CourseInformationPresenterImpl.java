@@ -134,7 +134,7 @@ public class CourseInformationPresenterImpl extends AbstractStepPresenter implem
     }
 
     private void resetInputs() {
-        QuestionGeneratorPortletVaadinUi.getCurrentPortletVaadinUi().resetAllInputs();
+        QuestionGeneratorPortletVaadinUi.getCurrentPortletVaadinUi().resetViews();
     }
 
     private void resetSession() {

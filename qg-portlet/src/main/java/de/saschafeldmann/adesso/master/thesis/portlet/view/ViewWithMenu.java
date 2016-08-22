@@ -33,7 +33,8 @@ public interface ViewWithMenu extends View {
     void setCurrentSessionStatus(QuestionGenerationSession.Status currentSessionStatus);
 
     /**
-     * Resets all inputs in the current view.
+     * Refreshes the view by reinitializing the labels and
+     * resetting all inputs in the current view.
      */
-    void resetInputs();
+    void refreshView();
 }

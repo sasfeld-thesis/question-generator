@@ -97,18 +97,23 @@ public class CourseInformationViewImpl extends AbstractStepView implements Cours
 
     @PostConstruct
     private void initialize() {
-        this.inputCourseTitle.setCaption(messages.getCourseInformationViewCourseTitleLabel());
-        this.inputCourseUrl.setCaption(messages.getCourseInformationViewCourseUrlLabel());
-
         initializeLanguageSelect();
 
         this.buttonGroupLayout.addStyleName(CSS_BUTTON_GROUP_STYLENAME);
-        this.btnNext.setCaption(messages.getCourseInformationViewBtnNextLabel());
-        this.btnNewSession.setCaption(messages.getCourseInformationViewBtnNewSessionLabel());
-        this.btnOptions.setCaption(messages.getCourseInformationViewButtonOptionsLabel());
 
         registerListeners();
         disableActionsButtons();
+
+        setLabels();
+    }
+
+    private void setLabels() {
+        this.inputCourseTitle.setCaption(messages.getCourseInformationViewCourseTitleLabel());
+        this.inputCourseUrl.setCaption(messages.getCourseInformationViewCourseUrlLabel());
+        this.btnNext.setCaption(messages.getCourseInformationViewBtnNextLabel());
+        this.btnNewSession.setCaption(messages.getCourseInformationViewBtnNewSessionLabel());
+        this.btnOptions.setCaption(messages.getCourseInformationViewButtonOptionsLabel());
+        this.inputCourseLanguageSelect.setCaption(messages.getCourseInformationViewCourseLanguageLabel());
     }
 
     private void enableActionButtons() {
@@ -120,8 +125,6 @@ public class CourseInformationViewImpl extends AbstractStepView implements Cours
     }
 
     private void initializeLanguageSelect() {
-        this.inputCourseLanguageSelect.setCaption(messages.getCourseInformationViewCourseLanguageLabel());
-
         this.inputCourseLanguageSelect.addItems(LanguageWrapper.getAllLanguageItems());
 
         this.inputCourseLanguageSelect.setRows(2);
@@ -170,6 +173,7 @@ public class CourseInformationViewImpl extends AbstractStepView implements Cours
         // add menu and set the course information item to be active
         super.reset(messages.getMenuItemCourseInformationLabel());
 
+        setLabels();
         setInfoBox();
         addComponent(infoBox);
         addComponent(introductionLabel);
@@ -240,9 +244,11 @@ public class CourseInformationViewImpl extends AbstractStepView implements Cours
     }
 
     @Override
-    public void resetInputs() {
+    public void refreshView() {
         this.inputCourseUrl.setValue("");
         this.inputCourseTitle.setValue("");
         this.inputCourseLanguageSelect.setValue(DEFAULT_LANGUAGE_ITEM);
+
+        setLabels();
     }
 }

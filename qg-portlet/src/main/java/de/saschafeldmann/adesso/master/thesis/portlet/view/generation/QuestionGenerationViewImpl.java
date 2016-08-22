@@ -7,7 +7,6 @@ import com.vaadin.shared.ui.label.ContentMode;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
 import de.saschafeldmann.adesso.master.thesis.generation.model.TestQuestion;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.Messages;
-import de.saschafeldmann.adesso.master.thesis.portlet.util.VaadinUtil;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.AbstractStepView;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.*;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.Button;
@@ -23,8 +22,6 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.ConcurrentModificationException;
 import java.util.List;
 
@@ -116,21 +113,20 @@ public class QuestionGenerationViewImpl extends AbstractStepView implements Ques
 
     @PostConstruct
     private void initialize() {
-        this.btnStartQuestionGeneration.setCaption(messages.getQuestionGenerationViewButtonStartLabel());
-        this.completedLearningContentsListLabel.setCaption(messages.getQuestionGenerationViewFinishedContentsLabels());
-        initCompletedQuestionsListLabel();
-
-        this.btnPrevious.setCaption(messages.getButtonBackTitle());
-        this.btnExport.setCaption(messages.getQuestionGenerationViewButtonExport());
-
         initializeHorizontalLayout();
         initializeExportSelect();
         registerListeners();
         disableActionsButtons();
         setStyles();
+
+        setLabels();
     }
 
-    private void initCompletedQuestionsListLabel() {
+    private void setLabels() {
+        this.btnStartQuestionGeneration.setCaption(messages.getQuestionGenerationViewButtonStartLabel());
+        this.completedLearningContentsListLabel.setCaption(messages.getQuestionGenerationViewFinishedContentsLabels());
+        this.btnPrevious.setCaption(messages.getButtonBackTitle());
+        this.btnExport.setCaption(messages.getQuestionGenerationViewButtonExport());
         this.completedQuestionsListLabel.setCaption(messages.getQuestionGenerationViewFinishedQuestionsLabel());
     }
 
@@ -288,6 +284,7 @@ public class QuestionGenerationViewImpl extends AbstractStepView implements Ques
         // add menu and set the generation item to be active
         super.reset(messages.getMenuItemQuestionGenerationLabel());
 
+        setLabels();
         setInfoBox();
         addComponent(infoBox);
         addComponent(introductionLabel);
@@ -327,7 +324,7 @@ public class QuestionGenerationViewImpl extends AbstractStepView implements Ques
 
     @Override
     public void showStatistics(long numberOfGeneratedQuestions, long questionGenerationRuntime) {
-        initCompletedQuestionsListLabel();
+        setLabels();
 
         completedLearningContentsListLabel.setValue(
                 completedLearningContentsListLabel.getValue()
@@ -352,9 +349,11 @@ public class QuestionGenerationViewImpl extends AbstractStepView implements Ques
     }
 
     @Override
-    public void resetInputs() {
+    public void refreshView() {
         this.completedLearningContentsList.removeAllItems();
         this.completedQuestionsList.removeAllItems();
+
+        setLabels();
     }
 
     @Override

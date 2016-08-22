@@ -1,6 +1,7 @@
 package de.saschafeldmann.adesso.master.thesis.portlet.presenter.options;
 
 import de.saschafeldmann.adesso.master.thesis.portlet.model.QuestionGenerationSession;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.options.OptionsView;
 
 /**
  * Project:        Masterthesis of Sascha Feldmann
@@ -29,4 +30,10 @@ public interface OptionsPresenter {
      * @param questionGenerationSession
      */
     void setQuestionGenerationSession(QuestionGenerationSession questionGenerationSession);
+
+    /**
+     * Gets the options view.
+     * @return view
+     */
+    OptionsView getView();
 }

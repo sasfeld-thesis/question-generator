@@ -37,11 +37,15 @@ import de.saschafeldmann.adesso.master.thesis.portlet.view.generation.QuestionGe
 import de.saschafeldmann.adesso.master.thesis.portlet.view.generation.QuestionGenerationViewImpl;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.preprocesses.PreprocessesView;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.preprocesses.PreprocessesViewImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.portlet.context.PortletApplicationContextUtils;
 
 import javax.portlet.PortletContext;
+import javax.portlet.PortletSession;
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * Project:        Masterthesis of Sascha Feldmann
@@ -66,6 +70,8 @@ import java.util.Locale;
  */
 @Theme(VaadinProperties.THEME)
 public class QuestionGeneratorPortletVaadinUi extends UI {
+    private static final Logger LOGGER = LoggerFactory.getLogger(QuestionGeneratorPortletVaadinUi.class);
+
     private Navigator viewNavigator;
     private QuestionGenerationSession questionGenerationSession;
     private Messages messages;
@@ -81,10 +87,12 @@ public class QuestionGeneratorPortletVaadinUi extends UI {
     private QuestionGenerationPresenter questionGenerationPresenter;
     private QuestionGenerationEditQuestionPresenter questionGenerationEditQuestionPresenter;
     private Locale currentLocale;
+    private PortletSession portletSession;
+    private ApplicationContext applicationContext;
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
-        ApplicationContext applicationContext = initializeApplicationContext(vaadinRequest);
+        this.applicationContext = initializeApplicationContext(vaadinRequest);
         // make sure to inject dependencies before initializing views
         injectOtherDependencies(applicationContext);
 
@@ -96,13 +104,18 @@ public class QuestionGeneratorPortletVaadinUi extends UI {
     private void initSession(VaadinRequest vaadinRequest, ApplicationContext applicationContext) {
         this.currentLocale = vaadinRequest.getLocale(); // make sure to initialize before messagesBundle!
         this.questionGenerationSession = Factory.newQuestionGenerationSession();
-        this.messagesBundle = new MessagesBundle(currentLocale);
+        initializeMessageBundle(this.currentLocale);
+    }
+
+    private void initializeMessageBundle(Locale locale) {
+        this.messagesBundle = new MessagesBundle(locale);
     }
 
     private ApplicationContext initializeApplicationContext(VaadinRequest vaadinRequest) {
         WrappedPortletSession wrappedPortletSession = (WrappedPortletSession) vaadinRequest.getWrappedSession();
+        this.portletSession = wrappedPortletSession.getPortletSession();
 
-         return PortletApplicationContextUtils.getRequiredWebApplicationContext(wrappedPortletSession.getPortletSession().getPortletContext());
+        return PortletApplicationContextUtils.getRequiredWebApplicationContext(portletSession.getPortletContext());
     }
 
     private void initializeViewNavigator() {
@@ -266,12 +279,13 @@ public class QuestionGeneratorPortletVaadinUi extends UI {
     /**
      * Resets all inputs done by the user so far.
      */
-    public void resetAllInputs() {
-        courseInformationPresenter.getView().resetInputs();
-        courseContentsPresenter.getView().resetInputs();
-        preprocessesPresenter.getView().resetInputs();
-        detectionPresenter.getView().resetInputs();
-        questionGenerationPresenter.getView().resetInputs();
+    public void resetViews() {
+        courseInformationPresenter.getView().refreshView();
+        courseContentsPresenter.getView().refreshView();
+        preprocessesPresenter.getView().refreshView();
+        detectionPresenter.getView().refreshView();
+        questionGenerationPresenter.getView().refreshView();
+        optionsPresenter.getView().reset();
     }
 
     /**
@@ -295,6 +309,25 @@ public class QuestionGeneratorPortletVaadinUi extends UI {
      * @return the localized message bundle
      */
     public MessagesBundle getMessagesBundle() {
+        Map<String, Object> attributeMap = portletSession.getAttributeMap();
+
+        Object languageInSessionAttribute = portletSession.getAttribute(QuestionGeneratorPortlet.PORTLET_SESSION_ATTRIBUTE_LANGUAGE, PortletSession.APPLICATION_SCOPE);
+
+        if (null != languageInSessionAttribute
+                && !languageInSessionAttribute.equals(currentLocale)) {
+            reinitializeUi((Locale) languageInSessionAttribute);
+        }
+
         return messagesBundle;
+    }
+
+    private void reinitializeUi(Locale languageInSessionAttribute) {
+        // makre sure to reinitialize message bundle if the language was changed by the user
+        currentLocale = languageInSessionAttribute;
+
+        LOGGER.debug("getMessageBundle(): will set new locale {}", currentLocale);
+        initializeMessageBundle(currentLocale);
+
+        resetViews();
     }
 }

@@ -2,13 +2,11 @@ package de.saschafeldmann.adesso.master.thesis.portlet;
 
 import com.vaadin.server.VaadinPortlet;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.QuestionGeneratorProperties;
-import de.saschafeldmann.adesso.master.thesis.preprocesses.algorithm.nlp.NlpPreprocessingAlgorithm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.portlet.PortletConfig;
-import javax.portlet.PortletException;
+import javax.portlet.*;
+import java.io.IOException;
 
 /**
  * Project:        Masterthesis of Sascha Feldmann
@@ -27,7 +25,9 @@ import javax.portlet.PortletException;
  * To add portlet initialization logic, extend the init() method here.
  */
 public class QuestionGeneratorPortlet extends VaadinPortlet {
-    private static final Logger LOGGER = LoggerFactory.getLogger(QuestionGeneratorProperties.class);
+    public static final String PORTLET_SESSION_ATTRIBUTE_LANGUAGE = "org.apache.struts.action.LOCALE";
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(QuestionGeneratorPortlet.class);
 
     @Override
     public void init(PortletConfig config) throws PortletException {

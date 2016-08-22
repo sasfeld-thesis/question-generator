@@ -189,5 +189,7 @@ public class OptionsViewImpl extends Window implements OptionsView {
     public void reset() {
         inputNumberFillTextQuestions.setValue(String.valueOf(DetectionOptions.UNLIMITED));
         inputNumberCardinalityQuestions.setValue(String.valueOf(DetectionOptions.UNLIMITED));
+
+        setLabels();
     }
 }

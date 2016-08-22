@@ -72,6 +72,11 @@ public class OptionsPresenterImpl implements OptionsPresenter, OptionsViewListen
     }
 
     @Override
+    public OptionsView getView() {
+        return optionsView;
+    }
+
+    @Override
     public void onClosed() {
         LOGGER.info("onClosed(): the options dialog was closed");
     }

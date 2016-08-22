@@ -69,6 +69,7 @@ public class DetectionViewImpl extends AbstractStepView implements DetectionView
     private final Button btnPrevious;
     private final Button btnStartProcessChain;
     private DetectionViewListener viewListener;
+    private Label finishedLabel;
 
     @Autowired
     public DetectionViewImpl (
@@ -110,11 +111,11 @@ public class DetectionViewImpl extends AbstractStepView implements DetectionView
     private void initialize() {
         initializeAccordion();
 
-        initializeBottomButtonGroup();
         registerListeners();
         disableActionsButtons();
 
         setStyles();
+        setLabels();
     }
 
     private void initializeAccordion() {
@@ -142,9 +143,7 @@ public class DetectionViewImpl extends AbstractStepView implements DetectionView
         accordionDetectionChainLayoutTable.addContainerProperty(PROCESS_CHAIN_TABLE_CONTAINER_PROPERTY_LEFT, Component.class, null);
         accordionDetectionChainLayoutTable.addContainerProperty(PROCESS_CHAIN_TABLE_CONTAINER_PROPERTY_RIGHT, Component.class, null);
 
-        btnStartProcessChain.setCaption(messages.getDetectionViewAccordionDetectionChainButtonStartLabel());
-
-        Label finishedLabel = new Label(messages.getDetectionViewAccordionDetectionChainFinishedLabel());
+        this.finishedLabel = new Label(messages.getDetectionViewAccordionDetectionChainFinishedLabel());
 
         // add first row (left cell: start process button; right cell: label)
         accordionDetectionChainLayoutTable.addItem(
@@ -169,10 +168,15 @@ public class DetectionViewImpl extends AbstractStepView implements DetectionView
         accordionDetectionChainLayoutTable.setColumnWidth(PROCESS_CHAIN_TABLE_CONTAINER_PROPERTY_RIGHT, PROCESS_CHAIN_TABLE_RIGHT_COLUMN_WIDTH_PIXELS);
     }
 
-    private void initializeBottomButtonGroup() {
+    private void setLabels() {
+        btnStartProcessChain.setCaption(messages.getDetectionViewAccordionDetectionChainButtonStartLabel());
+
+        this.finishedLabel.setCaption(messages.getDetectionViewAccordionDetectionChainFinishedLabel());
+
         this.btnPrevious.setCaption(messages.getButtonBackTitle());
         this.btnNext.setCaption(messages.getButtonNextTitle());
     }
+
 
     private void registerListeners() {
         btnPrevious.addClickListener(new com.vaadin.ui.Button.ClickListener() {
@@ -311,6 +315,7 @@ public class DetectionViewImpl extends AbstractStepView implements DetectionView
         // add menu and set the detection item to be active
         super.reset(messages.getMenuItemDetectionLabel());
 
+        setLabels();
         setInfoBox();
         addComponent(infoBox);
         addComponent(introductionLabel);
@@ -344,9 +349,11 @@ public class DetectionViewImpl extends AbstractStepView implements DetectionView
     }
 
     @Override
-    public void resetInputs() {
+    public void refreshView() {
         accordionDetectionChainLogTextarea.setValue("");
         accordionDetectionChainFinishedSelect.removeAllItems();
+
+        setLabels();
     }
 
     @Override

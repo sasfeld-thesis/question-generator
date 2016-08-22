@@ -131,15 +131,22 @@ public class CourseContentsViewImpl extends AbstractStepView implements CourseCo
     @PostConstruct
     private void initialize() {
         initializeAccordion();
-
         setStyles();
+        registerListeners();
+        disableActionsButtons();
+        setLabels();
+    }
 
+    private void setLabels() {
         this.btnPrevious.setCaption(messages.getCourseInformationViewBtnPreviousLabel());
         this.btnNext.setCaption(messages.getCourseInformationViewBtnNextLabel());
 
-        registerListeners();
+        this.accordionDocumentsLeftSideFileUpload.setCaption(messages.getCourseContentsViewAccordionDocumentsFileUploadLabel());
+        this.accordionDocumentsLeftSideUploadedList.setCaption(messages.getCourseContentsViewAccordionDocumentsUploadedListLabel());
 
-        disableActionsButtons();
+        this.accordionRawTextsLeftSideTitleInput.setCaption(messages.getCourseContentsViewAccordionRawTextsTitleInputLabel());
+        this.accordionRawTextsLeftSideRawTextInput.setCaption(messages.getCourseContentsViewAccordionRawTextsRawTextInputLabel());
+        this.btnAccordionRawTextsLeftSideAddRawText.setCaption(messages.getCourseContentsViewAccordionRawTextsAddButtonLabel());
     }
 
     private void enableActionButtons() {
@@ -161,9 +168,6 @@ public class CourseContentsViewImpl extends AbstractStepView implements CourseCo
         // documents
         accordionDocumentsLayout.addStyleName(CSS_ACCORDION_DOCUMENTS_STYLENAME);
 
-        this.accordionDocumentsLeftSideFileUpload.setCaption(messages.getCourseContentsViewAccordionDocumentsFileUploadLabel());
-        this.accordionDocumentsLeftSideUploadedList.setCaption(messages.getCourseContentsViewAccordionDocumentsUploadedListLabel());
-
         accordionDocumentsLeftSideFileUpload.setImmediate(true);
         accordionDocumentsLeftSideFormLayout.addComponent(accordionDocumentsLeftSideFileUpload);
         accordionDocumentsLeftSideFormLayout.addComponent(accordionDocumentsLeftSideUploadedList);
@@ -178,10 +182,6 @@ public class CourseContentsViewImpl extends AbstractStepView implements CourseCo
         accordion.addTab(accordionDocumentsLayout, messages.getCourseContentsViewAccordionDocumentsTitleLabel());
 
         // raw texts
-        this.accordionRawTextsLeftSideTitleInput.setCaption(messages.getCourseContentsViewAccordionRawTextsTitleInputLabel());
-        this.accordionRawTextsLeftSideRawTextInput.setCaption(messages.getCourseContentsViewAccordionRawTextsRawTextInputLabel());
-        this.btnAccordionRawTextsLeftSideAddRawText.setCaption(messages.getCourseContentsViewAccordionRawTextsAddButtonLabel());
-
         accordionRawTextsLeftSideFormLayout.addComponent(accordionRawTextsLeftSideTitleInput);
         accordionRawTextsLeftSideFormLayout.addComponent(accordionRawTextsLeftSideRawTextInput);
         accordionRawTextsLeftSideFormLayout.addComponent(btnAccordionRawTextsLeftSideAddRawText);
@@ -334,6 +334,7 @@ public class CourseContentsViewImpl extends AbstractStepView implements CourseCo
         // add menu and set the course contents item to be active
         super.reset(messages.getMenuItemContentsLabel());
 
+        setLabels();
         setInfoBox();
         addComponent(infoBox);
         addComponent(introductionLabel);
@@ -410,8 +411,10 @@ public class CourseContentsViewImpl extends AbstractStepView implements CourseCo
     }
 
     @Override
-    public void resetInputs() {
+    public void refreshView() {
         this.accordionDocumentsLeftSideUploadedList.removeAllItems();
         this.accordionRawTextsRightSideAddedList.removeAllItems();
+
+        reset();
     }
 }
