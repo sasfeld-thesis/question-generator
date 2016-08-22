@@ -144,6 +144,14 @@ public abstract class AbstractStepView extends VerticalLayout implements ViewWit
         }
     }
 
+    protected void resetMenuItemLabels() {
+        menuBar.getItems().get(0).setText(messages.getMenuItemCourseInformationLabel());
+        menuBar.getItems().get(1).setText(messages.getMenuItemContentsLabel());
+        menuBar.getItems().get(2).setText(messages.getMenuItemPreprocessesLabel());
+        menuBar.getItems().get(3).setText(messages.getMenuItemDetectionLabel());
+        menuBar.getItems().get(3).setText(messages.getMenuItemQuestionGenerationLabel());
+    }
+
     private MenuBar.MenuItem addMenuItem(final String label, final String activeItemLabel) {
         MenuBar.MenuItem item = this.menuBar.addItem(label, null, this.menuClickListener);
 

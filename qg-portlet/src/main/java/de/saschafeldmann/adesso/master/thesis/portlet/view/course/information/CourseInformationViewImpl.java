@@ -55,7 +55,7 @@ public class CourseInformationViewImpl extends AbstractStepView implements Cours
 
     private ViewMode viewMode;
     private final InfoBox infoBox;
-    private final Label introductionLabel;
+    private Label introductionLabel;
     private final FormLayout formLayout;
     private final TextField inputCourseTitle;
     private final TextField inputCourseUrl;
@@ -92,6 +92,10 @@ public class CourseInformationViewImpl extends AbstractStepView implements Cours
         this.btnNewSession = btnNewSession;
         this.btnOptions = btnOptions;
 
+        setIntroductionText();
+    }
+
+    private void setIntroductionText() {
         this.introductionLabel = new Label(messages.getCourseInformationViewIntroductionText(), ContentMode.HTML);
     }
 
@@ -108,6 +112,7 @@ public class CourseInformationViewImpl extends AbstractStepView implements Cours
     }
 
     private void setLabels() {
+        setIntroductionText();
         this.inputCourseTitle.setCaption(messages.getCourseInformationViewCourseTitleLabel());
         this.inputCourseUrl.setCaption(messages.getCourseInformationViewCourseUrlLabel());
         this.btnNext.setCaption(messages.getCourseInformationViewBtnNextLabel());
@@ -194,7 +199,11 @@ public class CourseInformationViewImpl extends AbstractStepView implements Cours
     private void setInfoBox() {
         this.infoBox.setInfo();
 
-        if (viewMode.equals(ViewMode.NEW_COURSE)) {
+        setInfoBoxCaption();
+    }
+
+    private void setInfoBoxCaption() {
+        if (null == viewMode || viewMode.equals(ViewMode.NEW_COURSE)) {
             this.infoBox.setCaption(messages.getCourseInformationViewNewCourseInfoText());
         } else {
             // ViewMode.EDIT_COURSE
@@ -248,7 +257,5 @@ public class CourseInformationViewImpl extends AbstractStepView implements Cours
         this.inputCourseUrl.setValue("");
         this.inputCourseTitle.setValue("");
         this.inputCourseLanguageSelect.setValue(DEFAULT_LANGUAGE_ITEM);
-
-        setLabels();
     }
 }

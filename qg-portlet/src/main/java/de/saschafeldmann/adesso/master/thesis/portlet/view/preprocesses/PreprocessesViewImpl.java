@@ -63,7 +63,7 @@ public class PreprocessesViewImpl extends AbstractStepView implements Preprocess
     private static final int PROCESS_CHAIN_TABLE_RIGHT_COLUMN_WIDTH_PIXELS = 300;
 
     private final InfoBox infoBox;
-    private final Label introductionLabel;
+    private Label introductionLabel;
     private final Accordion accordion;
 
     private final VerticalLayout accordionActivationLayout;
@@ -118,6 +118,10 @@ public class PreprocessesViewImpl extends AbstractStepView implements Preprocess
         this.btnStartProcessChain = btnStartProcessChain;
         this.editWindow = editWindow;
 
+        setIntroductionText();
+    }
+
+    private void setIntroductionText() {
         this.introductionLabel = new Label(messages.getPreproccesesViewIntroductionText(), ContentMode.HTML);
     }
 
@@ -153,11 +157,16 @@ public class PreprocessesViewImpl extends AbstractStepView implements Preprocess
     }
 
     private void setLabels() {
+        setIntroductionText();
+
         this.btnPrevious.setCaption(messages.getButtonBackTitle());
         this.btnNext.setCaption(messages.getButtonNextTitle());
 
         btnStartProcessChain.setCaption(messages.getPreproccesesViewAccordionProcesschainButtonStartLabel());
         this.finishedLabel.setCaption(messages.getPreproccesesViewAccordionProcesschainFinishedLabel());
+
+        accordion.getTab(0).setCaption(messages.getPreproccesesViewAccordionActivationLabel());
+        accordion.getTab(1).setCaption(messages.getPreproccesesViewAccordionProcesschainLabel());
     }
 
     private void initializeActivationPart() {
@@ -425,6 +434,10 @@ public class PreprocessesViewImpl extends AbstractStepView implements Preprocess
 
     private void setInfoBox() {
         this.infoBox.setInfo();
+        setInfoBoxCaption();
+    }
+
+    private void setInfoBoxCaption() {
         this.infoBox.setCaption(messages.getPreproccesesViewInfoText());
     }
 
@@ -442,7 +455,5 @@ public class PreprocessesViewImpl extends AbstractStepView implements Preprocess
     public void refreshView() {
         this.accordionProcessChainLogTextarea.setValue("");
         this.accordionProcessChainFinishedSelect.removeAllItems();
-
-        setLabels();
     }
 }

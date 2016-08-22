@@ -53,7 +53,7 @@ public class DetectionViewImpl extends AbstractStepView implements DetectionView
     private static final int PROCESS_CHAIN_TABLE_RIGHT_COLUMN_WIDTH_PIXELS = 300;
 
     private final InfoBox infoBox;
-    private final Label introductionLabel;
+    private Label introductionLabel;
     private final Accordion accordion;
 
     private final VerticalLayout accordionActivationLayout;
@@ -104,6 +104,10 @@ public class DetectionViewImpl extends AbstractStepView implements DetectionView
         this.btnPrevious = btnPrevious;
         this.btnStartProcessChain = btnStartProcessChain;
 
+        setIntroductionText();
+    }
+
+    private void setIntroductionText() {
         this.introductionLabel = new Label(messages.getDetectionViewIntroductionText(), ContentMode.HTML);
     }
 
@@ -169,12 +173,16 @@ public class DetectionViewImpl extends AbstractStepView implements DetectionView
     }
 
     private void setLabels() {
-        btnStartProcessChain.setCaption(messages.getDetectionViewAccordionDetectionChainButtonStartLabel());
+        setIntroductionText();
 
+        btnStartProcessChain.setCaption(messages.getDetectionViewAccordionDetectionChainButtonStartLabel());
         this.finishedLabel.setCaption(messages.getDetectionViewAccordionDetectionChainFinishedLabel());
 
         this.btnPrevious.setCaption(messages.getButtonBackTitle());
         this.btnNext.setCaption(messages.getButtonNextTitle());
+
+        accordion.getTab(0).setCaption(messages.getDetectionViewAccordionActivationLabel());
+        accordion.getTab(1).setCaption(messages.getDetectionViewAccordionDetectionChainLabel());
     }
 
 
@@ -340,6 +348,10 @@ public class DetectionViewImpl extends AbstractStepView implements DetectionView
 
     private void setInfoBox() {
         this.infoBox.setInfo();
+        setInfoBoxCaption();
+    }
+
+    private void setInfoBoxCaption() {
         this.infoBox.setCaption(messages.getPreproccesesViewInfoText());
     }
 
@@ -352,8 +364,6 @@ public class DetectionViewImpl extends AbstractStepView implements DetectionView
     public void refreshView() {
         accordionDetectionChainLogTextarea.setValue("");
         accordionDetectionChainFinishedSelect.removeAllItems();
-
-        setLabels();
     }
 
     @Override

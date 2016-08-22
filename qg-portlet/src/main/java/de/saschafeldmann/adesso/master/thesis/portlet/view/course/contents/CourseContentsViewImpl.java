@@ -55,7 +55,7 @@ public class CourseContentsViewImpl extends AbstractStepView implements CourseCo
     private static final String CSS_FILE_UPLOAD_PROGRESSBAR_STYLENAME = "course-contents-file-upload-progress-bar";
 
     private final InfoBox infoBox;
-    private final Label introductionLabel;
+    private Label introductionLabel;
     private final Accordion accordion;
 
     private final HorizontalLayout accordionDocumentsLayout;
@@ -125,6 +125,10 @@ public class CourseContentsViewImpl extends AbstractStepView implements CourseCo
         this.btnPrevious = btnPrevious;
         this.btnNext = btnNext;
 
+        setIntroductionText();
+    }
+
+    private void setIntroductionText() {
         this.introductionLabel = new Label(messages.getCourseContentsViewIntroductionText(), ContentMode.HTML);
     }
 
@@ -138,8 +142,13 @@ public class CourseContentsViewImpl extends AbstractStepView implements CourseCo
     }
 
     private void setLabels() {
+        setIntroductionText();
+
         this.btnPrevious.setCaption(messages.getCourseInformationViewBtnPreviousLabel());
         this.btnNext.setCaption(messages.getCourseInformationViewBtnNextLabel());
+
+        accordion.getTab(0).setCaption(messages.getCourseContentsViewAccordionDocumentsTitleLabel());
+        accordion.getTab(1).setCaption(messages.getCourseContentsViewAccordionDocumentsTitleLabel());
 
         this.accordionDocumentsLeftSideFileUpload.setCaption(messages.getCourseContentsViewAccordionDocumentsFileUploadLabel());
         this.accordionDocumentsLeftSideUploadedList.setCaption(messages.getCourseContentsViewAccordionDocumentsUploadedListLabel());
@@ -147,6 +156,7 @@ public class CourseContentsViewImpl extends AbstractStepView implements CourseCo
         this.accordionRawTextsLeftSideTitleInput.setCaption(messages.getCourseContentsViewAccordionRawTextsTitleInputLabel());
         this.accordionRawTextsLeftSideRawTextInput.setCaption(messages.getCourseContentsViewAccordionRawTextsRawTextInputLabel());
         this.btnAccordionRawTextsLeftSideAddRawText.setCaption(messages.getCourseContentsViewAccordionRawTextsAddButtonLabel());
+        accordionRawTextsRightSideAddedList.setCaption(messages.getCourseContentsViewAccordionRawTextsAddedLabel());
     }
 
     private void enableActionButtons() {
@@ -188,7 +198,6 @@ public class CourseContentsViewImpl extends AbstractStepView implements CourseCo
         accordionRawTextsLayout.addComponent(accordionRawTextsLeftSideFormLayout);
 
         accordionRawTextsRightSideFormLayout.addStyleName(CSS_RAW_TEXTS_RIGHT_SIDE_STYLENAME);
-        accordionRawTextsRightSideAddedList.setCaption(messages.getCourseContentsViewAccordionRawTextsAddedLabel());
         accordionRawTextsRightSideFormLayout.addComponent(accordionRawTextsRightSideAddedList);
         accordionRawTextsLayout.addComponent(accordionRawTextsRightSideFormLayout);
 
@@ -354,6 +363,10 @@ public class CourseContentsViewImpl extends AbstractStepView implements CourseCo
     private void setInfoBox() {
         this.infoBox.setInfo();
 
+        setInfoBoxCaption();
+    }
+
+    private void setInfoBoxCaption() {
         if (!Strings.isNullOrEmpty(this.courseTitle)) {
             this.infoBox.setCaption(messages.getCourseContentsInfoBoxCourseAddedText(this.courseTitle));
         }
@@ -414,7 +427,5 @@ public class CourseContentsViewImpl extends AbstractStepView implements CourseCo
     public void refreshView() {
         this.accordionDocumentsLeftSideUploadedList.removeAllItems();
         this.accordionRawTextsRightSideAddedList.removeAllItems();
-
-        reset();
     }
 }

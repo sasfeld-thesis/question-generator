@@ -328,6 +328,7 @@ public class QuestionGeneratorPortletVaadinUi extends UI {
         LOGGER.debug("getMessageBundle(): will set new locale {}", currentLocale);
         initializeMessageBundle(currentLocale);
 
-        resetViews();
+        // close session and reload the current page
+        getPage().reload();
     }
 }

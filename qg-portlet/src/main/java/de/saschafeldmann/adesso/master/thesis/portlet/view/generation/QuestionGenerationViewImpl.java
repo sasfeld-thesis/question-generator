@@ -52,7 +52,7 @@ public class QuestionGenerationViewImpl extends AbstractStepView implements Ques
     private QuestionGenerationViewListener viewListener;
 
     private final InfoBox infoBox;
-    private final Label introductionLabel;
+    private Label introductionLabel;
     private final Button btnStartQuestionGeneration;
     private final HorizontalLayout horizontalLayout;
     private final VerticalLayout leftVerticalLayout;
@@ -108,6 +108,10 @@ public class QuestionGenerationViewImpl extends AbstractStepView implements Ques
         this.btnExport = btnExport;
         this.exportListSelect = exportListSelect;
 
+        setIntroductionText();
+    }
+
+    private void setIntroductionText() {
         this.introductionLabel = new Label(messages.getQuestionGenerationViewIntroductionText(), ContentMode.HTML);
     }
 
@@ -123,11 +127,17 @@ public class QuestionGenerationViewImpl extends AbstractStepView implements Ques
     }
 
     private void setLabels() {
+        setIntroductionText();
+
         this.btnStartQuestionGeneration.setCaption(messages.getQuestionGenerationViewButtonStartLabel());
-        this.completedLearningContentsListLabel.setCaption(messages.getQuestionGenerationViewFinishedContentsLabels());
+        setCompletedLearningContentListLabel();
         this.btnPrevious.setCaption(messages.getButtonBackTitle());
         this.btnExport.setCaption(messages.getQuestionGenerationViewButtonExport());
         this.completedQuestionsListLabel.setCaption(messages.getQuestionGenerationViewFinishedQuestionsLabel());
+    }
+
+    private void setCompletedLearningContentListLabel() {
+        this.completedLearningContentsListLabel.setCaption(messages.getQuestionGenerationViewFinishedContentsLabels());
     }
 
     private void initializeHorizontalLayout() {
@@ -296,6 +306,10 @@ public class QuestionGenerationViewImpl extends AbstractStepView implements Ques
 
     private void setInfoBox() {
         this.infoBox.setInfo();
+        setInfoBoxCaption();
+    }
+
+    private void setInfoBoxCaption() {
         this.infoBox.setCaption(messages.getQuestionGenerationViewInfoText());
     }
 
@@ -326,6 +340,7 @@ public class QuestionGenerationViewImpl extends AbstractStepView implements Ques
     public void showStatistics(long numberOfGeneratedQuestions, long questionGenerationRuntime) {
         setLabels();
 
+        setCompletedLearningContentListLabel();
         completedLearningContentsListLabel.setValue(
                 completedLearningContentsListLabel.getValue()
                 + " ("
@@ -352,8 +367,6 @@ public class QuestionGenerationViewImpl extends AbstractStepView implements Ques
     public void refreshView() {
         this.completedLearningContentsList.removeAllItems();
         this.completedQuestionsList.removeAllItems();
-
-        setLabels();
     }
 
     @Override

@@ -80,7 +80,7 @@ public class QuestionGenerationSession {
     private Course course;
     private Status status = Status.STARTED;
     private Map<LearningContent, List<Concept>> detectedConceptsContentsMap;
-    private Map<LearningContent, List<TestQuestion>> generatedQuestionsContentsMap;
+    private Map<LearningContent, List<TestQuestion>> generatedQuestionsContentsMap = new HashMap<>();
     private DetectionOptions conceptDetectionOptions = new DetectionOptions();
 
     /**

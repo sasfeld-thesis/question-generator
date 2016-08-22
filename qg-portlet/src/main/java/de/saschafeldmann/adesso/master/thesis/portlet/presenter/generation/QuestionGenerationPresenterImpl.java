@@ -126,13 +126,8 @@ public class QuestionGenerationPresenterImpl extends AbstractStepPresenter imple
         generateTestQuestions();
         addStatisticsLogEntryIfConfigured();
 
-        deletePreviousExportFiles();
         generateExportFiles();
         refreshGeneratedQuestionsLearningContents();
-    }
-
-    private void deletePreviousExportFiles() {
-
     }
 
     private void generateExportFiles() {
