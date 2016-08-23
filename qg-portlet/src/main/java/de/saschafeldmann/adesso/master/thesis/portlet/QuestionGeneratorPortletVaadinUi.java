@@ -310,8 +310,6 @@ public class QuestionGeneratorPortletVaadinUi extends UI {
      * @return the localized message bundle
      */
     public MessagesBundle getMessagesBundle() {
-        Map<String, Object> attributeMap = portletSession.getAttributeMap();
-
         Object languageInSessionAttribute = portletSession.getAttribute(QuestionGeneratorPortlet.PORTLET_SESSION_ATTRIBUTE_LANGUAGE, PortletSession.APPLICATION_SCOPE);
 
         if (null != languageInSessionAttribute

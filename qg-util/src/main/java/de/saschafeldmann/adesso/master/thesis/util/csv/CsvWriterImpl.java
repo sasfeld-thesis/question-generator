@@ -29,14 +29,14 @@ import java.util.List;
 public class CsvWriterImpl implements CsvWriter {
     private static final Logger LOGGER = LoggerFactory.getLogger(CsvWriterImpl.class);
     private String delimiter = resetDelimiter();
-    private List<String> rows = resetRows();
+    private List<String> rows = new ArrayList<>();
 
     private String resetDelimiter() {
         return ";";
     }
 
-    private ArrayList<String> resetRows() {
-        return new ArrayList<>();
+    private void resetRows() {
+        rows = new ArrayList<>();
     }
 
     @Override

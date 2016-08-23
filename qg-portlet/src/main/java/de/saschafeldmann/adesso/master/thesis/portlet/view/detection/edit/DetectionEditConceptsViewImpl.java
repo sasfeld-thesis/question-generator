@@ -103,8 +103,8 @@ public class DetectionEditConceptsViewImpl extends Window implements DetectionEd
     private void initializeGridColumns() {
         conceptsGrid.setSelectionMode(com.vaadin.ui.Grid.SelectionMode.NONE);
 
-        com.vaadin.ui.Grid.Column columnConceptName = conceptsGrid.addColumn(messages.getDetectionViewAccordionDetectionChainEditWindowTableColumnConceptHeader(), String.class);
-        com.vaadin.ui.Grid.Column columnOriginalSentence = conceptsGrid.addColumn(messages.getDetectionViewAccordionDetectionChainEditWindowTableColumnOriginalSentenceHeader(), String.class);
+        conceptsGrid.addColumn(messages.getDetectionViewAccordionDetectionChainEditWindowTableColumnConceptHeader(), String.class);
+        conceptsGrid.addColumn(messages.getDetectionViewAccordionDetectionChainEditWindowTableColumnOriginalSentenceHeader(), String.class);
         com.vaadin.ui.Grid.Column columnAttributes = conceptsGrid.addColumn(messages.getDetectionViewAccordionDetectionChainEditWindowTableColumnAttributesHeader(), String.class);
         columnAttributes.setRenderer(new HtmlRenderer()); // allows HTML rendering in grid cells
 

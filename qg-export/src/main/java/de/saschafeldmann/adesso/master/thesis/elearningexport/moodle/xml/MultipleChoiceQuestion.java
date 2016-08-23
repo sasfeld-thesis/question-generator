@@ -39,8 +39,9 @@ public class MultipleChoiceQuestion extends Question {
      * Creates a question with given type.
      */
     public MultipleChoiceQuestion() {
-        super(TYPE);
+        super();
 
+        setType(TYPE);
         singleQuestion = "true";
         shuffleAnswers = "1";
     }

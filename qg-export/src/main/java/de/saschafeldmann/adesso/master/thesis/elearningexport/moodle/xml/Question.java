@@ -117,23 +117,15 @@ public abstract class Question {
     }
 
     @XmlAttribute
-    public String type;
+    private String type;
 
     @XmlElement(name = "name")
-    public QuestionName name = new QuestionName();
+    private QuestionName name = new QuestionName();
 
     @XmlElement(name = "questiontext")
-    public QuestionText questionText = new QuestionText();
+    private QuestionText questionText = new QuestionText();
 
     public List<Answer> answer = new ArrayList<>();
-
-    /**
-     * Creates a question with given type.
-     * @param type the question type.
-     */
-    public Question(String type) {
-        setType(type);
-    }
 
     /**
      * Sets the question type.

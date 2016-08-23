@@ -1,5 +1,7 @@
 package de.saschafeldmann.adesso.master.thesis.elearningexport.moodle.xml;
 
+import org.apache.poi.ss.formula.functions.T;
+
 /**
  * Project:        Masterthesis of Sascha Feldmann
  * Creation date:  10.08.2016
@@ -22,6 +24,7 @@ public class ShortAnswerQuestion extends Question {
      * Creates a question with given type.
      */
     public ShortAnswerQuestion() {
-        super(TYPE);
+        super();
+        setType(TYPE);
     }
 }
