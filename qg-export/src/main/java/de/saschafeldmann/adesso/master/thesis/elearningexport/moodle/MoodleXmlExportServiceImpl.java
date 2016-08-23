@@ -98,7 +98,7 @@ public class MoodleXmlExportServiceImpl implements ExportService {
         return file;
     }
 
-    private Quiz buildQuizXmlHierarchy(Map<LearningContent, List<TestQuestion>> generatedQuestionsMap) {
+    protected Quiz buildQuizXmlHierarchy(Map<LearningContent, List<TestQuestion>> generatedQuestionsMap) {
         Quiz quiz = new Quiz();
 
         for (LearningContent learningContent: generatedQuestionsMap.keySet()) {

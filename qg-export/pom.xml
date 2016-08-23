@@ -44,6 +44,7 @@
             <artifactId>junit</artifactId>
             <scope>test</scope>
         </dependency>
+        <!-- interal dependencies -->
         <dependency>
             <groupId>de.saschafeldmann.adesso.master.thesis.software</groupId>
             <artifactId>qg-util</artifactId>
@@ -53,6 +54,11 @@
             <groupId>de.saschafeldmann.adesso.master.thesis.software</groupId>
             <artifactId>qg-generation</artifactId>
             <version>${project.version}</version>
+        </dependency>
+        <!-- Mockito unittest library -->
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
         </dependency>
     </dependencies>
 </project>

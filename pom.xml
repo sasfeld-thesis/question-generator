@@ -47,6 +47,8 @@
         <junit.version>4.12</junit.version>
         <!-- JavaCodeCoverage version -->
         <jacoco.version>0.7.6.201602180812</jacoco.version>
+        <!-- Mockito version -->
+        <mockito.version>1.10.19</mockito.version>
         <!-- Portlets API version -->
         <portlets.api.version>2.0</portlets.api.version>
         <!-- Servlets API version -->
@@ -120,6 +122,13 @@
                 <groupId>org.apache.tika</groupId>
                 <artifactId>tika-parsers</artifactId>
                 <version>${apache.tika.version}</version>
+            </dependency>
+            <!-- Mockito unittest library -->
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-all</artifactId>
+                <version>1.10.19</version>
+                <scope>test</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>

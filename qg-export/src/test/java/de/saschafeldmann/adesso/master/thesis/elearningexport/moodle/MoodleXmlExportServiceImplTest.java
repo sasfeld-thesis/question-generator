@@ -1,13 +1,17 @@
 package de.saschafeldmann.adesso.master.thesis.elearningexport.moodle;
 
+import static org.mockito.Mockito.*;
+import static org.junit.Assert.*;
 import de.saschafeldmann.adesso.master.thesis.detection.model.CardinalRelationConcept;
 import de.saschafeldmann.adesso.master.thesis.detection.model.FillInTheBlankTextConcept;
+import de.saschafeldmann.adesso.master.thesis.elearningexport.ExportException;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.Course;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.Language;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
 import de.saschafeldmann.adesso.master.thesis.generation.model.TestQuestion;
 import org.junit.Test;
 
+import javax.xml.bind.JAXBException;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -161,6 +165,25 @@ public class MoodleXmlExportServiceImplTest {
                         "        </answer>");
     }
 
+    @Test
+    public void testExportJaxbThrowsExceptionLeadsToExportException() {
+        // given
+        Map<LearningContent, List<TestQuestion>> testQuestions = newGeneratedShortAnswerQuestionsMap();
+
+        MoodleXmlExportServiceImpl mock = spy(MoodleXmlExportServiceImpl.class); // "partial mock"
+        mock.setFileDirectory(".");
+        mock.setFileName("unittest.xml");
+        when(mock.buildQuizXmlHierarchy(testQuestions)).thenThrow(JAXBException.class);
+
+        // when export is called
+        try {
+            mock.exportGeneratedQuestionsToFile(testQuestions);
+            fail("An export exception should have been thrown");
+        } catch (ExportException e) {
+           // exception as expected
+        }
+    }
+
     private void assertMultipleChoiceFields(File moodleXmlFile) {
 
     }
@@ -180,6 +203,7 @@ public class MoodleXmlExportServiceImplTest {
     private MoodleXmlExportServiceImpl newMoodleXmlExportService() {
         MoodleXmlExportServiceImpl moodleXmlExportService = new MoodleXmlExportServiceImpl();
 
+        moodleXmlExportService.setFileDirectory(".");
         moodleXmlExportService.setFileName("testfilename");
         moodleXmlExportService.setCorrectAnswerText("Your answer is correct.");
         moodleXmlExportService.setWrongAnswerText("Your answer is incorrect.");
