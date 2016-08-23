@@ -45,4 +45,36 @@ public class MultipleChoiceQuestion extends Question {
         singleQuestion = "true";
         shuffleAnswers = "1";
     }
+
+    /**
+     * Sets the shuffleAnswers option.
+     * @param shuffleAnswers String
+     */
+    public void setShuffleAnswers(String shuffleAnswers) {
+        this.shuffleAnswers = shuffleAnswers;
+    }
+
+    /**
+     * Gets the shuffleAnswers option.
+     * @return String
+     */
+    public String getShuffleAnswers() {
+        return shuffleAnswers;
+    }
+
+    /**
+     * Sets the single question option.
+     * @param singleQuestion String
+     */
+    public void setSingleQuestion(String singleQuestion) {
+        this.singleQuestion = singleQuestion;
+    }
+
+    /**
+     * Gets the single question option.
+     * @return String
+     */
+    public String getSingleQuestion() {
+        return singleQuestion;
+    }
 }

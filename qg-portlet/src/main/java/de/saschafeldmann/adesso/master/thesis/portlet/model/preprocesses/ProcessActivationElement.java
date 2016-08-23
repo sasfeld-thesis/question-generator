@@ -60,7 +60,7 @@ public class ProcessActivationElement {
     /**
      * Class for the connection between {@link ProcessActivationElement} and {@link ActivationOptionGroupItem}.
      */
-    public class ProcessActivationElementState {
+    public static class ProcessActivationElementState {
         private ProcessActivationElement parentProcessActivationElement;
         private ActivationOptionGroupItem activationOptionGroupItem;
 

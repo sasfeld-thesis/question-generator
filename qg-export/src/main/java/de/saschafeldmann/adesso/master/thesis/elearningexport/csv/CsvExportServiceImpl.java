@@ -171,10 +171,11 @@ public class CsvExportServiceImpl implements ExportService {
     }
 
     private void addGeneratedQuestionsToCsvWriter(CsvWriter csvWriter, Map<LearningContent, List<TestQuestion>> generatedQuestionsMap) {
-        for (final LearningContent learningContent : generatedQuestionsMap.keySet()) {
+        for (final Map.Entry<LearningContent, List<TestQuestion>> entry : generatedQuestionsMap.entrySet()) {
+            LearningContent learningContent = entry.getKey();
             final String columnLearningContentTitle = learningContent.getTitle();
 
-            for (final TestQuestion testQuestion : generatedQuestionsMap.get(learningContent)) {
+            for (final TestQuestion testQuestion : entry.getValue()) {
                 final String columnTestQuestionQuestion = testQuestion.getQuestion();
                 final String columnTestQuestionOriginalSentence = testQuestion.getSourceConcept().getOriginalSentence();
                 final String columnTestQuestionCorrectAnswer = testQuestion.getCorrectAnswer();

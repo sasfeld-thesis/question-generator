@@ -33,10 +33,11 @@ public class VersionProperties {
 
     static {
         versionProperties = new Properties();
-        InputStream in = VersionProperties.class.getResourceAsStream(PATH_TO_VERSION_PROPERTIES);
+        InputStream in = null;
 
         LOGGER.info("Initializing version properties...");
         try {
+            in = VersionProperties.class.getResourceAsStream(PATH_TO_VERSION_PROPERTIES);
             if (null != in) {
                 versionProperties.load(in);
             } else {
@@ -47,10 +48,7 @@ public class VersionProperties {
                     e.getMessage(),
                     ExceptionUtils.getStackTrace(e));
         } finally {
-            try {
-                in.close();
-            } catch (Exception e) { // ignore
-            }
+            try { if (null != in) in.close();} catch (Exception e) { /* ignore */   }
         }
     }
 

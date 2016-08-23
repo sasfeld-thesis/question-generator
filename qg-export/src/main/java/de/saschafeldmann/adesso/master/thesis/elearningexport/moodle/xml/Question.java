@@ -2,6 +2,7 @@ package de.saschafeldmann.adesso.master.thesis.elearningexport.moodle.xml;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlTransient;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,6 +37,15 @@ public abstract class Question {
         public void setText(String text) {
             this.text = text;
         }
+
+        @XmlTransient
+        /**
+         * Gets the text
+         * @return String
+         */
+        public String getText() {
+            return text;
+        }
     }
 
     /**
@@ -58,12 +68,30 @@ public abstract class Question {
             this.format = format;
         }
 
+        @XmlTransient
+        /**
+         * Gets the format
+         * @return String
+         */
+        public String getFormat() {
+            return format;
+        }
+
         /**
          * Sets the question feedback
          * @param text the question feedback
          */
         public void setText(String text) {
             this.text = text;
+        }
+
+        @XmlTransient
+        /**
+         * Gets the text
+         * @return String
+         */
+        public String getText() {
+            return text;
         }
     }
 
@@ -78,6 +106,15 @@ public abstract class Question {
              */
             public void setText(String text) {
                 this.text = text;
+            }
+
+            @XmlTransient
+            /**
+             * Gets the text
+             * @return String
+             */
+            public String getText() {
+                return text;
             }
         }
 
@@ -99,12 +136,30 @@ public abstract class Question {
             this.fraction = fraction;
         }
 
+        @XmlTransient
+        /**
+         * Gets the fraction.
+         * @return String
+         */
+        public int getFraction() {
+            return fraction;
+        }
+
         /**
          * Sets the answer's text.
          * @param text the answer text / label.
          */
         public void setText(String text) {
             this.text = text;
+        }
+
+        @XmlTransient
+        /**
+         * Gets the text
+         * @return String
+         */
+        public String getText() {
+            return text;
         }
 
         /**
@@ -135,6 +190,16 @@ public abstract class Question {
         this.type = type;
     }
 
+    @XmlTransient
+    /**
+     * Gets the type.
+     * @return String
+     */
+    public String getType() {
+        return type;
+    }
+
+    @XmlTransient
     /**
      * Gets the question feedback.
      * @return the question feedback

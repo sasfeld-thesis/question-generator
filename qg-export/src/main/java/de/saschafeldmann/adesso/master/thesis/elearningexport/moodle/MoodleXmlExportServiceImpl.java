@@ -101,8 +101,8 @@ public class MoodleXmlExportServiceImpl implements ExportService {
     protected Quiz buildQuizXmlHierarchy(Map<LearningContent, List<TestQuestion>> generatedQuestionsMap) {
         Quiz quiz = new Quiz();
 
-        for (LearningContent learningContent: generatedQuestionsMap.keySet()) {
-            buildQuestionHierarchyForLearningContent(quiz, learningContent, generatedQuestionsMap.get(learningContent));
+        for (Map.Entry<LearningContent, List<TestQuestion>> entry: generatedQuestionsMap.entrySet()) {
+            buildQuestionHierarchyForLearningContent(quiz, entry.getKey(), entry.getValue());
         }
 
         return quiz;

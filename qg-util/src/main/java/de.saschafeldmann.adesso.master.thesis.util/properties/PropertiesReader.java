@@ -106,8 +106,9 @@ public abstract class PropertiesReader implements PropertiesReaderApi {
             this.propertiesMap = new HashMap<String, String>();
 
             // fill properties map
-            for (Object key : properties.keySet()) {
-                Object property = properties.get(key);
+            for (Map.Entry entry : properties.entrySet()) {
+                final Object key = entry.getKey();
+                Object property = entry.getValue();
                 if (key instanceof String && property instanceof String) {
                     propertiesMap.put((String) key, (String) property);
                 } else {
@@ -131,14 +132,15 @@ public abstract class PropertiesReader implements PropertiesReaderApi {
          * An example input to get a list of the properties 1 - 3 would be:
          * a.b.c.d
          */
-        for (String key : propertiesMap.keySet()) {
+        for (Map.Entry<String, String> entry : propertiesMap.entrySet()) {
+            final String key = entry.getKey();
             // check if the propertyKey is the beginning of the one in the map
             // and the one in the map is followed by other characters (such as
             // ".anotherconfigkey")
             if (key.startsWith(propertyKey)
                     && key.substring(propertyKey.length(), key.length())
                     .length() > 0) {
-                returnValues.add(propertiesMap.get(key));
+                returnValues.add(entry.getValue());
             }
         }
 
