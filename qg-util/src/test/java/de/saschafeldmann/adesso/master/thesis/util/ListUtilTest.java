@@ -36,4 +36,17 @@ public class ListUtilTest {
         assertTrue("First element should be the value 1", newList.get(0) == 1);
         assertTrue("Second element should be the value 6", newList.get(1) == 6);
     }
+
+    @Test
+    public void testReduceListToMaximumElementsReturnsCompleteListIfSizeIsLessThan() {
+        // given a list with 10 elements
+        Integer[] test = {1,2,3,4,5,6,7,8,9,10};
+        List<Integer> testList = Arrays.asList(test);
+
+        // when list size should be reduce to 15
+        List<Integer> newList = ListUtil.reduceListToMaximumOfElements(testList, 15);
+
+        // then the list size should have remained
+        assertEquals(10, newList.size());
+    }
 }
