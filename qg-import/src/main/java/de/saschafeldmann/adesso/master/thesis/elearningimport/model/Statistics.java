@@ -160,6 +160,7 @@ public class Statistics {
         this.numberOfWords = 0;
         this.numberOfSentences = 0;
         this.naturalLanguageProcessingRuntime = 0;
+        this.languageDetectionRuntime = 0;
     }
 
     /**

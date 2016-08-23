@@ -5,7 +5,9 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -177,5 +179,24 @@ public class CourseTest {
 
         // and the number of learning contents should not have been increased
         assertEquals(originalSize, course.getLearningContents().size());
+    }
+
+    @Test
+    public void testCourseIdentity() {
+        // given two courses with identical titles
+        final Course course1 = newCourse();
+        course1.setTitle("title1");
+
+        final Course course2 = newCourse();
+        course2.setTitle("title1");
+
+        final Set<Course> set = new HashSet<>();
+
+        // when both are added to a hash set
+        set.add(course1);
+        set.add(course2);
+
+        // then only one element should be inside
+        assertEquals(1, set.size());
     }
 }
