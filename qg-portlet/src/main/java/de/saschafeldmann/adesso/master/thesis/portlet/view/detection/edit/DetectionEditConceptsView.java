@@ -2,7 +2,7 @@ package de.saschafeldmann.adesso.master.thesis.portlet.view.detection.edit;
 
 import com.vaadin.ui.Window;
 import de.saschafeldmann.adesso.master.thesis.detection.model.api.Concept;
-import de.saschafeldmann.adesso.master.thesis.portlet.view.components.Grid;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.AutowirableGrid;
 
 import java.util.List;
 
@@ -45,5 +45,5 @@ public interface DetectionEditConceptsView {
      * Gets the grid listing all detected {@link Concept}.
      * @return the grid
      */
-    Grid getDetectedConceptsGrid();
+    AutowirableGrid getDetectedConceptsGrid();
 }

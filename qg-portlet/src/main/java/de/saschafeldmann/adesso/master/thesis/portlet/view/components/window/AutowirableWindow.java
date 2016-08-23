@@ -1,11 +1,11 @@
-package de.saschafeldmann.adesso.master.thesis.portlet.view.components;
+package de.saschafeldmann.adesso.master.thesis.portlet.view.components.window;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 /**
  * Project:        Masterthesis of Sascha Feldmann
- * Creation date:  05.07.2016
+ * Creation date:  25.05.2016
  * Author:         Sascha Feldmann (sascha.feldmann@gmx.de)
  * <br /><br />
  * University:
@@ -16,9 +16,10 @@ import org.springframework.stereotype.Component;
  * Company:
  * adesso AG
  * <br /><br />
- * A Vaadin {@link com.vaadin.ui.ComboBox}
+ * A window component.
  */
 @Component
 @Scope("prototype")
-public class ComboBox extends com.vaadin.ui.ComboBox {
+public class AutowirableWindow extends com.vaadin.ui.Window {
+
 }

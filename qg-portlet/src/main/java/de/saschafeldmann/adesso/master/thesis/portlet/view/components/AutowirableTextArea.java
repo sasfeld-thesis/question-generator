@@ -3,11 +3,9 @@ package de.saschafeldmann.adesso.master.thesis.portlet.view.components;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
-
 /**
  * Project:        Masterthesis of Sascha Feldmann
- * Creation date:  23.05.2016
+ * Creation date:  24.05.2016
  * Author:         Sascha Feldmann (sascha.feldmann@gmx.de)
  * <br /><br />
  * University:
@@ -18,15 +16,10 @@ import javax.annotation.PostConstruct;
  * Company:
  * adesso AG
  * <br /><br />
- * A Vaadin list select component.
+ * A Vaadin text area component.
  */
 @Component
 @Scope("prototype")
-public class ListSelect extends com.vaadin.ui.ListSelect {
+public class AutowirableTextArea extends com.vaadin.ui.TextArea {
 
-    @PostConstruct
-    public void initialize() {
-        // do not allow null selections per default
-        this.setNullSelectionAllowed(false);
-    }
 }

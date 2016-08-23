@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * Project:        Masterthesis of Sascha Feldmann
- * Creation date:  23.05.2016
+ * Creation date:  25.05.2016
  * Author:         Sascha Feldmann (sascha.feldmann@gmx.de)
  * <br /><br />
  * University:
@@ -16,10 +16,10 @@ import org.springframework.stereotype.Component;
  * Company:
  * adesso AG
  * <br /><br />
- * A Vaadin text field component.
+ * A progress bar component.
  */
 @Component
 @Scope("prototype")
-public class TextField extends com.vaadin.ui.TextField {
+public class AutowirableProgressBar extends com.vaadin.ui.ProgressBar {
 
 }

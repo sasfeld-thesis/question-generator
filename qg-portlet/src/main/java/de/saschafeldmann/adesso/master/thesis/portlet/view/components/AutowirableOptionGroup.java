@@ -1,4 +1,4 @@
-package de.saschafeldmann.adesso.master.thesis.portlet.view.components.window;
+package de.saschafeldmann.adesso.master.thesis.portlet.view.components;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -16,11 +16,10 @@ import org.springframework.stereotype.Component;
  * Company:
  * adesso AG
  * <br /><br />
- * A Vaadin {@link com.vaadin.ui.Table}
+ * A option group which consists of radio button.
+ * See Vaadin's description on option groups.
  */
 @Component
 @Scope("prototype")
-public class Table extends com.vaadin.ui.Table {
-
-
+public class AutowirableOptionGroup extends com.vaadin.ui.OptionGroup {
 }

@@ -5,10 +5,10 @@ import de.saschafeldmann.adesso.master.thesis.detection.algorithm.DetectionOptio
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.QuestionGeneratorProperties;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.Messages;
 import de.saschafeldmann.adesso.master.thesis.portlet.util.VaadinUtil;
-import de.saschafeldmann.adesso.master.thesis.portlet.view.components.Button;
-import de.saschafeldmann.adesso.master.thesis.portlet.view.components.FormLayout;
-import de.saschafeldmann.adesso.master.thesis.portlet.view.components.HorizontalLayout;
-import de.saschafeldmann.adesso.master.thesis.portlet.view.components.TextField;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.AutowirableButton;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.AutowirableFormLayout;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.AutowirableHorizontalLayout;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.AutowirableTextField;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -39,13 +39,13 @@ public class OptionsViewImpl extends Window implements OptionsView {
     private OptionsViewListener viewListener;
 
     private final Messages messages;
-    private final FormLayout formLayout;
-    private final TextField inputNumberFillTextQuestions;
-    private final TextField inputNumberCardinalityQuestions;
-    private final TextField inputMaxNumberTokensFillTextQuestions;
-    private final HorizontalLayout buttonGroupLayout;
-    private final Button editButton;
-    private final Button resetButton;
+    private final AutowirableFormLayout formLayout;
+    private final AutowirableTextField inputNumberFillTextQuestions;
+    private final AutowirableTextField inputNumberCardinalityQuestions;
+    private final AutowirableTextField inputMaxNumberTokensFillTextQuestions;
+    private final AutowirableHorizontalLayout buttonGroupLayout;
+    private final AutowirableButton editButton;
+    private final AutowirableButton resetButton;
     private final QuestionGeneratorProperties questionGeneratorProperties;
 
     /**
@@ -61,13 +61,13 @@ public class OptionsViewImpl extends Window implements OptionsView {
     @Autowired
     public OptionsViewImpl(
             final Messages messages,
-            final FormLayout formLayout,
-            final TextField inputNumberFillTextQuestions,
-            final TextField inputNumberCardinalityQuestions,
-            final TextField inputMaxNumberTokensFillTextQuestions,
-            final HorizontalLayout buttonGroupLayout,
-            final Button editButton,
-            final Button resetButton,
+            final AutowirableFormLayout formLayout,
+            final AutowirableTextField inputNumberFillTextQuestions,
+            final AutowirableTextField inputNumberCardinalityQuestions,
+            final AutowirableTextField inputMaxNumberTokensFillTextQuestions,
+            final AutowirableHorizontalLayout buttonGroupLayout,
+            final AutowirableButton editButton,
+            final AutowirableButton resetButton,
             final QuestionGeneratorProperties questionGeneratorProperties
     ) {
         this.messages = messages;

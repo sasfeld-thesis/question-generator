@@ -4,17 +4,16 @@ import static com.google.common.base.Strings.*;
 import com.vaadin.data.Property;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.shared.ui.label.ContentMode;
-import com.vaadin.ui.*;
 import de.saschafeldmann.adesso.master.thesis.portlet.model.LanguageWrapper;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.Messages;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.AbstractStepView;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.*;
-import de.saschafeldmann.adesso.master.thesis.portlet.view.components.Button;
-import de.saschafeldmann.adesso.master.thesis.portlet.view.components.FormLayout;
-import de.saschafeldmann.adesso.master.thesis.portlet.view.components.HorizontalLayout;
-import de.saschafeldmann.adesso.master.thesis.portlet.view.components.Label;
-import de.saschafeldmann.adesso.master.thesis.portlet.view.components.ListSelect;
-import de.saschafeldmann.adesso.master.thesis.portlet.view.components.TextField;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.AutowirableButton;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.AutowirableFormLayout;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.AutowirableHorizontalLayout;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.AutowirableLabel;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.AutowirableListSelect;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.AutowirableTextField;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -55,30 +54,30 @@ public class CourseInformationViewImpl extends AbstractStepView implements Cours
 
     private ViewMode viewMode;
     private final InfoBox infoBox;
-    private Label introductionLabel;
-    private final FormLayout formLayout;
-    private final TextField inputCourseTitle;
-    private final TextField inputCourseUrl;
-    private final ListSelect inputCourseLanguageSelect;
-    private final HorizontalLayout buttonGroupLayout;
-    private final Button btnNext;
-    private final Button btnNewSession;
-    private final Button btnOptions;
+    private AutowirableLabel introductionLabel;
+    private final AutowirableFormLayout formLayout;
+    private final AutowirableTextField inputCourseTitle;
+    private final AutowirableTextField inputCourseUrl;
+    private final AutowirableListSelect inputCourseLanguageSelect;
+    private final AutowirableHorizontalLayout buttonGroupLayout;
+    private final AutowirableButton btnNext;
+    private final AutowirableButton btnNewSession;
+    private final AutowirableButton btnOptions;
     private CourseInformationViewListener viewListener;
     private String courseTitle;
 
     @Autowired
     public CourseInformationViewImpl(final Messages messages,
                                      final InfoBox infoBox,
-                                     final FormLayout formLayout,
+                                     final AutowirableFormLayout formLayout,
                                      final VersionLabel versionLabel,
-                                     final TextField inputCourseTitle,
-                                     final TextField inputCourseUrl,
-                                     final ListSelect inputCourseLanguageSelect,
-                                     final HorizontalLayout buttonGroupLayout,
-                                     final Button btnNext,
-                                     final Button btnNewSession,
-                                     final Button btnOptions
+                                     final AutowirableTextField inputCourseTitle,
+                                     final AutowirableTextField inputCourseUrl,
+                                     final AutowirableListSelect inputCourseLanguageSelect,
+                                     final AutowirableHorizontalLayout buttonGroupLayout,
+                                     final AutowirableButton btnNext,
+                                     final AutowirableButton btnNewSession,
+                                     final AutowirableButton btnOptions
                                      ) {
         super(messages, versionLabel);
 
@@ -96,7 +95,7 @@ public class CourseInformationViewImpl extends AbstractStepView implements Cours
     }
 
     private void setIntroductionText() {
-        this.introductionLabel = new Label(messages.getCourseInformationViewIntroductionText(), ContentMode.HTML);
+        this.introductionLabel = new AutowirableLabel(messages.getCourseInformationViewIntroductionText(), ContentMode.HTML);
     }
 
     @PostConstruct
@@ -148,14 +147,14 @@ public class CourseInformationViewImpl extends AbstractStepView implements Cours
             }
         });
 
-        btnNext.addClickListener(new Button.ClickListener() {
-            public void buttonClick(Button.ClickEvent clickEvent) {
+        btnNext.addClickListener(new AutowirableButton.ClickListener() {
+            public void buttonClick(AutowirableButton.ClickEvent clickEvent) {
                 viewListener.onNextButtonClicked();
             }
         });
 
-        btnNewSession.addClickListener(new Button.ClickListener() {
-            public void buttonClick(Button.ClickEvent clickEvent) {
+        btnNewSession.addClickListener(new AutowirableButton.ClickListener() {
+            public void buttonClick(AutowirableButton.ClickEvent clickEvent) {
                 viewListener.onNewSessionButtonClicked();
             }
         });

@@ -12,17 +12,17 @@ import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.Messages;
 import de.saschafeldmann.adesso.master.thesis.portlet.util.VaadinUtil;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.AbstractStepView;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.*;
-import de.saschafeldmann.adesso.master.thesis.portlet.view.components.Accordion;
-import de.saschafeldmann.adesso.master.thesis.portlet.view.components.Button;
-import de.saschafeldmann.adesso.master.thesis.portlet.view.components.FormLayout;
-import de.saschafeldmann.adesso.master.thesis.portlet.view.components.HorizontalLayout;
-import de.saschafeldmann.adesso.master.thesis.portlet.view.components.Label;
-import de.saschafeldmann.adesso.master.thesis.portlet.view.components.ListSelect;
-import de.saschafeldmann.adesso.master.thesis.portlet.view.components.OptionGroup;
-import de.saschafeldmann.adesso.master.thesis.portlet.view.components.TextArea;
-import de.saschafeldmann.adesso.master.thesis.portlet.view.components.VerticalLayout;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.AutowirableAccordion;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.AutowirableButton;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.AutowirableFormLayout;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.AutowirableHorizontalLayout;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.AutowirableLabel;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.AutowirableListSelect;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.AutowirableOptionGroup;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.AutowirableTextArea;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.AutowirableVerticalLayout;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.window.*;
-import de.saschafeldmann.adesso.master.thesis.portlet.view.components.window.Table;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.window.AutowirableTable;
 import de.saschafeldmann.adesso.master.thesis.util.linguistic.SentenceUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -63,43 +63,43 @@ public class PreprocessesViewImpl extends AbstractStepView implements Preprocess
     private static final int PROCESS_CHAIN_TABLE_RIGHT_COLUMN_WIDTH_PIXELS = 300;
 
     private final InfoBox infoBox;
-    private Label introductionLabel;
-    private final Accordion accordion;
+    private AutowirableLabel introductionLabel;
+    private final AutowirableAccordion accordion;
 
-    private final VerticalLayout accordionActivationLayout;
-    private final FormLayout accordionActivationFormLayout;
+    private final AutowirableVerticalLayout accordionActivationLayout;
+    private final AutowirableFormLayout accordionActivationFormLayout;
     private final InfoBox accordionActivationLayoutInfoBox;
 
-    private final Table accordionProcessChainLayoutTable;
-    private final TextArea accordionProcessChainLogTextarea;
-    private final ListSelect accordionProcessChainFinishedSelect;
+    private final AutowirableTable accordionProcessChainLayoutTable;
+    private final AutowirableTextArea accordionProcessChainLogTextarea;
+    private final AutowirableListSelect accordionProcessChainFinishedSelect;
 
-    private final HorizontalLayout bottomButtonGroupLayout;
-    private final Button btnNext;
-    private final Button btnPrevious;
-    private final Button btnStartProcessChain;
+    private final AutowirableHorizontalLayout bottomButtonGroupLayout;
+    private final AutowirableButton btnNext;
+    private final AutowirableButton btnPrevious;
+    private final AutowirableButton btnStartProcessChain;
 
     private final EditWindowWithSelectBox editWindow;
 
     private PreprocessesViewListener viewListener;
-    private Label finishedLabel;
+    private AutowirableLabel finishedLabel;
 
     @Autowired
     public PreprocessesViewImpl(
             final Messages messages,
             final VersionLabel versionLabel,
             final InfoBox infoBox,
-            final Accordion accordion,
-            final VerticalLayout accordionActivationLayout,
-            final FormLayout accordionActivationFormLayout,
+            final AutowirableAccordion accordion,
+            final AutowirableVerticalLayout accordionActivationLayout,
+            final AutowirableFormLayout accordionActivationFormLayout,
             final InfoBox accordionActivationLayoutInfoBox,
-            final Table accordionProcessChainLayoutTable,
-            final TextArea accordionProcessChainLogTextarea,
-            final ListSelect accordionProcessChainFinishedSelect,
-            final HorizontalLayout bottomButtonGroupLayout,
-            final Button btnNext,
-            final Button btnPrevious,
-            final Button btnStartProcessChain,
+            final AutowirableTable accordionProcessChainLayoutTable,
+            final AutowirableTextArea accordionProcessChainLogTextarea,
+            final AutowirableListSelect accordionProcessChainFinishedSelect,
+            final AutowirableHorizontalLayout bottomButtonGroupLayout,
+            final AutowirableButton btnNext,
+            final AutowirableButton btnPrevious,
+            final AutowirableButton btnStartProcessChain,
             final EditWindowWithSelectBox editWindow
     ) {
         super(messages, versionLabel);
@@ -122,7 +122,7 @@ public class PreprocessesViewImpl extends AbstractStepView implements Preprocess
     }
 
     private void setIntroductionText() {
-        this.introductionLabel = new Label(messages.getPreproccesesViewIntroductionText(), ContentMode.HTML);
+        this.introductionLabel = new AutowirableLabel(messages.getPreproccesesViewIntroductionText(), ContentMode.HTML);
     }
 
     @PostConstruct
@@ -193,7 +193,7 @@ public class PreprocessesViewImpl extends AbstractStepView implements Preprocess
         accordionProcessChainLayoutTable.addContainerProperty(PROCESS_CHAIN_TABLE_CONTAINER_PROPERTY_LEFT, Component.class, null);
         accordionProcessChainLayoutTable.addContainerProperty(PROCESS_CHAIN_TABLE_CONTAINER_PROPERTY_RIGHT, Component.class, null);
 
-        this.finishedLabel = new Label(messages.getPreproccesesViewAccordionProcesschainFinishedLabel());
+        this.finishedLabel = new AutowirableLabel(messages.getPreproccesesViewAccordionProcesschainFinishedLabel());
 
         // add first row (left cell: start process button; right cell: label)
         accordionProcessChainLayoutTable.addItem(
@@ -346,7 +346,7 @@ public class PreprocessesViewImpl extends AbstractStepView implements Preprocess
 
     private void addProcessActivationElement(final ProcessActivationElement activationElement) {
         // add yes-no option group
-        OptionGroup activationOptionGroup = new OptionGroup();
+        AutowirableOptionGroup activationOptionGroup = new AutowirableOptionGroup();
 
         activationOptionGroup.addStyleName(CSS_STYLE_NAME_HORICONTAL_OPTION_GROUP);
         activationOptionGroup.setCaption(activationElement.getActivationLabel());

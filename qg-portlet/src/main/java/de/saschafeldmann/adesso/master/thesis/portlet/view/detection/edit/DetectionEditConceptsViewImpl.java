@@ -10,8 +10,8 @@ import de.saschafeldmann.adesso.master.thesis.detection.model.api.Concept;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.QuestionGeneratorProperties;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.Messages;
 import de.saschafeldmann.adesso.master.thesis.portlet.util.VaadinUtil;
-import de.saschafeldmann.adesso.master.thesis.portlet.view.components.Grid;
-import de.saschafeldmann.adesso.master.thesis.portlet.view.components.VerticalLayout;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.AutowirableGrid;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.AutowirableVerticalLayout;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -43,9 +43,9 @@ public class DetectionEditConceptsViewImpl extends Window implements DetectionEd
     public static final String CONCEPT_ATTRIBUTES_DELIMITER = ";";
 
     private final Messages messages;
-    private final VerticalLayout mainLayout;
+    private final AutowirableVerticalLayout mainLayout;
     private final QuestionGeneratorProperties properties;
-    private Grid conceptsGrid;
+    private AutowirableGrid conceptsGrid;
     private DetectionEditConceptsViewListener viewListener;
     private Map<Object, Concept> rowConceptMap;
 
@@ -54,7 +54,7 @@ public class DetectionEditConceptsViewImpl extends Window implements DetectionEd
      * @param messages the messages
      */
     @Autowired
-    public DetectionEditConceptsViewImpl(final VerticalLayout mainLayout, final Messages messages, final QuestionGeneratorProperties properties) {
+    public DetectionEditConceptsViewImpl(final AutowirableVerticalLayout mainLayout, final Messages messages, final QuestionGeneratorProperties properties) {
         this.messages = messages;
         this.mainLayout = mainLayout;
         this.properties = properties;
@@ -93,7 +93,7 @@ public class DetectionEditConceptsViewImpl extends Window implements DetectionEd
     }
 
     private void initializeGrid() {
-        conceptsGrid = new Grid();
+        conceptsGrid = new AutowirableGrid();
         mainLayout.addComponent(conceptsGrid);
 
         conceptsGrid.setWidth(properties.getConceptDetectionEditWindowGridWidthEm(), Unit.EM);
@@ -190,7 +190,7 @@ public class DetectionEditConceptsViewImpl extends Window implements DetectionEd
     }
 
     @Override
-    public Grid getDetectedConceptsGrid() {
+    public AutowirableGrid getDetectedConceptsGrid() {
         return conceptsGrid;
     }
 }

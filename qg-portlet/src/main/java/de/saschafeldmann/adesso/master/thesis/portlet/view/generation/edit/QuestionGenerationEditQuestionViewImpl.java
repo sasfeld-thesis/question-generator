@@ -8,12 +8,11 @@ import de.saschafeldmann.adesso.master.thesis.portlet.properties.QuestionGenerat
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.Messages;
 import de.saschafeldmann.adesso.master.thesis.portlet.util.CommaseparatedValueUtil;
 import de.saschafeldmann.adesso.master.thesis.portlet.util.VaadinUtil;
-import de.saschafeldmann.adesso.master.thesis.portlet.view.components.Button;
-import de.saschafeldmann.adesso.master.thesis.portlet.view.components.ComboBox;
-import de.saschafeldmann.adesso.master.thesis.portlet.view.components.FormLayout;
-import de.saschafeldmann.adesso.master.thesis.portlet.view.components.HorizontalLayout;
-import de.saschafeldmann.adesso.master.thesis.portlet.view.components.ListSelect;
-import de.saschafeldmann.adesso.master.thesis.portlet.view.components.TextField;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.AutowirableButton;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.AutowirableFormLayout;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.AutowirableHorizontalLayout;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.AutowirableListSelect;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.AutowirableTextField;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 
@@ -44,15 +43,15 @@ public class QuestionGenerationEditQuestionViewImpl extends Window implements Qu
     private QuestionGenerationEditQuestionViewListener viewListener;
 
     private final Messages messages;
-    private final FormLayout formLayout;
-    private final TextField inputTestQuestion;
-    private final TextField inputCorrectAnswer;
-    private final ListSelect selectQuestionType;
-    private final TextField textFieldWrongAnswers;
-    private final TextField textFieldCorrectAnswers;
-    private final HorizontalLayout buttonGroupLayout;
-    private final Button editButton;
-    private final Button deleteButton;
+    private final AutowirableFormLayout formLayout;
+    private final AutowirableTextField inputTestQuestion;
+    private final AutowirableTextField inputCorrectAnswer;
+    private final AutowirableListSelect selectQuestionType;
+    private final AutowirableTextField textFieldWrongAnswers;
+    private final AutowirableTextField textFieldCorrectAnswers;
+    private final AutowirableHorizontalLayout buttonGroupLayout;
+    private final AutowirableButton editButton;
+    private final AutowirableButton deleteButton;
     private final QuestionGeneratorProperties questionGeneratorProperties;
     private TestQuestion testQuestion;
 
@@ -72,15 +71,15 @@ public class QuestionGenerationEditQuestionViewImpl extends Window implements Qu
     @Autowired
     public QuestionGenerationEditQuestionViewImpl(
             final Messages messages,
-            final FormLayout formLayout,
-            final TextField inputTestQuestion,
-            final TextField inputCorrectAnswer,
-            final ListSelect selectQuestionType,
-            final TextField comboBoxWrongAnswers,
-            final TextField textFieldCorrectAnswers,
-            final HorizontalLayout buttonGroupLayout,
-            final Button editButton,
-            final Button deleteButton,
+            final AutowirableFormLayout formLayout,
+            final AutowirableTextField inputTestQuestion,
+            final AutowirableTextField inputCorrectAnswer,
+            final AutowirableListSelect selectQuestionType,
+            final AutowirableTextField comboBoxWrongAnswers,
+            final AutowirableTextField textFieldCorrectAnswers,
+            final AutowirableHorizontalLayout buttonGroupLayout,
+            final AutowirableButton editButton,
+            final AutowirableButton deleteButton,
             final QuestionGeneratorProperties questionGeneratorProperties
     ) {
         this.messages = messages;
@@ -261,7 +260,7 @@ public class QuestionGenerationEditQuestionViewImpl extends Window implements Qu
         return getAllItems(textFieldCorrectAnswers);
     }
 
-    private List<String> getAllItems(TextField textField) {
+    private List<String> getAllItems(AutowirableTextField textField) {
         return CommaseparatedValueUtil.toMultipleValuesList(textField.getValue());
     }
 

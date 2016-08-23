@@ -1,8 +1,7 @@
 package de.saschafeldmann.adesso.master.thesis.portlet.view.components.upload;
 
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.QuestionGeneratorProperties;
-import de.saschafeldmann.adesso.master.thesis.portlet.util.PropertyKeys;
-import de.saschafeldmann.adesso.master.thesis.portlet.view.components.ProgressBar;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.AutowirableProgressBar;
 import com.vaadin.ui.Upload;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
@@ -32,7 +31,7 @@ import java.net.MalformedURLException;
  * <p>
  * This component contains the file receiver as well and hides the receiving and progress logic.
  *
- * Since it consists of a {@link ProgressBar}, you need to call getProgressBar() to include it in the view which contains the file upload
+ * Since it consists of a {@link AutowirableProgressBar}, you need to call getProgressBar() to include it in the view which contains the file upload
  * component.
  *
  * Attention: the file upload uses the method createTempFile() to create the upload file.
@@ -47,14 +46,14 @@ public class FileUpload extends com.vaadin.ui.Upload implements Upload.Receiver,
     private File uploadFile;
     private FileUploadListener fileUploadListener;
 
-    private final ProgressBar progressBar;
+    private final AutowirableProgressBar progressBar;
     private final QuestionGeneratorProperties questionGeneratorProperties;
 
     /**
      * Creates a file upload component.
      */
     @Autowired
-    public FileUpload(final ProgressBar progressBar, final QuestionGeneratorProperties questionGeneratorProperties) {
+    public FileUpload(final AutowirableProgressBar progressBar, final QuestionGeneratorProperties questionGeneratorProperties) {
         super();
 
         this.progressBar = progressBar;
@@ -87,7 +86,7 @@ public class FileUpload extends com.vaadin.ui.Upload implements Upload.Receiver,
      * For sure, you can adjust the components look as you want.
      * @return the progress bar
      */
-    public ProgressBar getProgressBar() {
+    public AutowirableProgressBar getProgressBar() {
         return progressBar;
     }
 

@@ -10,11 +10,11 @@ import de.saschafeldmann.adesso.master.thesis.generation.model.TestQuestion;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.Messages;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.AbstractStepView;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.*;
-import de.saschafeldmann.adesso.master.thesis.portlet.view.components.Button;
-import de.saschafeldmann.adesso.master.thesis.portlet.view.components.HorizontalLayout;
-import de.saschafeldmann.adesso.master.thesis.portlet.view.components.Label;
-import de.saschafeldmann.adesso.master.thesis.portlet.view.components.ListSelect;
-import de.saschafeldmann.adesso.master.thesis.portlet.view.components.VerticalLayout;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.AutowirableButton;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.AutowirableHorizontalLayout;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.AutowirableLabel;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.AutowirableListSelect;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.AutowirableVerticalLayout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,20 +54,20 @@ public class QuestionGenerationViewImpl extends AbstractStepView implements Ques
     private QuestionGenerationViewListener viewListener;
 
     private final InfoBox infoBox;
-    private Label introductionLabel;
-    private final Button btnStartQuestionGeneration;
-    private final HorizontalLayout horizontalLayout;
-    private final VerticalLayout leftVerticalLayout;
-    private final Label completedLearningContentsListLabel;
-    private final ListSelect completedLearningContentsList;
-    private final VerticalLayout rightVerticalLayout;
-    private final Label completedQuestionsListLabel;
-    private final ListSelect completedQuestionsList;
+    private AutowirableLabel introductionLabel;
+    private final AutowirableButton btnStartQuestionGeneration;
+    private final AutowirableHorizontalLayout horizontalLayout;
+    private final AutowirableVerticalLayout leftVerticalLayout;
+    private final AutowirableLabel completedLearningContentsListLabel;
+    private final AutowirableListSelect completedLearningContentsList;
+    private final AutowirableVerticalLayout rightVerticalLayout;
+    private final AutowirableLabel completedQuestionsListLabel;
+    private final AutowirableListSelect completedQuestionsList;
 
-    private final HorizontalLayout buttonGroupLayout;
-    private final Button btnPrevious;
-    private final Button btnExport;
-    private final ListSelect exportListSelect;
+    private final AutowirableHorizontalLayout buttonGroupLayout;
+    private final AutowirableButton btnPrevious;
+    private final AutowirableButton btnExport;
+    private final AutowirableListSelect exportListSelect;
     private String defaultExportValue = messages.getQuestionGenerationViewListselectExportCsv();
     private File moodleXmlExportFile;
     private File csvExportFile;
@@ -81,18 +81,18 @@ public class QuestionGenerationViewImpl extends AbstractStepView implements Ques
     @Autowired
     public QuestionGenerationViewImpl(Messages messages, VersionLabel versionLabel,
                                       final InfoBox infoBox,
-                                      final Button btnStartQuestionGeneration,
-                                      final HorizontalLayout horizontalLayout,
-                                      final VerticalLayout leftVerticalLayout,
-                                      final Label completedLearningContentsListLabel,
-                                      final ListSelect completedLearningContentsList,
-                                      final VerticalLayout rightVerticalLayout,
-                                      final Label completedQuestionsListLabel,
-                                      final ListSelect completedQuestionsList,
-                                      final HorizontalLayout buttonGroupLayout,
-                                      final Button btnPrevious,
-                                      final Button btnExport,
-                                      final ListSelect exportListSelect
+                                      final AutowirableButton btnStartQuestionGeneration,
+                                      final AutowirableHorizontalLayout horizontalLayout,
+                                      final AutowirableVerticalLayout leftVerticalLayout,
+                                      final AutowirableLabel completedLearningContentsListLabel,
+                                      final AutowirableListSelect completedLearningContentsList,
+                                      final AutowirableVerticalLayout rightVerticalLayout,
+                                      final AutowirableLabel completedQuestionsListLabel,
+                                      final AutowirableListSelect completedQuestionsList,
+                                      final AutowirableHorizontalLayout buttonGroupLayout,
+                                      final AutowirableButton btnPrevious,
+                                      final AutowirableButton btnExport,
+                                      final AutowirableListSelect exportListSelect
                                       ) {
         super(messages, versionLabel);
 
@@ -114,7 +114,7 @@ public class QuestionGenerationViewImpl extends AbstractStepView implements Ques
     }
 
     private void setIntroductionText() {
-        this.introductionLabel = new Label(messages.getQuestionGenerationViewIntroductionText(), ContentMode.HTML);
+        this.introductionLabel = new AutowirableLabel(messages.getQuestionGenerationViewIntroductionText(), ContentMode.HTML);
     }
 
     @PostConstruct

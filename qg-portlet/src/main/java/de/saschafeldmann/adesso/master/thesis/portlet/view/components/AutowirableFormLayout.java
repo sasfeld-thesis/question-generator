@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * Project:        Masterthesis of Sascha Feldmann
- * Creation date:  25.05.2016
+ * Creation date:  23.05.2016
  * Author:         Sascha Feldmann (sascha.feldmann@gmx.de)
  * <br /><br />
  * University:
@@ -16,10 +16,10 @@ import org.springframework.stereotype.Component;
  * Company:
  * adesso AG
  * <br /><br />
- * A progress bar component.
+ * A form layout component.
  */
 @Component
 @Scope("prototype")
-public class ProgressBar extends com.vaadin.ui.ProgressBar {
+public class AutowirableFormLayout extends com.vaadin.ui.FormLayout {
 
 }

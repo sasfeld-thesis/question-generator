@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * Project:        Masterthesis of Sascha Feldmann
- * Creation date:  23.05.2016
+ * Creation date:  24.05.2016
  * Author:         Sascha Feldmann (sascha.feldmann@gmx.de)
  * <br /><br />
  * University:
@@ -16,10 +16,10 @@ import org.springframework.stereotype.Component;
  * Company:
  * adesso AG
  * <br /><br />
- * A HoricontalLayout component.
+ * An accordion component.
  */
 @Component
 @Scope("prototype")
-public class HorizontalLayout extends com.vaadin.ui.HorizontalLayout {
+public class AutowirableAccordion extends com.vaadin.ui.Accordion {
 
 }

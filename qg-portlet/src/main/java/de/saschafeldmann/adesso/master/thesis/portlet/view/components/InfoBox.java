@@ -28,8 +28,8 @@ import javax.annotation.PostConstruct;
 @Scope("prototype")
 public class InfoBox extends HorizontalLayout {
     private static final String CSS_STYLE_NAME = "infobox";
-    private Label iconLabel;
-    private Label infoLabel;
+    private AutowirableLabel iconLabel;
+    private AutowirableLabel infoLabel;
 
     @PostConstruct
     public void reset() {
@@ -44,7 +44,7 @@ public class InfoBox extends HorizontalLayout {
      */
     @Override
     public void setCaption(final String infoText) {
-        this.infoLabel = new Label(infoText, ContentMode.HTML);
+        this.infoLabel = new AutowirableLabel(infoText, ContentMode.HTML);
 
         removeAndAdd();
     }
@@ -68,7 +68,7 @@ public class InfoBox extends HorizontalLayout {
      */
     @Override
     public void setIcon(final Resource icon) {
-        this.iconLabel = new Label();
+        this.iconLabel = new AutowirableLabel();
         this.iconLabel.setIcon(icon);
 
         removeAndAdd();

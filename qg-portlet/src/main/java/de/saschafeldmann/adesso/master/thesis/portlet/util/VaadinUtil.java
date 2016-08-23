@@ -4,7 +4,7 @@ import com.vaadin.server.Extension;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.Window;
-import de.saschafeldmann.adesso.master.thesis.portlet.view.components.ComboBox;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.AutowirableComboBox;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -60,7 +60,7 @@ public class VaadinUtil {
      * @param comboBox the combobox
      * @return a list of all items
      */
-    public static <T> List<T> getAllItems(ComboBox comboBox) {
+    public static <T> List<T> getAllItems(AutowirableComboBox comboBox) {
         List<T> items = new ArrayList<>();
 
         for (Object itemId : comboBox.getItemIds()) {

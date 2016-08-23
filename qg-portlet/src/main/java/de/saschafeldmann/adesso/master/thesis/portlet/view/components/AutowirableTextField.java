@@ -16,10 +16,10 @@ import org.springframework.stereotype.Component;
  * Company:
  * adesso AG
  * <br /><br />
- * A form layout component.
+ * A Vaadin text field component.
  */
 @Component
 @Scope("prototype")
-public class FormLayout extends com.vaadin.ui.FormLayout {
+public class AutowirableTextField extends com.vaadin.ui.TextField {
 
 }

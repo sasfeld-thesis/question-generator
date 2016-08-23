@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * Project:        Masterthesis of Sascha Feldmann
- * Creation date:  06.06.2016
+ * Creation date:  23.05.2016
  * Author:         Sascha Feldmann (sascha.feldmann@gmx.de)
  * <br /><br />
  * University:
@@ -16,10 +16,10 @@ import org.springframework.stereotype.Component;
  * Company:
  * adesso AG
  * <br /><br />
- * A option group which consists of radio button.
- * See Vaadin's description on option groups.
+ * A VerticalLayout component.
  */
 @Component
 @Scope("prototype")
-public class OptionGroup extends com.vaadin.ui.OptionGroup {
+public class AutowirableVerticalLayout extends com.vaadin.ui.VerticalLayout {
+
 }

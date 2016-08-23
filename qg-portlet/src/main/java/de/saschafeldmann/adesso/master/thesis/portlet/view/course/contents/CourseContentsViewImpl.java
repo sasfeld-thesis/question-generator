@@ -10,14 +10,14 @@ import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.Messages;
 import de.saschafeldmann.adesso.master.thesis.portlet.util.VaadinUtil;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.AbstractStepView;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.*;
-import de.saschafeldmann.adesso.master.thesis.portlet.view.components.Accordion;
-import de.saschafeldmann.adesso.master.thesis.portlet.view.components.Button;
-import de.saschafeldmann.adesso.master.thesis.portlet.view.components.FormLayout;
-import de.saschafeldmann.adesso.master.thesis.portlet.view.components.HorizontalLayout;
-import de.saschafeldmann.adesso.master.thesis.portlet.view.components.Label;
-import de.saschafeldmann.adesso.master.thesis.portlet.view.components.ListSelect;
-import de.saschafeldmann.adesso.master.thesis.portlet.view.components.TextArea;
-import de.saschafeldmann.adesso.master.thesis.portlet.view.components.TextField;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.AutowirableAccordion;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.AutowirableButton;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.AutowirableFormLayout;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.AutowirableHorizontalLayout;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.AutowirableLabel;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.AutowirableListSelect;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.AutowirableTextArea;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.AutowirableTextField;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.upload.FileUpload;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.upload.FileUploadListener;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.window.EditWindow;
@@ -55,53 +55,53 @@ public class CourseContentsViewImpl extends AbstractStepView implements CourseCo
     private static final String CSS_FILE_UPLOAD_PROGRESSBAR_STYLENAME = "course-contents-file-upload-progress-bar";
 
     private final InfoBox infoBox;
-    private Label introductionLabel;
-    private final Accordion accordion;
+    private AutowirableLabel introductionLabel;
+    private final AutowirableAccordion accordion;
 
-    private final HorizontalLayout accordionDocumentsLayout;
-    private final FormLayout accordionDocumentsLeftSideFormLayout;
+    private final AutowirableHorizontalLayout accordionDocumentsLayout;
+    private final AutowirableFormLayout accordionDocumentsLeftSideFormLayout;
     private final FileUpload accordionDocumentsLeftSideFileUpload;
-    private final ListSelect accordionDocumentsLeftSideUploadedList;
-    private final VerticalLayout accordionDocumentsRightSideLayout;
+    private final AutowirableListSelect accordionDocumentsLeftSideUploadedList;
+    private final AutowirableVerticalLayout accordionDocumentsRightSideLayout;
     private final InfoBox accordionDocumentsRightSideInfoBox;
 
-    private final HorizontalLayout accordionRawTextsLayout;
-    private final FormLayout accordionRawTextsLeftSideFormLayout;
-    private final TextField accordionRawTextsLeftSideTitleInput;
-    private final TextArea accordionRawTextsLeftSideRawTextInput;
-    private final Button btnAccordionRawTextsLeftSideAddRawText;
+    private final AutowirableHorizontalLayout accordionRawTextsLayout;
+    private final AutowirableFormLayout accordionRawTextsLeftSideFormLayout;
+    private final AutowirableTextField accordionRawTextsLeftSideTitleInput;
+    private final AutowirableTextArea accordionRawTextsLeftSideRawTextInput;
+    private final AutowirableButton btnAccordionRawTextsLeftSideAddRawText;
 
-    private final FormLayout accordionRawTextsRightSideFormLayout;
-    private final ListSelect accordionRawTextsRightSideAddedList;
+    private final AutowirableFormLayout accordionRawTextsRightSideFormLayout;
+    private final AutowirableListSelect accordionRawTextsRightSideAddedList;
 
     private final EditWindow editWindow;
 
-    private final HorizontalLayout buttonGroupLayout;
-    private final Button btnPrevious;
-    private final Button btnNext;
+    private final AutowirableHorizontalLayout buttonGroupLayout;
+    private final AutowirableButton btnPrevious;
+    private final AutowirableButton btnNext;
     private CourseContentsViewListener viewListener;
     private String courseTitle;
 
     @Autowired
     public CourseContentsViewImpl(final Messages messages, final VersionLabel versionLabel, final InfoBox infoBox,
-                                  final Accordion accordion,
-                                  final HorizontalLayout buttonGroupLayout,
-                                  final HorizontalLayout accordionDocumentsLayout,
-                                  final FormLayout accordionDocumentsLeftSideFormLayout,
+                                  final AutowirableAccordion accordion,
+                                  final AutowirableHorizontalLayout buttonGroupLayout,
+                                  final AutowirableHorizontalLayout accordionDocumentsLayout,
+                                  final AutowirableFormLayout accordionDocumentsLeftSideFormLayout,
                                   final FileUpload accordionDocumentsLeftSideFileUpload,
-                                  final ListSelect accordionDocumentsLeftSideUploadedList,
-                                  final VerticalLayout accordionDocumentsRightSideLayout,
+                                  final AutowirableListSelect accordionDocumentsLeftSideUploadedList,
+                                  final AutowirableVerticalLayout accordionDocumentsRightSideLayout,
                                   final InfoBox accordionDocumentsRightSideInfoBox,
-                                  final HorizontalLayout accordionRawTextsLayout,
-                                  final FormLayout accordionRawTextsLeftSideFormLayout,
-                                  final TextField accordionRawTextsLeftSideTitleInput,
-                                  final TextArea accordionRawTextsLeftSideRawTextInput,
-                                  final Button btnAccordionRawTextsLeftSideAddRawText,
-                                  final FormLayout accordionRawTextsRightSideFormLayout,
-                                  final ListSelect accordionRawTextsRightSideAddedList,
+                                  final AutowirableHorizontalLayout accordionRawTextsLayout,
+                                  final AutowirableFormLayout accordionRawTextsLeftSideFormLayout,
+                                  final AutowirableTextField accordionRawTextsLeftSideTitleInput,
+                                  final AutowirableTextArea accordionRawTextsLeftSideRawTextInput,
+                                  final AutowirableButton btnAccordionRawTextsLeftSideAddRawText,
+                                  final AutowirableFormLayout accordionRawTextsRightSideFormLayout,
+                                  final AutowirableListSelect accordionRawTextsRightSideAddedList,
                                   final EditWindow editWindow,
-                                  final Button btnPrevious,
-                                  final Button btnNext
+                                  final AutowirableButton btnPrevious,
+                                  final AutowirableButton btnNext
     ) {
         super(messages, versionLabel);
 
@@ -129,7 +129,7 @@ public class CourseContentsViewImpl extends AbstractStepView implements CourseCo
     }
 
     private void setIntroductionText() {
-        this.introductionLabel = new Label(messages.getCourseContentsViewIntroductionText(), ContentMode.HTML);
+        this.introductionLabel = new AutowirableLabel(messages.getCourseContentsViewIntroductionText(), ContentMode.HTML);
     }
 
     @PostConstruct

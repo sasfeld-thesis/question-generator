@@ -5,10 +5,10 @@ import de.saschafeldmann.adesso.master.thesis.detection.model.FillInTheBlankText
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.QuestionGeneratorProperties;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.Messages;
 import de.saschafeldmann.adesso.master.thesis.portlet.util.VaadinUtil;
-import de.saschafeldmann.adesso.master.thesis.portlet.view.components.Button;
-import de.saschafeldmann.adesso.master.thesis.portlet.view.components.FormLayout;
-import de.saschafeldmann.adesso.master.thesis.portlet.view.components.HorizontalLayout;
-import de.saschafeldmann.adesso.master.thesis.portlet.view.components.TextField;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.AutowirableButton;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.AutowirableFormLayout;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.AutowirableHorizontalLayout;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.AutowirableTextField;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -33,13 +33,13 @@ import javax.annotation.PostConstruct;
 @Component
 @Scope("prototype")
 public class DetectionEditFillInTheBlankConceptViewImpl extends AbstractDetectionEditConceptView implements DetectionEditFillInTheBlankConceptView, Window.CloseListener {
-    private final FormLayout formLayout;
-    private final TextField originalSentenceInput;
-    private final TextField filltextSentenceInput;
-    private final TextField correctAnswerInput;
-    private final HorizontalLayout buttonGroupLayout;
-    private final Button btnEdit;
-    private final Button btnDelete;
+    private final AutowirableFormLayout formLayout;
+    private final AutowirableTextField originalSentenceInput;
+    private final AutowirableTextField filltextSentenceInput;
+    private final AutowirableTextField correctAnswerInput;
+    private final AutowirableHorizontalLayout buttonGroupLayout;
+    private final AutowirableButton btnEdit;
+    private final AutowirableButton btnDelete;
     private final Messages messages;
     private DetectionEditConceptViewListener<FillInTheBlankTextConcept> viewListener;
     private FillInTheBlankTextConcept fillInTheBlankTextConcept;
@@ -55,13 +55,13 @@ public class DetectionEditFillInTheBlankConceptViewImpl extends AbstractDetectio
     public DetectionEditFillInTheBlankConceptViewImpl(
             final QuestionGeneratorProperties questionGeneratorProperties,
             final Messages messages,
-            final FormLayout formLayout,
-            final TextField originalSentenceInput,
-            final TextField filltextSentenceInput,
-            final TextField correctAnswerInput,
-            final HorizontalLayout buttonGroupLayout,
-            final Button btnEdit,
-            final Button btnDelete
+            final AutowirableFormLayout formLayout,
+            final AutowirableTextField originalSentenceInput,
+            final AutowirableTextField filltextSentenceInput,
+            final AutowirableTextField correctAnswerInput,
+            final AutowirableHorizontalLayout buttonGroupLayout,
+            final AutowirableButton btnEdit,
+            final AutowirableButton btnDelete
     ) {
         super(questionGeneratorProperties);
 

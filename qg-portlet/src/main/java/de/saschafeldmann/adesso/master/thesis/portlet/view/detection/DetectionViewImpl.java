@@ -11,14 +11,13 @@ import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.Messages;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.AbstractStepView;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.*;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.window.EditWindowWithSelectBox;
-import de.saschafeldmann.adesso.master.thesis.portlet.view.components.window.Table;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.window.AutowirableTable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 
 import javax.annotation.PostConstruct;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -54,40 +53,40 @@ public class DetectionViewImpl extends AbstractStepView implements DetectionView
     private static final int PROCESS_CHAIN_TABLE_RIGHT_COLUMN_WIDTH_PIXELS = 300;
 
     private final InfoBox infoBox;
-    private Label introductionLabel;
-    private final Accordion accordion;
+    private AutowirableLabel introductionLabel;
+    private final AutowirableAccordion accordion;
 
-    private final VerticalLayout accordionActivationLayout;
-    private final FormLayout accordionActivationFormLayout;
+    private final AutowirableVerticalLayout accordionActivationLayout;
+    private final AutowirableFormLayout accordionActivationFormLayout;
     private final InfoBox accordionActivationLayoutInfoBox;
 
-    private final Table accordionDetectionChainLayoutTable;
-    private final TextArea accordionDetectionChainLogTextarea;
-    private final ListSelect accordionDetectionChainFinishedSelect;
+    private final AutowirableTable accordionDetectionChainLayoutTable;
+    private final AutowirableTextArea accordionDetectionChainLogTextarea;
+    private final AutowirableListSelect accordionDetectionChainFinishedSelect;
 
-    private final HorizontalLayout bottomButtonGroupLayout;
-    private final Button btnNext;
-    private final Button btnPrevious;
-    private final Button btnStartProcessChain;
+    private final AutowirableHorizontalLayout bottomButtonGroupLayout;
+    private final AutowirableButton btnNext;
+    private final AutowirableButton btnPrevious;
+    private final AutowirableButton btnStartProcessChain;
     private DetectionViewListener viewListener;
-    private Label finishedLabel;
+    private AutowirableLabel finishedLabel;
 
     @Autowired
     public DetectionViewImpl (
             final Messages messages,
             final VersionLabel versionLabel,
             final InfoBox infoBox,
-            final Accordion accordion,
-            final VerticalLayout accordionActivationLayout,
-            final FormLayout accordionActivationFormLayout,
+            final AutowirableAccordion accordion,
+            final AutowirableVerticalLayout accordionActivationLayout,
+            final AutowirableFormLayout accordionActivationFormLayout,
             final InfoBox accordionActivationLayoutInfoBox,
-            final Table accordionProcessChainLayoutTable,
-            final TextArea accordionProcessChainLogTextarea,
-            final ListSelect accordionProcessChainFinishedSelect,
-            final HorizontalLayout bottomButtonGroupLayout,
-            final Button btnNext,
-            final Button btnPrevious,
-            final Button btnStartProcessChain,
+            final AutowirableTable accordionProcessChainLayoutTable,
+            final AutowirableTextArea accordionProcessChainLogTextarea,
+            final AutowirableListSelect accordionProcessChainFinishedSelect,
+            final AutowirableHorizontalLayout bottomButtonGroupLayout,
+            final AutowirableButton btnNext,
+            final AutowirableButton btnPrevious,
+            final AutowirableButton btnStartProcessChain,
             final EditWindowWithSelectBox editWindow
     ) {
         super(messages, versionLabel);
@@ -109,7 +108,7 @@ public class DetectionViewImpl extends AbstractStepView implements DetectionView
     }
 
     private void setIntroductionText() {
-        this.introductionLabel = new Label(messages.getDetectionViewIntroductionText(), ContentMode.HTML);
+        this.introductionLabel = new AutowirableLabel(messages.getDetectionViewIntroductionText(), ContentMode.HTML);
     }
 
     @PostConstruct
@@ -148,7 +147,7 @@ public class DetectionViewImpl extends AbstractStepView implements DetectionView
         accordionDetectionChainLayoutTable.addContainerProperty(PROCESS_CHAIN_TABLE_CONTAINER_PROPERTY_LEFT, Component.class, null);
         accordionDetectionChainLayoutTable.addContainerProperty(PROCESS_CHAIN_TABLE_CONTAINER_PROPERTY_RIGHT, Component.class, null);
 
-        this.finishedLabel = new Label(messages.getDetectionViewAccordionDetectionChainFinishedLabel());
+        this.finishedLabel = new AutowirableLabel(messages.getDetectionViewAccordionDetectionChainFinishedLabel());
 
         // add first row (left cell: start process button; right cell: label)
         accordionDetectionChainLayoutTable.addItem(
@@ -261,7 +260,7 @@ public class DetectionViewImpl extends AbstractStepView implements DetectionView
 
     private void addDetectionActivationElement(final DetectionActivationElement detectionActivationElement) {
         // add yes-no option group
-        OptionGroup activationOptionGroup = new OptionGroup();
+        AutowirableOptionGroup activationOptionGroup = new AutowirableOptionGroup();
 
         activationOptionGroup.addStyleName(CSS_STYLE_NAME_HORICONTAL_OPTION_GROUP);
         activationOptionGroup.setCaption(detectionActivationElement.getActivationLabel());

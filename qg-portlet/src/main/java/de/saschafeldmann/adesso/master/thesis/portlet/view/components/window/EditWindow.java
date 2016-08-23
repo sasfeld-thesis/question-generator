@@ -26,18 +26,18 @@ import javax.annotation.PostConstruct;
  */
 @Component
 @Scope("prototype")
-public class EditWindow extends Window {
+public class EditWindow extends AutowirableWindow {
     private static final String CSS_EDIT_WINDOW_STYLENAME = "edit-window";
     private final Messages messages;
     private String title;
     private String textareaLabel;
     protected EditWindowListener editWindowListener;
 
-    protected final TextArea textArea;
-    protected final Button btnEdit;
-    protected final Button btnDelete;
-    protected final FormLayout formLayout;
-    protected final HorizontalLayout buttonGroupLayout;
+    protected final AutowirableTextArea textArea;
+    protected final AutowirableButton btnEdit;
+    protected final AutowirableButton btnDelete;
+    protected final AutowirableFormLayout formLayout;
+    protected final AutowirableHorizontalLayout buttonGroupLayout;
     private String textareaInput;
 
     /**
@@ -48,7 +48,7 @@ public class EditWindow extends Window {
      * @param formLayout the layout
      */
     @Autowired
-    public EditWindow(final Messages messages, final TextArea textArea, final Button btnEdit, final Button btnDelete, final FormLayout formLayout, final HorizontalLayout buttonGroupLayout) {
+    public EditWindow(final Messages messages, final AutowirableTextArea textArea, final AutowirableButton btnEdit, final AutowirableButton btnDelete, final AutowirableFormLayout formLayout, final AutowirableHorizontalLayout buttonGroupLayout) {
         this.messages = messages;
         this.textArea = textArea;
         this.btnEdit = btnEdit;

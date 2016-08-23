@@ -16,10 +16,24 @@ import org.springframework.stereotype.Component;
  * Company:
  * adesso AG
  * <br /><br />
- * A VerticalLayout component.
+ * A Vaadin button component.
  */
 @Component
 @Scope("prototype")
-public class VerticalLayout extends com.vaadin.ui.VerticalLayout {
+public class AutowirableButton extends com.vaadin.ui.Button {
 
+    /**
+     * Creates a simple button.
+     */
+    public AutowirableButton() {
+        super();
+    }
+
+    /**
+     * Creates a new button with the given label / caption.
+     * @param label caption
+     */
+    public AutowirableButton(String label) {
+        super(label);
+    }
 }

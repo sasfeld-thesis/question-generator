@@ -1,11 +1,11 @@
-package de.saschafeldmann.adesso.master.thesis.portlet.view.components;
+package de.saschafeldmann.adesso.master.thesis.portlet.view.components.window;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 /**
  * Project:        Masterthesis of Sascha Feldmann
- * Creation date:  24.05.2016
+ * Creation date:  06.06.2016
  * Author:         Sascha Feldmann (sascha.feldmann@gmx.de)
  * <br /><br />
  * University:
@@ -16,10 +16,11 @@ import org.springframework.stereotype.Component;
  * Company:
  * adesso AG
  * <br /><br />
- * A Vaadin text area component.
+ * A Vaadin {@link com.vaadin.ui.Table}
  */
 @Component
 @Scope("prototype")
-public class TextArea extends com.vaadin.ui.TextArea {
+public class AutowirableTable extends com.vaadin.ui.Table {
+
 
 }

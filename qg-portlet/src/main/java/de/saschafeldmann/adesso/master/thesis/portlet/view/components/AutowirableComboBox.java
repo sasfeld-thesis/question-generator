@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * Project:        Masterthesis of Sascha Feldmann
- * Creation date:  24.05.2016
+ * Creation date:  05.07.2016
  * Author:         Sascha Feldmann (sascha.feldmann@gmx.de)
  * <br /><br />
  * University:
@@ -16,10 +16,9 @@ import org.springframework.stereotype.Component;
  * Company:
  * adesso AG
  * <br /><br />
- * An accordion component.
+ * A Vaadin {@link com.vaadin.ui.ComboBox}
  */
 @Component
 @Scope("prototype")
-public class Accordion extends com.vaadin.ui.Accordion {
-
+public class AutowirableComboBox extends com.vaadin.ui.ComboBox {
 }

@@ -1,15 +1,14 @@
 package de.saschafeldmann.adesso.master.thesis.portlet.view.detection.edit;
 
 import com.vaadin.data.util.ObjectProperty;
-import com.vaadin.ui.Window;
 import de.saschafeldmann.adesso.master.thesis.detection.model.CardinalRelationConcept;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.QuestionGeneratorProperties;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.Messages;
 import de.saschafeldmann.adesso.master.thesis.portlet.util.VaadinUtil;
-import de.saschafeldmann.adesso.master.thesis.portlet.view.components.Button;
-import de.saschafeldmann.adesso.master.thesis.portlet.view.components.FormLayout;
-import de.saschafeldmann.adesso.master.thesis.portlet.view.components.HorizontalLayout;
-import de.saschafeldmann.adesso.master.thesis.portlet.view.components.TextField;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.AutowirableButton;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.AutowirableFormLayout;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.AutowirableHorizontalLayout;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.AutowirableTextField;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -35,15 +34,15 @@ import javax.annotation.PostConstruct;
 @Scope("prototype")
 public class DetectionEditCardinalRelationConceptViewImpl extends AbstractDetectionEditConceptView implements DetectionEditCardinalRelationConceptView {
     private static final java.lang.Integer INITIAL_NUMBER = 1;
-    private final FormLayout formLayout;
-    private final TextField originalSentenceInput;
-    private final TextField compositeInput;
-    private final TextField compositeCardinalityInput;
-    private final TextField compositionInput;
-    private final TextField compositionCardinalityInput;
-    private final HorizontalLayout buttonGroupLayout;
-    private final Button btnEdit;
-    private final Button btnDelete;
+    private final AutowirableFormLayout formLayout;
+    private final AutowirableTextField originalSentenceInput;
+    private final AutowirableTextField compositeInput;
+    private final AutowirableTextField compositeCardinalityInput;
+    private final AutowirableTextField compositionInput;
+    private final AutowirableTextField compositionCardinalityInput;
+    private final AutowirableHorizontalLayout buttonGroupLayout;
+    private final AutowirableButton btnEdit;
+    private final AutowirableButton btnDelete;
     private final Messages messages;
     private DetectionEditConceptViewListener<CardinalRelationConcept> viewListener;
     private CardinalRelationConcept cardinalRelationConcept;
@@ -59,15 +58,15 @@ public class DetectionEditCardinalRelationConceptViewImpl extends AbstractDetect
     public DetectionEditCardinalRelationConceptViewImpl(
             final QuestionGeneratorProperties questionGeneratorProperties,
             final Messages messages,
-            final FormLayout formLayout,
-            final TextField originalSentenceInput,
-            final TextField compositeInput,
-            final TextField compositeCardinalityInput,
-            final TextField compositionInput,
-            final TextField compositionCardinalityInput,
-            final HorizontalLayout buttonGroupLayout,
-            final Button btnEdit,
-            final Button btnDelete
+            final AutowirableFormLayout formLayout,
+            final AutowirableTextField originalSentenceInput,
+            final AutowirableTextField compositeInput,
+            final AutowirableTextField compositeCardinalityInput,
+            final AutowirableTextField compositionInput,
+            final AutowirableTextField compositionCardinalityInput,
+            final AutowirableHorizontalLayout buttonGroupLayout,
+            final AutowirableButton btnEdit,
+            final AutowirableButton btnDelete
     ) {
         super(questionGeneratorProperties);
 

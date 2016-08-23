@@ -54,11 +54,15 @@ public abstract class PropertiesReader implements PropertiesReaderApi {
         super();
 
         properties = new Properties();
+        FileInputStream fileInputStream = null;
         try {
-            properties.load(new FileInputStream(inputFile));
+            fileInputStream = new FileInputStream(inputFile);
+            properties.load(fileInputStream);
         } catch (IOException e) { // log critical message
             LOGGER.error("PropertiesReader(): could not load properties - exception:\n{}",
                     e);
+        } finally {
+            try { if (null != fileInputStream) fileInputStream.close(); } catch (Exception e) { /* ignore exception here */ }
         }
     }
     /**

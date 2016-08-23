@@ -21,12 +21,12 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @Scope("prototype")
-public class Grid extends com.vaadin.ui.Grid {
+public class AutowirableGrid extends com.vaadin.ui.Grid {
 
     /**
      * Creates a grid.
      */
-    public Grid() {
+    public AutowirableGrid() {
         super();
     }
 
@@ -34,7 +34,7 @@ public class Grid extends com.vaadin.ui.Grid {
      * Creates a grid with the given date source.
      * @param dataSource the data source
      */
-    public Grid(Container.Indexed dataSource) {
+    public AutowirableGrid(Container.Indexed dataSource) {
         super(dataSource);
     }
 
@@ -42,7 +42,7 @@ public class Grid extends com.vaadin.ui.Grid {
      * Creates a grid with the given caption.
      * @param caption String
      */
-    public Grid(String caption) {
+    public AutowirableGrid(String caption) {
         super(caption);
     }
 
@@ -51,7 +51,7 @@ public class Grid extends com.vaadin.ui.Grid {
      * @param caption String
      * @param dataSource the data source
      */
-    public Grid(String caption, Container.Indexed dataSource) {
+    public AutowirableGrid(String caption, Container.Indexed dataSource) {
         super(caption, dataSource);
     }
 

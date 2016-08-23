@@ -19,7 +19,7 @@ import java.util.*;
  * Company:
  * adesso AG
  * <br /><br />
- * Wrapper between {@link de.saschafeldmann.adesso.master.thesis.portlet.view.components.ListSelect} and {@link de.saschafeldmann.adesso.master.thesis.elearningimport.model.Language}
+ * Wrapper between {@link de.saschafeldmann.adesso.master.thesis.portlet.view.components.AutowirableListSelect} and {@link de.saschafeldmann.adesso.master.thesis.elearningimport.model.Language}
  */
 public class LanguageWrapper {
     public static final String DEFAULT_SELECTION = "-";
@@ -85,7 +85,7 @@ public class LanguageWrapper {
 
     /**
      * Gets all languages for the selection.
-     * @return the list of all languages for {@link de.saschafeldmann.adesso.master.thesis.portlet.view.components.ListSelect}
+     * @return the list of all languages for {@link de.saschafeldmann.adesso.master.thesis.portlet.view.components.AutowirableListSelect}
      */
     public static List<LanguageWrapper> getAllLanguageItems() {
         List<LanguageWrapper> wrapperList = new ArrayList<>();

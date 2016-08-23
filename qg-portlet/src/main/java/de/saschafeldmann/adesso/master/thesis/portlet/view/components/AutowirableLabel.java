@@ -1,5 +1,6 @@
 package de.saschafeldmann.adesso.master.thesis.portlet.view.components;
 
+import com.vaadin.shared.ui.label.ContentMode;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -16,24 +17,33 @@ import org.springframework.stereotype.Component;
  * Company:
  * adesso AG
  * <br /><br />
- * A Vaadin button component.
+ * A Vaadin label component.
  */
 @Component
 @Scope("prototype")
-public class Button extends com.vaadin.ui.Button {
+public class AutowirableLabel extends com.vaadin.ui.Label {
 
     /**
-     * Creates a simple button.
+     * Creates a label.
      */
-    public Button() {
+    public AutowirableLabel() {
         super();
     }
 
     /**
-     * Creates a new button with the given label / caption.
-     * @param label caption
+     * Creates a new label.
+     * @param infoText the info text
+     * @param mode the content mode
      */
-    public Button(String label) {
-        super(label);
+    public AutowirableLabel(String infoText, ContentMode mode) {
+        super(infoText, mode);
+    }
+
+    /**
+     * Creates a new label with the given string to be displayed.
+     * @param activationLabel
+     */
+    public AutowirableLabel(String activationLabel) {
+        super(activationLabel);
     }
 }

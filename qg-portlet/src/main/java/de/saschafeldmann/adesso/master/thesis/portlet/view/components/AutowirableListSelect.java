@@ -1,11 +1,13 @@
-package de.saschafeldmann.adesso.master.thesis.portlet.view.components.window;
+package de.saschafeldmann.adesso.master.thesis.portlet.view.components;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
+
 /**
  * Project:        Masterthesis of Sascha Feldmann
- * Creation date:  25.05.2016
+ * Creation date:  23.05.2016
  * Author:         Sascha Feldmann (sascha.feldmann@gmx.de)
  * <br /><br />
  * University:
@@ -16,10 +18,15 @@ import org.springframework.stereotype.Component;
  * Company:
  * adesso AG
  * <br /><br />
- * A window component.
+ * A Vaadin list select component.
  */
 @Component
 @Scope("prototype")
-public class Window extends com.vaadin.ui.Window {
+public class AutowirableListSelect extends com.vaadin.ui.ListSelect {
 
+    @PostConstruct
+    public void initialize() {
+        // do not allow null selections per default
+        this.setNullSelectionAllowed(false);
+    }
 }

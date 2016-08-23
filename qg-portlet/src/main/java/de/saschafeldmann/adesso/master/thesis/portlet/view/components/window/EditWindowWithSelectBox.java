@@ -1,22 +1,16 @@
 package de.saschafeldmann.adesso.master.thesis.portlet.view.components.window;
 
 import com.vaadin.data.Property;
-import com.vaadin.ui.*;
-import de.saschafeldmann.adesso.master.thesis.portlet.model.LanguageWrapper;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.Messages;
 import de.saschafeldmann.adesso.master.thesis.portlet.view.components.*;
-import de.saschafeldmann.adesso.master.thesis.portlet.view.components.Button;
-import de.saschafeldmann.adesso.master.thesis.portlet.view.components.FormLayout;
-import de.saschafeldmann.adesso.master.thesis.portlet.view.components.HorizontalLayout;
-import de.saschafeldmann.adesso.master.thesis.portlet.view.components.ListSelect;
-import de.saschafeldmann.adesso.master.thesis.portlet.view.components.TextArea;
-import org.apache.cxf.transport.Observable;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.AutowirableButton;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.AutowirableFormLayout;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.AutowirableHorizontalLayout;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.AutowirableListSelect;
+import de.saschafeldmann.adesso.master.thesis.portlet.view.components.AutowirableTextArea;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-
-import java.util.Collection;
-import java.util.List;
 
 /**
  * Project:        Masterthesis of Sascha Feldmann
@@ -38,11 +32,11 @@ import java.util.List;
 public class EditWindowWithSelectBox extends EditWindow {
     private static final java.lang.String CSS_STYLE_NAME = "edit-window-with-two-areas-and-selectlist";
     @Autowired
-    private ListSelect listSelect;
+    private AutowirableListSelect listSelect;
     @Autowired
     private InfoBox infoBox;
     @Autowired
-    protected TextArea secondTextArea;
+    protected AutowirableTextArea secondTextArea;
 
     private String secondTextareaLabel;
     private String secondTextareaInput;
@@ -60,7 +54,7 @@ public class EditWindowWithSelectBox extends EditWindow {
      * @param buttonGroupLayout
      */
     @Autowired
-    public EditWindowWithSelectBox(Messages messages, TextArea textArea, Button btnEdit, Button btnDelete, FormLayout formLayout, HorizontalLayout buttonGroupLayout) {
+    public EditWindowWithSelectBox(Messages messages, AutowirableTextArea textArea, AutowirableButton btnEdit, AutowirableButton btnDelete, AutowirableFormLayout formLayout, AutowirableHorizontalLayout buttonGroupLayout) {
         super(messages, textArea, btnEdit, btnDelete, formLayout, buttonGroupLayout);
     }
 
