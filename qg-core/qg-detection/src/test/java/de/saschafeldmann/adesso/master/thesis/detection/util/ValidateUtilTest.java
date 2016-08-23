@@ -69,10 +69,8 @@ public class ValidateUtilTest {
 
     private DetectionOptions newDetectionOptions() {
         DetectionOptions detectionOptions = new DetectionOptions();
-        detectionOptions.setNumberOfFilltextQuestions(10);
-        detectionOptions.getNumberOfFilltextQuestions();
-        detectionOptions.setNumberOfCardinalityQuestions(10);
-        detectionOptions.getNumberOfCardinalityQuestions();
+        detectionOptions.setNumberOfFilltextQuestions(detectionOptions.getNumberOfFilltextQuestions());
+        detectionOptions.setNumberOfCardinalityQuestions(detectionOptions.getNumberOfCardinalityQuestions());
 
         return detectionOptions;
     }

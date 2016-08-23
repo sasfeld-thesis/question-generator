@@ -67,6 +67,7 @@ public class LanguageDetectionPropertiesImplTest {
         // when is called
         try {
             int delta = languageDetectionProperties.getCoverageDeltaInPercent();
+            assertTrue(delta > 0);
         } catch (NumberFormatException e) {
             // then a number format exception must not be thrown
             fail("getCoverageDeltaInPercent(): did not return an integer since the configured properties is not a valid integer. Please fix in file languagedetection.properties.");

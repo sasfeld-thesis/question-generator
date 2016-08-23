@@ -36,7 +36,7 @@ public class TikaRawtextParserAdapterTest {
     private final static String TEST_FILE_PPTX = "/files/testdocument.pptx";
     private static final String TEST_PDF_FILE_WITHOUT_EXTENSION = "/files/testdocument";
     private static final String TEST_TXT_FILE = "/files/testdocument.txt";
-    private static final String TEST_FILE_NOT_EXISTING = "/files/notexisting";
+    private static final String TEST_FILE_NOT_EXISTING = "files/notexisting";
 
     private final static List<String> EXPECTED_STRINGS_PDF = new ArrayList<>(
             Arrays.asList(
