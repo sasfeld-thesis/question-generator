@@ -4,6 +4,7 @@ import com.vaadin.data.Property;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.*;
 import com.vaadin.shared.ui.label.ContentMode;
+import com.vaadin.ui.Notification;
 import de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent;
 import de.saschafeldmann.adesso.master.thesis.generation.model.TestQuestion;
 import de.saschafeldmann.adesso.master.thesis.portlet.properties.i18n.Messages;
@@ -22,6 +23,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.io.File;
+import java.util.Collection;
 import java.util.ConcurrentModificationException;
 import java.util.List;
 
@@ -133,6 +135,10 @@ public class QuestionGenerationViewImpl extends AbstractStepView implements Ques
         setCompletedLearningContentListLabel();
         this.btnPrevious.setCaption(messages.getButtonBackTitle());
         this.btnExport.setCaption(messages.getQuestionGenerationViewButtonExport());
+        setCompletedQuestionsListLabel();
+    }
+
+    private void setCompletedQuestionsListLabel() {
         this.completedQuestionsListLabel.setCaption(messages.getQuestionGenerationViewFinishedQuestionsLabel());
     }
 
@@ -261,8 +267,22 @@ public class QuestionGenerationViewImpl extends AbstractStepView implements Ques
 
         completedLearningContentsList.addItems(learningContents);
 
+        displayNumberOfProcessedLearningContents(learningContents);
+
         triggerActionButtonsEnabledState();
     }
+
+    private void displayNumberOfProcessedLearningContents(Collection<LearningContent> learningContents) {
+        setCompletedLearningContentListLabel();
+
+        completedLearningContentsListLabel.setCaption(
+                completedLearningContentsListLabel.getCaption()
+                        + " ("
+                        + learningContents.size()
+                        + ")"
+        );
+    }
+
 
     private void triggerActionButtonsEnabledState() {
         if (completedLearningContentsList.size() > 0) {
@@ -286,7 +306,20 @@ public class QuestionGenerationViewImpl extends AbstractStepView implements Ques
 
         completedQuestionsList.addItems(testQuestions);
 
+        displayNumberOfGeneratedQuestions(testQuestions);
+
         triggerActionButtonsEnabledState();
+    }
+
+    private void displayNumberOfGeneratedQuestions(List<TestQuestion> learningContents) {
+        setCompletedQuestionsListLabel();
+
+        completedQuestionsListLabel.setCaption(
+                completedQuestionsListLabel.getCaption()
+                        + " ("
+                        + learningContents.size()
+                        + ")"
+        );
     }
 
     @Override
@@ -294,7 +327,6 @@ public class QuestionGenerationViewImpl extends AbstractStepView implements Ques
         // add menu and set the generation item to be active
         super.reset(messages.getMenuItemQuestionGenerationLabel());
 
-        setLabels();
         setInfoBox();
         addComponent(infoBox);
         addComponent(introductionLabel);
@@ -340,14 +372,12 @@ public class QuestionGenerationViewImpl extends AbstractStepView implements Ques
     public void showStatistics(long numberOfGeneratedQuestions, long questionGenerationRuntime) {
         setLabels();
 
-        setCompletedLearningContentListLabel();
-        completedLearningContentsListLabel.setValue(
-                completedLearningContentsListLabel.getValue()
-                + " ("
-                + messages.getNumberOfGeneratedQuestions(String.valueOf(numberOfGeneratedQuestions))
-                + ", "
-                + messages.getRuntimeQuestionGeneration(String.valueOf(questionGenerationRuntime))
-                + ")"
+        Notification.show("",
+                        messages.getNumberOfGeneratedQuestions(String.valueOf(numberOfGeneratedQuestions))
+                        + ", "
+                        + messages.getRuntimeQuestionGeneration(String.valueOf(questionGenerationRuntime))
+                        + ")",
+                Notification.Type.ASSISTIVE_NOTIFICATION
         );
     }
 

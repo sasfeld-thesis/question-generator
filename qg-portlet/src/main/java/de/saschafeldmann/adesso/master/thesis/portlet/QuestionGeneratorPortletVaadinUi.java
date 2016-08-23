@@ -5,6 +5,7 @@ import com.vaadin.navigator.Navigator;
 import com.vaadin.server.VaadinPortlet;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.WrappedPortletSession;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
 import de.saschafeldmann.adesso.master.thesis.detection.model.CardinalRelationConcept;
 import de.saschafeldmann.adesso.master.thesis.detection.model.FillInTheBlankTextConcept;
@@ -328,7 +329,7 @@ public class QuestionGeneratorPortletVaadinUi extends UI {
         LOGGER.debug("getMessageBundle(): will set new locale {}", currentLocale);
         initializeMessageBundle(currentLocale);
 
-        // close session and reload the current page
-        getPage().reload();
+        // detach the current UI and reload the current page
+        getSession().close();
     }
 }

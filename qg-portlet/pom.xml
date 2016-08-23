@@ -62,6 +62,14 @@
             <!-- provided by liferay, DO NOT CHANGE if you don't know what you're doing since it might lead to class conflicts -->
             <scope>provided</scope>
         </dependency>
+        <!-- Servlet API -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>${servlets.api.version}</version>
+            <!-- provided by liferay, DO NOT CHANGE if you don't know what you're doing since it might lead to class conflicts -->
+            <scope>provided</scope>
+        </dependency>
         <!-- Vaadin -->
         <dependency>
             <groupId>com.vaadin</groupId>

@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 
 import javax.annotation.PostConstruct;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -176,13 +177,17 @@ public class DetectionViewImpl extends AbstractStepView implements DetectionView
         setIntroductionText();
 
         btnStartProcessChain.setCaption(messages.getDetectionViewAccordionDetectionChainButtonStartLabel());
-        this.finishedLabel.setCaption(messages.getDetectionViewAccordionDetectionChainFinishedLabel());
+        setFinishedLabel();
 
         this.btnPrevious.setCaption(messages.getButtonBackTitle());
         this.btnNext.setCaption(messages.getButtonNextTitle());
 
         accordion.getTab(0).setCaption(messages.getDetectionViewAccordionActivationLabel());
         accordion.getTab(1).setCaption(messages.getDetectionViewAccordionDetectionChainLabel());
+    }
+
+    private void setFinishedLabel() {
+        this.finishedLabel.setCaption(messages.getDetectionViewAccordionDetectionChainFinishedLabel());
     }
 
 
@@ -307,7 +312,15 @@ public class DetectionViewImpl extends AbstractStepView implements DetectionView
         accordionDetectionChainFinishedSelect.removeAllItems();
         accordionDetectionChainFinishedSelect.addItems(detectedConcepts.keySet());
 
+        displayNumberOfProcessedLearningContents(detectedConcepts);
         triggerActionButtonsEnabledState();
+    }
+
+    private void displayNumberOfProcessedLearningContents(Map<LearningContent, List<Concept>> learningContents) {
+        setFinishedLabel();
+        finishedLabel.setCaption(finishedLabel.getCaption() + " (" + learningContents.size() + ")");
+
+        reset();
     }
 
     private void triggerActionButtonsEnabledState() {
@@ -323,7 +336,6 @@ public class DetectionViewImpl extends AbstractStepView implements DetectionView
         // add menu and set the detection item to be active
         super.reset(messages.getMenuItemDetectionLabel());
 
-        setLabels();
         setInfoBox();
         addComponent(infoBox);
         addComponent(introductionLabel);

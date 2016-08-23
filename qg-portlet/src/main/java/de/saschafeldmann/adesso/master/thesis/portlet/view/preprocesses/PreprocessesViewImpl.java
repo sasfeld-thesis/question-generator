@@ -163,10 +163,14 @@ public class PreprocessesViewImpl extends AbstractStepView implements Preprocess
         this.btnNext.setCaption(messages.getButtonNextTitle());
 
         btnStartProcessChain.setCaption(messages.getPreproccesesViewAccordionProcesschainButtonStartLabel());
-        this.finishedLabel.setCaption(messages.getPreproccesesViewAccordionProcesschainFinishedLabel());
+        setFinishedLabelCaption();
 
         accordion.getTab(0).setCaption(messages.getPreproccesesViewAccordionActivationLabel());
         accordion.getTab(1).setCaption(messages.getPreproccesesViewAccordionProcesschainLabel());
+    }
+
+    private void setFinishedLabelCaption() {
+        this.finishedLabel.setCaption(messages.getPreproccesesViewAccordionProcesschainFinishedLabel());
     }
 
     private void initializeActivationPart() {
@@ -393,7 +397,15 @@ public class PreprocessesViewImpl extends AbstractStepView implements Preprocess
         accordionProcessChainFinishedSelect.removeAllItems();
         accordionProcessChainFinishedSelect.addItems(learningContents);
 
+        displayNumberOfProcessedLearningContents(learningContents);
         triggerActionButtonsEnabledState();
+    }
+
+    private void displayNumberOfProcessedLearningContents(Collection<LearningContent> learningContents) {
+        setFinishedLabelCaption();
+        this.finishedLabel.setCaption(finishedLabel.getCaption() + " (" + learningContents.size() + ")");
+
+        reset();
     }
 
     private void triggerActionButtonsEnabledState() {
@@ -409,7 +421,6 @@ public class PreprocessesViewImpl extends AbstractStepView implements Preprocess
         // add menu and set the preprocessing item to be active
         super.reset(messages.getMenuItemPreprocessesLabel());
 
-        setLabels();
         setInfoBox();
         addComponent(infoBox);
         addComponent(introductionLabel);

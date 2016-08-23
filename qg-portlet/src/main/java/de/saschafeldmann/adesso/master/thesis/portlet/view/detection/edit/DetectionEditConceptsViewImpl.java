@@ -62,17 +62,25 @@ public class DetectionEditConceptsViewImpl extends Window implements DetectionEd
 
     @PostConstruct
     private void initialize() {
-        setCaption(messages.getDetectionViewAccordionDetectionChainEditWindowTitle());
+        setCaption();
 
         setContent(mainLayout);
 
         setStyles();
     }
 
+    private void setCaption() {
+        setCaption(messages.getDetectionViewAccordionDetectionChainEditWindowTitle());
+    }
+
     @Override
     public void displayDetectedConcepts(final List<Concept> detectedConcepts) {
         mainLayout.removeAllComponents();
         rowConceptMap = new HashMap<>();
+
+        setCaption();
+        setCaption(getCaption() + " (" + detectedConcepts.size() +")");
+
         initializeGrid();
 
         initializeGridColumns();

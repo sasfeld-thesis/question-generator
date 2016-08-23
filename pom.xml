@@ -49,6 +49,8 @@
         <jacoco.version>0.7.6.201602180812</jacoco.version>
         <!-- Portlets API version -->
         <portlets.api.version>2.0</portlets.api.version>
+        <!-- Servlets API version -->
+        <servlets.api.version>2.5</servlets.api.version>
         <!-- Apache TIKA parser library version -->
         <apache.tika.version>1.13</apache.tika.version>
         <!-- name of the built portlet war file - this will be deployed if the 'deploy' profile is activated -->
