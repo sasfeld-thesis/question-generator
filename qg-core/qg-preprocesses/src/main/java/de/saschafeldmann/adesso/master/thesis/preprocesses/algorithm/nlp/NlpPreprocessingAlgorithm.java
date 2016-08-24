@@ -97,7 +97,7 @@ public class NlpPreprocessingAlgorithm implements PreprocessingAlgorithm {
      */
     @Override
     public LearningContent execute(final LearningContent learningContent, final PreprocessingOptions preprocessingOptions) {
-        final StanfordCoreNLP stanfordCoreNLP = getStanfordCoreNlpInstanceForLanguage(learningContent.getDeterminedLanguage());
+        final StanfordCoreNLP stanfordCoreNLP = getStanfordCoreNlpInstanceForLanguage(learningContent);
 
         annotateRawText(stanfordCoreNLP, learningContent, preprocessingOptions);
         return learningContent;
@@ -107,11 +107,16 @@ public class NlpPreprocessingAlgorithm implements PreprocessingAlgorithm {
      * Gets the stanford core nlp instance for the given language.
      * Uses a map to store the pipeline since its creation is very expensive.
      *
-     * @param determinedLanguage the language for which the pipeline should be created
+     * @param learningContent the language for which the pipeline should be created
      * @return the pipeline
      */
-    private StanfordCoreNLP getStanfordCoreNlpInstanceForLanguage(Language determinedLanguage) {
-        checkNotNull(determinedLanguage, "The language of the given learning content must not be null.");
+    private StanfordCoreNLP getStanfordCoreNlpInstanceForLanguage(LearningContent learningContent) {
+        Language determinedLanguage = learningContent.getDeterminedLanguage();
+
+        if (null == determinedLanguage) {
+            // fallback to course's primary language
+            determinedLanguage = learningContent.getCourse().getPrimaryLanguage();
+        }
 
         if (!stanfordPipelineMap.containsKey(determinedLanguage)) {
             LOGGER.error("getStanfordCoreNlpInstanceForLanguage(): no Stanford NLP instance for language {} found. Please check if initializeStanfordModels() is implemented correctly.",
