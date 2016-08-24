@@ -318,8 +318,6 @@ public class DetectionViewImpl extends AbstractStepView implements DetectionView
     private void displayNumberOfProcessedLearningContents(Map<LearningContent, List<Concept>> learningContents) {
         setFinishedLabel();
         finishedLabel.setCaption(finishedLabel.getCaption() + " (" + learningContents.size() + ")");
-
-        reset();
     }
 
     private void triggerActionButtonsEnabledState() {

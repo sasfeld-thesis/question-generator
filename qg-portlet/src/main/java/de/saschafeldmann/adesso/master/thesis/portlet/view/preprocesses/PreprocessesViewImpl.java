@@ -404,8 +404,6 @@ public class PreprocessesViewImpl extends AbstractStepView implements Preprocess
     private void displayNumberOfProcessedLearningContents(Collection<LearningContent> learningContents) {
         setFinishedLabelCaption();
         this.finishedLabel.setCaption(finishedLabel.getCaption() + " (" + learningContents.size() + ")");
-
-        reset();
     }
 
     private void triggerActionButtonsEnabledState() {
