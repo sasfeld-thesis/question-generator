@@ -114,9 +114,14 @@ public class LearningContent {
     /**
      * Gets the determined language.
      * Make sure that an determination algorithm was run before so that an appropriate value is set.
+     * Otherwise, the course's language will be returned.
      * @return the determined language
      */
     public Language getDeterminedLanguage() {
+        if (null == determinedLanguage) {
+            return course.getPrimaryLanguage();
+        }
+
         return determinedLanguage;
     }
 

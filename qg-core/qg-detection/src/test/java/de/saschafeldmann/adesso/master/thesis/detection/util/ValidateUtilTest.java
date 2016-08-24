@@ -55,18 +55,6 @@ public class ValidateUtilTest {
         ValidateUtil.validate(learningContent, newDetectionOptions());
     }
 
-    @Test(expected = NullPointerException.class)
-    public void testValidateLearningContentThrowsNullpointerIfLanguageTextIsNull() {
-        // given, when
-        LearningContent learningContent = newValidLearningContentWithoutPos();
-        String[] partOfSpeech = {"<POS>text</POS>"};
-        learningContent.setPartOfSpeechAnnotatedText(Arrays.asList(partOfSpeech));
-        String[] namedEntity = {"<NER>text</NER>"};
-        learningContent.setNamedEntityAnnotatedText(Arrays.asList(namedEntity));
-
-        ValidateUtil.validate(learningContent, newDetectionOptions());
-    }
-
     private DetectionOptions newDetectionOptions() {
         DetectionOptions detectionOptions = new DetectionOptions();
         detectionOptions.setNumberOfFilltextQuestions(detectionOptions.getNumberOfFilltextQuestions());

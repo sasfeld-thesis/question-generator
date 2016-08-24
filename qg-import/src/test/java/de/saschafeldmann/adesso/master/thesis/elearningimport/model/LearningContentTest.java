@@ -84,6 +84,20 @@ public class LearningContentTest {
     }
 
     @Test
+    public void testNoLanguageSetLeadsToReturnCoursesPrimaryLanguage() {
+        // given a learning content without determined language
+        LearningContent learningContent = newLearningContent();
+        learningContent.setDeterminedLanguage(null);
+        learningContent.getCourse().setPrimaryLanguage(Language.GERMAN);
+
+        // when get determined language is called
+        Language determinedLanguage = learningContent.getDeterminedLanguage();
+
+        // then it should be the courses primary one
+        assertEquals(Language.GERMAN, determinedLanguage);
+    }
+
+    @Test
     public void testSetFallbackLanguageSetsLanguageCouldNotBeDetermined() {
         // given a learning content with determined language
         LearningContent learningContent = newLearningContent();
