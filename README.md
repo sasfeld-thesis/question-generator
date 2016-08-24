@@ -12,6 +12,10 @@ Introduction
 
 The question generator is the central software that I create during my master thesis at Hochschule für Technik und Wirtschaft (HTW), Berlin in cooperation with adesso AG. It targets to automatically process e-learning material from several inputs (raw text, PDF,...), trigger Natural Language Processing on it, detect and combine semantic concepts and generate questions using Natural Language Generation technology as last step.
 
+Detailed manuals
+------------
+
+Since the software is ready to be shipped, detailed manuals can be found on this project's wiki: https://github.com/sasfeld-thesis/question-generator/wiki 
 
 Build Pipeline
 ------------
