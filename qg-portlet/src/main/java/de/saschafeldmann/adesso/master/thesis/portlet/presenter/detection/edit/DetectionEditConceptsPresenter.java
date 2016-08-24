@@ -11,15 +11,15 @@ import java.util.List;
  * Project:        Masterthesis of Sascha Feldmann
  * Creation date:  28.06.2016
  * Author:         Sascha Feldmann (sascha.feldmann@gmx.de)
- * <br /><br />
+ * <br><br>
  * University:
  * Hochschule für Technik und Wirtschaft, Berlin
  * Fachbereich 4
  * Studiengang Internationale Medieninformatik (Master)
- * <br /><br />
+ * <br><br>
  * Company:
  * adesso AG
- * <br /><br />
+ * <br><br>
  * The {@link DetectionEditConceptsPresenter} handles a dialog that is shown if the user selected a {@link de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent}
  * within the {@link DetectionPresenter} logic. Here, the user can edit identified {@link Concept}
  */

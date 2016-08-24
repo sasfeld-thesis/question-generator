@@ -18,15 +18,15 @@ import java.net.MalformedURLException;
  * Project:        Masterthesis of Sascha Feldmann
  * Creation date:  24.05.2016
  * Author:         Sascha Feldmann (sascha.feldmann@gmx.de)
- * <br /><br />
+ * <br><br>
  * University:
  * Hochschule für Technik und Wirtschaft, Berlin
  * Fachbereich 4
  * Studiengang Internationale Medieninformatik (Master)
- * <br /><br />
+ * <br><br>
  * Company:
  * adesso AG
- * <br /><br />
+ * <br><br>
  * A Vaadin file upload component.
  * <p>
  * This component contains the file receiver as well and hides the receiving and progress logic.

@@ -15,15 +15,15 @@ import java.util.Map;
  * Project:        Masterthesis of Sascha Feldmann
  * Creation date:  24.05.2016
  * Author:         Sascha Feldmann (sascha.feldmann@gmx.de)
- * <br /><br />
+ * <br><br>
  * University:
  * Hochschule für Technik und Wirtschaft, Berlin
  * Fachbereich 4
  * Studiengang Internationale Medieninformatik (Master)
- * <br /><br />
+ * <br><br>
  * Company:
  * adesso AG
- * <br /><br />
+ * <br><br>
  * Session-scoped bean that is valid for the whole user session.
  * It is a wrapper around a {@link Course} model and has a clear {@link Status}.
  */

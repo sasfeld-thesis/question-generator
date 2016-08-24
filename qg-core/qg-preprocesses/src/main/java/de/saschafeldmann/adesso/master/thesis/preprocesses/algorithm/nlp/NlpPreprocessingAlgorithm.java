@@ -25,28 +25,28 @@ import java.util.*;
  * Project:        Masterthesis of Sascha Feldmann
  * Creation date:  17.06.2016
  * Author:         Sascha Feldmann (sascha.feldmann@gmx.de)
- * <br /><br />
+ * <br><br>
  * University:
  * Hochschule für Technik und Wirtschaft, Berlin
  * Fachbereich 4
  * Studiengang Internationale Medieninformatik (Master)
- * <br /><br />
+ * <br><br>
  * Company:
  * adesso AG
- * <br /><br />
+ * <br><br>
  * Natural language preprocessing algorithm implementation.
  * Uses the Stanford NLP library and trained models for both the German and English languages.
  *
  * http://stanfordnlp.github.io/CoreNLP/
  *
- * <br /><br />
+ * <br><br>
  * <strong>Important:</strong>
- * <br /><br />
+ * <br><br>
  * Stanford NLP POS tagger and NER classifier models need a lot of Heap memory. I measured at least 1,2 GB for German only
  * plus 1 GB for English.
  * Therefore, the Java process running this application should get a maximum heap size (-Xmx)  of at least 3 GB.
- * <br /><br />
- * Additionally, this class here should be defined as singleton and initialized in the application only <strong>once</strong>.<br />
+ * <br><br>
+ * Additionally, this class here should be defined as singleton and initialized in the application only <strong>once</strong>.<br>
  * The implementation must be threadsafe so that multiple users can trigger the NLP via this singleton instance.
  *
  */

@@ -7,15 +7,15 @@ import java.util.Map;
  * Project:        Masterthesis of Sascha Feldmann
  * Creation date:  25.05.2016
  * Author:         Sascha Feldmann (sascha.feldmann@gmx.de)
- * <br /><br />
+ * <br><br>
  * University:
  * Hochschule für Technik und Wirtschaft, Berlin
  * Fachbereich 4
  * Studiengang Internationale Medieninformatik (Master)
- * <br /><br />
+ * <br><br>
  * Company:
  * adesso AG
- * <br /><br />
+ * <br><br>
  * Adapter to Java properties.
  * To use it for a special property file, implement a subclass and define the properties file.
  *
@@ -40,9 +40,9 @@ public interface PropertiesReaderApi {
     Map<String, String> fetchValues();
 
     /**
-     * <p>Fetch multiple values for a given property key.<br />
-     * Multiple values are given when the config value points to a list of values.<br />
-     * Example: test.1 = somevalue, test.2 = someothervalue <br />
+     * <p>Fetch multiple values for a given property key.<br>
+     * Multiple values are given when the config value points to a list of values.<br>
+     * Example: test.1 = somevalue, test.2 = someothervalue <br>
      * fetchMultipleValues("test") will result in a list of String with entries "somevalue" and "someothervalue".</p>
      * @param propertyKey String
      * @return a list of values. The value list will contain at least 1 element.

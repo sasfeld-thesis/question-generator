@@ -9,15 +9,15 @@ import static com.google.common.base.Preconditions.*;
  * Project:        Masterthesis of Sascha Feldmann
  * Creation date:  04.06.2016
  * Author:         Sascha Feldmann (sascha.feldmann@gmx.de)
- * <br /><br />
+ * <br><br>
  * University:
  * Hochschule für Technik und Wirtschaft, Berlin
  * Fachbereich 4
  * Studiengang Internationale Medieninformatik (Master)
- * <br /><br />
+ * <br><br>
  * Company:
  * adesso AG
- * <br /><br />
+ * <br><br>
  * Model to connect a process from the qg-preprocesses module with a view element to de- or activate it.
  */
 public class ProcessActivationElement {

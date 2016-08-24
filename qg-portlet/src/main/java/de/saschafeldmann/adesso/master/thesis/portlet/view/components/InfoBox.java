@@ -13,15 +13,15 @@ import javax.annotation.PostConstruct;
  * Project:        Masterthesis of Sascha Feldmann
  * Creation date:  23.05.2016
  * Author:         Sascha Feldmann (sascha.feldmann@gmx.de)
- * <br /><br />
+ * <br><br>
  * University:
  * Hochschule für Technik und Wirtschaft, Berlin
  * Fachbereich 4
  * Studiengang Internationale Medieninformatik (Master)
- * <br /><br />
+ * <br><br>
  * Company:
  * adesso AG
- * <br /><br />
+ * <br><br>
  * An info box consists of a icon indicating the type of information (info, warning, error) and the info text.
  */
 @org.springframework.stereotype.Component

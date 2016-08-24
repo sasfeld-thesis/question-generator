@@ -6,15 +6,15 @@ import de.saschafeldmann.adesso.master.thesis.portlet.model.preprocesses.Process
  * Project:        Masterthesis of Sascha Feldmann
  * Creation date:  27.06.2016
  * Author:         Sascha Feldmann (sascha.feldmann@gmx.de)
- * <br /><br />
+ * <br><br>
  * University:
  * Hochschule für Technik und Wirtschaft, Berlin
  * Fachbereich 4
  * Studiengang Internationale Medieninformatik (Master)
- * <br /><br />
+ * <br><br>
  * Company:
  * adesso AG
- * <br /><br />
+ * <br><br>
  * Interface for listeners of state changes of {@link DetectionActivationElement}, for example if the user changed the value of a process activation option group.
  */
 public interface DetectionActivationStateChangeListener {

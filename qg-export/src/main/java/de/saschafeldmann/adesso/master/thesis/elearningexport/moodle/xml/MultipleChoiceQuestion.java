@@ -6,15 +6,15 @@ import javax.xml.bind.annotation.XmlElement;
  * Project:        Masterthesis of Sascha Feldmann
  * Creation date:  10.08.2016
  * Author:         Sascha Feldmann (sascha.feldmann@gmx.de)
- * <br /><br />
+ * <br><br>
  * University:
  * Hochschule für Technik und Wirtschaft, Berlin
  * Fachbereich 4
  * Studiengang Internationale Medieninformatik (Master)
- * <br /><br />
+ * <br><br>
  * Company:
  * adesso AG
- * <br /><br />
+ * <br><br>
  * A multiple choice question element.
  * https://docs.moodle.org/24/en/Moodle_XML_format
  */

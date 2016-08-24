@@ -12,15 +12,15 @@ import java.util.List;
  * Project:        Masterthesis of Sascha Feldmann
  * Creation date:  04.07.2016
  * Author:         Sascha Feldmann (sascha.feldmann@gmx.de)
- * <br /><br />
+ * <br><br>
  * University:
  * Hochschule für Technik und Wirtschaft, Berlin
  * Fachbereich 4
  * Studiengang Internationale Medieninformatik (Master)
- * <br /><br />
+ * <br><br>
  * Company:
  * adesso AG
- * <br /><br />
+ * <br><br>
  * Implementation of a properties reader for the detection module.
  */
 @Component
@@ -37,9 +37,9 @@ public class DetectionProperties extends PropertiesReader implements PropertiesR
     }
 
     /**
-     * Gets the named entity types that are asked for within fill text concept questions.<br />
-     * Example original sentence: The capital of Germany is <LOCATION>Berlin</LOCATION>. <br />
-     * Berlin as location would be offered for the filltext if location is contained within the properties values.<br />
+     * Gets the named entity types that are asked for within fill text concept questions.<br>
+     * Example original sentence: The capital of Germany is &lt;LOCATION&gt;Berlin&lt;/LOCATION&gt;. <br>
+     * Berlin as location would be offered for the filltext if location is contained within the properties values.<br>
      * The resulting fill text question would be: "What is the complete sentence? The capital of Germany is ___?".
      *
      * @return a list of named entities
@@ -49,9 +49,9 @@ public class DetectionProperties extends PropertiesReader implements PropertiesR
     }
 
     /**
-     * Gets the part of speech tag typesthat are asked for within fill text concept questions.<br />
-     * Example original sentence: The capital of Germany is <NNP>Berlin</NNP>. <br />
-     * Berlin as a proper noun singular would be offered for the filltext if location is contained within the properties values.<br />
+     * Gets the part of speech tag typesthat are asked for within fill text concept questions.<br>
+     * Example original sentence: The capital of Germany is &lt;NNP&gt;Berlin&lt;/NNP&gt;. <br>
+     * Berlin as a proper noun singular would be offered for the filltext if location is contained within the properties values.<br>
      * The resulting fill text question would be: "What is the complete sentence? The capital of Germany is ___?".
      *
      * @return a list of named entities
@@ -79,7 +79,7 @@ public class DetectionProperties extends PropertiesReader implements PropertiesR
 
     /**
      * Gets the cardinal relation cardinality part - of - speech tags,
-     * e.g. "<CARD>16</CARD>" represents a cardinality of 16.
+     * e.g. "&lt;CARD&gt;16&lt;/CARD&gt;" represents a cardinality of 16.
      * @param language the given language
      * @return the list
      */
@@ -88,7 +88,7 @@ public class DetectionProperties extends PropertiesReader implements PropertiesR
     }
 
     /**
-     * Gets the cardinal relation keywords POS tags for the given language.<br />
+     * Gets the cardinal relation keywords POS tags for the given language.<br>
      * These are verbs most of times.
      * @param language the given language
      * @return the list
@@ -98,7 +98,7 @@ public class DetectionProperties extends PropertiesReader implements PropertiesR
     }
 
     /**
-     * Gets the cardinal relation keywords for the verb.<br />
+     * Gets the cardinal relation keywords for the verb.<br>
      * @param language the given language
      * @return the list
      */
@@ -107,8 +107,8 @@ public class DetectionProperties extends PropertiesReader implements PropertiesR
     }
 
     /**
-     * Gets the configured part of speech tags that can be represented by a cardinal relation. <br />
-     * E.g. the sentence <NN>Germany</NN> has 16 <NN>states</NN> -> here, the composite part of speech tag is NN (for noun).
+     * Gets the configured part of speech tags that can be represented by a cardinal relation. <br>
+     * E.g. the sentence &lt;NN&gt;Germany&lt;/NN&gt; has 16 &lt;NN&gt;states&lt;/NN&gt; -&gt; here, the composite part of speech tag is NN (for noun).
      * @param language the language
      * @return the list
      */
@@ -117,8 +117,8 @@ public class DetectionProperties extends PropertiesReader implements PropertiesR
     }
 
     /**
-     * Gets the configured part of speech tags that can be represented by a cardinal relation. <br />
-     * E.g. the sentence <NN>Germany</NN> has 16 <NN>states</NN> -> here, the composition part of speech tag is NN (for noun).
+     * Gets the configured part of speech tags that can be represented by a cardinal relation. <br>
+     * E.g. the sentence &lt;NN&gt;Germany&lt;/NN&gt; has 16 &lt;NN&gt;states&lt;/NN&gt; -&gt; here, the composition part of speech tag is NN (for noun).
      * @param language the language
      * @return the list
      */
@@ -128,7 +128,7 @@ public class DetectionProperties extends PropertiesReader implements PropertiesR
 
     /**
      * Gets the configured part of speech tags for optional adjectives on the composite or composition.
-     * E.g. the sentence <ADJ>Beautiful</ADJ> </ADJ><NN>Germany</NN> has 16 <NN>states</NN> -> Germany has the adjective beautiful
+     * E.g. the sentence &lt;ADJ&gt;Beautiful&lt;/ADJ&gt; &lt;/ADJ&gt;&lt;NN&gt;Germany&lt;/NN&gt; has 16 &lt;NN&gt;states&lt;/NN&gt; -&gt; Germany has the adjective beautiful
      * @param language the language
      * @return the list
      */

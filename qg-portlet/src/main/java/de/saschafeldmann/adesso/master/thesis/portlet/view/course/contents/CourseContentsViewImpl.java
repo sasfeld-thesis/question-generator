@@ -33,15 +33,15 @@ import java.util.List;
  * Project:        Masterthesis of Sascha Feldmann
  * Creation date:  24.05.2016
  * Author:         Sascha Feldmann (sascha.feldmann@gmx.de)
- * <br /><br />
+ * <br><br>
  * University:
  * Hochschule für Technik und Wirtschaft, Berlin
  * Fachbereich 4
  * Studiengang Internationale Medieninformatik (Master)
- * <br /><br />
+ * <br><br>
  * Company:
  * adesso AG
- * <br /><br />
+ * <br><br>
  * [short description]
  */
 @org.springframework.stereotype.Component
@@ -148,7 +148,7 @@ public class CourseContentsViewImpl extends AbstractStepView implements CourseCo
         this.btnNext.setCaption(messages.getCourseInformationViewBtnNextLabel());
 
         accordion.getTab(0).setCaption(messages.getCourseContentsViewAccordionDocumentsTitleLabel());
-        accordion.getTab(1).setCaption(messages.getCourseContentsViewAccordionDocumentsTitleLabel());
+        accordion.getTab(1).setCaption(messages.getCourseContentsViewAccordionRawTextsTitleLabel());
 
         this.accordionDocumentsLeftSideFileUpload.setCaption(messages.getCourseContentsViewAccordionDocumentsFileUploadLabel());
         this.accordionDocumentsLeftSideUploadedList.setCaption(messages.getCourseContentsViewAccordionDocumentsUploadedListLabel());

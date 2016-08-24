@@ -10,15 +10,15 @@ import java.util.Collection;
  * Project:        Masterthesis of Sascha Feldmann
  * Creation date:  04.06.2016
  * Author:         Sascha Feldmann (sascha.feldmann@gmx.de)
- * <br /><br />
+ * <br><br>
  * University:
  * Hochschule für Technik und Wirtschaft, Berlin
  * Fachbereich 4
  * Studiengang Internationale Medieninformatik (Master)
- * <br /><br />
+ * <br><br>
  * Company:
  * adesso AG
- * <br /><br />
+ * <br><br>
  * Interface for the preprocesses view where the user configures the preprocesses and can edit their outputs.
  */
 public interface PreprocessesView extends ViewWithMenu {

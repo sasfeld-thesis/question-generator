@@ -9,15 +9,15 @@ import java.util.List;
  * Project:        Masterthesis of Sascha Feldmann
  * Creation date:  24.05.2016
  * Author:         Sascha Feldmann (sascha.feldmann@gmx.de)
- * <br /><br />
+ * <br><br>
  * University:
  * Hochschule für Technik und Wirtschaft, Berlin
  * Fachbereich 4
  * Studiengang Internationale Medieninformatik (Master)
- * <br /><br />
+ * <br><br>
  * Company:
  * adesso AG
- * <br /><br />
+ * <br><br>
  * The course contents view. The user can upload course documents and enter raw texts here.
  * It will attach {@link de.saschafeldmann.adesso.master.thesis.elearningimport.model.LearningContent} instances to the {@link de.saschafeldmann.adesso.master.thesis.elearningimport.model.Course} model in the session.
  */

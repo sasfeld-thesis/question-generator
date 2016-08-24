@@ -23,19 +23,19 @@ import java.util.regex.Pattern;
  * Project:        Masterthesis of Sascha Feldmann
  * Creation date:  29.06.2016
  * Author:         Sascha Feldmann (sascha.feldmann@gmx.de)
- * <br /><br />
+ * <br><br>
  * University:
  * Hochschule für Technik und Wirtschaft, Berlin
  * Fachbereich 4
  * Studiengang Internationale Medieninformatik (Master)
- * <br /><br />
+ * <br><br>
  * Company:
  * adesso AG
- * <br /><br />
- * Filltext concept detection.<br />
- * Filltexts are simple concepts. <br />
- * Those are sentences that contain an object that is a named entity and at least one more noun.<br />
- * For the question generation part, the learning student will be asked to fill the object.<br />
+ * <br><br>
+ * Filltext concept detection.<br>
+ * Filltexts are simple concepts. <br>
+ * Those are sentences that contain an object that is a named entity and at least one more noun.<br>
+ * For the question generation part, the learning student will be asked to fill the object.<br>
  * E.g. if the original sentence was "Berlin is the capital of Germany."
  * the fill text will be "Berlin is the capital of ___?"
  */

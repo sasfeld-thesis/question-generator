@@ -14,15 +14,15 @@ import java.util.ResourceBundle;
  * Project:        Masterthesis of Sascha Feldmann
  * Creation date:  04.06.2016
  * Author:         Sascha Feldmann (sascha.feldmann@gmx.de)
- * <br /><br />
+ * <br><br>
  * University:
  * Hochschule für Technik und Wirtschaft, Berlin
  * Fachbereich 4
  * Studiengang Internationale Medieninformatik (Master)
- * <br /><br />
+ * <br><br>
  * Company:
  * adesso AG
- * <br /><br />
+ * <br><br>
  * German message properties accessor.
  */
 public class MessagesBundle implements PropertiesReaderApi {
@@ -31,7 +31,7 @@ public class MessagesBundle implements PropertiesReaderApi {
     private ResourceBundle messageProperties;
 
     /**
-     * Create a new config reader which reads from a '.property' - file. <br />
+     * Create a new config reader which reads from a '.property' - file. <br>
      * A critical log entry will be executed if the given file doesn't exist or
      * isn't accessible.
      * @param locale the user's locale to make use of the correct messages file

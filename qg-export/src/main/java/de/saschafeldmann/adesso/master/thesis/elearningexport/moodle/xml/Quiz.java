@@ -10,15 +10,15 @@ import java.util.List;
  * Project:        Masterthesis of Sascha Feldmann
  * Creation date:  10.08.2016
  * Author:         Sascha Feldmann (sascha.feldmann@gmx.de)
- * <br /><br />
+ * <br><br>
  * University:
  * Hochschule für Technik und Wirtschaft, Berlin
  * Fachbereich 4
  * Studiengang Internationale Medieninformatik (Master)
- * <br /><br />
+ * <br><br>
  * Company:
  * adesso AG
- * <br /><br />
+ * <br><br>
  * XML: top hierarchy element of the Moodle XML format.
  * https://docs.moodle.org/24/en/Moodle_XML_format
  */

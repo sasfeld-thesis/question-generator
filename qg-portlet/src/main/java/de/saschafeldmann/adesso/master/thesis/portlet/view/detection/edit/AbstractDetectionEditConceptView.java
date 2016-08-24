@@ -8,15 +8,15 @@ import de.saschafeldmann.adesso.master.thesis.portlet.properties.QuestionGenerat
  * Project:        Masterthesis of Sascha Feldmann
  * Creation date:  12.07.2016
  * Author:         Sascha Feldmann (sascha.feldmann@gmx.de)
- * <br /><br />
+ * <br><br>
  * University:
  * Hochschule für Technik und Wirtschaft, Berlin
  * Fachbereich 4
  * Studiengang Internationale Medieninformatik (Master)
- * <br /><br />
+ * <br><br>
  * Company:
  * adesso AG
- * <br /><br />
+ * <br><br>
  * Abstract for all specific {@link de.saschafeldmann.adesso.master.thesis.detection.model.api.Concept} views.
  */
 public class AbstractDetectionEditConceptView extends Window {

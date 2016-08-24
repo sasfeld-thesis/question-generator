@@ -8,15 +8,15 @@ import java.io.File;
  * Project:        Masterthesis of Sascha Feldmann
  * Creation date:  24.05.2016
  * Author:         Sascha Feldmann (sascha.feldmann@gmx.de)
- * <br /><br />
+ * <br><br>
  * University:
  * Hochschule für Technik und Wirtschaft, Berlin
  * Fachbereich 4
  * Studiengang Internationale Medieninformatik (Master)
- * <br /><br />
+ * <br><br>
  * Company:
  * adesso AG
- * <br /><br />
+ * <br><br>
  * Course contents view listener implement methods to react on user-triggered actions within the {@link CourseContentsView}.
  */
 public interface CourseContentsViewListener {

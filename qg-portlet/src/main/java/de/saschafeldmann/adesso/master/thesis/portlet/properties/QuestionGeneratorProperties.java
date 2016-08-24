@@ -16,15 +16,15 @@ import java.io.InputStream;
  * Project:        Masterthesis of Sascha Feldmann
  * Creation date:  25.05.2016
  * Author:         Sascha Feldmann (sascha.feldmann@gmx.de)
- * <br /><br />
+ * <br><br>
  * University:
  * Hochschule für Technik und Wirtschaft, Berlin
  * Fachbereich 4
  * Studiengang Internationale Medieninformatik (Master)
- * <br /><br />
+ * <br><br>
  * Company:
  * adesso AG
- * <br /><br />
+ * <br><br>
  * The adapter to read properties from the file 'questiongenerator.properties'.
  */
 @Component
@@ -34,7 +34,7 @@ public class QuestionGeneratorProperties extends PropertiesReader implements Pro
     private static final String PROPERTIES_FILE_NAME = "/questiongenerator.properties";
 
     /**
-     * Create a new config reader which reads from a '.property' - file. <br />
+     * Create a new config reader which reads from a '.property' - file. <br>
      * A critical log entry will be executed if the given file doesn't exist or
      * isn't accessible.
      */

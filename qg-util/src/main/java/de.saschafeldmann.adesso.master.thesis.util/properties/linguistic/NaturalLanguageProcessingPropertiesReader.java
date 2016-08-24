@@ -9,15 +9,15 @@ import org.slf4j.LoggerFactory;
  * Project:        Masterthesis of Sascha Feldmann
  * Creation date:  29.06.2016
  * Author:         Sascha Feldmann (sascha.feldmann@gmx.de)
- * <br /><br />
+ * <br><br>
  * University:
  * Hochschule für Technik und Wirtschaft, Berlin
  * Fachbereich 4
  * Studiengang Internationale Medieninformatik (Master)
- * <br /><br />
+ * <br><br>
  * Company:
  * adesso AG
- * <br /><br />
+ * <br><br>
  * Adapter to naturallanguageprocessing.properties file.
  */
 public class NaturalLanguageProcessingPropertiesReader extends PropertiesReader implements PropertiesReaderApi {
@@ -35,7 +35,7 @@ public class NaturalLanguageProcessingPropertiesReader extends PropertiesReader 
     }
 
     /**
-     * Create a new config reader which reads from a '.property' - file. <br />
+     * Create a new config reader which reads from a '.property' - file. <br>
      * A critical log entry will be executed if the given file doesn't exist or
      * isn't accessible.
      */

@@ -17,15 +17,15 @@ import java.util.Properties;
  * Project:        Masterthesis of Sascha Feldmann
  * Creation date:  25.05.2016
  * Author:         Sascha Feldmann (sascha.feldmann@gmx.de)
- * <br /><br />
+ * <br><br>
  * University:
  * Hochschule für Technik und Wirtschaft, Berlin
  * Fachbereich 4
  * Studiengang Internationale Medieninformatik (Master)
- * <br /><br />
+ * <br><br>
  * Company:
  * adesso AG
- * <br /><br />
+ * <br><br>
  * Abstract adapter to a properties file.
  * To use it for a special property file, implement a subclass and define the properties file.
  * Make sure that all property files are UTF-8 encoded.
@@ -44,7 +44,7 @@ public abstract class PropertiesReader implements PropertiesReaderApi {
     protected Map<String, String> propertiesMap;
 
     /**
-     * Create a new config reader which reads from a '.property' - file. <br />
+     * Create a new config reader which reads from a '.property' - file. <br>
      * A critical log entry will be executed if the given file doesn't exist or
      * isn't accessible.
      *
@@ -66,7 +66,7 @@ public abstract class PropertiesReader implements PropertiesReaderApi {
         }
     }
     /**
-     * Create a new config reader which reads from a '.property' - input stream. <br />
+     * Create a new config reader which reads from a '.property' - input stream. <br>
      * A critical log entry will be executed if the given file doesn't exist or
      * isn't accessible.
      *

@@ -14,15 +14,15 @@ import org.junit.Test;
  * Project:        Masterthesis of Sascha Feldmann
  * Creation date:  14.06.2016
  * Author:         Sascha Feldmann (sascha.feldmann@gmx.de)
- * <br /><br />
+ * <br><br>
  * University:
  * Hochschule für Technik und Wirtschaft, Berlin
  * Fachbereich 4
  * Studiengang Internationale Medieninformatik (Master)
- * <br /><br />
+ * <br><br>
  * Company:
  * adesso AG
- * <br /><br />
+ * <br><br>
  * Unit test of the {@link LanguageDetectionAlgorithm} algorithm.
  */
 public class LanguageDetectionAlgorithmTest {
@@ -67,8 +67,7 @@ public class LanguageDetectionAlgorithmTest {
     }
 
     private LearningContent getChineseLearningContent() {
-        return newLearningContent("這是一個考驗。\n" +
-                "這種語言不應該得到承認。");
+        return newLearningContent("abcd");
     }
 
     @Test

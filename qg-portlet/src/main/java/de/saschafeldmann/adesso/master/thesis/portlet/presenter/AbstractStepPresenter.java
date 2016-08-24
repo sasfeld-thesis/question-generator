@@ -15,15 +15,15 @@ import org.springframework.beans.factory.annotation.Autowired;
  * Project:        Masterthesis of Sascha Feldmann
  * Creation date:  23.05.2016
  * Author:         Sascha Feldmann (sascha.feldmann@gmx.de)
- * <br /><br />
+ * <br><br>
  * University:
  * Hochschule für Technik und Wirtschaft, Berlin
  * Fachbereich 4
  * Studiengang Internationale Medieninformatik (Master)
- * <br /><br />
+ * <br><br>
  * Company:
  * adesso AG
- * <br /><br />
+ * <br><br>
  * This abstract presenter defines the basic components that each view in the application has, e.g. the current step indicator etc.
  * It is a {@link de.saschafeldmann.adesso.master.thesis.portlet.view.MenuListener} and therefore manages menu clicks.
  */

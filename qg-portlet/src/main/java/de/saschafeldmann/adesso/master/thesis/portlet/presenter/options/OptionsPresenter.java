@@ -7,15 +7,15 @@ import de.saschafeldmann.adesso.master.thesis.portlet.view.options.OptionsView;
  * Project:        Masterthesis of Sascha Feldmann
  * Creation date:  01.08.2016
  * Author:         Sascha Feldmann (sascha.feldmann@gmx.de)
- * <br /><br />
+ * <br><br>
  * University:
  * Hochschule für Technik und Wirtschaft, Berlin
  * Fachbereich 4
  * Studiengang Internationale Medieninformatik (Master)
- * <br /><br />
+ * <br><br>
  * Company:
  * adesso AG
- * <br /><br />
+ * <br><br>
  * Triggers and shows an option dialog where the user can do settings.
  */
 public interface OptionsPresenter {

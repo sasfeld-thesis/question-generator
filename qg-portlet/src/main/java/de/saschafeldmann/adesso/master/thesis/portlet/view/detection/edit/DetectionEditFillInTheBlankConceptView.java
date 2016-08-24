@@ -6,15 +6,15 @@ import de.saschafeldmann.adesso.master.thesis.detection.model.FillInTheBlankText
  * Project:        Masterthesis of Sascha Feldmann
  * Creation date:  28.06.2016
  * Author:         Sascha Feldmann (sascha.feldmann@gmx.de)
- * <br /><br />
+ * <br><br>
  * University:
  * Hochschule für Technik und Wirtschaft, Berlin
  * Fachbereich 4
  * Studiengang Internationale Medieninformatik (Master)
- * <br /><br />
+ * <br><br>
  * Company:
  * adesso AG
- * <br /><br />
+ * <br><br>
  * Special view that allows editing {@link FillInTheBlankTextConcept}.
  */
 public interface DetectionEditFillInTheBlankConceptView extends DetectionEditConceptView<FillInTheBlankTextConcept> {

@@ -8,15 +8,15 @@ import de.saschafeldmann.adesso.master.thesis.portlet.view.ViewWithMenu;
  * Project:        Masterthesis of Sascha Feldmann
  * Creation date:  23.05.2016
  * Author:         Sascha Feldmann (sascha.feldmann@gmx.de)
- * <br /><br />
+ * <br><br>
  * University:
  * Hochschule für Technik und Wirtschaft, Berlin
  * Fachbereich 4
  * Studiengang Internationale Medieninformatik (Master)
- * <br /><br />
+ * <br><br>
  * Company:
  * adesso AG
- * <br /><br />
+ * <br><br>
  * The course information view interface.
  * The view is managed by the {@link CourseInformationPresenter}.
  */
@@ -67,7 +67,6 @@ public interface CourseInformationView extends ViewWithMenu {
     /**
      * Sets the course title - only relevant in the edit mode.
      * @param courseTitle String
-     * @return String
      */
     void setCourseTitle(final String courseTitle);
 }

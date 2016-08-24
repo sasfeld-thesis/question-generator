@@ -10,15 +10,15 @@ import java.util.List;
  * Project:        Masterthesis of Sascha Feldmann
  * Creation date:  24.05.2016
  * Author:         Sascha Feldmann (sascha.feldmann@gmx.de)
- * <br /><br />
+ * <br><br>
  * University:
  * Hochschule für Technik und Wirtschaft, Berlin
  * Fachbereich 4
  * Studiengang Internationale Medieninformatik (Master)
- * <br /><br />
+ * <br><br>
  * Company:
  * adesso AG
- * <br /><br />
+ * <br><br>
  * Each course consists of n {@link LearningContent} instances which represent the courses learning material.
  * One course learning unit content instance should encapsulate a single learning unit (typically, one slide set of PDF pages is a learning unit), for example
  * a learning unit "Exceptions" in a programming course.

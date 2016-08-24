@@ -4,16 +4,16 @@ package de.saschafeldmann.adesso.master.thesis.util.linguistic;
  * Project:        Masterthesis of Sascha Feldmann
  * Creation date:  04.07.2016
  * Author:         Sascha Feldmann (sascha.feldmann@gmx.de)
- * <br /><br />
+ * <br><br>
  * University:
  * Hochschule für Technik und Wirtschaft, Berlin
  * Fachbereich 4
  * Studiengang Internationale Medieninformatik (Master)
- * <br /><br />
+ * <br><br>
  * Company:
  * adesso AG
- * <br /><br />
- * Utility to annotate NLP - processed texts, e.g. by found part-of-speech tags or named entities. Example: <LOCATION>Berlin</LOCATION>
+ * <br><br>
+ * Utility to annotate NLP - processed texts, e.g. by found part-of-speech tags or named entities. Example: &lt;LOCATION&gt;Berlin&lt;/LOCATION&gt;
  */
 public class NlpAnnotationUtil {
 
@@ -22,7 +22,7 @@ public class NlpAnnotationUtil {
      *
      * @param tokenText     the orginal token, e.g. "Berlin".
      * @param nlpAnnotation the NLP part-of-speech-tag or named entity annotation for this token, e.g. "LOCATION"
-     * @return the annotated token, e.g. "<LOCATION>BERLIN</LOCATION>
+     * @return the annotated token, e.g. &lt;LOCATION&gt;Berlin&lt;/LOCATION&gt;
      */
     public static String annotateToken(final String tokenText, final String nlpAnnotation) {
         return "<" +

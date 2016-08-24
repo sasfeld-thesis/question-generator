@@ -7,21 +7,21 @@ import java.util.List;
  * Project:        Masterthesis of Sascha Feldmann
  * Creation date:  01.08.2016
  * Author:         Sascha Feldmann (sascha.feldmann@gmx.de)
- * <br /><br />
+ * <br><br>
  * University:
  * Hochschule für Technik und Wirtschaft, Berlin
  * Fachbereich 4
  * Studiengang Internationale Medieninformatik (Master)
- * <br /><br />
+ * <br><br>
  * Company:
  * adesso AG
- * <br /><br />
+ * <br><br>
  * Util to work with lists
  */
 public class ListUtil {
 
     /**
-     * Reduces the given list to have a maximum of maximumNumberOfElements elements.<br />
+     * Reduces the given list to have a maximum of maximumNumberOfElements elements.<br>
      * Does a uniform distribution instead of just removing elements in sequence.
      * @param list the list
      * @param maximumNumberOfElements the maximum number of elements

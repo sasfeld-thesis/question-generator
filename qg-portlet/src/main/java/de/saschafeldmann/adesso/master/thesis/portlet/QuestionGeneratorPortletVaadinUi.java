@@ -52,15 +52,15 @@ import java.util.Map;
  * Project:        Masterthesis of Sascha Feldmann
  * Creation date:  17.05.2016
  * Author:         Sascha Feldmann (sascha.feldmann@gmx.de)
- * <br /><br />
+ * <br><br>
  * University:
  * Hochschule für Technik und Wirtschaft, Berlin
  * Fachbereich 4
  * Studiengang Internationale Medieninformatik (Master)
- * <br /><br />
+ * <br><br>
  * Company:
  * adesso AG
- * <br /><br />
+ * <br><br>
  * This class defines the (vaadin) portlet. It is the single entry point for the portlet handling logic.
  * An instance is created when the user enters the page containing the portlet for the first time or on URL redirect.
  * The UI instance is bound to a single browser tab and will be killed if a page reload is done.
